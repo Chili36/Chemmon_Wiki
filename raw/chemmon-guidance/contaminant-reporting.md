@@ -7,18 +7,19 @@ related:
   - "[[foodex2-in-chemmon]]"
   - "[[business-rules]]"
   - "[[food-additives-reporting]]"
+  - "[[pesticide-reporting]]"
 last_updated: "2026-04-07"
 ---
 
 # Contaminant Reporting
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p51-58 -->
 ## Scope
 
 - The contaminant domain covers chemical contaminants in food including acrylamide, mycotoxins, heavy metals, polycyclic aromatic hydrocarbons (PAHs), and mineral oils. (ChemMon 2026)
 - Maximum levels for contaminants in foodstuffs are governed by Commission Regulation (EU) 2023/915. (ChemMon 2026)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p52-55 -->
 ## Acrylamide Requirements
 
 - F33 legislative classes are MANDATORY for acrylamide samples, per Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888. (ChemMon 2026)
@@ -35,25 +36,7 @@ last_updated: "2026-04-07"
 | Roasted coffee | `A03GL#F17.A07MY` | Standard product coding |
 | French fries with F33 | `A0BYV#F33.A169H` | Legislative class AC-1.1 |
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
-## Copper-Specific Requirements (New 2026)
-
-Copper reporting requires specific F20 facet codes to distinguish processing and preparation states across different commodities.
-
-- **CHEMMON90_a**: specific F20 facet codes are required for different commodity types. (ChemMon 2026)
-- **CHEMMON90_b**: result value uncertainty is mandatory for copper results. (ChemMon 2026)
-
-### Required F20 Codes by Commodity
-
-| Commodity | With Peel/Shell/Stone | Without Peel/Shell/Stone |
-| --- | --- | --- |
-| Citrus fruits | `F20.A07QF` (with peel) | `F20.A07QE` (without peel) |
-| Chestnuts | `F20.A07QD` (with shell) | `F20.A07QC` (without shell) |
-| Stone fruits | `F20.A07QK` (with stone) | `F20.A07QJ` (without stone) |
-
-- Roasted coffee beans use `F28.A07GY`. (ChemMon 2026)
-
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p55-58 -->
 ## Mycotoxins
 
 - Mycotoxin reporting follows Commission Regulation (EU) 2023/2782. (ChemMon 2026)

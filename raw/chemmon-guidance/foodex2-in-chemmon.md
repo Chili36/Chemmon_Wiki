@@ -79,7 +79,7 @@ The table below summarises which facets are required, recommended, or not applic
 
 ### Hemp seed flour
 - Code: `A0F0N#F27.A016B`
-- F27 specifies the brand or marketing type. (ChemMon 2026 p39)
+- F27 specifies the source commodity (hemp seeds) from which this derivative was obtained. (ChemMon 2026 p39)
 
 ### Pizza (takeaway, laminated box)
 - Code: `A03ZN#F18.A07NL$F19.A07PN`

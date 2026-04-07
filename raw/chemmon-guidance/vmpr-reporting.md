@@ -83,9 +83,9 @@ VMPR analytical results are reported using one of these result type codes:
 
 The following business rules apply specifically to the VMPR domain:
 
-- **CHEMMON96**: Validates that VMPR samples carry the correct programme type code for the declared control plan. (ChemMon 2026 p49)
-- **CHEMMON100**: Checks that non-food matrices use base term A0C60 and include both F01 and F02 explicit facets. (ChemMon 2026 p49)
-- **CHEMMON102**: Ensures wild game samples include the mandatory F21.A07RY production method facet. (ChemMon 2026 p50)
+- **CHEMMON96**: Validates that VMPR samples carry the correct sampling strategy for the declared programme type (amended 2026). (ChemMon 2026 p49)
+- **CHEMMON100**: Restricts which evaluation codes are permitted for VMPR results (new 2026). (ChemMon 2026 p49)
+- **CHEMMON102**: Checks consistency across records sharing the same `sampleEventId` in VMPR submissions (new 2026). (ChemMon 2026 p50)
 
 See [[business-rules]] for the full rule catalogue.
 

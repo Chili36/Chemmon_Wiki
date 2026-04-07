@@ -17,3 +17,11 @@ last_updated: "2026-04-07"
 - Seeded pages for ChemMon overview, SSD2 data model, FoodEx2 in ChemMon, business rules (CHEMMON01-109), VMPR reporting, contaminant reporting, and food additives/flavourings reporting.
 - Kept the source PDFs unchanged in `chemmon_docs/`.
 - Updated `index.md` with the new page catalog.
+
+## [2026-04-07] maintenance | Writing quality pass
+
+- Fixed incorrect F27 description in foodex2-in-chemmon.md (was "brand or marketing type", should be "source commodity").
+- Corrected CHEMMON100 and CHEMMON102 descriptions in vmpr-reporting.md to match the actual business rule definitions.
+- Moved copper-specific F20 requirements from contaminant-reporting.md to a new pesticide-reporting.md page, since CHEMMON90_a/b are PPP-domain rules.
+- Added pesticide-reporting.md covering legal references, sampling strategies, copper facet codes, and PPP-domain business rules.
+- Added page number citations to contaminant-reporting.md source comments.

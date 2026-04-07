@@ -27,7 +27,8 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 - [foodex2-in-chemmon.md](raw/chemmon-guidance/foodex2-in-chemmon.md): How FoodEx2 is used for matrix classification in ChemMon, mandatory facets by domain, and worked coding examples.
 - [business-rules.md](raw/chemmon-guidance/business-rules.md): Comprehensive reference of CHEMMON01-CHEMMON109 business rules with severities, descriptions, and 2026 changes.
 - [vmpr-reporting.md](raw/chemmon-guidance/vmpr-reporting.md): VMPR domain-specific rules including control plans, sampling strategies, FoodEx2 coding, and result types.
-- [contaminant-reporting.md](raw/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules covering acrylamide F33 requirements, copper facets, and mycotoxin corrections.
+- [pesticide-reporting.md](raw/chemmon-guidance/pesticide-reporting.md): Pesticide residues domain rules including legal references, sampling strategies, and copper-specific F20 facet requirements.
+- [contaminant-reporting.md](raw/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules covering acrylamide F33 requirements and mycotoxin corrections.
 - [food-additives-reporting.md](raw/chemmon-guidance/food-additives-reporting.md): Food additives and flavourings reporting rules including mandatory F33, expression types, and 2026 legal limit rules.
 
 ## Source Layer
