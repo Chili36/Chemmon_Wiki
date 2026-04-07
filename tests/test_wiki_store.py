@@ -17,16 +17,20 @@ def test_store_reads_index() -> None:
     assert page.content.startswith("---")
 
 
-def test_store_lists_no_pages_before_ingest() -> None:
+def test_store_lists_ingested_pages() -> None:
     store = _store()
     pages = store.list_pages()
-    assert pages == []
+    assert len(pages) >= 7
+    assert "business-rules.md" in pages
+    assert "chemmon-overview.md" in pages
 
 
-def test_store_catalog_empty_before_ingest() -> None:
+def test_store_catalog_returns_ingested_pages() -> None:
     store = _store()
     catalog = store.catalog()
-    assert catalog == []
+    assert len(catalog) >= 7
+    names = {page.name for page in catalog}
+    assert "business-rules.md" in names
 
 
 def test_store_guiding_principles_extracted() -> None:

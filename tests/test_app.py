@@ -123,12 +123,13 @@ def test_get_index() -> None:
     assert "Wiki Index" in payload["title"]
 
 
-def test_list_pages_empty_before_ingest() -> None:
+def test_list_pages_returns_ingested_pages() -> None:
     response = request("GET", "/wiki/pages")
     assert response.status_code == 200
     payload = response.json()
-    assert payload["count"] == 0
-    assert payload["pages"] == []
+    assert payload["count"] >= 7
+    names = {p["page_name"] for p in payload["pages"]}
+    assert "business-rules.md" in names
 
 
 def test_get_unknown_page_returns_404() -> None:
