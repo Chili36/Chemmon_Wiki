@@ -41,3 +41,59 @@ last_updated: "2026-04-07"
 
 - Mycotoxin reporting follows Commission Regulation (EU) 2023/2782. (ChemMon 2026)
 - Recovery rate corrections are mandatory for certain mycotoxin substances as specified in the regulation. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p58-62 -->
+## Dioxins and PCBs
+
+- For dioxin/dioxin-like PCB reporting, all 29 congeners (17 PCDD/Fs and 12 dl-PCBs) must be reported per Commission Regulation (EU) 2023/915. (CHEMMON09)
+- For non-dioxin-like PCBs, the six indicator congeners must be reported: PCB 28, PCB 52, PCB 101, PCB 138, PCB 153, and PCB 180. (CHEMMON10)
+- Fat percentage should always be reported regardless of the expression basis. (CHEMMON21)
+- For fish samples: area of origin for fisheries (`origFishAreaCode`) must be specified. (CHEMMON20)
+- If the precise fishing area is unknown, at minimum "from freshwater" or "from saltwater" must be indicated. (ChemMon 2026)
+- Fish species must be precisely reported, especially for Baltic region fish. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p62-63 -->
+## Brominated Flame Retardants
+
+- For fish with BFRs, `origFishAreaCode` must be specified. (CHEMMON20)
+- Fat percentage should always be reported. (CHEMMON21)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p63-64 -->
+## Arsenic
+
+- For seaweed: the presence of alga Hijiki must be identified. (ChemMon 2026)
+- For rice: specify the type of rice and distinguish raw vs processed using the F28 (Process) facet. (CHEMMON18)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p64-65 -->
+## Chlorates and Perchlorates
+
+- F28 (Process) is recommended to distinguish processed vs unprocessed food. (CHEMMON19)
+- Treatments like deep-freezing and blanching have a significant effect on chlorate levels. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p65-66 -->
+## Bisphenol Compounds
+
+- F19 (packaging material) is mandatory. (CHEMMON14)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p66-67 -->
+## PAHs
+
+- F19 (packaging material) is recommended since packaging is a source of PAH contamination. (CHEMMON15)
+- Recovery rate and measurement uncertainty are recommended. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p67-68 -->
+## 3-MCPDs, 2-MCPDs and Glycidyl Esters
+
+- The analytical method must clarify whether an ISO validated method was used (EN ISO 18363-1 through 18363-4). (ChemMon 2026)
+- Fat percentage should be reported. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p68-69 -->
+## Mineral Oils
+
+- Moisture percentage should be reported. (CHEMMON11)
+- Data providers should report molecular mass distribution information. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p69 -->
+## Nitrates
+
+- Recovery rate and measurement uncertainty are recommended. (ChemMon 2026)
