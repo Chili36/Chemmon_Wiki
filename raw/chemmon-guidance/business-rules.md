@@ -19,11 +19,12 @@ last_updated: "2026-04-07"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Overview
 
-- Business rules validate SSD2 submissions before acceptance into the EFSA data warehouse.
+- Business rules validate [[ssd2-data-model|SSD2]] submissions before acceptance into the EFSA data warehouse as part of the [[chemmon-overview|ChemMon]] data collection.
 - Two severity levels: **Error** (blocks submission) and **Warning** (flags for review but does not block).
-- Rules are domain-specific. Not all rules apply to all reporting domains (pesticides, contaminants, veterinary medicinal product residues, food additives/flavourings).
+- Rules are domain-specific. Not all rules apply to all reporting domains ([[pesticide-reporting|pesticides]], [[contaminant-reporting|contaminants]], [[vmpr-reporting|VMPR]], [[food-additives-reporting|food additives/flavourings]]).
 - Business rules take precedence when they conflict with prose sections of the guidance.
 - Rules are organised into three tiers: General Business Rules (GBR) that apply across all EFSA data collections, ChemMon-specific rules (CHEMMON) that apply to the chemical monitoring domain, and Legal Limit rules (LL) that compare reported values against regulatory thresholds.
+- Matrix coding rules reference [[foodex2-in-chemmon]] for FoodEx2 usage.
 
 ---
 

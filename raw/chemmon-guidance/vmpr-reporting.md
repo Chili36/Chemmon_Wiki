@@ -15,7 +15,7 @@ last_updated: "2026-04-07"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p41-50 -->
 ## Control Plan Types
 
-VMPR data originates from several types of monitoring and control programmes:
+VMPR (Veterinary Medicinal Product Residues) is one of five [[chemmon-overview|ChemMon]] reporting domains. VMPR data originates from several types of monitoring and control programmes:
 
 | Plan | Description |
 | --- | --- |

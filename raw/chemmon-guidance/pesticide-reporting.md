@@ -17,8 +17,9 @@ last_updated: "2026-04-07"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p25-32 -->
 ## Scope
 
-- Pesticide residues monitoring and enforcement under Regulation (EC) No 396/2005. (ChemMon 2026 p25)
+- Pesticide residues is one of five [[chemmon-overview|ChemMon]] reporting domains, covering monitoring and enforcement under Regulation (EC) No 396/2005. (ChemMon 2026 p25)
 - Covers EU coordinated programmes, national monitoring programmes, and targeted enforcement sampling. (ChemMon 2026 p25-26)
+- Matrix coding follows [[foodex2-in-chemmon]] rules. Copper reporting overlaps with [[contaminant-reporting]] (different F20 codes apply depending on domain).
 
 ## Mandatory Legal References
 

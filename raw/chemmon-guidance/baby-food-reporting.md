@@ -17,7 +17,7 @@ last_updated: "2026-04-07"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## FoodEx2 Classification
 
-Baby food is classified under FoodEx2 high-level code **A03PV** ("Food products for the young population").
+Baby food is classified under FoodEx2 high-level code **A03PV** ("Food products for the young population"). See [[foodex2-in-chemmon]] for general FoodEx2 coding rules in [[chemmon-overview|ChemMon]].
 
 Key FoodEx2 base terms for baby food products:
 
@@ -40,8 +40,8 @@ Baby foods are **always** considered processed products.
 
 Baby food samples are **excluded** from the VMPR Annual Report per Regulation (EU) 2022/1646.
 
-- **CHEMMON55** prevents baby foods being reported with `progLegalRef` N371A.
-- **CHEMMON63**: If `sampMatCode` is under A03PZ, `progLegalRef` cannot be N371A.
+- **CHEMMON55** prevents baby foods being reported with `progLegalRef` N371A. See [[business-rules]].
+- **CHEMMON63**: If `sampMatCode` is under A03PZ, `progLegalRef` cannot be N371A. See [[business-rules]].
 
 See [[vmpr-reporting]] for full VMPR reporting rules.
 

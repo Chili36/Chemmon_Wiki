@@ -18,7 +18,7 @@ last_updated: "2026-04-07"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-40 -->
 ## How FoodEx2 Is Used
 
-- The `sampMatCode` element in every ChemMon submission uses FoodEx2 to classify the sampled matrix. (ChemMon 2026 p33)
+- The `sampMatCode` element in every [[chemmon-overview|ChemMon]] submission uses FoodEx2 to classify the sampled matrix. (ChemMon 2026 p33)
 - Each code consists of a **mandatory base term** drawn from the MTX reporting hierarchy, optionally extended with **explicit facets** that add detail about source animal, part/nature, process, etc. (ChemMon 2026 p33-34)
 
 ## Code Syntax
@@ -50,7 +50,7 @@ The table below summarises which facets are required, recommended, or not applic
 | F01 Source | Always | Always | Always | Always | Always |
 | F02 Part-nature | Always | Always | Always | Recommended | Recommended |
 | F03 Physical state | -- | Recommended | Recommended | Recommended | Recommended |
-| F21 Production method | Recommended | Required | Required | -- | -- |
+| F21 Production method | Recommended | Required (see [[pesticide-reporting]]) | Required | -- | -- |
 | F23 Target consumer | Mandatory for feed | -- | Recommended | Required for infant | Required for infant |
 | F28 Process | Required | -- | Required | Required | Required |
 | F33 Legislative classes | Required for processed (see [[vmpr-reporting]]) | -- | Required for acrylamide (see [[contaminant-reporting]]) | Mandatory (see [[food-additives-reporting]]) | Mandatory (see [[food-additives-reporting]]) |
