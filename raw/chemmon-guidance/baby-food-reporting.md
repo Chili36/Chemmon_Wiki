@@ -7,6 +7,8 @@ related:
   - "[[vmpr-reporting]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[pesticide-reporting]]"
+  - "[[contaminant-reporting]]"
 last_updated: "2026-04-07"
 ---
 
@@ -46,7 +48,7 @@ See [[vmpr-reporting]] for full VMPR reporting rules.
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Accepted Domains
 
-Baby food samples **are** accepted in ChemMon data collection under other domains (pesticides, contaminants) as long as `progLegalRef` is **not** N371A.
+Baby food samples **are** accepted in ChemMon data collection under other domains ([[pesticide-reporting|pesticides]], [[contaminant-reporting|contaminants]]) as long as `progLegalRef` is **not** N371A.
 
 For inclusion in the **Pesticides Annual Report**, `progLegalRef` must be one of:
 

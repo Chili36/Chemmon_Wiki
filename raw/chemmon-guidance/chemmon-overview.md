@@ -6,6 +6,10 @@ related:
   - "[[ssd2-data-model]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[vmpr-reporting]]"
+  - "[[pesticide-reporting]]"
+  - "[[contaminant-reporting]]"
+  - "[[food-additives-reporting]]"
 last_updated: "2026-04-07"
 ---
 
@@ -24,11 +28,11 @@ ChemMon covers five distinct reporting domains, each with its own regulatory bas
 
 | Domain | Scope |
 | --- | --- |
-| Pesticide residues | Monitoring and enforcement samples under Regulation (EC) No 396/2005. |
-| Veterinary medicinal product residues (VMPR) | National residue monitoring plans under Directive 96/23/EC and Regulation (EU) 2017/625. |
-| Chemical contaminants | Occurrence data for contaminants such as heavy metals, mycotoxins, and process contaminants. |
-| Food additives | Occurrence data on permitted food additives for re-evaluation exposure assessments. |
-| Food flavourings | Occurrence data on flavouring substances used in or on food. |
+| Pesticide residues | Monitoring and enforcement samples under Regulation (EC) No 396/2005. See [[pesticide-reporting]]. |
+| Veterinary medicinal product residues (VMPR) | National residue monitoring plans under Directive 96/23/EC and Regulation (EU) 2017/625. See [[vmpr-reporting]]. |
+| Chemical contaminants | Occurrence data for contaminants such as heavy metals, mycotoxins, and process contaminants. See [[contaminant-reporting]]. |
+| Food additives | Occurrence data on permitted food additives for re-evaluation exposure assessments. See [[food-additives-reporting]]. |
+| Food flavourings | Occurrence data on flavouring substances used in or on food. See [[food-additives-reporting]]. |
 
 Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not every parameter belongs in every domain, and routing rules determine the correct destination for each submission. (ChemMon 2026 p7-10)
 

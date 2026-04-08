@@ -6,6 +6,7 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[business-rules]]"
+  - "[[foodex2-in-chemmon]]"
 last_updated: "2026-04-07"
 ---
 
@@ -29,7 +30,7 @@ The SSD2 model is organised around a chain of entities that describe the journey
 | Sampling Programme | The monitoring or control programme under which samples are taken. |
 | Sampling Event | A specific sampling occasion: where, when, and how the sample was obtained. |
 | Sample Taken | The physical sample collected at the sampling event. |
-| Matrix Sampled | What was sampled, coded using FoodEx2 (`sampMatCode`). |
+| Matrix Sampled | What was sampled, coded using FoodEx2 (`sampMatCode`). See [[foodex2-in-chemmon]]. |
 | Sample Analysed | The portion of the sample that was actually analysed (may differ from what was sampled). |
 | Matrix Analysed | What was analysed, again coded with FoodEx2 (`anMatCode`). |
 | Laboratory | The laboratory that performed the analysis. |

@@ -7,6 +7,7 @@ related:
   - "[[foodex2-in-chemmon]]"
   - "[[business-rules]]"
   - "[[contaminant-reporting]]"
+  - "[[baby-food-reporting]]"
 last_updated: "2026-04-07"
 ---
 
@@ -23,7 +24,7 @@ last_updated: "2026-04-07"
 
 - **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. (ChemMon 2026)
 - **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. (ChemMon 2026)
-- **F23 (Target consumer)**: required for infant formulas and follow-on formulas. (ChemMon 2026)
+- **F23 (Target consumer)**: required for infant formulas and follow-on formulas. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Expression Type

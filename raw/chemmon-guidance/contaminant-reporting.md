@@ -26,7 +26,7 @@ last_updated: "2026-04-07"
 - CHEMMON12 enforces this: "sampMatCode.legis is not reported or does not contain specific product code, though paramCode is acrylamide." (ChemMon 2026)
 - F33 must be added even when the base term already carries an implicit F33 facet (EFSA clarification). (ChemMon 2026)
 - The paramCode for acrylamide is `RF-00000410-ORG`. (ChemMon 2026)
-- Specific food categories are required, including potato crisps, french fries, coffee, baby foods, and others defined in the legislation. (ChemMon 2026)
+- Specific food categories are required, including potato crisps, french fries, coffee, baby foods (see [[baby-food-reporting]]), and others defined in the legislation. (ChemMon 2026)
 
 ### Acrylamide Worked Examples
 

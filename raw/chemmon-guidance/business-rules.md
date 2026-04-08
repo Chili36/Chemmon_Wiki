@@ -9,6 +9,7 @@ related:
   - "[[food-additives-reporting]]"
   - "[[pesticide-reporting]]"
   - "[[vmpr-reporting]]"
+  - "[[baby-food-reporting]]"
   - "[[ssd2-data-model]]"
 last_updated: "2026-04-07"
 ---
@@ -132,8 +133,8 @@ General Business Rules apply across all EFSA SSD2 data collections, not only Che
 
 | Rule ID | Severity | Description | Domain |
 | --- | --- | --- | --- |
-| CHEMMON55 | Error | For N028A/N318A (baby food programme references), `sampMatCode` parent term must be A03PV (Food products for young population). Baby food programme data must reference baby food matrices. | All |
-| CHEMMON63 | Error | If `sampMatCode` falls under A03PZ (baby food), `progLegalRef` cannot be N371A. Baby food is excluded from the VMPR legal framework. | VMPR |
+| CHEMMON55 | Error | For N028A/N318A (baby food programme references), `sampMatCode` parent term must be A03PV (Food products for young population). Baby food programme data must reference baby food matrices. See [[baby-food-reporting]]. | All |
+| CHEMMON63 | Error | If `sampMatCode` falls under A03PZ (baby food), `progLegalRef` cannot be N371A. Baby food is excluded from the VMPR legal framework. See [[baby-food-reporting]] and [[vmpr-reporting]]. | VMPR |
 
 ### Domain-Specific Matrix Rules
 
@@ -144,7 +145,7 @@ General Business Rules apply across all EFSA SSD2 data collections, not only Che
 | CHEMMON09 | Warning | For dioxin/dl-PCB parameters, all 29 congeners must be reported per sample. Incomplete congener profiles prevent TEQ calculation. | CONT |
 | CHEMMON10 | Warning | For non-dl-PCB parameters, six indicator congeners must be reported per sample. | CONT |
 | CHEMMON11 | Warning | For mineral oils/mycotoxins, `moistPerc` should be reported to enable dry-weight conversions. | CONT |
-| CHEMMON12 | Error | For acrylamide, F33 (legislative class) facet is mandatory. `sampMatCode.legis` must contain the specific product code per Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888. | CONT |
+| CHEMMON12 | Error | For acrylamide, F33 (legislative class) facet is mandatory. `sampMatCode.legis` must contain the specific product code per Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888. See [[contaminant-reporting]]. | CONT |
 | CHEMMON14 | Error | For bisphenol compounds, F19 (packaging material) facet is mandatory. Packaging material affects migration and exposure. | CONT |
 | CHEMMON15 | Warning | For PAHs, F19 (packaging material) facet should be reported. | CONT |
 | CHEMMON17 | Warning | For mycotoxins, F21 (production method) facet should be reported (e.g., organic vs. conventional). | CONT |

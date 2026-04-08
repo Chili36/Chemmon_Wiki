@@ -7,6 +7,9 @@ related:
   - "[[vmpr-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
+  - "[[pesticide-reporting]]"
+  - "[[baby-food-reporting]]"
+  - "[[business-rules]]"
 last_updated: "2026-04-07"
 ---
 
@@ -35,7 +38,7 @@ BaseTermCode#FacetHeader.FacetCode$FacetHeader.FacetCode
 
 - Many base terms carry **implicit facets** -- attributes already encoded in the term itself. For example, `A01YM` (pig kidney) implicitly carries F01.A057 (source = pigs) and F02.A069N (part-nature = kidney). (ChemMon 2026 p35)
 - **Do not duplicate** an implicit facet as an explicit facet unless a specific business rule requires it. Redundant explicit facets trigger validation warnings. (ChemMon 2026 p35)
-- Exception: business rule CHEMMON12 for acrylamide requires certain facets to be stated explicitly even when they are already implicit in the base term. (ChemMon 2026 p36)
+- Exception: business rule CHEMMON12 for acrylamide requires certain facets to be stated explicitly even when they are already implicit in the base term. See [[contaminant-reporting]] and [[business-rules]]. (ChemMon 2026 p36)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p36-39 -->
 ## Mandatory Facets by Domain
@@ -50,7 +53,7 @@ The table below summarises which facets are required, recommended, or not applic
 | F21 Production method | Recommended | Required | Required | -- | -- |
 | F23 Target consumer | Mandatory for feed | -- | Recommended | Required for infant | Required for infant |
 | F28 Process | Required | -- | Required | Required | Required |
-| F33 Legislative classes | Required for processed | -- | Required for acrylamide | Mandatory | Mandatory |
+| F33 Legislative classes | Required for processed (see [[vmpr-reporting]]) | -- | Required for acrylamide (see [[contaminant-reporting]]) | Mandatory (see [[food-additives-reporting]]) | Mandatory (see [[food-additives-reporting]]) |
 
 (ChemMon 2026 p36-39)
 
@@ -67,7 +70,7 @@ The table below summarises which facets are required, recommended, or not applic
 
 ### Infant formula
 - Code: `A03QF#F28.A07HB$F18.A07NM$F19.A16RX`
-- Process (F28), packaging type (F18), and packaging material (F19) are stated explicitly. (ChemMon 2026 p38)
+- Process (F28), packaging type (F18), and packaging material (F19) are stated explicitly. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026 p38)
 
 ### Pasteurised eggs (organic)
 - Code: `A031G#F21.A075E$F28.A07HV`

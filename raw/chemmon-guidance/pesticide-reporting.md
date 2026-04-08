@@ -7,6 +7,8 @@ related:
   - "[[foodex2-in-chemmon]]"
   - "[[business-rules]]"
   - "[[contaminant-reporting]]"
+  - "[[vmpr-reporting]]"
+  - "[[baby-food-reporting]]"
 last_updated: "2026-04-07"
 ---
 
@@ -25,8 +27,8 @@ Each pesticide submission must carry a `progLegalRef` code identifying the regul
 | Code | Regulation |
 | --- | --- |
 | N027A | Regulation (EU) 2024/989 -- EU coordinated programme for pesticide residues |
-| N028A / N318A | Regulation 2021/1355 -- baby food sampling |
-| N371A | Regulation 2022/1646 -- VMPR sampling |
+| N028A / N318A | Regulation 2021/1355 -- baby food sampling. See [[baby-food-reporting]]. |
+| N371A | Regulation 2022/1646 -- VMPR sampling. See [[vmpr-reporting]]. |
 | N375A / N112A / N113A | Contamination control plans |
 | N317A | Border control posts |
 | N422A | Regulation (EU) -- intensified official controls at border control posts for animal-origin products (new 2026) |
