@@ -20,17 +20,21 @@ def test_store_reads_index() -> None:
 def test_store_lists_ingested_pages() -> None:
     store = _store()
     pages = store.list_pages()
-    assert len(pages) >= 7
-    assert "business-rules.md" in pages
+    # After the patterns refactor: 9 original pages + 9 business-rules slice files = 18
+    assert len(pages) >= 16
+    assert "business-rules.md" in pages  # hub
     assert "chemmon-overview.md" in pages
+    # At least one sliced rule-reference file is present
+    assert any(p.startswith("business-rules-") for p in pages)
 
 
 def test_store_catalog_returns_ingested_pages() -> None:
     store = _store()
     catalog = store.catalog()
-    assert len(catalog) >= 7
+    assert len(catalog) >= 16
     names = {page.name for page in catalog}
-    assert "business-rules.md" in names
+    assert "business-rules.md" in names  # hub
+    assert any(n.startswith("business-rules-") for n in names)
 
 
 def test_store_guiding_principles_extracted() -> None:

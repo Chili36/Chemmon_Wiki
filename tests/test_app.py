@@ -127,9 +127,11 @@ def test_list_pages_returns_ingested_pages() -> None:
     response = request("GET", "/wiki/pages")
     assert response.status_code == 200
     payload = response.json()
-    assert payload["count"] >= 7
+    # After the patterns refactor: 9 original pages + 9 business-rules slice files = 18
+    assert payload["count"] >= 16
     names = {p["page_name"] for p in payload["pages"]}
-    assert "business-rules.md" in names
+    assert "business-rules.md" in names  # hub
+    assert any(n.startswith("business-rules-") for n in names)
 
 
 def test_get_unknown_page_returns_404() -> None:
@@ -138,10 +140,13 @@ def test_get_unknown_page_returns_404() -> None:
 
 
 def test_ask_returns_answer_with_citations() -> None:
+    # Use an SSD2-shaped question that matches none of the deterministic
+    # fast-path patterns, so the LLM selector path is exercised.
+    question = "Explain SSD2 sample event consistency validation."
     response = request(
         "POST",
         "/wiki/ask",
-        json={"question": "Do I need F33 for acrylamide?"},
+        json={"question": question},
     )
     assert response.status_code == 200
     payload = response.json()
@@ -152,7 +157,28 @@ def test_ask_returns_answer_with_citations() -> None:
     assert payload["trace"]["selector"]["model"] == "fake-claude"
     assert payload["trace"]["answerer"]["model"] == "fake-claude"
     assert payload["trace"]["total"]["total_llm_calls"] == 2
-    assert app_module.selector_runner.calls[0]["question"] == "Do I need F33 for acrylamide?"
+    assert app_module.selector_runner.calls[0]["question"] == question
+
+
+def test_ask_fast_path_skips_llm_selector() -> None:
+    # A question containing a CHEMMON rule-ID should trigger the fast-path
+    # and completely skip the LLM selector call.
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={"question": "What does CHEMMON12 require?"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["trace"]["selection_method"] == "deterministic fast-path (heuristic) + llm answerer"
+    assert payload["trace"]["selector"]["model"] == "fast-path"
+    # Only the answerer LLM was called; selector was not
+    assert payload["trace"]["total"]["total_llm_calls"] == 1
+    # CHEMMON12 is a contaminant rule — cross-cutting is always appended as companion
+    assert "business-rules-contaminant.md" in payload["pages_used"]
+    assert "business-rules-cross-cutting.md" in payload["pages_used"]
+    # FakeSelector.run should NOT have been called
+    assert app_module.selector_runner.calls == []
 
 
 def test_ask_requires_question() -> None:

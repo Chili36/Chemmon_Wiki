@@ -12,7 +12,7 @@ A persistent markdown knowledge base for EFSA Chemical Monitoring reporting guid
 In this workspace, that means:
 
 - `chemmon_docs/` holds the immutable source PDFs.
-- `raw/chemmon-guidance/` holds the LLM-maintained markdown pages extracted, organized, cross-linked, and kept concise for both human reading and machine use.
+- `wiki/chemmon-guidance/` holds the LLM-maintained markdown pages extracted, organized, cross-linked, and kept concise for both human reading and machine use.
 - The knowledge base is topic-oriented rather than document-oriented, so rules about reporting domains, mandatory facets, business rules, and submission procedures live in dedicated pages instead of a single large dump.
 
 # Why We Are Building It

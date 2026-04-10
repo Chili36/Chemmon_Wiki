@@ -1,5 +1,7 @@
 ---
 title: "VMPR Reporting"
+type: "domain-guide"
+domain: "vmpr"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -7,7 +9,7 @@ related:
   - "[[foodex2-in-chemmon]]"
   - "[[business-rules]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # VMPR Reporting

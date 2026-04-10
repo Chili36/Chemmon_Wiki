@@ -55,7 +55,7 @@ def split_frontmatter(raw: str) -> tuple[dict[str, Any], str]:
 class WikiStore:
     def __init__(self, root: Path | str):
         self.root = Path(root)
-        self.guidance_dir = self.root / "raw" / "chemmon-guidance"
+        self.guidance_dir = self.root / "wiki" / "chemmon-guidance"
         self.index_path = self.root / "index.md"
         self.log_path = self.root / "log.md"
 

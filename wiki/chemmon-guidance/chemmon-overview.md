@@ -1,5 +1,7 @@
 ---
 title: "ChemMon Overview"
+type: "overview"
+domain: "all"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -10,7 +12,7 @@ related:
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # ChemMon Overview
