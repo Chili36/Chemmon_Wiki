@@ -132,26 +132,6 @@ def _aggregate_usage(usages: list[dict[str, int | str | None]], model: str) -> d
     }
 
 
-def build_fast_path_result(pages: list[str]) -> PageSelectionResult:
-    """Construct a PageSelectionResult for a deterministic fast-path hit.
-
-    Zero-fills the token/timing summaries using the same aggregation
-    helpers as the LLM selector path so downstream trace consumers see a
-    consistent field set regardless of which path was taken.
-    """
-    pages_used = list(dict.fromkeys(["index.md", *pages]))
-    tool_trace: list[dict[str, Any]] = [
-        {"fast_path": True, "page_name": p, "order": i + 1, "synthetic": True}
-        for i, p in enumerate(pages)
-    ]
-    return PageSelectionResult(
-        pages_used=pages_used,
-        tool_trace=tool_trace,
-        token_summary=_aggregate_usage([], "fast-path"),
-        timing_summary={**_aggregate_timing([]), "selector_wall_time_ms": 0},
-    )
-
-
 def _aggregate_timing(timings: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "calls": len(timings),
