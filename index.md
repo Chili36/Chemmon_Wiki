@@ -26,8 +26,21 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 ### Overview & References
 
 - [chemmon-overview.md](wiki/chemmon-guidance/chemmon-overview.md): High-level explanation of ChemMon purpose, reporting domains, data submission cycle, and the role of business rules.
+- [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background and rationale — why the single SSD2 data collection, resolving overlapping domains, FCM exclusion, compound element flexibility, Open Data and free-text reduction, revision cadence, meaning of 'residue'.
 - [ssd2-data-model.md](wiki/chemmon-guidance/ssd2-data-model.md): SSD2 logical model overview including main entities, element types, mandatory fields, and validation levels.
 - [foodex2-in-chemmon.md](wiki/chemmon-guidance/foodex2-in-chemmon.md): How FoodEx2 is used for matrix classification in ChemMon, mandatory facets by domain, and worked coding examples.
+- [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): Full F01-F33 facet reference — per-domain descriptions of each FoodEx2 facet drawn from Table 4 of the source guidance.
+
+### SSD2 Element Reference
+
+Per-element reference pages covering the ~88 SSD2 elements required for ChemMon submissions. Start at the element group that matches your question; the pages cross-link to the relevant business rules.
+
+- [ssd2-elements-programme.md](wiki/chemmon-guidance/ssd2-elements-programme.md): Programme group — `progId`, `progLegalRef`, `sampStrategy`, `progType` plus Table 2 valid combinations across all domains.
+- [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group — `sampMethod`, `sampler`, `sampPoint`, `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampId`, `sampCountry`, sampling date, `origSampId`.
+- [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group — `sampMatCode` (with VMPR/feed/non-food/insects coding), `sampMatText`, `origCountry`, `sampAnId`, `anMatCode`, `anMatText`.
+- [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.
+- [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group — `resId`, `accredProc`, `resUnit`, `resLOD`, `resLOQ`, `CCalpha`, `CCbeta`, `resVal`, recovery, expression of results, `resQualValue`, `resType`, `resValUncert`, `resInfo.notSummed`.
+- [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group — `evalLowLimit`, `evalLimitType`, `evalCode`, `actTakenCode`, `evalInfo.conclusion`, `evalInfo.com`.
 
 ### Domain Guides
 
