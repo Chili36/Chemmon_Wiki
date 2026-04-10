@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from .answerer import AnthropicChemMonAnswerer
-from .page_selector import AnthropicWikiPageSelector, PageSelectionResult
+from .page_selector import AnthropicWikiPageSelector, build_fast_path_result
 from .wiki_store import WikiStore
 
 
@@ -186,68 +186,25 @@ _KEYWORD_PATTERNS: list[tuple[re.Pattern[str], list[str]]] = [
 
 def _try_deterministic_selection(question: str) -> list[str] | None:
     """Return a minimal page set for known question patterns, or None."""
-    # Rule-ID lookup takes priority over keyword matching
+    # Rule-ID lookup takes priority over keyword matching. The regex only
+    # captures \d+, so int() cannot fail.
     rule_matches = _CHEMMON_RULE_REGEX.findall(question)
     if rule_matches:
         pages: list[str] = []
         for match in rule_matches:
-            try:
-                rid = int(match)
-            except ValueError:
-                continue
-            slices = _CHEMMON_RULE_TO_SLICES.get(rid)
+            slices = _CHEMMON_RULE_TO_SLICES.get(int(match))
             if slices:
                 pages.extend(slices)
         if pages:
-            # Always include cross-cutting as companion
             if "business-rules-cross-cutting.md" not in pages:
                 pages.append("business-rules-cross-cutting.md")
-            # Deduplicate while preserving order
-            seen: set[str] = set()
-            result: list[str] = []
-            for p in pages:
-                if p not in seen:
-                    seen.add(p)
-                    result.append(p)
-            return result
+            return list(dict.fromkeys(pages))
 
-    # Keyword patterns
     for pattern, slices in _KEYWORD_PATTERNS:
         if pattern.search(question):
             return list(slices)
 
     return None
-
-
-def _synthetic_selection_result(pages: list[str]) -> PageSelectionResult:
-    """Build a PageSelectionResult for a fast-path hit (no LLM call)."""
-    pages_used = list(dict.fromkeys(["index.md", *pages]))
-    tool_trace = [
-        {"fast_path": True, "page_name": p, "order": i + 1, "synthetic": True}
-        for i, p in enumerate(pages)
-    ]
-    token_summary: dict[str, Any] = {
-        "model": "fast-path",
-        "calls": 0,
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "cache_creation_input_tokens": 0,
-        "cache_read_input_tokens": 0,
-        "total_tracked_tokens": 0,
-        "per_call": [],
-    }
-    timing_summary: dict[str, Any] = {
-        "calls": 0,
-        "llm_time_ms": 0,
-        "per_call": [],
-        "selector_wall_time_ms": 0,
-    }
-    return PageSelectionResult(
-        pages_used=pages_used,
-        tool_trace=tool_trace,
-        token_summary=token_summary,
-        timing_summary=timing_summary,
-    )
 
 
 @app.get("/wiki/view", include_in_schema=False)
@@ -320,7 +277,7 @@ def ask_question(request: AskRequest) -> AskResponse:
 
     fast_path_pages = _try_deterministic_selection(request.question)
     if fast_path_pages is not None:
-        selection_result = _synthetic_selection_result(fast_path_pages)
+        selection_result = build_fast_path_result(fast_path_pages)
         selector_model_for_trace = "fast-path"
         selection_method = "deterministic fast-path (heuristic) + llm answerer"
     else:

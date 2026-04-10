@@ -153,26 +153,38 @@ def check_rule_id_uniqueness(
             )
 
 
-def check_no_old_path_references(report: HealthReport) -> None:
-    # log.md is exempt because it documents historical state (e.g. rename entries).
+def check_no_old_path_references(
+    report: HealthReport, file_contents: dict[Path, str]
+) -> None:
+    """Check cached file contents for stale references to the old wiki path.
+
+    log.md is exempt because it documents historical state (e.g. rename entries).
+    Metadata files not already in the cache are read here.
+    """
     exempt_files = {REPO_ROOT / "log.md"}
-    targets = [
-        p
-        for p in list(WIKI_DIR.glob("*.md")) + METADATA_FILES
-        if p.exists() and p not in exempt_files
-    ]
-    for path in targets:
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, OSError):
+    for path, text in file_contents.items():
+        if path in exempt_files:
             continue
         if OLD_PATH_LITERAL in text:
             report.error(
                 f"{_rel(path)}: contains stale reference to '{OLD_PATH_LITERAL}'"
             )
+    for metadata_path in METADATA_FILES:
+        if metadata_path in exempt_files or metadata_path in file_contents:
+            continue
+        if not metadata_path.exists():
+            continue
+        try:
+            text = metadata_path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        if OLD_PATH_LITERAL in text:
+            report.error(
+                f"{_rel(metadata_path)}: contains stale reference to '{OLD_PATH_LITERAL}'"
+            )
 
 
-def run_health_check(strict: bool = False) -> HealthReport:
+def run_health_check() -> HealthReport:
     report = HealthReport()
 
     if not WIKI_DIR.is_dir():
@@ -186,6 +198,7 @@ def run_health_check(strict: bool = False) -> HealthReport:
             valid_targets.add(metadata_path.stem)
 
     rule_occurrences: dict[str, list[str]] = {}
+    file_contents: dict[Path, str] = {}
 
     for path in wiki_files:
         try:
@@ -193,6 +206,7 @@ def run_health_check(strict: bool = False) -> HealthReport:
         except OSError as exc:
             report.error(f"{_rel(path)}: could not read: {exc}")
             continue
+        file_contents[path] = raw
         try:
             data, body = split_frontmatter(raw)
         except Exception as exc:  # noqa: BLE001
@@ -206,14 +220,14 @@ def run_health_check(strict: bool = False) -> HealthReport:
                 rule_occurrences.setdefault(rule_id, []).append(path.name)
 
     check_rule_id_uniqueness(report, rule_occurrences)
-    check_no_old_path_references(report)
+    check_no_old_path_references(report, file_contents)
 
     return report
 
 
 def main(argv: list[str]) -> int:
     strict = "--strict" in argv
-    report = run_health_check(strict=strict)
+    report = run_health_check()
     report.print_summary()
     return 0 if report.is_clean(strict=strict) else 1
 
