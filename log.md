@@ -5,9 +5,9 @@ last_updated: "2026-04-10"
 
 # Log
 
-## [2026-04-10] refactor | Full patterns refactor (closes #1)
+## [2026-04-10] refactor | Patterns refactor (closes #1)
 
-Aligned the repo with community best practices that have crystallized around Karpathy-style LLM wikis: compiled layer vs distilled tier, short opinionated files, selective injection, deterministic-first selection, schema + frontmatter, compiler-analogy layer naming.
+Aligned the repo with community best practices that have crystallized around Karpathy-style LLM wikis: compiled layer, short opinionated files, selective injection via the LLM selector, schema + frontmatter, compiler-analogy layer naming.
 
 **Structural changes:**
 
@@ -22,12 +22,10 @@ Aligned the repo with community best practices that have crystallized around Kar
 - **Added `SCHEMA.md`** defining five page types (overview, reference, domain-guide, rule-reference, hub), seven domain values, required frontmatter fields, wiki-link convention, source-comment convention, and rule ID conventions.
 - **Enriched frontmatter on all 18 wiki pages** with `type` and `domain` fields per schema.
 
-**Deterministic selector fast-path:**
+**Page selection:**
 
-- **Added `_try_deterministic_selection()` in `wiki_api/app.py`** short-circuiting the LLM page-selector call for 6 keyword patterns (vmpr, pesticide, baby-food, food-additive, contaminant, legal-limit) plus CHEMMON rule-ID lookups. Rule-ID mapping covers all 104 unique CHEMMON rules across the slice files.
-- **Every fast-path hit includes `business-rules-cross-cutting.md`** as a default companion.
-- **Trace marks fast-path calls** with `{"fast_path": true, ...}` in `tool_trace` and `"model": "fast-path"` in the selector token summary so observability stays consistent.
-- **LLM selector remains the fallback** for questions that don't match any pattern.
+- **Kept the LLM selector as the only selection path.** An earlier iteration of this branch added a deterministic keyword/rule-ID fast-path in `wiki_api/app.py` to short-circuit the selector call. It was removed before merge because it pushed routing intelligence out of the wiki layer and into code — the fast-path's slice mapping could silently drift from the actual files, keyword patterns weren't derivable from frontmatter, and adding a new routing rule meant editing `app.py` instead of the wiki. Premature optimization for a problem the LLM selector doesn't actually have at this scale.
+- The slice split still helps the LLM selector significantly: questions about baby food or acrylamide now get a ~30-line or ~50-line file as context instead of the 27 KB business-rules dump.
 
 **Health check:**
 
@@ -37,13 +35,12 @@ Aligned the repo with community best practices that have crystallized around Kar
 **Tests:**
 
 - Updated `tests/test_wiki_store.py` and `tests/test_app.py` to check broader membership assertions (16+ pages) instead of hardcoded `"business-rules.md"` lookup.
-- Added `tests/test_fast_path.py` (30 unit tests) covering rule-ID routing, each keyword pattern, fall-through behavior, and rule-to-slice mapping sanity.
-- Added `tests/test_app.py::test_ask_fast_path_skips_llm_selector` for end-to-end fast-path validation.
 - Added `tests/test_health.py` wrapping the health check for CI.
-- Full suite: **50 tests passing, 0 failing, 1 warning** (the expected CHEMMON03 duplicate).
+- Full suite: **19 tests passing, 0 failing, 1 warning** (the expected CHEMMON03 duplicate).
 
 **Explicitly out of scope for this pass:**
 
+- No deterministic fast-path for page selection — see note above.
 - No second distilled tier (task-oriented decision files).
 - No idea file capturing the pattern itself — this is a domain repo.
 - No `WikiStore` subdirectory support (flat filenames sidestep the work).
