@@ -23,6 +23,14 @@ last_updated: "2026-04-10"
 - ChemMon is EFSA's annual data collection exercise in which EU Member States and participating countries submit analytical results on chemical substances found in food and feed. (ChemMon 2026 p6-8)
 - The data feeds EFSA's scientific outputs: annual reports on pesticide residues, veterinary medicinal product residues, contaminant occurrence, and dietary exposure assessments. (ChemMon 2026 p6-7)
 
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p1, p7-8 -->
+## Relationship to SSD2 and GDE2
+
+- This document does **not replace** the general EFSA Guidance on Standard Sample Description (SSD2) and Guidance on Data Exchange (GDE2) — it **complements and updates** some aspects of them. (ChemMon 2026 p1)
+- This guidance **must be used in conjunction with** SSD2 and GDE2, which provide the details of the workflow, data validation, and the EFSA Data Collection Framework principles. See [[ssd2-data-model]] for the logical model. (ChemMon 2026 p8)
+- **Precedence rule**: where divergence exists between the SSD2/GDE2 guidance publications and this document (e.g. in field size or mandatory status), **the details in this guidance must be followed**. (ChemMon 2026 p8)
+- Documents to consult alongside this guidance: Standard Sample Description ver. 2.0 (EFSA, 2013), Guidance on Data Exchange version 2.0 (EFSA, 2014a), The food classification and description system FoodEx2 revision 2 (EFSA, 2015), the FoodEx2 classification webinar, the Catalogue Browser user guide, the FoodEx2 Interpreting and Checking Tool user guide, and the DCF User Manual. (ChemMon 2026 p8)
+
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p7-10 -->
 ## Reporting Domains
 
