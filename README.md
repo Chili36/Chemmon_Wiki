@@ -12,7 +12,7 @@ See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale.
 chemmon_docs/
   Raw EFSA PDF sources (annual ChemMon reporting guidance)
 
-raw/chemmon-guidance/
+wiki/chemmon-guidance/
   Topic-oriented markdown knowledge pages derived from the guidance PDFs
   and EFSA official clarifications
 

@@ -1,5 +1,7 @@
 ---
 title: "Pesticide Residues Reporting"
+type: "domain-guide"
+domain: "pesticide"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -9,7 +11,7 @@ related:
   - "[[contaminant-reporting]]"
   - "[[vmpr-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # Pesticide Residues Reporting

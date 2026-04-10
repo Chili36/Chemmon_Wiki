@@ -1,5 +1,7 @@
 ---
 title: "SSD2 Data Model"
+type: "reference"
+domain: "all"
 sources:
   - "EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
@@ -7,7 +9,7 @@ related:
   - "[[chemmon-overview]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # SSD2 Data Model

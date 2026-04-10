@@ -1,5 +1,7 @@
 ---
 title: "Food Additives and Flavourings Reporting"
+type: "domain-guide"
+domain: "additives"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -8,7 +10,7 @@ related:
   - "[[business-rules]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -19,7 +21,7 @@ last_updated: "2026-04-07"
 - Food additives and flavourings form two of the five [[chemmon-overview|ChemMon]] reporting domains. (ChemMon 2026)
 - Food additives are regulated under Regulation (EC) No 1333/2008. (ChemMon 2026)
 - Food flavourings are regulated under Regulation (EC) No 1334/2008. (ChemMon 2026)
-- Matrix coding follows [[foodex2-in-chemmon]] rules. Validation is enforced by [[business-rules]]. Some substances overlap with [[contaminant-reporting]] (e.g., naturally occurring substances with dual classification).
+- Matrix coding follows [[foodex2-in-chemmon]] rules. Validation is enforced by [[business-rules-additives]] and [[business-rules-cross-cutting]]. Some substances overlap with [[contaminant-reporting]] (e.g., naturally occurring substances with dual classification).
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Mandatory Facets

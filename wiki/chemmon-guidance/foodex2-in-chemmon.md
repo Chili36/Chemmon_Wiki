@@ -1,5 +1,7 @@
 ---
 title: "FoodEx2 in ChemMon"
+type: "reference"
+domain: "all"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -10,7 +12,7 @@ related:
   - "[[pesticide-reporting]]"
   - "[[baby-food-reporting]]"
   - "[[business-rules]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # FoodEx2 in ChemMon
@@ -38,7 +40,7 @@ BaseTermCode#FacetHeader.FacetCode$FacetHeader.FacetCode
 
 - Many base terms carry **implicit facets** -- attributes already encoded in the term itself. For example, `A01YM` (pig kidney) implicitly carries F01.A057 (source = pigs) and F02.A069N (part-nature = kidney). (ChemMon 2026 p35)
 - **Do not duplicate** an implicit facet as an explicit facet unless a specific business rule requires it. Redundant explicit facets trigger validation warnings. (ChemMon 2026 p35)
-- Exception: business rule CHEMMON12 for acrylamide requires certain facets to be stated explicitly even when they are already implicit in the base term. See [[contaminant-reporting]] and [[business-rules]]. (ChemMon 2026 p36)
+- Exception: business rule CHEMMON12 for acrylamide requires certain facets to be stated explicitly even when they are already implicit in the base term. See [[contaminant-reporting]] and [[business-rules-contaminant]]. (ChemMon 2026 p36)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p36-39 -->
 ## Mandatory Facets by Domain

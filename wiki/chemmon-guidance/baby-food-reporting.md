@@ -1,5 +1,7 @@
 ---
 title: "Baby Food Reporting"
+type: "domain-guide"
+domain: "baby-food"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -9,7 +11,7 @@ related:
   - "[[foodex2-in-chemmon]]"
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
-last_updated: "2026-04-07"
+last_updated: "2026-04-10"
 ---
 
 # Baby Food Reporting
@@ -40,8 +42,8 @@ Baby foods are **always** considered processed products.
 
 Baby food samples are **excluded** from the VMPR Annual Report per Regulation (EU) 2022/1646.
 
-- **CHEMMON55** prevents baby foods being reported with `progLegalRef` N371A. See [[business-rules]].
-- **CHEMMON63**: If `sampMatCode` is under A03PZ, `progLegalRef` cannot be N371A. See [[business-rules]].
+- **CHEMMON55** prevents baby foods being reported with `progLegalRef` N371A. See [[business-rules-baby-food]].
+- **CHEMMON63**: If `sampMatCode` is under A03PZ, `progLegalRef` cannot be N371A. See [[business-rules-baby-food]].
 
 See [[vmpr-reporting]] for full VMPR reporting rules.
 
