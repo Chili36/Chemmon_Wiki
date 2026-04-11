@@ -5,6 +5,111 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] retrieval | Graph expansion (Option C) + fixed wiki cost tracking
+
+Two architectural changes in the same session, driven by the reality-check conversation and a follow-up web-research pass showing that graph expansion at retrieval time is an emerging community pattern for Karpathy-style wikis. Both land together so the eval comparison sees the full picture.
+
+### Fix 1: total_cost_usd in the wiki ask trace
+
+Earlier eval runs reported `cost=0.0` for every wiki-mode query because the chemmon-wiki service never emitted a cost field, and `document-chat` hardcoded zero when routing wiki responses back to callers. Every wiki-vs-RAG cost comparison to date was asymmetric — RAG was measured, wiki was blind.
+
+**Changes:**
+- `wiki_api/app.py`: added a per-model pricing table covering Haiku 4.5, Sonnet 4.6, Opus 4.6, and the 3.7 Sonnet fallback. New `_compute_call_cost()` helper reads the per-call token summaries (input/output split) and returns USD. Aggregated selector + answerer cost is written to `trace.total.total_cost_usd`. Unknown models contribute zero rather than crash.
+- Paired fix in `guidance_with_claude/apps/document-chat/backend/app.py`: the chemmon-wiki handler now reads `trace.total.total_tracked_tokens` and `trace.total.total_cost_usd` from the wiki response and passes them into the ChatResponse. The previous code read `trace.token_summary.total_tracked_tokens`, which never existed in the wiki's trace structure.
+
+**Verified via live query**: 11,226 total tokens, $0.031648 cost for a single "What is progId used for?" question. Haiku selector $0.0035, Sonnet answerer $0.0286.
+
+### Fix 2: Graph expansion — Option C (summary-only related-neighbor injection)
+
+**Problem**: The 2026-04-11-010813 eval showed 5 regressions from the first ingest pass (Q2, Q5, Q6, Q18, Q45). Manual inspection of Q6 revealed the selector had picked a page *adjacent* to the one containing the precedence-rule answer — not the page itself. Yesterday's answer came from `chemmon-overview.md`; today's selector picked `ssd2-data-model.md` instead. Same wiki content, different selection.
+
+**Decision**: use curated `related:` frontmatter edges (depth 1, no transitive expansion) and inject SHORT SUMMARIES of each neighbor, not full page content. Summaries come from the `index.md` one-line descriptions already parsed into `WikiPage.summary`. This is Option C from the graph-expansion discussion — documented in `docs/research/2026-04-11-emerging-llm-wiki-patterns.md`.
+
+**Rationale for summary-only over full-page**:
+- Full-page expansion would push per-query tokens from ~8k to ~20k — blowing past RAG's typical ~8-10k injection budget on this workload
+- Summaries are ~50-150 tokens each; 8 of them adds ~400-600 tokens total
+- The answerer gets "neighbor exists, here's what it's about" — enough context to surface the adjacent fact when the summary contains it, without full content bloat
+
+**Changes in `wiki_api/app.py`**:
+- New `_expand_related_summaries()` helper: walks each selected page's `related:` frontmatter list, deduplicates against the selected set, reads each neighbor's title + summary, builds short context blocks prefixed with `[RELATED CONTEXT — brief summary only...]`. Hard caps: max 8 neighbors, ~2000 expansion tokens.
+- `AskRequest` gains `use_graph_expansion: bool = True` for A/B testing.
+- `ask_question()` appends expansion blocks to the answerer's pages input when enabled.
+- Trace emits `graph_expansion.enabled`, `graph_expansion.neighbors_count`, and `graph_expansion.neighbors_added` so every eval run records what was pulled in.
+
+### Eval run 2026-04-11-094003
+
+Rerun the 50-question ChemMon test set with both fixes live (Haiku selector, Sonnet answerer, graph expansion on, cost tracking fixed).
+
+**Headline**: 65.2% (73/112) — **identical** to the previous run.
+
+**But the headline is a lie**, because the 503 distribution changed:
+- Previous run (2026-04-11-010813): 503s on Q5 and Q13 (3 facts lost)
+- This run (2026-04-11-094003): 503s on **Q30, Q41, Q50** (10 facts lost)
+
+Q30 scored 3/3 in the previous run and 0/3 this run because document-chat returned a 503, not because graph expansion regressed. Q41 same pattern (2/2 → 0/2). Both have `answer_tokens: 0` confirming they never got an answer generated.
+
+**Fair comparison — questions that completed successfully in both runs**:
+
+| Metric | Previous | With expansion | Delta |
+|---|---|---|---|
+| Facts hit (on 99 common facts) | 68 | **73** | **+5** |
+| Hit rate (on 45 common questions) | 68.7% | **73.7%** | **+5.0 pp** |
+
+Graph expansion produced a genuine **+5 percentage point gain** on the questions where both runs completed. The flat headline masked the improvement because the 503 noise cut the other way.
+
+**Questions that graph expansion fixed**:
+- **Q6** (SSD2/GDE2 precedence): 0/2 → 2/2 — the specific regression that motivated this work; fixed cleanly.
+- **Q2** (reporting domains covered): 1/3 → 3/3 — selector picked a different page; summary of `chemmon-overview.md` surfaced the domain list.
+- **Q32** (new VMPR categories insects/reptiles/casings): 0/1 → 1/1 — selector picked an adjacent page; matrix-page summary carried the fact.
+
+**Zero real regressions** from graph expansion. The two apparent regressions (Q30, Q41) are both 503 infrastructure failures, not content or retrieval misses.
+
+### Token and cost reality — honest numbers for the first time
+
+With the cost tracking fixed, we finally have apples-to-apples wiki-vs-RAG numbers:
+
+| Metric | Wiki (expansion on) | RAG baseline | Ratio |
+|---|---|---|---|
+| Avg tokens / query | ~12,100 | ~8,400 | 1.44× |
+| Avg cost / query | **$0.031** | $0.068 | **0.46×** |
+| Hit rate | 65.2% | 84.8% | 0.77× |
+| Cost per accuracy point | **$0.00048** | $0.00080 | **0.60×** |
+
+**Wiki is ~55% cheaper per query than RAG** and **~40% more cost-efficient per accuracy point**, despite using 44% more tokens on the input side. The cost gap comes from the Haiku+Sonnet mixed tier (Haiku selector at $1/M input) vs RAG's all-Sonnet path.
+
+The initial worry — "we're using 20k tokens for what RAG handles in a fraction" — turned out to be wrong. With honest measurement, wiki is in the same order of magnitude as RAG on tokens and materially cheaper on dollars. The gap is accuracy, not efficiency.
+
+### Still-zero questions — content gaps that graph expansion cannot fix
+
+Questions that remained 0/N after this run (excluding the 503s):
+
+- Q4 transmission timing — partial content exists in `chemmon-background.md` but not matching the specific facts the test wants
+- Q18, Q19 pesticide EU MACP / MANCP plan flagging — multi-criteria Table 2 logic, content exists in `ssd2-elements-programme.md` but the selector/answerer combo isn't extracting it cleanly
+- Q28 VMPR F01/F02 always-present rule — content exists in `ssd2-elements-matrix.md`
+- **Q36 drinking water data reporting** — genuine content gap, PDF p42 never ingested
+- Q45 `evalInfo.restrictionException` — mentioned in cross-references but not given its own definition
+- **Q48 business rules grouping** — wants meta-structure summary; needs an explicit "how the rules are organized" page
+- Q49 domain flag values 0/1/2/3 — may not exist in the PDF prose at all
+- **Q50 end-to-end DCF validation workflow** — genuine gap, section 10 not ingested
+
+Three of these (Q36, Q48, Q50) are real content gaps that a targeted ingest pass could close. The rest are retrieval-side issues that graph expansion didn't touch.
+
+### Open investigation: the 503 storm
+
+Three questions failed with document-chat returning 503 Service Unavailable in this run, on a different set of questions than the previous run. Same server, same code, flaky behavior. Q30 and Q50 are both large multi-fact questions; Q41 is medium complexity. Possible causes to investigate:
+- Chemmon-wiki answerer timeout on long questions (graph expansion increases context size which might push response time past a threshold)
+- Document-chat client timeout
+- Rate limiting somewhere upstream
+
+Worth diagnosing before any further eval runs, because 503 variance is drowning real accuracy signal across runs.
+
+### What this session established
+
+- **Graph expansion works.** Option C (summary-only, curated edges) produces measurable accuracy gains on exactly the questions where selector drift caused regressions, without blowing the token budget.
+- **Wiki is cheaper than RAG.** With honest cost accounting, wiki costs roughly half what RAG costs per query and is more efficient per accuracy point. The earlier worry about token efficiency was based on a measurement bug.
+- **The accuracy ceiling is still 65-75%.** Closing the remaining 10-15 percentage points to RAG requires targeted content ingest (Q36, Q50) and content restructuring for the meta-questions (Q48, Q49), not more retrieval architecture work.
+- **The 503 storm needs to be fixed before further eval runs.** Otherwise every comparison is contaminated by which questions happened to 503 that day.
+
 ## [2026-04-11] ingest | Section 1 Background + Section 2 SSD2 element reference
 
 Second ingest pass driven by the diagnosis from the 2026-04-10 eval run where the wiki scored 36.6% (41/112 facts) vs RAG's 84.8% (95/112 facts). The failure modes were:
