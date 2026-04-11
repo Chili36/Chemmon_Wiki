@@ -5,6 +5,99 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] retrieval | Phase timings + OpenAI selector (GPT-5.4-mini)
+
+Infrastructure additions to make the next round of model/architecture experiments measurable, plus a first alternative selector to put the "Sonnet-for-planning, Haiku-for-execution" community pattern under test with a twist: use GPT-5.4-mini as the planner instead.
+
+### Added: `phase_timings_ms` in `trace`
+
+Every `/wiki/ask` response now reports a named breakdown of wall time:
+
+```
+phase_timings_ms:
+  selector_total:   ms spent in the selector LLM call (+ index read)
+  page_read:        ms spent reading selected pages from disk
+  graph_expansion:  ms spent building related-neighbor summary blocks
+  answerer_total:   ms spent in the answerer LLM call
+  overhead:         FastAPI + JSON + network-to-client remainder
+```
+
+The numbers approximately sum to `request_wall_time_ms`. First observation on real traces: **~84% of wall time is the answerer call.** Everything else combined is ~16%. Selector tuning and retrieval architecture moves the 16%; the 84% is bounded by Sonnet's per-token generation speed. Useful calibration for what can and cannot be sped up.
+
+### Added: `OpenAIWikiPageSelector` + factory dispatch
+
+New class in `wiki_api/page_selector.py` that mirrors `AnthropicWikiPageSelector` via the OpenAI Responses API. Parses JSON from `response.output_text` rather than implementing OpenAI's tool-call format — simpler, and the existing selector prompt already specifies JSON fallback output. OpenAI SDK added to `requirements.txt` and `OPENAI_API_KEY` expected in `.env`.
+
+`get_selector_runner()` in `app.py` dispatches on the `WIKI_SELECTOR_MODEL` env var: prefix `gpt-` → `OpenAIWikiPageSelector`, everything else → `AnthropicWikiPageSelector` (default). `_MODEL_PRICING_USD_PER_MTOK` gains a `gpt-5.4-mini` entry ($0.75 / $4.50 per M tokens).
+
+### Eval: Haiku vs GPT-5.4-mini as selector (2026-04-11-115246)
+
+Full 50-question eval, selector only changed, everything else held constant (graph expansion on, Sonnet answerer, 60s timeout). **Zero 503 errors this run** — confirmed the timeout fix holds.
+
+| Metric | Haiku selector | **GPT-5.4-mini selector** |
+|---|---|---|
+| Hit rate | 65.2% (73/112) | **69.6% (78/112)** |
+| Δ | — | **+4.4 pp, +5 facts** |
+| Improved questions | — | 5 |
+| Unchanged | — | 41 |
+| Regressed | — | 4 |
+| 503 errors | 3 | **0** |
+| Avg tokens/query | 11,356 | 11,745 |
+| Total cost | $1.57 | $1.70 |
+| Avg latency | 8.6s | 8.6s |
+
+### The +4.4 pp headline is mostly 503 recovery
+
+Three questions that 503'd with Haiku completed successfully with GPT-5.4-mini — not because GPT is "better", but because the latency distribution shifted enough to stay under the 60s timeout. Q30 recovered 3/3, Q41 recovered 2/2, Q50 ran to completion but scored 0/5 (genuine content gap).
+
+**Discounting 503 recoveries, the net content move is zero**: 5 improvements and 4 regressions, same total:
+
+- **+** Q5 (documents to consult): 0 → 1/1
+- **+** Q7 (why single SSD2): 1 → 2/3
+- **+** Q45 (`evalInfo.restrictionException`): 0 → 3/3 — notable recovery, this was a persistent Haiku-side regression that no amount of graph expansion could touch
+- **−** Q6 (SSD2/GDE2 precedence): 2 → 1/2 — the question graph expansion specifically fixed, now partially regressed again
+- **−** Q17 (VMPR Plan 3): 2 → 1/2
+- **−** Q32 (new VMPR categories): 1 → 0/1
+- **−** Q47 (VMPR/pesticide classification algorithms): 2 → 0/3
+
+**Selector choice changes which questions get right, not how many.** Haiku and GPT-5.4-mini have different blind spots. Some blind spots are addressable by graph expansion; others (like Q45) only clear with a selector model change. Suggests ensemble / A/B routing would beat either alone.
+
+### Cost did not drop
+
+Predicted GPT-5.4-mini would be cheaper based on per-token pricing ($0.75 input vs $1.00 for Haiku). Eval shows otherwise: **$1.70 total vs $1.57, +8%**. Two reasons:
+
+1. The selector is ~2k tokens of ~11k total per query. Per-token price difference is rounding error.
+2. GPT picked slightly larger page sets on a few queries, pushing the answerer input up.
+
+**The biggest cost lever is the answerer model**, not the selector model. Swapping selectors moves pennies. If cost is the target, the interesting experiment is cheaper answerer, not cheaper selector.
+
+### What phase timings revealed
+
+Per-query wall time is bounded by `answerer_total`, which in turn is bounded by Sonnet's generation speed at ~50-80 tokens/second for ~500-token outputs. Typical breakdown:
+
+```
+selector_total:  ~2s    (17%)
+page_read:       ~0ms   (0%)
+graph_expansion: ~7ms   (0%)
+answerer_total:  ~10s   (84%)
+overhead:        ~2ms   (0%)
+```
+
+The only levers that materially move wall time:
+
+1. **Streaming API** — doesn't reduce total, improves perceived TTFT from 10s to ~1s
+2. **Swap Sonnet answerer to Haiku** — ~2-3× speedup on generation, some accuracy cost
+3. **Smaller answerer input** — marginal; Sonnet throughput is output-bound, not input-bound
+
+Selector tuning, retrieval architecture, graph expansion — all move the other 16%. Worth remembering when deciding where to spend effort next.
+
+### Open items
+
+- **Q6 regression under GPT selector**: we fixed this via graph expansion for Haiku; GPT picks differently and partially re-introduces it. Worth understanding why — the GPT selector's page pick for Q6 doesn't include `chemmon-overview.md` and expansion from its chosen pages doesn't surface the precedence content.
+- **Ensemble or A/B routing**: given the overlap is only ~80% between Haiku and GPT selector choices, a simple ensemble (run both, merge page sets) might beat either alone. Speculative.
+- **Sonnet selector** (the community pattern we haven't tried): the research note flagged this as the "correct" community convention. Still untested. Maybe the next thing to run.
+- **Answerer model experiments**: the real cost and latency live in the answerer. Haiku answerer on a subset of questions could halve both latency and cost, at unknown accuracy cost.
+
 ## [2026-04-11] retrieval | Graph expansion (Option C) + fixed wiki cost tracking
 
 Two architectural changes in the same session, driven by the reality-check conversation and a follow-up web-research pass showing that graph expansion at retrieval time is an emerging community pattern for Karpathy-style wikis. Both land together so the eval comparison sees the full picture.

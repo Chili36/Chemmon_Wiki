@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 from pathlib import Path
 import time
@@ -13,7 +14,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from .answerer import AnthropicChemMonAnswerer
-from .page_selector import AnthropicWikiPageSelector
+from .page_selector import AnthropicWikiPageSelector, OpenAIWikiPageSelector
 from .wiki_store import WikiStore
 
 
@@ -29,10 +30,21 @@ if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 
-def get_selector_runner() -> AnthropicWikiPageSelector | Any:
+def get_selector_runner() -> AnthropicWikiPageSelector | OpenAIWikiPageSelector | Any:
+    """Return a page-selector instance, dispatching by WIKI_SELECTOR_MODEL.
+
+    Model names starting with 'gpt-' are routed to the OpenAI Responses-API
+    selector; everything else goes to the Anthropic selector (which is also
+    the default). This is a simple prefix match — if we ever need multi-
+    provider routing beyond OpenAI/Anthropic, promote to a registry.
+    """
     global selector_runner
     if selector_runner is None:
-        selector_runner = AnthropicWikiPageSelector(store=store)
+        requested_model = os.getenv("WIKI_SELECTOR_MODEL", "")
+        if requested_model.startswith("gpt-"):
+            selector_runner = OpenAIWikiPageSelector(store=store)
+        else:
+            selector_runner = AnthropicWikiPageSelector(store=store)
     return selector_runner
 
 
@@ -99,6 +111,8 @@ _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     "claude-sonnet-4-6": (3.0, 15.0),
     "claude-opus-4-6": (15.0, 75.0),
     "claude-3-7-sonnet-latest": (3.0, 15.0),
+    "gpt-5.4-mini": (0.75, 4.50),
+    "gpt-5.4-mini-2026-03-17": (0.75, 4.50),
 }
 
 
@@ -273,6 +287,11 @@ def ask_question(request: AskRequest) -> AskResponse:
         json.dumps({"question": request.question, "max_pages": request.max_pages}, ensure_ascii=False),
     )
 
+    # Phase timings: capture wall time at each phase boundary so the trace
+    # surfaces a clean breakdown of where time is spent. Values at the end
+    # should approximately sum to request_wall_time_ms (modulo FastAPI and
+    # network-to-client overhead, which is reported as 'overhead').
+    selector_start = time.perf_counter()
     selector = get_selector_runner()
     if request.max_pages != selector.max_pages:
         selector.max_pages = request.max_pages
@@ -281,17 +300,21 @@ def ask_question(request: AskRequest) -> AskResponse:
         selection_result = selector.run({"question": request.question})
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+    selector_end = time.perf_counter()
 
+    page_read_start = time.perf_counter()
     pages_raw = [store.read_page(page_name) for page_name in selection_result.pages_used]
     page_contents = [
         {"page_name": page.name, "content": store.clean_content_for_model(page)}
         for page in pages_raw
     ]
+    page_read_end = time.perf_counter()
 
     # Graph expansion: add summary-only blocks for curated neighbors of the
     # selected pages. This recovers cases where the selector picks a page
     # adjacent to the one containing the answer. Controlled by request flag;
     # default on. See _expand_related_summaries for the rationale.
+    graph_expansion_start = time.perf_counter()
     expansion_blocks: list[dict[str, Any]] = []
     if request.use_graph_expansion:
         expansion_blocks = _expand_related_summaries(
@@ -300,14 +323,17 @@ def ask_question(request: AskRequest) -> AskResponse:
             max_neighbors=8,
             max_total_tokens=2000,
         )
+    graph_expansion_end = time.perf_counter()
 
     answerer_input_pages = page_contents + expansion_blocks
 
+    answerer_start = time.perf_counter()
     answerer = get_answerer_runner()
     try:
         answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+    answerer_end = time.perf_counter()
 
     pages = [
         PageSummary(
@@ -360,6 +386,20 @@ def ask_question(request: AskRequest) -> AskResponse:
                     _compute_call_cost(selection_result.token_summary)
                     + _compute_call_cost(answer_result.token_summary),
                     6,
+                ),
+            },
+            "phase_timings_ms": {
+                "selector_total": int((selector_end - selector_start) * 1000),
+                "page_read": int((page_read_end - page_read_start) * 1000),
+                "graph_expansion": int((graph_expansion_end - graph_expansion_start) * 1000),
+                "answerer_total": int((answerer_end - answerer_start) * 1000),
+                "overhead": max(
+                    0,
+                    int((time.perf_counter() - request_started) * 1000)
+                    - int((selector_end - selector_start) * 1000)
+                    - int((page_read_end - page_read_start) * 1000)
+                    - int((graph_expansion_end - graph_expansion_start) * 1000)
+                    - int((answerer_end - answerer_start) * 1000),
                 ),
             },
         },

@@ -10,6 +10,7 @@ from typing import Any, Protocol
 
 from anthropic import Anthropic
 from dotenv import load_dotenv
+from openai import OpenAI
 
 from .wiki_store import WikiStore
 
@@ -210,12 +211,127 @@ def build_anthropic_client() -> AnthropicClientProtocol:
     return Anthropic(api_key=api_key)
 
 
+def build_openai_client() -> OpenAI:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY is not set")
+    return OpenAI(api_key=api_key)
+
+
+def _openai_usage_dict(usage: Any, *, stop_reason: str | None) -> dict[str, int | str | None]:
+    """Convert an OpenAI Responses-API usage object to the same shape as
+    _usage_dict() so downstream aggregation helpers work identically.
+
+    The Responses API does not expose prompt-cache fields the way Anthropic
+    does; report them as 0 so the dict shape stays consistent.
+    """
+    input_tokens = int(_get_block_value(usage, "input_tokens", 0) or 0)
+    output_tokens = int(_get_block_value(usage, "output_tokens", 0) or 0)
+    return {
+        "stop_reason": stop_reason,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": input_tokens + output_tokens,
+    }
+
+
 def _resolve_model(*env_keys: str, default: str) -> str:
     for key in env_keys:
         value = os.getenv(key)
         if value:
             return value
     return default
+
+
+class OpenAIWikiPageSelector:
+    """OpenAI Responses-API backed wiki page selector.
+
+    Same output contract as AnthropicWikiPageSelector (returns a
+    PageSelectionResult) but uses the OpenAI Responses API. No tool calling —
+    relies on the system prompt's JSON fallback ('return JSON only:
+    {"page_names": []}') because OpenAI tool-calling format differs and
+    isn't worth the complexity for a one-shot selection call.
+    """
+
+    def __init__(
+        self,
+        *,
+        store: WikiStore,
+        client: Any | None = None,
+        model: str | None = None,
+        max_pages: int = 6,
+    ):
+        self.store = store
+        self.client = client or build_openai_client()
+        self.model = model or _resolve_model("WIKI_SELECTOR_MODEL", default="gpt-5.4-mini")
+        self.max_pages = max_pages
+
+    def run(self, payload: dict[str, Any]) -> PageSelectionResult:
+        selector_started = time.perf_counter()
+        index_content = self.store.read_page("index.md").content
+        llm_started = time.perf_counter()
+        response = self.client.responses.create(
+            model=self.model,
+            input=[
+                {"role": "system", "content": SELECTION_SYSTEM_PROMPT},
+                {
+                    "role": "user",
+                    "content": json.dumps(
+                        {"question": payload["question"], "wiki_index": index_content},
+                        ensure_ascii=False,
+                    ),
+                },
+            ],
+        )
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+
+        output_text = _get_block_value(response, "output_text", "") or ""
+        # OpenAI Responses API does not expose a stop_reason identical to
+        # Anthropic's; record None so trace consumers see a consistent shape.
+        stop_reason: str | None = None
+
+        timing_trace = [{
+            "call_number": 1,
+            "duration_ms": llm_duration_ms,
+            "stop_reason": stop_reason,
+        }]
+        usage_trace = [_openai_usage_dict(
+            _get_block_value(response, "usage"),
+            stop_reason=stop_reason,
+        )]
+
+        # Parse JSON out of the plain-text response. _extract_json_payload
+        # handles the three common shapes: raw JSON, fenced ```json, and
+        # text that happens to contain a {...} block.
+        try:
+            data = _extract_json_payload(output_text)
+            raw = data.get("page_names", []) if isinstance(data, dict) else []
+            if not isinstance(raw, list):
+                raw = [raw]
+            selected_page_names = [str(name) for name in raw]
+        except (ValueError, json.JSONDecodeError, AttributeError):
+            selected_page_names = []
+
+        pages_read: list[str] = []
+        tool_trace: list[dict[str, Any]] = []
+        _read_pages_payload(
+            store=self.store,
+            requested_page_names=selected_page_names,
+            max_pages=self.max_pages,
+            pages_read=pages_read,
+            tool_trace=tool_trace,
+        )
+        return PageSelectionResult(
+            pages_used=list(dict.fromkeys(["index.md", *pages_read])),
+            tool_trace=tool_trace,
+            token_summary=_aggregate_usage(usage_trace, self.model),
+            timing_summary={
+                **_aggregate_timing(timing_trace),
+                "selector_wall_time_ms": int((time.perf_counter() - selector_started) * 1000),
+            },
+        )
 
 
 class AnthropicWikiPageSelector:
