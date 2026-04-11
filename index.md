@@ -52,7 +52,7 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 
 - [vmpr-reporting.md](wiki/chemmon-guidance/vmpr-reporting.md): VMPR domain-specific rules including control plans, sampling strategies, FoodEx2 coding, result types, feed/water coding, processed products, wild game, and insects.
 - [pesticide-reporting.md](wiki/chemmon-guidance/pesticide-reporting.md): Pesticide residues domain rules including legal references, sampling strategies, and copper-specific F20 facet requirements.
-- [contaminant-reporting.md](wiki/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules covering acrylamide, dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, and nitrates.
+- [contaminant-reporting.md](wiki/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules and Table 8 metadata guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, furan/alkylfurans, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, nitrates, and metals (cadmium/lead/mercury).
 - [food-additives-reporting.md](wiki/chemmon-guidance/food-additives-reporting.md): Food additives and flavourings reporting rules including mandatory F33, expression types, result reporting, restrictions/exceptions, conclusion reporting, and 2026 legal limit rules.
 - [baby-food-reporting.md](wiki/chemmon-guidance/baby-food-reporting.md): Baby food classification, VMPR exclusion rules (CHEMMON55/63), accepted domains, legal limits, and coding examples.
 

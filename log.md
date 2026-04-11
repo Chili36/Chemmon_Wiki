@@ -5,6 +5,19 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] ingest | Section 4 Table 8: contaminant metadata requirements
+
+Patched [[contaminant-reporting]] with durable, reusable Table 8 rules (metadata requirements/recommendations) instead of copying the full table. Added a compact "Relevant Business Rules" anchor list to improve retrieval.
+
+Captured (high-signal) Table 8 guidance for:
+
+- Mycotoxins: matrix-detail note for grains, organic vs conventional facet F21, recovery/uncertainty, moisture, and reconstitution protocol.
+- Dioxins/PCBs: congener-level reporting emphasis, fat/dry-basis notes, fish origin, and reconstitution protocol.
+- Furan/alkylfurans: as-consumed preparation details (M.20) and the `sampMethod` hook (N011A is already in the sampling element page).
+- Arsenic/rice: processed vs unprocessed (F28), dehydrated note, rice/algae ingredient notes.
+- Mineral oils: moisture + carbon-number distribution note and the pointer to JRC guidance.
+- Metals/nitrates: recovery and expanded uncertainty recommendations, plus the mercury matrix-detail note for fish/seafood.
+
 ## [2026-04-11] ingest | Sections 5-11: flags, catalogues, legal limits, reports, validation workflow
 
 Ingested the previously skipped non-element sections of the ChemMon 2026 guidance into small reference pages, and corrected a couple of high-impact FoodEx2/copper/drinking-water details that were either missing or mis-stated.
