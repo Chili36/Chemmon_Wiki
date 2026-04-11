@@ -78,6 +78,33 @@ app.add_middleware(
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
+# Per-million-token pricing for cost attribution in the trace.
+# Only covers models we actually use; unknown models fall back to zero cost.
+_MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
+    # (input_price_per_mtok, output_price_per_mtok)
+    "claude-haiku-4-5-20251001": (1.0, 5.0),
+    "claude-sonnet-4-6": (3.0, 15.0),
+    "claude-opus-4-6": (15.0, 75.0),
+    "claude-3-7-sonnet-latest": (3.0, 15.0),
+}
+
+
+def _compute_call_cost(token_summary: dict[str, Any]) -> float:
+    """Compute USD cost for a single LLM call's token summary.
+
+    Returns 0.0 if the model is not in the pricing table (unknown models
+    contribute nothing to the aggregated cost rather than crashing).
+    """
+    model = token_summary.get("model", "")
+    prices = _MODEL_PRICING_USD_PER_MTOK.get(model)
+    if prices is None:
+        return 0.0
+    input_price, output_price = prices
+    input_tokens = int(token_summary.get("input_tokens", 0) or 0)
+    output_tokens = int(token_summary.get("output_tokens", 0) or 0)
+    return (input_tokens * input_price + output_tokens * output_price) / 1_000_000
+
+
 @app.get("/wiki/view", include_in_schema=False)
 def wiki_viewer():
     return FileResponse(STATIC_DIR / "viewer.html", media_type="text/html")
@@ -206,6 +233,11 @@ def ask_question(request: AskRequest) -> AskResponse:
                 "total_tracked_tokens": (
                     int(selection_result.token_summary["total_tracked_tokens"])
                     + int(answer_result.token_summary["total_tracked_tokens"])
+                ),
+                "total_cost_usd": round(
+                    _compute_call_cost(selection_result.token_summary)
+                    + _compute_call_cost(answer_result.token_summary),
+                    6,
                 ),
             },
         },
