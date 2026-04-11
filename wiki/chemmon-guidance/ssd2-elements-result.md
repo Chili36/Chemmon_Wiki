@@ -23,6 +23,31 @@ related:
 
 The result group captures the numeric and qualitative outputs of the analysis: detection/quantification limits, the measured value, units, recovery, expression basis (whole/fat/dry weight), result type, and measurement uncertainty. See [[ssd2-elements-evaluation]] for how the result is compared against legal limits.
 
+## Rule Summary (Rule-First)
+
+Use these as the "fast path" when coding/debugging result records:
+
+- `resType` drives which value fields are allowed/required (e.g. `VAL` -> `resVal`, `LOD` -> `resLOD`, `LOQ` -> `resLOQ`, `BIN` -> qualitative value).
+- `resLOQ` is expected for most chemical-monitoring results; the guidance lists narrow exceptions (unvalidated methods, some VMPR cases, `resType=BIN`, and sum/not-summed scenarios).
+- VMPR: at least one of `resLOD`, `resLOQ`, `CCalpha`, or `CCbeta` must be reported per result (and CCalpha/CCbeta become mandatory in specific accreditation/method cases).
+- Expression basis matters: when expressing results on fat or dry-matter basis, the corresponding percentage (fat/moisture) must be available where required.
+- Processed products: report the result for the sample analysed (the processed product) without "back-calculating" to the unprocessed commodity (with specific pesticide-domain compliance caveats handled via facets, not by altering the numeric result).
+
+## Relevant Business Rules
+
+This page is constrained by business rules; the most load-bearing ones:
+
+- GBR result-shape rules (units/required fields): GBR27/28/29, GBR36/39/46/47/48, GBR37, GBR102. See [[business-rules-gbr]].
+- `resLOQ`/limits rules: CHEMMON44/45, CHEMMON78, CHEMMON82. See [[business-rules-cross-cutting]].
+- VMPR CCalpha/CCbeta requirements: CHEMMON31/32. See [[business-rules-vmpr]].
+- Recovery metadata: CHEMMON04/05/42, CHEMMON80. See [[business-rules-contaminant]].
+- Uncertainty: CHEMMON72 (recommended for pesticides), CHEMMON90_b (mandatory for copper). See [[business-rules-pesticide]].
+
+## Relevant Policy
+
+- If prose guidance and business rules conflict on mandatory/optional status, follow the business rule (and the current-year ChemMon guidance) for what passes DCF validation.
+- Prefer encoding context via the appropriate elements/facets (e.g. expression basis, sample-preparation facets) rather than altering numeric results to "fit" a downstream interpretation.
+
 ## resId — Result identification code
 
 <!-- Source: ChemMon 2026 pp. 64-65 -->

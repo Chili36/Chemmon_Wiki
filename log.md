@@ -5,6 +5,10 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] refactor | Make ssd2-elements-result rule-first
+
+Added a short rule-first summary plus explicit "Relevant Business Rules" and "Relevant Policy" sections to `ssd2-elements-result.md` to improve retrieval without splitting it into many micro-pages.
+
 ## [2026-04-11] ingest | Section 4 Table 8: contaminant metadata requirements
 
 Patched [[contaminant-reporting]] with durable, reusable Table 8 rules (metadata requirements/recommendations) instead of copying the full table. Added a compact "Relevant Business Rules" anchor list to improve retrieval.
