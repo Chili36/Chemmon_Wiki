@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from pathlib import Path
 import time
 from typing import Any
@@ -14,6 +15,9 @@ from pydantic import BaseModel, Field
 from .answerer import AnthropicChemMonAnswerer
 from .page_selector import AnthropicWikiPageSelector
 from .wiki_store import WikiStore
+
+
+_WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -42,6 +46,15 @@ def get_answerer_runner() -> AnthropicChemMonAnswerer | Any:
 class AskRequest(BaseModel):
     question: str = Field(description="The user's question about ChemMon reporting.")
     max_pages: int = Field(default=6, ge=1, le=10)
+    use_graph_expansion: bool = Field(
+        default=True,
+        description=(
+            "If true (default), the answerer also receives short summary "
+            "blocks for pages listed in each selected page's `related:` "
+            "frontmatter. This recovers cases where the selector picks a "
+            "page adjacent to the one containing the answer."
+        ),
+    )
 
 
 class PageSummary(BaseModel):
@@ -103,6 +116,93 @@ def _compute_call_cost(token_summary: dict[str, Any]) -> float:
     input_tokens = int(token_summary.get("input_tokens", 0) or 0)
     output_tokens = int(token_summary.get("output_tokens", 0) or 0)
     return (input_tokens * input_price + output_tokens * output_price) / 1_000_000
+
+
+# -------------------------------------------------------------------------
+# Graph expansion: summary-only injection of related neighbors
+#
+# The LLM page selector picks a minimal set of pages from the catalog.
+# In practice, the selector sometimes picks a page *adjacent* to the one
+# containing the answer — e.g., for an SSD2 question it picks the SSD2
+# data-model page, while the specific rule the user asked about lives in
+# chemmon-overview. Full-page graph expansion (injecting every linked
+# neighbor's content) would recover these misses at the cost of ~3x more
+# tokens per query, which defeats the wiki's efficiency argument vs RAG.
+#
+# Instead, we inject *summary-only* blocks for each selected page's
+# curated `related:` frontmatter neighbors. Each block is ~50-150 tokens
+# (title + the one-line summary from index.md) rather than the ~1500
+# tokens of a full page. The answerer sees "there's also a page X with
+# summary Y" — enough to surface the adjacent fact when the summary
+# contains it, without ballooning the context window.
+#
+# This is "Option C" from the research-note / retrieval-architecture
+# discussion: related-neighbor summaries, depth=1, curated edges only.
+# -------------------------------------------------------------------------
+
+
+def _expand_related_summaries(
+    selected_page_names: list[str],
+    store: WikiStore,
+    *,
+    max_neighbors: int,
+    max_total_tokens: int,
+) -> list[dict[str, Any]]:
+    """Return short summary blocks for curated neighbors of the selected pages.
+
+    Walks each selected page's frontmatter `related:` list (depth=1, no
+    transitive expansion), deduplicates against the selected set and each
+    other, and emits one summary block per neighbor. Stops when either the
+    neighbor count cap or the token budget is reached.
+    """
+    already_selected = set(selected_page_names)
+    allowed = store.allowed_page_names()
+
+    candidates: list[str] = []
+    seen_candidates: set[str] = set()
+
+    for page_name in selected_page_names:
+        try:
+            page = store.read_page(page_name)
+        except FileNotFoundError:
+            continue
+        for ref in page.related:
+            match = _WIKI_LINK_RE.search(ref)
+            if not match:
+                continue
+            target = f"{match.group(1)}.md"
+            if target in already_selected or target in seen_candidates:
+                continue
+            if target not in allowed:
+                continue
+            seen_candidates.add(target)
+            candidates.append(target)
+
+    blocks: list[dict[str, Any]] = []
+    total_tokens = 0
+
+    for candidate in candidates:
+        if len(blocks) >= max_neighbors:
+            break
+        try:
+            neighbor = store.read_page(candidate)
+        except FileNotFoundError:
+            continue
+        summary_text = neighbor.summary or "(no summary available — see full page for details)"
+        content = (
+            "[RELATED CONTEXT — brief summary of a neighbor page. "
+            "Use as peripheral context; the full page is not loaded.]\n"
+            f"Title: {neighbor.title}\n"
+            f"{summary_text}"
+        )
+        # Rough token estimate: ~4 chars per token
+        block_tokens = max(1, len(content) // 4)
+        if total_tokens + block_tokens > max_total_tokens and blocks:
+            break
+        blocks.append({"page_name": neighbor.name, "content": content, "expansion": True})
+        total_tokens += block_tokens
+
+    return blocks
 
 
 @app.get("/wiki/view", include_in_schema=False)
@@ -188,9 +288,24 @@ def ask_question(request: AskRequest) -> AskResponse:
         for page in pages_raw
     ]
 
+    # Graph expansion: add summary-only blocks for curated neighbors of the
+    # selected pages. This recovers cases where the selector picks a page
+    # adjacent to the one containing the answer. Controlled by request flag;
+    # default on. See _expand_related_summaries for the rationale.
+    expansion_blocks: list[dict[str, Any]] = []
+    if request.use_graph_expansion:
+        expansion_blocks = _expand_related_summaries(
+            selection_result.pages_used,
+            store,
+            max_neighbors=8,
+            max_total_tokens=2000,
+        )
+
+    answerer_input_pages = page_contents + expansion_blocks
+
     answerer = get_answerer_runner()
     try:
-        answer_result = answerer.run(question=request.question, pages=page_contents)
+        answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
@@ -213,6 +328,13 @@ def ask_question(request: AskRequest) -> AskResponse:
         pages=pages,
         trace={
             "selection_method": "service-owned llm page selector + answerer",
+            "graph_expansion": {
+                "enabled": request.use_graph_expansion,
+                "neighbors_added": [
+                    block["page_name"] for block in expansion_blocks
+                ],
+                "neighbors_count": len(expansion_blocks),
+            },
             "selector": {
                 "model": selector.model,
                 "tool_trace": selection_result.tool_trace,
