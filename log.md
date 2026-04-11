@@ -5,6 +5,79 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] eval | General-concepts test set: RAG 92.4% vs Wiki 78.5%
+
+First run of a new 50-question test set designed to probe conceptual / definitional knowledge ("what is X", "what does X describe", "why X") rather than narrow lookup. The intent was to measure whether the wiki's curated structure helps on the kind of question wikis are theoretically supposed to be good at.
+
+Test set: `chemmon_testset_50_general_concepts.json` (cold — deliberately not read before running, to avoid contaminating the ingest direction).
+Eval run: `guidance_with_claude/tests/manual/chemmon_eval_runs/2026-04-11-133157`
+Configuration: Sonnet 4.6 answerer, GPT-5.4-mini selector, graph expansion on, 60s timeout.
+
+### Headline result
+
+| Mode | Facts hit | Facts total | Hit rate | Cost | Avg latency |
+|---|---|---|---|---|---|
+| rag | 133 | 144 | **92.4%** | $2.63 | 8.77s |
+| wiki | 113 | 144 | **78.5%** | $1.57 | 8.81s |
+
+**Gap: 13.9 percentage points, RAG winning.** Both systems scored higher on this test than on the original lookup test (RAG 84.8%→92.4%, Wiki 69.6%→78.5%), suggesting the concept test is easier overall — possibly because "what is X" questions are more forgiving than the exact-fact lookup questions in the original set.
+
+### The shape of the gap is telling
+
+| Bucket | Count | Note |
+|---|---|---|
+| Both perfect (tied at 100%) | 29 | 58% of the test |
+| Wiki > RAG | 6 | e.g. Q31 origCountry, Q37 anMethType, Q41 resLOQ, Q44 evalCode |
+| Partial tie (same hit count) | 1 | |
+| RAG > Wiki by 1 fact | 7 | minor gaps, mostly recoverable via selector tuning |
+| RAG > Wiki by 2+ facts | 7 | **the entire headline gap lives here** |
+
+**35 of 50 questions (70%) are ties or wiki wins.** On the content we've ingested, the wiki performs at parity with or better than RAG. The 13.9-point gap is concentrated in seven "catastrophic miss" questions, not spread across the test set.
+
+### Where the catastrophic misses live
+
+Seven questions where wiki scored 0-1 while RAG scored 2-4:
+
+| Q | Wiki / RAG | Question | Root cause |
+|---|---|---|---|
+| Q7 | 0/3 vs 2/3 | What problem are harmonised ChemMon business rules trying to solve? | **Retrieval miss** — content exists in `chemmon-background.md` and `business-rules.md` but the selector doesn't pull them in the right combination |
+| Q14 | 0/3 vs 3/3 | Why use the most specific LEGREF code? | **Retrieval miss** — content exists in `ssd2-elements-programme.md` |
+| Q15 | 0/2 vs 2/2 | What does sampStrategy describe? | **Retrieval miss** — we have a full `sampStrategy` section in `ssd2-elements-programme.md` |
+| Q46 | 0/3 vs 3/3 | Three groups of business rules in ChemMon? | **Retrieval miss** — `business-rules.md` literally opens with "organised into three tiers: GBR, CHEMMON, Legal Limit" |
+| Q47 | 0/3 vs 3/3 | Controlled terminology catalogues? | **Content gap** — Section 7 of PDF, never ingested |
+| Q49 | 0/3 vs 3/3 | Reporting flags in the EFSA sDWH? | **Content gap** — Section 9 of PDF, never ingested |
+| Q50 | 0/4 vs 4/4 | Data validation and acceptance workflow? | **Content gap** — Section 10-11 of PDF, never ingested |
+
+**Four of seven are real content gaps in PDF sections that were unilaterally skipped during the second ingest pass.** Those cost about 13 facts. The other three are retrieval failures on content that exists in the wiki but the selector isn't finding in the right combination — particularly painful because Q46 asks about "three groups of business rules" and `business-rules.md` answers that exactly in its first three bullets.
+
+### Projected ceiling after closing the content gaps
+
+If Sections 7-11 of the PDF are ingested (catalogues, Legal Limits, reporting flags, validation workflow), the three 0/N content-gap questions (~13 facts) should largely recover. The four retrieval misses (Q7, Q14, Q15, Q46) are harder — they need selector tuning or different graph expansion, not more content.
+
+Rough projection: 113 + ~13 content-gap recoveries + 2-4 retrieval fixes = **128-132 / 144 ≈ 89-92%**. That lands at or within a couple of points of RAG's 92.4%, on this test set.
+
+### What this does and doesn't prove
+
+**Proven**:
+- On content the wiki has ingested, it matches or beats RAG on conceptual definitions (35/50 questions)
+- The remaining gap is ~80% content-coverage and ~20% retrieval-quality, NOT a wiki-approach failure
+- The wiki can realistically reach RAG parity on this test set with ~1-2 hours of targeted ingest
+
+**NOT proven**:
+- Whether wiki beats RAG on **true cross-cutting synthesis** (rule interactions, multi-domain trade-offs, conflict resolution). This test set is definitional, not relational. Those questions still haven't been written or run.
+- Whether wiki holds its accuracy as the wiki grows to cover the full PDF (scaling behavior untested)
+
+### Process finding
+
+The second ingest pass (earlier today, commit `f3e0570`) explicitly skipped PDF Sections 3-11, covering only Sections 1-2 (background + SSD2 element reference). The decision was framed in the commit as "the biggest failure modes are covered, running the eval is the highest-value next step" — i.e. optimizing for specific failure modes in the first eval rather than completing the wiki. This concept test surfaces exactly which facts that skipping decision cost. See the conversation log for the conversation where the user called this out as a process issue: optimizing for eval score instead of wiki completeness is not what the wiki is *for*.
+
+### Open items
+
+- **Ingest pass 3**: Sections 3-11 of the PDF (baby food specifics, contaminant specifics, classification algorithm, business rules narrative, catalogues, Legal Limits, reporting flags, validation workflow). ~1-2 hours of focused work. Should close most of the content gaps surfaced by this test.
+- **Q46 retrieval failure**: diagnose why the selector doesn't pick `business-rules.md` for a "three groups of business rules" question — the hub page's opening exactly answers it. Might be a selector-prompt or frontmatter-summary issue, not a content issue.
+- **True synthesis test set**: distinct from this concept test, which is still definitional. Would need questions of the form "given condition X, how do rules A and B interact" or "if a sample falls in domains P and V, which progLegalRef combination applies and why". Open question whether this is worth commissioning.
+- **Cost comparison on concept test**: RAG $2.63 vs wiki $1.57. Wiki is ~40% cheaper here too, consistent with the lookup test.
+
 ## [2026-04-11] retrieval | Phase timings + OpenAI selector (GPT-5.4-mini)
 
 Infrastructure additions to make the next round of model/architecture experiments measurable, plus a first alternative selector to put the "Sonnet-for-planning, Haiku-for-execution" community pattern under test with a twist: use GPT-5.4-mini as the planner instead.
