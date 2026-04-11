@@ -5,6 +5,69 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] process | Mental-model correction: wiki-as-ontology vs wiki-as-archive
+
+A retrospective on the day's ingest work. The user reviewed my approach and the Codex2 system prompt for the FoodEx2 wiki side by side, and the delta made an error I hadn't spotted visible. All of today's ingest work was done under the wrong mental model.
+
+### The correct framing (Codex2's system prompt, quoted verbatim)
+
+> Your job is not to summarize an entire PDF.
+> Your job is to update the wiki with durable, reusable knowledge.
+
+### The wrong framing (what I was actually doing)
+
+My internal workflow was: "take the ChemMon 2026 PDF and turn its sections into wiki pages, prioritizing the sections where the current eval is failing." That is summarizing the PDF, organized by topic and filtered by eval score. It is not what this wiki is for.
+
+### The conceptual difference, named
+
+**Wiki-as-ontology (correct)**. The wiki is a set of small, topic-scoped atoms of durable knowledge about the domain. Sources (PDFs, clarifications, annual updates) are **inputs** that feed into atoms. A new source rarely becomes a new page — it more often patches existing pages, adds a cross-reference, or bumps a `last_updated` field. New pages are created only when a genuinely new concept appears that has no existing home. The wiki's shape is determined by the **domain's concepts**, not by the source's section structure.
+
+**Wiki-as-archive (what I did)**. The wiki is a topic-organized restructuring of the source PDF. Sections of the PDF become pages. New documents become new pages. The wiki's shape mirrors the source's shape. Completeness is measured by "have we written about every section?" rather than "does the wiki cover every durable concept the domain needs?"
+
+The archive mindset explains every weird decision the day produced:
+
+- **Six new element-reference pages** (`ssd2-elements-programme.md`, `-sampling.md`, `-matrix.md`, `-analysis.md`, `-result.md`, `-evaluation.md`) instead of expanding the existing `ssd2-data-model.md`. An archive mindset says "Section 2 of the PDF covers elements, so I'll make an 'elements' family of pages." An ontology mindset says "the existing page covers the SSD2 data model; I should patch it with the missing element definitions, splitting only when the page gets too big."
+- **Pages walking the source in document order.** `ssd2-elements-result.md` is structured as M.01 → M.02 → M.03 ..., mirroring the PDF's section numbering. An ontology mindset would have one small page per decision (`resloq-when-required.md`, `exprres-fat-weight-rule.md`, `ccalpha-ccbeta-vmpr-rule.md`) with rules leading and context trailing.
+- **Skipping PDF Sections 3-11** because the current eval didn't probe them. An archive mindset says "those sections don't match current failure modes, deprioritize." An ontology mindset says "those sections define workflow, catalogues, legal limits, validation — all durable concepts the wiki must cover, independent of what any single test happens to probe."
+- **No structure scan pass.** Linear read, linear write. A principled ingest does three passes: structure scan → rule extraction → gap sweep. I did only the middle one.
+- **Document-order narrative preserved.** Sections like "Wild animal VMPR samples coding" from the source PDF became verbatim subsections in `ssd2-elements-matrix.md`, because "it's in the source." An ontology mindset would compress that to a one-line rule (`for wild game in VMPR, F21 must be explicitly set to A07RY`) plus a cross-link to the rule that enforces it.
+
+### Why I defaulted to the archive mindset
+
+Probably three reasons, none of them excuses:
+
+1. **Training bias.** Summarizing a long document is a common task shape and the default answer is "read section by section, write section by section." The archive mindset is the lowest-energy interpretation of an ingest task.
+2. **Satisficing.** Archive-style ingest feels productive because progress is measurable — lines written, pages created. The metric rewards quantity over shape. An ontology-style ingest often looks like *fewer* lines and *fewer* new pages, which feels like less work but is actually harder.
+3. **Eval anchoring.** Once I had an eval score to move, I anchored on it and framed ingest as "fill the gaps this test has" rather than "complete the knowledge base the domain needs." The eval became a guidance signal when it should have been a measurement signal.
+
+### Concrete corrective action
+
+1. **New file: `INGEST_WORKFLOW.md`** at the repo root. Adapted from Codex2's FoodEx2 system prompt, specialized for this wiki's structure (CHEMMON / GBR / LL business rule tiers, domain slice files, the five page types defined in `SCHEMA.md`, etc.). Contains: the three-pass workflow (A structure scan → B rule extraction → C gap sweep), per-page rules, when-to-patch vs when-to-create guidance, the exact anti-patterns from today's ingest as teaching examples, and explicit "do not" rules (don't read test sets during ingest, don't optimize for a specific test, don't create a new page just because the source has a new section, don't skip Pass A).
+
+2. **This log entry** so the next session starts from a corrected frame rather than the default summarize-the-PDF reflex.
+
+### What this correction does NOT do
+
+It does not retroactively fix the pages that were created under the wrong mental model. `ssd2-elements-programme.md`, `-sampling.md`, `-matrix.md`, `-analysis.md`, `-result.md`, `-evaluation.md`, `foodex2-facets.md`, `chemmon-background.md` all remain as-is. They contain correct content but wrong shape — too big, document-order, created-instead-of-patched. A principled next pass would likely refactor them into smaller rule-first atoms and consolidate back toward the existing `ssd2-data-model.md`. That refactor is a separate piece of work, not part of this correction.
+
+It also does not retroactively ingest PDF Sections 3-11. Those are still missing from the wiki. The concept eval showed them as ~13 facts of missing coverage (catalogues, Legal Limits database, reporting flags, validation workflow).
+
+### What a correct ingest pass would look like
+
+For reference, so the next session knows what to build toward:
+
+1. **Pass A (structure scan)**: walk all 156 pages of the ChemMon 2026 PDF. Build a map of every section, classify each as rule-bearing / narrative / procedural / historical. Identify which existing wiki pages each rule-bearing section patches. Expect ~2-3 new pages at most for a pass of this size, not 6-8.
+2. **Pass B (rule extraction)**: for each rule-bearing section, extract definitions / rules / tie-breaks / exceptions into target pages in rule-first order. Sections 3-11 get covered because they contain durable domain concepts, not because they match a failure mode. Each page stays narrow — one concept, one decision.
+3. **Pass C (gap sweep)**: check orphans, missing cross-links, stale frontmatter, index updates, contradictions.
+4. **Final state**: a wiki where every durable ChemMon concept has a small, retrieval-optimized page, the eval measures coverage rather than drives it, and the answerer sees high-signal-density context per selected page.
+
+### Open items after the correction
+
+- The wrongly-shaped pages from today are still in the wiki. Refactor-vs-leave-alone is a future decision.
+- Sections 3-11 of the ChemMon 2026 PDF are still not covered. A pass done under the new `INGEST_WORKFLOW.md` guidance would address this.
+- Infrastructure work from today (graph expansion, phase timings, GPT-5.4-mini selector, token cost attribution) is unaffected — those are retrieval-layer changes, architecturally separate from the ingest question.
+- The 4 retrieval misses on content that *does* exist in the wiki (Q7, Q14, Q15, Q46 from the concept eval) suggest that even with the wrong-shape pages, some of the failure is in the selector / answerer, not the content.
+
 ## [2026-04-11] eval | General-concepts test set: RAG 92.4% vs Wiki 78.5%
 
 First run of a new 50-question test set designed to probe conceptual / definitional knowledge ("what is X", "what does X describe", "why X") rather than narrow lookup. The intent was to measure whether the wiki's curated structure helps on the kind of question wikis are theoretically supposed to be good at.
