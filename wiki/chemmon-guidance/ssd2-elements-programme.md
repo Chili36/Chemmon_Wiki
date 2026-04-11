@@ -9,6 +9,8 @@ source_pages:
   - "pp. 17-26 (Section 2, elements B.01-B.04)"
 related:
   - "[[ssd2-data-model]]"
+  - "[[controlled-terminology-catalogues]]"
+  - "[[reporting-flags]]"
   - "[[ssd2-elements-sampling]]"
   - "[[ssd2-elements-matrix]]"
   - "[[business-rules-cross-cutting]]"

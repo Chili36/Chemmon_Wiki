@@ -7,12 +7,15 @@ sources:
 related:
   - "[[ssd2-data-model]]"
   - "[[business-rules]]"
+  - "[[reporting-flags]]"
+  - "[[chemmon-reports]]"
+  - "[[data-validation-and-acceptance]]"
   - "[[foodex2-in-chemmon]]"
   - "[[vmpr-reporting]]"
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # ChemMon Overview

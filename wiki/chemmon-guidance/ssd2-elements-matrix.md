@@ -11,6 +11,7 @@ related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-sampling]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[chemmon-matrix-classification-algorithms]]"
   - "[[vmpr-reporting]]"
   - "[[business-rules-vmpr]]"
   - "[[business-rules-cross-cutting]]"
@@ -41,6 +42,14 @@ FoodEx2 codes can be selected from the **MTX catalogue** using the **reporting h
 ### Base terms and facets
 
 FoodEx2 requires that a **base term is always supplied**. If the implicit facets are enough to characterise the matrix sampled (see example code), only a base term needs to be reported. Where the base term chosen has implicit facets, reporting of explicit facets should only be additional ones not already covered by the implicit facets. (ChemMon 2026 p33)
+
+## Drinking water intended for human consumption (A03DK)
+
+<!-- Source: ChemMon 2026 p42 -->
+
+EFSA encourages competent authorities and data providers to report available results for **pesticides and contaminants in drinking water intended for human consumption**, using FoodEx2 base term `A03DK` ("Drinking water") and its children.
+
+This is distinct from **water given to farmed animals** (VMPR feed/water coding), which is coded under non-food/environment base terms with an explicit F23 target-consumer facet (see below).
 
 <!-- Source: ChemMon 2026 pp. 33-36 (VMPR-specific coding) -->
 

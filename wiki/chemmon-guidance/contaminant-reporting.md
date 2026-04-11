@@ -10,7 +10,7 @@ related:
   - "[[business-rules]]"
   - "[[food-additives-reporting]]"
   - "[[pesticide-reporting]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # Contaminant Reporting
@@ -21,6 +21,11 @@ last_updated: "2026-04-10"
 - The contaminant domain is one of five [[chemmon-overview|ChemMon]] reporting domains. It covers chemical contaminants in food including acrylamide, mycotoxins, heavy metals, polycyclic aromatic hydrocarbons (PAHs), and mineral oils. (ChemMon 2026)
 - Maximum levels for contaminants in foodstuffs are governed by Commission Regulation (EU) 2023/915. (ChemMon 2026)
 - Matrix coding follows [[foodex2-in-chemmon]] rules. Validation is enforced by [[business-rules-contaminant]] and [[business-rules-cross-cutting]]. Some contaminants overlap with [[pesticide-reporting]] (e.g., copper) or [[food-additives-reporting]] (e.g., substances with dual classification).
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p42 -->
+## Drinking Water (A03DK)
+
+EFSA encourages competent authorities and data providers to collect and submit available results for **pesticides and contaminants in drinking water intended for human consumption**, using FoodEx2 base term `A03DK` ("Drinking water") and its children. (ChemMon 2026 p42)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p52-55 -->
 ## Acrylamide Requirements

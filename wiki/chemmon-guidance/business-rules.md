@@ -2,7 +2,7 @@
 title: "ChemMon Business Rules"
 type: "hub"
 domain: "all"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -28,11 +28,15 @@ related:
 
 - Business rules validate [[ssd2-data-model|SSD2]] submissions before acceptance into the EFSA data warehouse as part of the [[chemmon-overview|ChemMon]] data collection.
 - Two severity levels: **Error** (blocks submission) and **Warning** (flags for review but does not block).
-- Rules are organised into three tiers: General Business Rules (GBR), ChemMon-specific rules (CHEMMON), and Legal Limit rules (LL).
+- Per the guidance, there are three groups of business rules: **GBR** (all DCF submissions), **CHEMMON** (ChemMon-wide rules), and **subset-specific rules** (e.g. pesticides, VMPR, additives/flavourings, or specific contaminants). (ChemMon 2026 p97)
 - **Business rules take precedence** when they conflict with prose sections of the guidance.
 - Matrix coding rules reference [[foodex2-in-chemmon]] for FoodEx2 usage.
 
 This page is a **hub**: the canonical rule definitions live in the nine slice files below, grouped by applicability so the selector can inject just what a query actually needs. When in doubt, start with [[business-rules-cross-cutting]] — it applies to every domain.
+
+<!-- Source: ChemMon 2026 pp. 97-113 (Tables 9-10) -->
+
+The source guidance also provides troubleshooting tips alongside the GBR and CHEMMON rule lists (Tables 9 and 10). This wiki focuses on the rule definitions and how they relate to ChemMon reporting; troubleshooting text is not fully transcribed.
 
 ## Rule Index
 

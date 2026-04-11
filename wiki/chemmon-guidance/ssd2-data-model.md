@@ -9,7 +9,7 @@ related:
   - "[[chemmon-overview]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # SSD2 Data Model
@@ -91,3 +91,14 @@ The ChemMon business rules (CHEMMON01 onward) implement and extend these validat
 
 - Detailed element-by-element specifications, including data types, cardinalities, and allowed-value catalogues, are maintained in the Generic Data Exchange (GDE2) documentation rather than in the SSD2 logical model itself. (SSD2 p7)
 - This page covers the logical model and high-level structure. For element-level details, refer to the GDE2 specifications and the annual ChemMon guidance annexes.
+
+## ChemMon-focused element reference pages (this wiki)
+
+In addition to the SSD2 logical-model overview, this wiki maintains ChemMon-focused SSD2 element reference pages derived from the annual guidance (e.g. conditional mandatory rules, ChemMon-specific conventions, and the business rules that constrain each element group):
+
+- [[ssd2-elements-programme]] — programme/legal reference/sampling strategy/programme type
+- [[ssd2-elements-sampling]] — sampling event and sample identification/date/location
+- [[ssd2-elements-matrix]] — FoodEx2 matrix coding (`sampMatCode` / `anMatCode`) and special cases
+- [[ssd2-elements-analysis]] — laboratory, parameter, and analytical-method elements
+- [[ssd2-elements-result]] — result limits/values/types/expression/uncertainty
+- [[ssd2-elements-evaluation]] — evaluation codes and action elements

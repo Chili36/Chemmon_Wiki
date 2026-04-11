@@ -2,7 +2,7 @@
 title: "Pesticide-Specific Business Rules"
 type: "rule-reference"
 domain: "pesticide"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -39,8 +39,8 @@ Rules that apply to PPP *and* other domains (e.g. CHEMMON27, CHEMMON43, CHEMMON4
 | CHEMMON61 | Error | For pesticides, `resType` can only be LOD, LOQ, BIN, or VAL. No other result types are accepted. | PPP |
 | CHEMMON70 | Error | For pesticides in egg/milk matrices, `exprResType` must be B001A (whole weight). Fat-weight or dry-weight expression is not accepted for these matrices. | PPP |
 | CHEMMON72 | Warning | For pesticides, `resValUncert` (measurement uncertainty) should be reported when `resType` = VAL. | PPP |
-| CHEMMON90_a | Warning | For copper parameters, F20 (geographical origin of production) and/or F28 (process) facets are needed. (New 2026) | PPP |
-| CHEMMON90_b | Error | For copper parameters, `resValUncert` is mandatory when `resType` = VAL. (New 2026) | PPP |
+| CHEMMON90_a | Warning | For copper (`paramCode` RF-0102-001-PPP), the use of facet F20 (part-consumed-analysed) and/or facet F28 (process) is needed to describe sample preparation. | PPP |
+| CHEMMON90_b | Error | For copper (`paramCode` RF-0102-001-PPP), `resValUncert` is mandatory when `resType` = VAL. | PPP |
 | CHEMMON95 | Warning | For PPP with `evalCode` = J003A (non-compliant), `origCountry` must not be XX, AA, EU, XC, XD, or XE. Non-compliant results require a specific country of origin. (Amended 2026) | PPP |
 | CHEMMON101 | Error | For N422A (new regulation reference), `progType` must be K019A and `sampStrategy` must be ST30A. (New 2026) | PPP |
 | CHEMMON104 | Error | N422A is exclusive -- it cannot be concatenated with other `progLegalRef` values in the same record. (New 2026) | PPP |

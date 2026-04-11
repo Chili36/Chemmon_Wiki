@@ -7,9 +7,10 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[chemmon-matrix-classification-algorithms]]"
   - "[[business-rules]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # VMPR Reporting

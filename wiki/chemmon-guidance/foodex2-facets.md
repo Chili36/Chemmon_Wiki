@@ -146,7 +146,7 @@ This page summarises Table 4 from the source guidance: which facets matter in wh
 | Domain | Usage |
 | --- | --- |
 | **Pesticides** | Where meat (as part nature) or its sub-codes are reported, then part-consumed-analysed is recommended to be used, to indicate the presence of fat: `A0F4V` = 'Excluding visible fat' or `A0F4T` = 'Including visible fat'. According to Regulation (EC) No 396/2005 the MRLs for 'Muscle' apply to "Meat after removal of trimmable fat". Therefore, to report muscle samples the code `A0F4V` — 'Excluding visible fat' should be used. |
-| | When reporting **copper results**, the part to which the sample preparation applies needs to be reported. For example, reporting a banana without peel should be `A01LC#F20.A07QF`, while banana with peel should be codified as `A01LC#F20.A07QE`. |
+| | When reporting **copper** (`paramCode` RF-0102-001-PPP), EFSA expects facet **F20 (part-consumed-analysed)** and/or **F28 (process)** to reflect **sample preparation** (CHEMMON90_a). Some commodities use different facet values depending on whether the result is treated as pesticide-residue-style vs contaminant-style (e.g. banana with peel `...#F20.A07QE` vs without peel `...#F20.A07QF`). See [[pesticide-reporting]]. |
 | other domains | — |
 
 (ChemMon 2026 pp. 46-47)
@@ -222,7 +222,7 @@ This page summarises Table 4 from the source guidance: which facets matter in wh
 | **Pesticides** | — |
 | **Contaminants** | **Required for samples analysed for acrylamide** to describe the acrylamide legislative classes in Commission Recommendation 2019/1888/EU and Commission Regulation (EC) 2017/2158. |
 | **Additives** | **Required** to describe the sample legislative food category, according to Regulation (EC) 1333/2008. |
-| **Flavourings** | **Recommended** to describe the sample legislative food category according to Regulation (EC) 1334/2008. |
+| **Flavourings** | **Required** to describe the sample legislative food category according to Regulation (EC) 1334/2008. |
 
 (ChemMon 2026 p51)
 
@@ -244,26 +244,3 @@ This page summarises Table 4 from the source guidance: which facets matter in wh
 - **CHEMMON91** — For VMPR, only one F33 (legislative class) facet under VR classes should be reported per sample.
 - **CHEMMON103** — Organic production (A07SE) and conventional production (A0C6Y) facets must not be reported together. See [[business-rules-cross-cutting]].
 - **CHEMMON109** — Implicit F33 makes explicit F33 unnecessary for food additives/flavourings. See [[business-rules-additives]].
-
-## Food additives and flavourings F33 rules
-
-<!-- Source: ChemMon 2026 pp. 38-39 -->
-
-For additives and flavourings, the **legislative food category (F33 facet) must always be present**. In some cases, the F33 facet is already pre-assigned in the reporting hierarchy of the FoodEx2 browser. If it is not implicitly assigned, it must be added explicitly. **The legislative category "All categories of foods" is not allowed to be reported.** (ChemMon 2026 p38)
-
-### F03 physical state for additives — where it matters
-
-The physical-state facet (F03) should be considered for samples belonging to the following legislative food categories/subcategories:
-
-- 1 — Dairy products and analogues
-- 6.3 — Breakfast cereals
-- 12.5 — Soups and broths
-- 12.6 — Sauces
-- 13 — Foods intended for specific groups as defined by Regulation (EU) No 609/2013
-- 14.1.2 — Fruit juices as defined by Directive 2001/112/EC and vegetable juices
-- 14.1.3 — Fruit nectars as defined by Directive 2001/112/EC and vegetable nectars and similar products
-- 14.1.4 — Flavoured drinks
-- 14.1.5 — Coffee, coffee and chicory extracts, tea, herbal- and fruit-infusions; coffee substitutes, coffee mixes and mixes for 'hot beverages'
-- 17 — Food supplements as defined in Directive 2002/46/EC of the European Parliament and of the Council excluding food supplements for infants and young children
-
-If the F03 facet is not implicitly assigned, it is highly recommended to be added. Moreover, if the sample is formulated for **infants (<12 months)**, the target-consumer facet (F23) should be added to the code if it is not implicitly assigned. (ChemMon 2026 p39)

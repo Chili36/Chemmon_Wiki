@@ -5,6 +5,26 @@ last_updated: "2026-04-11"
 
 # Log
 
+## [2026-04-11] ingest | Sections 5-11: flags, catalogues, legal limits, reports, validation workflow
+
+Ingested the previously skipped non-element sections of the ChemMon 2026 guidance into small reference pages, and corrected a couple of high-impact FoodEx2/copper/drinking-water details that were either missing or mis-stated.
+
+**Added reference pages (new):**
+
+- `chemmon-matrix-classification-algorithms.md` — where EFSA’s VMPR/pesticide matrix-classification algorithms live and what they do (Section 5).
+- `controlled-terminology-catalogues.md` — catalogue/hierarchy overview (LEGREF/PARAM/MTX/etc) and LEGREF specificity guidance (Section 7).
+- `legal-limits-database.md` — scope/limitations of EFSA’s Legal Limits Database (Section 8).
+- `reporting-flags.md` — domain-flag values (0-3), “in-domain” logic, and examples (Section 9).
+- `chemmon-reports.md` — which dashboards/reports exist and which flag values are included (Section 10 / Table 13).
+- `data-validation-and-acceptance.md` — ack → BR validation → submit → accept/reject flow and the post-acceptance update constraint (Section 11).
+
+**Patches / refactors:**
+
+- Fixed copper sample-preparation facet guidance (F20/F28) so pesticide vs contaminant coding is no longer inverted, and aligned CHEMMON90_a wording to “F20 (part-consumed-analysed) and/or F28 (process)”. (ChemMon 2026 pp. 40-41; Table 10)
+- Added the missing drinking-water recommendation (FoodEx2 `A03DK`) under matrix coding + pesticide/contaminant guidance, and removed the misplaced drinking-water note from additives/flavourings. (ChemMon 2026 p42)
+- Moved additives/flavourings-specific F33/F03 guidance out of the global facet reference (`foodex2-facets.md`) into [[food-additives-reporting]] to keep `foodex2-facets.md` closer to a Table 4-derived facet reference.
+- Updated `index.md` summaries and curated `related:` links so the selector can find the new pages and graph expansion can pull them in when adjacent pages are selected.
+
 ## [2026-04-11] process | Mental-model correction: wiki-as-ontology vs wiki-as-archive
 
 A retrospective on the day's ingest work. The user reviewed my approach and the Codex2 system prompt for the FoodEx2 wiki side by side, and the delta made an error I hadn't spotted visible. All of today's ingest work was done under the wrong mental model.

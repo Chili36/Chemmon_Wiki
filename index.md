@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # Index
@@ -30,6 +30,12 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 - [ssd2-data-model.md](wiki/chemmon-guidance/ssd2-data-model.md): SSD2 logical model overview including main entities, element types, mandatory fields, and validation levels.
 - [foodex2-in-chemmon.md](wiki/chemmon-guidance/foodex2-in-chemmon.md): How FoodEx2 is used for matrix classification in ChemMon, mandatory facets by domain, and worked coding examples.
 - [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): Full F01-F33 facet reference — per-domain descriptions of each FoodEx2 facet drawn from Table 4 of the source guidance.
+- [controlled-terminology-catalogues.md](wiki/chemmon-guidance/controlled-terminology-catalogues.md): Which EFSA catalogues/hierarchies ChemMon uses (LEGREF, PARAM, MTX, UNIT, etc.) and how they drive validation and domain routing.
+- [reporting-flags.md](wiki/chemmon-guidance/reporting-flags.md): How EFSA sets the five domain flags (0-3 values) from `progLegalRef` and `paramCode`, and how flags drive business-rule applicability and reports.
+- [legal-limits-database.md](wiki/chemmon-guidance/legal-limits-database.md): EFSA Legal Limits Database for MRL evaluation: what it covers, sampling-date applicability, and relationship to legal-limit rules.
+- [chemmon-matrix-classification-algorithms.md](wiki/chemmon-guidance/chemmon-matrix-classification-algorithms.md): Where EFSA’s VMPR/pesticide matrix-classification algorithms live and how FoodEx2 `sampMatCode` is grouped for reporting.
+- [chemmon-reports.md](wiki/chemmon-guidance/chemmon-reports.md): Which validation dashboards, national reports, EU annual reports, and AROC extracts are produced, and which domain flags are included.
+- [data-validation-and-acceptance.md](wiki/chemmon-guidance/data-validation-and-acceptance.md): DCF lifecycle: ack/ack-details, business-rule validation statuses, submit/accept/reject, and post-acceptance update procedure.
 
 ### SSD2 Element Reference
 
@@ -54,7 +60,7 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 
 The full 131-rule catalog is sliced into nine files by applicability. Start at the hub if you're unsure which slice to open; otherwise jump directly to the relevant domain or tier.
 
-- [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — short orientation page listing all nine slices with one-line summaries. Start here when the scope is broad or unclear.
+- [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — explains the three groups of business rules (GBR/CHEMMON/subset-specific) and links to the nine slice files by domain/tier.
 - [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): General Business Rules (16 rules) applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.
 - [business-rules-cross-cutting.md](wiki/chemmon-guidance/business-rules-cross-cutting.md): CHEMMON rules (46 rules) marked "All" or applying to multiple domains — analytical method, result value & type, sampling & programme, cross-domain matrix, evaluation & action, FoodEx2 validation.
 - [business-rules-vmpr.md](wiki/chemmon-guidance/business-rules-vmpr.md): VMPR-specific rules (11 CHEMMON rules) — accreditation, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.

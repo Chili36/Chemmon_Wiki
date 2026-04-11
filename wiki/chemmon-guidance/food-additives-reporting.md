@@ -10,7 +10,7 @@ related:
   - "[[business-rules]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -29,6 +29,31 @@ last_updated: "2026-04-10"
 - **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. (ChemMon 2026)
 - **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. (ChemMon 2026)
 - **F23 (Target consumer)**: required for infant formulas and follow-on formulas. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39 -->
+### F33 legislative class: implicit vs explicit
+
+For additives and flavourings, the **legislative food category facet (F33) must always be present**. In many cases, F33 is already implicitly assigned in the reporting hierarchy of the FoodEx2 browser; if it is not implicitly assigned, it must be added explicitly. (ChemMon 2026 p38-39)
+
+The legislative category **"All categories of foods" is not allowed** to be reported for additives/flavourings. (ChemMon 2026 p38)
+
+<!-- Source: ChemMon 2026 p39 -->
+### F03 physical state: where it matters for additives/flavourings
+
+If F03 is not implicitly assigned, it is highly recommended to add it for samples in these legislative food categories/subcategories:
+
+- 1 — Dairy products and analogues
+- 6.3 — Breakfast cereals
+- 12.5 — Soups and broths
+- 12.6 — Sauces
+- 13 — Foods intended for specific groups (Regulation (EU) No 609/2013)
+- 14.1.2 — Fruit juices and vegetable juices (Directive 2001/112/EC)
+- 14.1.3 — Fruit/vegetable nectars and similar products (Directive 2001/112/EC)
+- 14.1.4 — Flavoured drinks
+- 14.1.5 — Coffee/tea/herbal infusions and similar "hot beverages"
+- 17 — Food supplements (Directive 2002/46/EC), excluding supplements for infants and young children
+
+If the sample is formulated for **infants (<12 months)**, the target-consumer facet (F23) should be added if it is not implicitly assigned. (ChemMon 2026 p39)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Expression Type
@@ -64,11 +89,6 @@ last_updated: "2026-04-10"
 | LL_01_FA_FF | Maximum Permitted Level comparison |
 | LL_02_FA_FF | MPL threshold evaluation |
 | LL_03_FA_FF | Legislative category substance authorization |
-
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
-## Drinking Water
-
-- Drinking water samples use the FoodEx2 code `A03DK`. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Worked Examples
