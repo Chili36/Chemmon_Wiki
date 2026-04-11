@@ -1,9 +1,76 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 ---
 
 # Log
+
+## [2026-04-11] ingest | Section 1 Background + Section 2 SSD2 element reference
+
+Second ingest pass driven by the diagnosis from the 2026-04-10 eval run where the wiki scored 36.6% (41/112 facts) vs RAG's 84.8% (95/112 facts). The failure modes were:
+
+1. **Missing per-element definitions** — the existing `ssd2-data-model.md` enumerated the logical structure but named only ~8 of the ~88 SSD2 elements; questions about specific fields like `progId`, `progLegalRef`, `CCalpha`, `paramType` got "the wiki doesn't mention this" answers.
+2. **Missing background/rationale** — questions about **why** the single SSD2 collection exists, **why** free-text was reduced, and similar historical "why" questions had no target content in the wiki.
+3. **Definitions alongside rules** — for fields that had business rules captured (e.g. `progLegalRef` in CHEMMON68), the rules were in the wiki but the field's own purpose statement was not.
+
+**Ingested directly from the source PDF** (ChemMon 2026, pp. 5-76), **not from the test set** — to keep the eval honest. Six new pages (2094 lines total):
+
+- `chemmon-background.md` — rationale for single SSD2 consolidation, FCM exclusion, compound element flexibility, catalogue browser, Open Data / Transparency / free-text reduction, revision cadence, meaning of "residue". (Source: pp. 5-10)
+- `foodex2-facets.md` — complete F01-F33 per-domain facet reference. (Source: Table 4, pp. 43-51)
+- `ssd2-elements-programme.md` — progId, progLegalRef, sampStrategy, progType + Table 2 valid combinations. (pp. 17-26)
+- `ssd2-elements-sampling.md` — sampMethod, sampler, sampPoint, sampEventId, sampUnitType, sampUnitSize, sampId, sampCountry, date elements, origSampId. (pp. 27-32)
+- `ssd2-elements-matrix.md` (expanded) — sampMatCode VMPR/feed/non-food/insect coding plus sampMatText, origCountry, sampAnId, anMatCode, anMatText. (pp. 32-36, 56)
+- `ssd2-elements-analysis.md` — analysisY, anPortSeq, labId, labAccred, labCountry, paramType, paramCode, paramText, anMethRefId, anMethType, anMethCode. (pp. 57-64)
+- `ssd2-elements-result.md` — resId, accredProc, resUnit, resLOD, resLOQ, CCalpha, CCbeta, resVal, resValRec/Corr, exprResPerc/Type, resQualValue, resType (including AWR), resValUncert, resInfo.notSummed. (pp. 64-73)
+- `ssd2-elements-evaluation.md` — evalLowLimit, evalLimitType, evalCode, actTakenCode, evalInfo.conclusion/com. (pp. 73-76)
+
+**Eval result (guidance_with_claude/tests/manual/chemmon_eval_runs/2026-04-11-010813):**
+
+- **Wiki hit rate: 36.6% → 65.2%** (+28.6 pp, +32 facts)
+- **25 of 50 questions improved**; 20 unchanged; 5 regressed
+- **RAG baseline** (from 2026-04-10 run): 84.8% — wiki still ~19.6 pp behind
+- **2 infrastructure failures** (Q5, Q13 hit transient 503s from document-chat, unrelated to wiki content)
+
+**Notable wins** — all of these went from 0 hits to full hits after the ingest:
+
+- Q8 (Why free-text reduced) — 0/3 → 3/3
+- Q9 (What is progId for?) — 0/2 → 2/2
+- Q10 (progId in annual reports) — 0/3 → 3/3
+- Q11 (What is progLegalRef for?) — 0/2 → 2/2
+- Q25 (Why is sampling date mandatory?) — 0/2 → 2/2
+- Q27 (How detailed should sampMatCode be?) — 0/2 → 2/2
+- Q37 (What do paramType P002A/P004A/P005A mean?) — 0/3 → 3/3
+- Q41 (What do CCalpha and CCbeta mean?) — 0/2 → 2/2
+
+**Notable regressions** — adding content changed which pages the selector picks, and 5 questions got worse:
+
+- Q2 (Which reporting domains) — 3/3 → 1/3
+- Q6 (Precedence when SSD2/GDE2 conflict) — 2/2 → 0/2 *(the fact we ingested on 2026-04-10 for test #5)*
+- Q18 (How pesticides EU MACP flagged) — 1/3 → 0/3
+- Q45 (evalInfo.restrictionException) — 3/3 → 0/3
+
+These regressions happened with the same wiki content as yesterday. The LLM selector is making different choices now that `index.md` has grown from ~30 to ~45 catalog entries — a classic scaling issue where more candidates can mean noisier selection. The wiki content is still correct; the selector just isn't pulling it in for these specific questions.
+
+**Remaining content gaps** (questions that still scored 0 after the ingest):
+
+- Q4 (transmission timing) — partially in background but not matching
+- Q13 (503 transient) and Q5 (503 transient) — not content issues
+- Q18, Q19 (Plan flagging logic) — covered in programme page Table 2 but selector miss
+- Q28 (F01/F02 always present for VMPR) — covered in matrix page
+- Q32 (new VMPR categories: insects/reptiles/casings) — covered in matrix page
+- Q36 (drinking water data) — **real gap**, section on p42 not ingested
+- Q48 (how business rules grouped) — wants a meta-structure summary
+- Q49 (domain flag values 0,1,2,3) — may not exist in PDF prose
+- Q50 (end-to-end DCF validation workflow) — **real gap**, section 10 not ingested
+
+**What this ingest did and did not demonstrate:**
+
+- **Did** — the diagnosis from the first eval was correct. The wiki was missing specific content; adding it from the source PDF directly recovered exactly the facts the test asked about.
+- **Did** — the PDF-driven (not test-driven) ingest approach works. The content was extracted by systematically reading sections 1 and 2 of the source, not by cherry-picking for the test.
+- **Did not** — close the gap to RAG. The wiki is still ~20 points behind; several remaining gaps are real content not yet captured, and the 5 regressions indicate the LLM selector has a scaling ceiling that more content alone cannot fix.
+- **Did not** — prove wiki is the right tool for this workload. The 50-question test set is heavy on lookup questions where RAG's whole-PDF recall wins structurally.
+
+Next step is a reality check on whether to continue closing content gaps, work on the selector regressions, or accept the 65% result and stop.
 
 ## [2026-04-10] refactor | Patterns refactor (closes #1)
 
