@@ -326,6 +326,8 @@ def ask_question(request: AskRequest) -> AskResponse:
     graph_expansion_end = time.perf_counter()
 
     answerer_input_pages = page_contents + expansion_blocks
+    expanded_page_names = [block["page_name"] for block in expansion_blocks]
+    pages_used = list(dict.fromkeys([*selection_result.pages_used, *expanded_page_names]))
 
     answerer_start = time.perf_counter()
     answerer = get_answerer_runner()
@@ -335,22 +337,59 @@ def ask_question(request: AskRequest) -> AskResponse:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     answerer_end = time.perf_counter()
 
-    pages = [
-        PageSummary(
-            page_name=page.name,
-            title=page.title,
-            summary=page.summary,
-            sources=page.sources,
-            related=page.related,
-            content=store.clean_content_for_model(page),
+    expansion_content_by_page = {block["page_name"]: block["content"] for block in expansion_blocks}
+    expanded_pages_raw = []
+    for page_name in expanded_page_names:
+        try:
+            expanded_pages_raw.append(store.read_page(page_name))
+        except FileNotFoundError:
+            continue
+
+    pages = []
+    for page in pages_raw:
+        pages.append(
+            PageSummary(
+                page_name=page.name,
+                title=page.title,
+                summary=page.summary,
+                sources=page.sources,
+                related=page.related,
+                content=store.clean_content_for_model(page),
+            )
         )
-        for page in pages_raw
-    ]
+    for page in expanded_pages_raw:
+        pages.append(
+            PageSummary(
+                page_name=page.name,
+                title=page.title,
+                summary=page.summary,
+                sources=page.sources,
+                related=page.related,
+                # Expansion pages were injected as summary-only blocks; return the
+                # same short content so citations can be resolved consistently.
+                content=expansion_content_by_page.get(page.name),
+            )
+        )
+
+    allowed_citations = set(pages_used)
+    citations: list[str] = []
+    for raw_citation in answer_result.citations:
+        if not isinstance(raw_citation, str):
+            continue
+        citation = raw_citation.strip()
+        if not citation:
+            continue
+        if not citation.endswith(".md"):
+            citation = f"{citation}.md"
+        citation = store.normalize_page_name(citation)
+        if citation in allowed_citations:
+            citations.append(citation)
+    citations = list(dict.fromkeys(citations))
 
     response = AskResponse(
         answer=answer_result.answer,
-        citations=answer_result.citations,
-        pages_used=selection_result.pages_used,
+        citations=citations,
+        pages_used=pages_used,
         pages=pages,
         trace={
             "selection_method": "service-owned llm page selector + answerer",
