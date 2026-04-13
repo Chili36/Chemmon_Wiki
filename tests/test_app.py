@@ -7,6 +7,7 @@ import httpx
 import wiki_api.app as app_module
 from wiki_api.page_selector import PageSelectionResult
 from wiki_api.answerer import AnswerResult
+from wiki_api.wiki_store import WikiStore
 
 
 async def _request(method: str, path: str, **kwargs: object) -> httpx.Response:
@@ -155,6 +156,154 @@ def test_ask_returns_answer_with_citations() -> None:
     assert payload["trace"]["answerer"]["model"] == "fake-claude"
     assert payload["trace"]["total"]["total_llm_calls"] == 2
     assert app_module.selector_runner.calls[0]["question"] == "Do I need F33 for acrylamide?"
+
+
+def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch) -> None:
+    """Graph expansion adds neighbor summaries; response metadata must reflect them."""
+
+    (tmp_path / "wiki" / "chemmon-guidance").mkdir(parents=True, exist_ok=True)
+
+    (tmp_path / "index.md").write_text(
+        "\n".join(
+            [
+                "---",
+                'title: "Wiki Index"',
+                'last_updated: "2026-04-12"',
+                "---",
+                "",
+                "# Index",
+                "",
+                "- [A](wiki/chemmon-guidance/a.md): Page A summary",
+                "- [B](wiki/chemmon-guidance/b.md): Page B summary",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "log.md").write_text("# Log\n", encoding="utf-8")
+
+    (tmp_path / "wiki" / "chemmon-guidance" / "a.md").write_text(
+        "\n".join(
+            [
+                "---",
+                'title: "A"',
+                'type: "reference"',
+                'domain: "all"',
+                'last_updated: "2026-04-12"',
+                "related:",
+                '  - "[[b]]"',
+                "---",
+                "",
+                "# A",
+                "",
+                "Body A.",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "wiki" / "chemmon-guidance" / "b.md").write_text(
+        "\n".join(
+            [
+                "---",
+                'title: "B"',
+                'type: "reference"',
+                'domain: "all"',
+                'last_updated: "2026-04-12"',
+                "---",
+                "",
+                "# B",
+                "",
+                "Body B.",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(app_module, "store", WikiStore(tmp_path))
+
+    class SelectorWithRelated:
+        def __init__(self) -> None:
+            self.max_pages = 6
+            self.model = "fake-claude"
+
+        def run(self, payload: dict[str, object]) -> PageSelectionResult:
+            return PageSelectionResult(
+                pages_used=["index.md", "a.md"],
+                tool_trace=[],
+                token_summary={
+                    "model": "fake-claude",
+                    "calls": 1,
+                    "input_tokens": 90,
+                    "output_tokens": 20,
+                    "cache_creation_input_tokens": 0,
+                    "cache_read_input_tokens": 0,
+                    "total_tracked_tokens": 110,
+                    "per_call": [
+                        {
+                            "stop_reason": "end_turn",
+                            "input_tokens": 90,
+                            "output_tokens": 20,
+                            "cache_creation_input_tokens": 0,
+                            "cache_read_input_tokens": 0,
+                            "total_tracked_tokens": 110,
+                        }
+                    ],
+                },
+                timing_summary={
+                    "calls": 1,
+                    "llm_time_ms": 500,
+                    "selector_wall_time_ms": 550,
+                    "per_call": [{"call_number": 1, "duration_ms": 500, "stop_reason": "end_turn"}],
+                },
+            )
+
+    class AnswererCitingExpansion:
+        def __init__(self) -> None:
+            self.model = "fake-claude"
+
+        def run(self, question: str, pages: list[dict[str, object]]) -> AnswerResult:
+            return AnswerResult(
+                answer="Answer based on expansion.",
+                citations=["b.md"],
+                token_summary={
+                    "model": "fake-claude",
+                    "calls": 1,
+                    "input_tokens": 200,
+                    "output_tokens": 50,
+                    "cache_creation_input_tokens": 0,
+                    "cache_read_input_tokens": 0,
+                    "total_tracked_tokens": 250,
+                    "per_call": [
+                        {
+                            "stop_reason": "end_turn",
+                            "input_tokens": 200,
+                            "output_tokens": 50,
+                            "cache_creation_input_tokens": 0,
+                            "cache_read_input_tokens": 0,
+                            "total_tracked_tokens": 250,
+                        }
+                    ],
+                },
+                timing_summary={
+                    "calls": 1,
+                    "llm_time_ms": 600,
+                    "answerer_wall_time_ms": 650,
+                    "per_call": [{"call_number": 1, "duration_ms": 600, "stop_reason": "end_turn"}],
+                },
+            )
+
+    app_module.selector_runner = SelectorWithRelated()
+    app_module.answerer_runner = AnswererCitingExpansion()
+
+    response = request("POST", "/wiki/ask", json={"question": "test"})
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["citations"] == ["b.md"]
+    assert payload["trace"]["graph_expansion"]["neighbors_added"] == ["b.md"]
+    assert "b.md" in payload["pages_used"]
+    assert any(p["page_name"] == "b.md" for p in payload["pages"])
 
 
 def test_ask_requires_question() -> None:

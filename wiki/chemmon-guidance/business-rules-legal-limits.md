@@ -2,13 +2,14 @@
 title: "Legal Limit Business Rules"
 type: "rule-reference"
 domain: "cross-cutting"
-last_updated: "2026-04-10"
+last_updated: "2026-04-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "Annex B"
 related:
   - "[[business-rules]]"
+  - "[[legal-limits-database]]"
   - "[[business-rules-vmpr]]"
   - "[[business-rules-pesticide]]"
   - "[[business-rules-additives]]"
