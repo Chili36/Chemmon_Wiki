@@ -53,8 +53,8 @@ Set at least:
 
 ```bash
 ANTHROPIC_API_KEY=...
-WIKI_SELECTOR_MODEL=claude-3-7-sonnet-latest
-WIKI_ANSWERER_MODEL=claude-3-7-sonnet-latest
+WIKI_SELECTOR_MODEL=claude-sonnet-4-6
+WIKI_ANSWERER_MODEL=claude-sonnet-4-6
 ```
 
 Run it locally with:

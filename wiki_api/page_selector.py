@@ -346,7 +346,7 @@ class AnthropicWikiPageSelector:
     ):
         self.store = store
         self.client = client or build_anthropic_client()
-        self.model = model or _resolve_model("WIKI_SELECTOR_MODEL", default="claude-3-7-sonnet-latest")
+        self.model = model or _resolve_model("WIKI_SELECTOR_MODEL", default="claude-sonnet-4-6")
         self.max_pages = max_pages
         self.max_tokens = max_tokens
 
