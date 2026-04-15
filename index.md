@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-11"
+last_updated: "2026-04-15"
 ---
 
 # Index
@@ -45,7 +45,14 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group — `sampMethod`, `sampler`, `sampPoint`, `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampId`, `sampCountry`, sampling date, `origSampId`.
 - [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group — `sampMatCode` (with VMPR/feed/non-food/insects coding), `sampMatText`, `origCountry`, `sampAnId`, `anMatCode`, `anMatText`.
 - [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.
-- [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group — `resId`, `accredProc`, `resUnit`, `resLOD`, `resLOQ`, `CCalpha`, `CCbeta`, `resVal`, recovery, expression of results, `resQualValue`, `resType`, `resValUncert`, `resInfo.notSummed`.
+- [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group hub — fast-path rules + links to narrower per-topic pages.
+- [ssd2-result-identification.md](wiki/chemmon-guidance/ssd2-result-identification.md): Result identifier — `resId` uniqueness and naming guidance.
+- [ssd2-result-method-accreditation.md](wiki/chemmon-guidance/ssd2-result-method-accreditation.md): Method accreditation + decision thresholds — `accredProc`, `CCalpha`, `CCbeta` (VMPR-specific requirements).
+- [ssd2-result-units-and-limits.md](wiki/chemmon-guidance/ssd2-result-units-and-limits.md): Units and reporting limits — `resUnit`, `resLOD`, `resLOQ`, `resInfo.notSummed` (LOQ exceptions and placeholder bans).
+- [ssd2-result-value-and-type.md](wiki/chemmon-guidance/ssd2-result-value-and-type.md): Reported value and result type — `resVal`, `resQualValue`, `resType` (including AWR).
+- [ssd2-result-recovery-correction.md](wiki/chemmon-guidance/ssd2-result-recovery-correction.md): Recovery correction — `resValRec`, `resValRecCorr`.
+- [ssd2-result-expression-basis.md](wiki/chemmon-guidance/ssd2-result-expression-basis.md): Expression basis — `exprResType`, `exprResPerc` (domain-specific constraints).
+- [ssd2-result-uncertainty.md](wiki/chemmon-guidance/ssd2-result-uncertainty.md): Measurement uncertainty — `resValUncert` (recommended vs mandatory by domain).
 - [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group — `evalLowLimit`, `evalLimitType`, `evalCode`, `actTakenCode`, `evalInfo.conclusion`, `evalInfo.com`.
 
 ### Domain Guides
