@@ -1,9 +1,25 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-11"
+last_updated: "2026-04-15"
 ---
 
 # Log
+
+## [2026-04-15] maintenance | Split SSD2 result element content into narrow pages
+
+Refactored `ssd2-elements-result.md` to follow the "one page = one topic/decision" guideline: the page is now a short hub (overview + fast-path rules + links), and the detailed element guidance was split into narrowly-scoped pages so the selector can retrieve the right slice without pulling a 400+ line file.
+
+**New pages:**
+
+- `ssd2-result-identification.md` — `resId`.
+- `ssd2-result-method-accreditation.md` — `accredProc`, `CCalpha`, `CCbeta`.
+- `ssd2-result-units-and-limits.md` — `resUnit`, `resLOD`, `resLOQ`, `resInfo.notSummed`.
+- `ssd2-result-value-and-type.md` — `resVal`, `resQualValue`, `resType` (incl. AWR).
+- `ssd2-result-recovery-correction.md` — `resValRec`, `resValRecCorr`.
+- `ssd2-result-expression-basis.md` — `exprResType`, `exprResPerc`.
+- `ssd2-result-uncertainty.md` — `resValUncert`.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only. Updated `index.md` accordingly.
 
 ## [2026-04-11] refactor | Make ssd2-elements-result rule-first
 
