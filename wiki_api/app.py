@@ -622,12 +622,17 @@ def ask_question(request: AskRequest) -> AskResponse:
                         final_answer_result = event.get("result")
                         break
             except Exception as exc:
+                if raw_fallback_buffer and (not raw_mode) and (not extractor.started):
+                    yield _sse({"type": "delta", "text": raw_fallback_buffer}, event="delta")
                 yield _sse({"type": "error", "message": str(exc)}, event="error")
                 return
 
             if final_answer_result is None:
                 yield _sse({"type": "error", "message": "Answer stream ended without a final result"}, event="error")
                 return
+
+            if raw_fallback_buffer and (not raw_mode) and (not extractor.started):
+                yield _sse({"type": "delta", "text": raw_fallback_buffer}, event="delta")
 
             answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
             response = _build_response(answer_result=final_answer_result, answerer_total_ms=answerer_total_ms)
