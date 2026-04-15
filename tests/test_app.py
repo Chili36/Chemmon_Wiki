@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 
 import httpx
 
@@ -156,6 +157,93 @@ def test_ask_returns_answer_with_citations() -> None:
     assert payload["trace"]["answerer"]["model"] == "fake-claude"
     assert payload["trace"]["total"]["total_llm_calls"] == 2
     assert app_module.selector_runner.calls[0]["question"] == "Do I need F33 for acrylamide?"
+
+
+def _parse_sse_events(body: str) -> list[dict[str, object]]:
+    events: list[dict[str, object]] = []
+    for block in body.strip().split("\n\n"):
+        data_lines = [line for line in block.splitlines() if line.startswith("data:")]
+        if not data_lines:
+            continue
+        data = "\n".join(line[len("data:") :].strip() for line in data_lines)
+        events.append(json.loads(data))
+    return events
+
+
+async def _stream_body(path: str, *, payload: dict[str, object]) -> tuple[int, str, str]:
+    transport = httpx.ASGITransport(app=app_module.app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+        async with client.stream("POST", path, json=payload) as response:
+            body = (await response.aread()).decode("utf-8")
+            content_type = response.headers.get("content-type", "")
+            return response.status_code, content_type, body
+
+
+def test_ask_streams_answer_when_requested() -> None:
+    class FakeStreamingAnswerer:
+        def __init__(self) -> None:
+            self.model = "fake-claude"
+
+        def stream(self, question: str, pages: list[dict[str, object]]):  # type: ignore[no-untyped-def]
+            raw_json_1 = '{"answer":"F33 is mandatory for'
+            raw_json_2 = ' acrylamide per CHEMMON12.","citations":["index.md"]}'
+            yield {"type": "delta", "text": raw_json_1}
+            yield {"type": "delta", "text": raw_json_2}
+            yield {
+                "type": "final",
+                "result": AnswerResult(
+                    answer="F33 is mandatory for acrylamide per CHEMMON12.",
+                    citations=["index.md"],
+                    token_summary={
+                        "model": "fake-claude",
+                        "calls": 1,
+                        "input_tokens": 200,
+                        "output_tokens": 50,
+                        "cache_creation_input_tokens": 0,
+                        "cache_read_input_tokens": 0,
+                        "total_tracked_tokens": 250,
+                        "per_call": [
+                            {
+                                "stop_reason": "end_turn",
+                                "input_tokens": 200,
+                                "output_tokens": 50,
+                                "cache_creation_input_tokens": 0,
+                                "cache_read_input_tokens": 0,
+                                "total_tracked_tokens": 250,
+                            }
+                        ],
+                    },
+                    timing_summary={
+                        "calls": 1,
+                        "llm_time_ms": 600,
+                        "answerer_wall_time_ms": 650,
+                        "per_call": [{"call_number": 1, "duration_ms": 600, "stop_reason": "end_turn"}],
+                    },
+                ),
+            }
+
+    app_module.answerer_runner = FakeStreamingAnswerer()
+
+    status, content_type, body = asyncio.run(
+        _stream_body(
+            "/wiki/ask",
+            payload={"question": "Do I need F33 for acrylamide?", "stream": True},
+        )
+    )
+    assert status == 200
+    assert content_type.startswith("text/event-stream")
+
+    events = _parse_sse_events(body)
+    assert events[0]["type"] == "meta"
+    assert "index.md" in events[0]["pages_used"]
+
+    streamed_answer = "".join(e["text"] for e in events if e["type"] == "delta")
+    assert streamed_answer == "F33 is mandatory for acrylamide per CHEMMON12."
+
+    done = [e for e in events if e["type"] == "done"][0]
+    response = done["response"]
+    assert response["answer"] == "F33 is mandatory for acrylamide per CHEMMON12."
+    assert response["citations"] == ["index.md"]
 
 
 def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch) -> None:

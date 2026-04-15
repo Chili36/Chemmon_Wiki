@@ -10,7 +10,7 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from .answerer import AnthropicChemMonAnswerer
@@ -58,6 +58,14 @@ def get_answerer_runner() -> AnthropicChemMonAnswerer | Any:
 class AskRequest(BaseModel):
     question: str = Field(description="The user's question about ChemMon reporting.")
     max_pages: int = Field(default=6, ge=1, le=10)
+    stream: bool = Field(
+        default=False,
+        description=(
+            "If true, stream the answer back as Server-Sent Events (SSE). "
+            "The final event contains the full AskResponse object. "
+            "Only supported for /wiki/ask."
+        ),
+    )
     use_graph_expansion: bool = Field(
         default=True,
         description=(
@@ -219,6 +227,122 @@ def _expand_related_summaries(
     return blocks
 
 
+def _sse(payload: dict[str, Any], *, event: str | None = None) -> str:
+    """Serialize a single SSE event with a compact JSON payload."""
+    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    lines = []
+    if event:
+        lines.append(f"event: {event}")
+    lines.append(f"data: {data}")
+    return "\n".join(lines) + "\n\n"
+
+
+class _JsonStringFieldExtractor:
+    """Incrementally extract and decode a JSON string field from streamed text.
+
+    Used to stream only the `answer` value while the model returns a JSON object.
+    If extraction never starts (e.g. malformed JSON), callers can fall back to
+    streaming raw deltas.
+    """
+
+    _START_RE = re.compile(r"\"answer\"\s*:\s*\"")
+
+    def __init__(self) -> None:
+        self._buffer = ""
+        self._started = False
+        self._done = False
+        self._escape = False
+        self._unicode_remaining = 0
+        self._unicode_hex = ""
+
+    @property
+    def started(self) -> bool:
+        return self._started
+
+    @property
+    def done(self) -> bool:
+        return self._done
+
+    def feed(self, chunk: str) -> str:
+        if self._done or not chunk:
+            return ""
+        self._buffer += chunk
+
+        if not self._started:
+            match = self._START_RE.search(self._buffer)
+            if not match:
+                # Keep a small tail so cross-chunk `"answer":"` matches still work.
+                if len(self._buffer) > 256:
+                    self._buffer = self._buffer[-256:]
+                return ""
+            self._started = True
+            self._buffer = self._buffer[match.end() :]
+
+        out: list[str] = []
+        i = 0
+        while i < len(self._buffer):
+            ch = self._buffer[i]
+
+            if self._unicode_remaining:
+                if ch.lower() in "0123456789abcdef":
+                    self._unicode_hex += ch
+                    self._unicode_remaining -= 1
+                    if self._unicode_remaining == 0:
+                        try:
+                            out.append(chr(int(self._unicode_hex, 16)))
+                        except Exception:
+                            out.append("\\u" + self._unicode_hex)
+                        self._unicode_hex = ""
+                else:
+                    out.append("\\u" + self._unicode_hex + ch)
+                    self._unicode_remaining = 0
+                    self._unicode_hex = ""
+                i += 1
+                continue
+
+            if self._escape:
+                self._escape = False
+                if ch == "n":
+                    out.append("\n")
+                elif ch == "r":
+                    out.append("\r")
+                elif ch == "t":
+                    out.append("\t")
+                elif ch == "b":
+                    out.append("\b")
+                elif ch == "f":
+                    out.append("\f")
+                elif ch == "\\":
+                    out.append("\\")
+                elif ch == "/":
+                    out.append("/")
+                elif ch == '"':
+                    out.append('"')
+                elif ch == "u":
+                    self._unicode_remaining = 4
+                    self._unicode_hex = ""
+                else:
+                    out.append(ch)
+                i += 1
+                continue
+
+            if ch == "\\":
+                self._escape = True
+                i += 1
+                continue
+
+            if ch == '"':
+                self._done = True
+                i += 1
+                break
+
+            out.append(ch)
+            i += 1
+
+        self._buffer = self._buffer[i:]
+        return "".join(out)
+
+
 @app.get("/wiki/view", include_in_schema=False)
 def wiki_viewer():
     return FileResponse(STATIC_DIR / "viewer.html", media_type="text/html")
@@ -329,14 +453,6 @@ def ask_question(request: AskRequest) -> AskResponse:
     expanded_page_names = [block["page_name"] for block in expansion_blocks]
     pages_used = list(dict.fromkeys([*selection_result.pages_used, *expanded_page_names]))
 
-    answerer_start = time.perf_counter()
-    answerer = get_answerer_runner()
-    try:
-        answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
-    except (RuntimeError, ValueError) as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
-    answerer_end = time.perf_counter()
-
     expansion_content_by_page = {block["page_name"]: block["content"] for block in expansion_blocks}
     expanded_pages_raw = []
     for page_name in expanded_page_names:
@@ -372,88 +488,168 @@ def ask_question(request: AskRequest) -> AskResponse:
         )
 
     allowed_citations = set(pages_used)
-    citations: list[str] = []
-    for raw_citation in answer_result.citations:
-        if not isinstance(raw_citation, str):
-            continue
-        citation = raw_citation.strip()
-        if not citation:
-            continue
-        if not citation.endswith(".md"):
-            citation = f"{citation}.md"
-        citation = store.normalize_page_name(citation)
-        if citation in allowed_citations:
-            citations.append(citation)
-    citations = list(dict.fromkeys(citations))
+    selector_total_ms = int((selector_end - selector_start) * 1000)
+    page_read_ms = int((page_read_end - page_read_start) * 1000)
+    graph_expansion_ms = int((graph_expansion_end - graph_expansion_start) * 1000)
 
-    response = AskResponse(
-        answer=answer_result.answer,
-        citations=citations,
-        pages_used=pages_used,
-        pages=pages,
-        trace={
-            "selection_method": "service-owned llm page selector + answerer",
-            "graph_expansion": {
-                "enabled": request.use_graph_expansion,
-                "neighbors_added": [
-                    block["page_name"] for block in expansion_blocks
-                ],
-                "neighbors_count": len(expansion_blocks),
+    answerer = get_answerer_runner()
+
+    def _normalize_citations(raw_citations: list[Any]) -> list[str]:
+        citations: list[str] = []
+        for raw_citation in raw_citations:
+            if not isinstance(raw_citation, str):
+                continue
+            citation = raw_citation.strip()
+            if not citation:
+                continue
+            if not citation.endswith(".md"):
+                citation = f"{citation}.md"
+            citation = store.normalize_page_name(citation)
+            if citation in allowed_citations:
+                citations.append(citation)
+        return list(dict.fromkeys(citations))
+
+    def _build_response(*, answer_result: Any, answerer_total_ms: int) -> AskResponse:
+        citations = _normalize_citations(getattr(answer_result, "citations", []))
+        request_wall_time_ms = int((time.perf_counter() - request_started) * 1000)
+        overhead_ms = max(
+            0,
+            request_wall_time_ms - selector_total_ms - page_read_ms - graph_expansion_ms - answerer_total_ms,
+        )
+        response = AskResponse(
+            answer=answer_result.answer,
+            citations=citations,
+            pages_used=pages_used,
+            pages=pages,
+            trace={
+                "selection_method": "service-owned llm page selector + answerer",
+                "graph_expansion": {
+                    "enabled": request.use_graph_expansion,
+                    "neighbors_added": [block["page_name"] for block in expansion_blocks],
+                    "neighbors_count": len(expansion_blocks),
+                },
+                "selector": {
+                    "model": selector.model,
+                    "tool_trace": selection_result.tool_trace,
+                    "token_summary": selection_result.token_summary,
+                    "timing_summary": selection_result.timing_summary,
+                },
+                "answerer": {
+                    "model": answerer.model,
+                    "token_summary": answer_result.token_summary,
+                    "timing_summary": answer_result.timing_summary,
+                },
+                "total": {
+                    "request_wall_time_ms": request_wall_time_ms,
+                    "total_llm_calls": (
+                        int(selection_result.token_summary["calls"])
+                        + int(answer_result.token_summary["calls"])
+                    ),
+                    "total_tracked_tokens": (
+                        int(selection_result.token_summary["total_tracked_tokens"])
+                        + int(answer_result.token_summary["total_tracked_tokens"])
+                    ),
+                    "total_cost_usd": round(
+                        _compute_call_cost(selection_result.token_summary)
+                        + _compute_call_cost(answer_result.token_summary),
+                        6,
+                    ),
+                },
+                "phase_timings_ms": {
+                    "selector_total": selector_total_ms,
+                    "page_read": page_read_ms,
+                    "graph_expansion": graph_expansion_ms,
+                    "answerer_total": answerer_total_ms,
+                    "overhead": overhead_ms,
+                },
             },
-            "selector": {
-                "model": selector.model,
-                "tool_trace": selection_result.tool_trace,
-                "token_summary": selection_result.token_summary,
-                "timing_summary": selection_result.timing_summary,
+        )
+        logger.info(
+            "ask_response %s",
+            json.dumps(
+                {
+                    "question": request.question,
+                    "answer_length": len(response.answer),
+                    "citations": response.citations,
+                    "pages_used": response.pages_used,
+                    "total_tokens": response.trace["total"]["total_tracked_tokens"],
+                },
+                ensure_ascii=False,
+            ),
+        )
+        return response
+
+    if request.stream:
+        def _event_stream() -> Any:
+            # Small metadata burst so clients can show what context will be used.
+            meta_pages = [
+                {"page_name": p.page_name, "title": p.title, "summary": p.summary}
+                for p in pages
+            ]
+            yield _sse({"type": "meta", "pages_used": pages_used, "pages": meta_pages}, event="meta")
+
+            extractor = _JsonStringFieldExtractor()
+            raw_fallback_buffer = ""
+            raw_mode = False
+
+            answerer_start = time.perf_counter()
+            final_answer_result = None
+            try:
+                for event in answerer.stream(question=request.question, pages=answerer_input_pages):
+                    if event.get("type") == "delta":
+                        raw = event.get("text", "")
+                        if not isinstance(raw, str) or not raw:
+                            continue
+
+                        if raw_mode:
+                            yield _sse({"type": "delta", "text": raw}, event="delta")
+                            continue
+
+                        extracted = extractor.feed(raw)
+                        if extracted:
+                            yield _sse({"type": "delta", "text": extracted}, event="delta")
+                            continue
+
+                        if not extractor.started:
+                            raw_fallback_buffer += raw
+                            if len(raw_fallback_buffer) >= 200:
+                                raw_mode = True
+                                yield _sse({"type": "delta", "text": raw_fallback_buffer}, event="delta")
+                                raw_fallback_buffer = ""
+                        continue
+
+                    if event.get("type") == "final":
+                        final_answer_result = event.get("result")
+                        break
+            except Exception as exc:
+                yield _sse({"type": "error", "message": str(exc)}, event="error")
+                return
+
+            if final_answer_result is None:
+                yield _sse({"type": "error", "message": "Answer stream ended without a final result"}, event="error")
+                return
+
+            answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
+            response = _build_response(answer_result=final_answer_result, answerer_total_ms=answerer_total_ms)
+            yield _sse(
+                {"type": "done", "response": json.loads(response.model_dump_json())},
+                event="done",
+            )
+
+        return StreamingResponse(
+            _event_stream(),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                # Nginx: prevent buffering so deltas flush immediately.
+                "X-Accel-Buffering": "no",
             },
-            "answerer": {
-                "model": answerer.model,
-                "token_summary": answer_result.token_summary,
-                "timing_summary": answer_result.timing_summary,
-            },
-            "total": {
-                "request_wall_time_ms": int((time.perf_counter() - request_started) * 1000),
-                "total_llm_calls": (
-                    int(selection_result.token_summary["calls"])
-                    + int(answer_result.token_summary["calls"])
-                ),
-                "total_tracked_tokens": (
-                    int(selection_result.token_summary["total_tracked_tokens"])
-                    + int(answer_result.token_summary["total_tracked_tokens"])
-                ),
-                "total_cost_usd": round(
-                    _compute_call_cost(selection_result.token_summary)
-                    + _compute_call_cost(answer_result.token_summary),
-                    6,
-                ),
-            },
-            "phase_timings_ms": {
-                "selector_total": int((selector_end - selector_start) * 1000),
-                "page_read": int((page_read_end - page_read_start) * 1000),
-                "graph_expansion": int((graph_expansion_end - graph_expansion_start) * 1000),
-                "answerer_total": int((answerer_end - answerer_start) * 1000),
-                "overhead": max(
-                    0,
-                    int((time.perf_counter() - request_started) * 1000)
-                    - int((selector_end - selector_start) * 1000)
-                    - int((page_read_end - page_read_start) * 1000)
-                    - int((graph_expansion_end - graph_expansion_start) * 1000)
-                    - int((answerer_end - answerer_start) * 1000),
-                ),
-            },
-        },
-    )
-    logger.info(
-        "ask_response %s",
-        json.dumps(
-            {
-                "question": request.question,
-                "answer_length": len(response.answer),
-                "citations": response.citations,
-                "pages_used": response.pages_used,
-                "total_tokens": response.trace["total"]["total_tracked_tokens"],
-            },
-            ensure_ascii=False,
-        ),
-    )
-    return response
+        )
+
+    answerer_start = time.perf_counter()
+    try:
+        answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
+    return _build_response(answer_result=answer_result, answerer_total_ms=answerer_total_ms)
