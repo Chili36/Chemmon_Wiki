@@ -6,7 +6,7 @@ import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any, Protocol, Iterator, Literal, TypedDict
 
 from anthropic import Anthropic
 from dotenv import load_dotenv
@@ -42,6 +42,7 @@ If you cannot answer from the provided pages, return:
 
 class AnthropicMessagesClient(Protocol):
     def create(self, **kwargs: Any) -> Any: ...
+    def stream(self, **kwargs: Any) -> Any: ...
 
 
 class AnthropicClientProtocol(Protocol):
@@ -55,6 +56,19 @@ class AnswerResult:
     citations: list[str]
     token_summary: dict[str, Any]
     timing_summary: dict[str, Any]
+
+
+class AnswerStreamDelta(TypedDict):
+    type: Literal["delta"]
+    text: str
+
+
+class AnswerStreamFinal(TypedDict):
+    type: Literal["final"]
+    result: AnswerResult
+
+
+AnswerStreamEvent = AnswerStreamDelta | AnswerStreamFinal
 
 
 def _get_block_value(block: Any, key: str, default: Any = None) -> Any:
@@ -198,3 +212,86 @@ class AnthropicChemMonAnswerer:
                 ],
             },
         )
+
+    def stream(
+        self,
+        question: str,
+        pages: list[dict[str, Any]],
+    ) -> Iterator[AnswerStreamEvent]:
+        """Stream the raw model text deltas, then yield a final AnswerResult.
+
+        The model is still instructed to return JSON only (see ANSWERER_SYSTEM_PROMPT).
+        Streaming callers can extract the `answer` field progressively while the
+        request is in-flight, then rely on the final AnswerResult for citations
+        and token accounting.
+        """
+        answerer_started = time.perf_counter()
+        llm_started = time.perf_counter()
+
+        with self.client.messages.stream(
+            model=self.model,
+            max_tokens=self.max_tokens,
+            system=ANSWERER_SYSTEM_PROMPT,
+            messages=[
+                {
+                    "role": "user",
+                    "content": json.dumps(
+                        {"question": question, "pages": pages},
+                        ensure_ascii=False,
+                    ),
+                }
+            ],
+        ) as stream:
+            for text in stream.text_stream:
+                if text:
+                    yield {"type": "delta", "text": text}
+
+            final_message = stream.get_final_message()
+            try:
+                final_text = stream.get_final_text()
+            except Exception:
+                final_text = _response_text(_get_block_value(final_message, "content", []))
+
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        usage = _usage_dict(
+            _get_block_value(final_message, "usage"),
+            stop_reason=_get_block_value(final_message, "stop_reason"),
+        )
+
+        data = _extract_json_payload(final_text)
+        if data and "answer" in data:
+            answer = data["answer"]
+            citations = data.get("citations", [])
+        else:
+            answer = final_text.strip()
+            citations = []
+
+        yield {
+            "type": "final",
+            "result": AnswerResult(
+                answer=answer,
+                citations=citations,
+                token_summary={
+                    "model": self.model,
+                    "calls": 1,
+                    "input_tokens": usage["input_tokens"],
+                    "output_tokens": usage["output_tokens"],
+                    "cache_creation_input_tokens": usage["cache_creation_input_tokens"],
+                    "cache_read_input_tokens": usage["cache_read_input_tokens"],
+                    "total_tracked_tokens": usage["total_tracked_tokens"],
+                    "per_call": [usage],
+                },
+                timing_summary={
+                    "calls": 1,
+                    "llm_time_ms": llm_duration_ms,
+                    "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
+                    "per_call": [
+                        {
+                            "call_number": 1,
+                            "duration_ms": llm_duration_ms,
+                            "stop_reason": _get_block_value(final_message, "stop_reason"),
+                        }
+                    ],
+                },
+            ),
+        }
