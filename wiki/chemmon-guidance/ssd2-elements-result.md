@@ -16,6 +16,7 @@ related:
   - "[[ssd2-result-method-accreditation]]"
   - "[[ssd2-result-recovery-correction]]"
   - "[[ssd2-result-uncertainty]]"
+  - "[[ssd2-result-identification]]"
 ---
 
 # SSD2 Elements: Result Values
