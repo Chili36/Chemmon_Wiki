@@ -183,3 +183,64 @@ class WikiAnswerer:
                 "per_call": [{"call_number": 1, "duration_ms": llm_duration_ms, "stop_reason": finish_reason}],
             },
         )
+
+    def stream(
+        self,
+        question: str,
+        pages: list[dict[str, Any]],
+    ) -> Iterator[AnswerStreamEvent]:
+        answerer_started = time.perf_counter()
+        llm_started = time.perf_counter()
+        accumulated_text = ""
+        usage_data: Any = None
+        finish_reason: str | None = None
+
+        try:
+            response_stream = self.client.chat.completions.create(
+                model=self.model_id,
+                max_tokens=self.max_tokens,
+                messages=self._build_messages(question, pages),
+                stream=True,
+                stream_options={"include_usage": True},
+            )
+
+            for chunk in response_stream:
+                if chunk.choices:
+                    delta = chunk.choices[0].delta
+                    if delta and delta.content:
+                        accumulated_text += delta.content
+                        yield {"type": "delta", "text": delta.content}
+                    if chunk.choices[0].finish_reason:
+                        finish_reason = chunk.choices[0].finish_reason
+                if chunk.usage:
+                    usage_data = chunk.usage
+
+        except Exception:
+            result = self.run(question, pages)
+            yield {"type": "delta", "text": result.answer}
+            yield {"type": "final", "result": result}
+            return
+
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        usage = _normalize_usage(usage_data, finish_reason)
+        answer, citations = self._parse_answer(accumulated_text)
+
+        yield {
+            "type": "final",
+            "result": AnswerResult(
+                answer=answer,
+                citations=citations,
+                token_summary={
+                    "model": self.model_id,
+                    "calls": 1,
+                    **{k: usage[k] for k in ("input_tokens", "output_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "total_tracked_tokens")},
+                    "per_call": [usage],
+                },
+                timing_summary={
+                    "calls": 1,
+                    "llm_time_ms": llm_duration_ms,
+                    "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
+                    "per_call": [{"call_number": 1, "duration_ms": llm_duration_ms, "stop_reason": finish_reason}],
+                },
+            ),
+        }
