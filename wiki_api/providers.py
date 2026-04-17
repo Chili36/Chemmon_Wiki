@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import os
+import re
 from dataclasses import dataclass
 from typing import Any
 
@@ -110,6 +112,51 @@ def client_for_model(model_str: str) -> tuple[OpenAI, str]:
 
 def clear_client_cache() -> None:
     _client_cache.clear()
+
+
+def extract_json_payload(text: str) -> dict[str, Any] | None:
+    text = text.strip()
+    if not text:
+        return None
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    fenced = re.search(r"```json\s*(\{.*\})\s*```", text, flags=re.DOTALL)
+    if fenced:
+        try:
+            return json.loads(fenced.group(1))
+        except json.JSONDecodeError:
+            pass
+    brace_start = text.find("{")
+    brace_end = text.rfind("}")
+    if brace_start != -1 and brace_end != -1 and brace_end > brace_start:
+        try:
+            return json.loads(text[brace_start : brace_end + 1])
+        except json.JSONDecodeError:
+            pass
+    return None
+
+
+def aggregate_usage(usages: list[dict[str, int | str | None]], model: str) -> dict[str, Any]:
+    return {
+        "model": model,
+        "calls": len(usages),
+        "input_tokens": sum(int(u["input_tokens"]) for u in usages),
+        "output_tokens": sum(int(u["output_tokens"]) for u in usages),
+        "cache_creation_input_tokens": sum(int(u["cache_creation_input_tokens"]) for u in usages),
+        "cache_read_input_tokens": sum(int(u["cache_read_input_tokens"]) for u in usages),
+        "total_tracked_tokens": sum(int(u["total_tracked_tokens"]) for u in usages),
+        "per_call": usages,
+    }
+
+
+def aggregate_timing(timings: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "calls": len(timings),
+        "llm_time_ms": sum(int(t["duration_ms"]) for t in timings),
+        "per_call": timings,
+    }
 
 
 def normalize_usage(usage: Any, finish_reason: str | None) -> dict[str, int | str | None]:

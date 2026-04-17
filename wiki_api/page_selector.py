@@ -2,20 +2,18 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import time
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
-
-from .providers import client_for_model, normalize_usage as _normalize_usage
+from .providers import (
+    aggregate_timing as _aggregate_timing,
+    aggregate_usage as _aggregate_usage,
+    client_for_model,
+    extract_json_payload,
+    normalize_usage as _normalize_usage,
+)
 from .wiki_store import WikiStore
-
-
-REPO_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(REPO_ROOT / ".env")
 
 
 SELECTION_SYSTEM_PROMPT = """You are the ChemMon wiki page selector.
@@ -42,43 +40,6 @@ class PageSelectionResult:
     timing_summary: dict[str, Any]
 
 
-def _extract_json_payload(text: str) -> dict[str, Any]:
-    text = text.strip()
-    if not text:
-        raise ValueError("Empty response from page selector")
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-    fenced = re.search(r"```json\s*(\{.*\})\s*```", text, flags=re.DOTALL)
-    if fenced:
-        return json.loads(fenced.group(1))
-    brace_start = text.find("{")
-    brace_end = text.rfind("}")
-    if brace_start != -1 and brace_end != -1 and brace_end > brace_start:
-        return json.loads(text[brace_start : brace_end + 1])
-    raise ValueError("Could not extract JSON from page selector response")
-
-
-def _aggregate_usage(usages: list[dict[str, int | str | None]], model: str) -> dict[str, Any]:
-    return {
-        "model": model,
-        "calls": len(usages),
-        "input_tokens": sum(int(u["input_tokens"]) for u in usages),
-        "output_tokens": sum(int(u["output_tokens"]) for u in usages),
-        "cache_creation_input_tokens": sum(int(u["cache_creation_input_tokens"]) for u in usages),
-        "cache_read_input_tokens": sum(int(u["cache_read_input_tokens"]) for u in usages),
-        "total_tracked_tokens": sum(int(u["total_tracked_tokens"]) for u in usages),
-        "per_call": usages,
-    }
-
-
-def _aggregate_timing(timings: list[dict[str, Any]]) -> dict[str, Any]:
-    return {
-        "calls": len(timings),
-        "llm_time_ms": sum(int(t["duration_ms"]) for t in timings),
-        "per_call": timings,
-    }
 
 
 def _read_pages_payload(
@@ -171,13 +132,13 @@ class WikiPageSelector:
         timing_trace = [{"call_number": 1, "duration_ms": llm_duration_ms, "stop_reason": finish_reason}]
 
         output_text = response.choices[0].message.content or "" if response.choices else ""
-        try:
-            data = _extract_json_payload(output_text)
-            raw = data.get("page_names", []) if isinstance(data, dict) else []
+        data = extract_json_payload(output_text)
+        if data and isinstance(data, dict):
+            raw = data.get("page_names", [])
             if not isinstance(raw, list):
                 raw = [raw]
             selected_page_names = [str(name) for name in raw]
-        except (ValueError, json.JSONDecodeError, AttributeError):
+        else:
             selected_page_names = []
 
         pages_read: list[str] = []
