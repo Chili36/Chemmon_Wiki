@@ -10,7 +10,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from .providers import client_for_model
+from .providers import client_for_model, normalize_usage as _normalize_usage
 from .wiki_store import WikiStore
 
 
@@ -58,30 +58,6 @@ def _extract_json_payload(text: str) -> dict[str, Any]:
     if brace_start != -1 and brace_end != -1 and brace_end > brace_start:
         return json.loads(text[brace_start : brace_end + 1])
     raise ValueError("Could not extract JSON from page selector response")
-
-
-def _normalize_usage(usage: Any, finish_reason: str | None) -> dict[str, int | str | None]:
-    if usage is None:
-        return {
-            "stop_reason": finish_reason,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0,
-            "total_tracked_tokens": 0,
-        }
-    input_tokens = int(getattr(usage, "prompt_tokens", 0) or getattr(usage, "input_tokens", 0) or 0)
-    output_tokens = int(getattr(usage, "completion_tokens", 0) or getattr(usage, "output_tokens", 0) or 0)
-    cache_creation = int(getattr(usage, "cache_creation_input_tokens", 0) or 0)
-    cache_read = int(getattr(usage, "cache_read_input_tokens", 0) or 0)
-    return {
-        "stop_reason": finish_reason,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "cache_creation_input_tokens": cache_creation,
-        "cache_read_input_tokens": cache_read,
-        "total_tracked_tokens": input_tokens + output_tokens + cache_creation + cache_read,
-    }
 
 
 def _aggregate_usage(usages: list[dict[str, int | str | None]], model: str) -> dict[str, Any]:

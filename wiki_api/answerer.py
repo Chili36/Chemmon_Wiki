@@ -10,7 +10,7 @@ from typing import Any, Iterator, Literal, TypedDict
 
 from dotenv import load_dotenv
 
-from .providers import client_for_model
+from .providers import client_for_model, normalize_usage as _normalize_usage
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -84,35 +84,6 @@ def _extract_json_payload(text: str) -> dict[str, Any] | None:
         except json.JSONDecodeError:
             pass
     return None
-
-
-def _normalize_usage(usage: Any, finish_reason: str | None) -> dict[str, int | str | None]:
-    """Normalise usage from either OpenAI-style (prompt_tokens/completion_tokens)
-    or Anthropic-style (input_tokens/output_tokens) usage objects.
-
-    Duplicated from page_selector.py — will be extracted to a shared location in Task 5.
-    """
-    if usage is None:
-        return {
-            "stop_reason": finish_reason,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0,
-            "total_tracked_tokens": 0,
-        }
-    input_tokens = int(getattr(usage, "prompt_tokens", 0) or getattr(usage, "input_tokens", 0) or 0)
-    output_tokens = int(getattr(usage, "completion_tokens", 0) or getattr(usage, "output_tokens", 0) or 0)
-    cache_creation = int(getattr(usage, "cache_creation_input_tokens", 0) or 0)
-    cache_read = int(getattr(usage, "cache_read_input_tokens", 0) or 0)
-    return {
-        "stop_reason": finish_reason,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "cache_creation_input_tokens": cache_creation,
-        "cache_read_input_tokens": cache_read,
-        "total_tracked_tokens": input_tokens + output_tokens + cache_creation + cache_read,
-    }
 
 
 class WikiAnswerer:

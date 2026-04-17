@@ -23,14 +23,14 @@ _WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
-selector_runner: WikiPageSelector | Any | None = None
-answerer_runner: WikiAnswerer | Any | None = None
+selector_runner: WikiPageSelector | None = None
+answerer_runner: WikiAnswerer | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 
-def get_selector_runner() -> WikiPageSelector | Any:
+def get_selector_runner() -> WikiPageSelector:
     """Return a page-selector instance using the unified WikiPageSelector."""
     global selector_runner
     if selector_runner is None:
@@ -38,7 +38,7 @@ def get_selector_runner() -> WikiPageSelector | Any:
     return selector_runner
 
 
-def get_answerer_runner() -> WikiAnswerer | Any:
+def get_answerer_runner() -> WikiAnswerer:
     global answerer_runner
     if answerer_runner is None:
         answerer_runner = WikiAnswerer()
@@ -519,13 +519,13 @@ def ask_question(request: AskRequest) -> AskResponse:
                     "neighbors_count": len(expansion_blocks),
                 },
                 "selector": {
-                    "model": selector.model,
+                    "model": selector.model_id,
                     "tool_trace": selection_result.tool_trace,
                     "token_summary": selection_result.token_summary,
                     "timing_summary": selection_result.timing_summary,
                 },
                 "answerer": {
-                    "model": answerer.model,
+                    "model": answerer.model_id,
                     "token_summary": answer_result.token_summary,
                     "timing_summary": answer_result.timing_summary,
                 },
