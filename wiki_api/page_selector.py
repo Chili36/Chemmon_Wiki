@@ -6,39 +6,17 @@ import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any
 
-from anthropic import Anthropic
 from dotenv import load_dotenv
-from openai import OpenAI
 
+from .providers import client_for_model
 from .wiki_store import WikiStore
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
 
-
-READ_WIKI_PAGES_TOOL = {
-    "name": "read_wiki_pages",
-    "description": (
-        "Read one or more non-index pages from the local ChemMon wiki by filename. "
-        "Use this to batch the page reads you need after reviewing the provided index."
-    ),
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "page_names": {
-                "type": "array",
-                "items": {"type": "string"},
-                "description": "Wiki filenames to read.",
-            }
-        },
-        "required": ["page_names"],
-    },
-}
-
-TOOLS = [READ_WIKI_PAGES_TOOL]
 
 SELECTION_SYSTEM_PROMPT = """You are the ChemMon wiki page selector.
 
@@ -56,35 +34,12 @@ Rules:
 """
 
 
-class AnthropicMessagesClient(Protocol):
-    def create(self, **kwargs: Any) -> Any: ...
-
-
-class AnthropicClientProtocol(Protocol):
-    @property
-    def messages(self) -> AnthropicMessagesClient: ...
-
-
 @dataclass(frozen=True)
 class PageSelectionResult:
     pages_used: list[str]
     tool_trace: list[dict[str, Any]]
     token_summary: dict[str, Any]
     timing_summary: dict[str, Any]
-
-
-def _get_block_value(block: Any, key: str, default: Any = None) -> Any:
-    if isinstance(block, dict):
-        return block.get(key, default)
-    return getattr(block, key, default)
-
-
-def _response_text(content_blocks: list[Any]) -> str:
-    parts: list[str] = []
-    for block in content_blocks:
-        if _get_block_value(block, "type") == "text":
-            parts.append(_get_block_value(block, "text", ""))
-    return "".join(parts).strip()
 
 
 def _extract_json_payload(text: str) -> dict[str, Any]:
@@ -105,13 +60,22 @@ def _extract_json_payload(text: str) -> dict[str, Any]:
     raise ValueError("Could not extract JSON from page selector response")
 
 
-def _usage_dict(usage: Any, *, stop_reason: str | None) -> dict[str, int | str | None]:
-    input_tokens = int(_get_block_value(usage, "input_tokens", 0) or 0)
-    output_tokens = int(_get_block_value(usage, "output_tokens", 0) or 0)
-    cache_creation = int(_get_block_value(usage, "cache_creation_input_tokens", 0) or 0)
-    cache_read = int(_get_block_value(usage, "cache_read_input_tokens", 0) or 0)
+def _normalize_usage(usage: Any, finish_reason: str | None) -> dict[str, int | str | None]:
+    if usage is None:
+        return {
+            "stop_reason": finish_reason,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 0,
+        }
+    input_tokens = int(getattr(usage, "prompt_tokens", 0) or getattr(usage, "input_tokens", 0) or 0)
+    output_tokens = int(getattr(usage, "completion_tokens", 0) or getattr(usage, "output_tokens", 0) or 0)
+    cache_creation = int(getattr(usage, "cache_creation_input_tokens", 0) or 0)
+    cache_read = int(getattr(usage, "cache_read_input_tokens", 0) or 0)
     return {
-        "stop_reason": stop_reason,
+        "stop_reason": finish_reason,
         "input_tokens": input_tokens,
         "output_tokens": output_tokens,
         "cache_creation_input_tokens": cache_creation,
@@ -186,95 +150,33 @@ def _read_pages_payload(
     return {"pages": pages, "skipped": skipped, "errors": errors}
 
 
-def _selection_payload_from_response(content: list[Any]) -> list[str]:
-    tool_uses = [b for b in content if _get_block_value(b, "type") == "tool_use"]
-    if tool_uses:
-        page_names: list[str] = []
-        for block in tool_uses:
-            raw = _get_block_value(block, "input", {}).get("page_names", [])
-            if not isinstance(raw, list):
-                raw = [raw]
-            page_names.extend(str(name) for name in raw)
-        return page_names
-    final_text = _response_text(content)
-    data = _extract_json_payload(final_text)
-    raw = data.get("page_names", [])
-    if not isinstance(raw, list):
-        raw = [raw]
-    return [str(name) for name in raw]
-
-
-def build_anthropic_client() -> AnthropicClientProtocol:
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY is not set")
-    return Anthropic(api_key=api_key)
-
-
-def build_openai_client() -> OpenAI:
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENAI_API_KEY is not set")
-    return OpenAI(api_key=api_key)
-
-
-def _openai_usage_dict(usage: Any, *, stop_reason: str | None) -> dict[str, int | str | None]:
-    """Convert an OpenAI Responses-API usage object to the same shape as
-    _usage_dict() so downstream aggregation helpers work identically.
-
-    The Responses API does not expose prompt-cache fields the way Anthropic
-    does; report them as 0 so the dict shape stays consistent.
-    """
-    input_tokens = int(_get_block_value(usage, "input_tokens", 0) or 0)
-    output_tokens = int(_get_block_value(usage, "output_tokens", 0) or 0)
-    return {
-        "stop_reason": stop_reason,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "cache_creation_input_tokens": 0,
-        "cache_read_input_tokens": 0,
-        "total_tracked_tokens": input_tokens + output_tokens,
-    }
-
-
-def _resolve_model(*env_keys: str, default: str) -> str:
-    for key in env_keys:
-        value = os.getenv(key)
-        if value:
-            return value
-    return default
-
-
-class OpenAIWikiPageSelector:
-    """OpenAI Responses-API backed wiki page selector.
-
-    Same output contract as AnthropicWikiPageSelector (returns a
-    PageSelectionResult) but uses the OpenAI Responses API. No tool calling —
-    relies on the system prompt's JSON fallback ('return JSON only:
-    {"page_names": []}') because OpenAI tool-calling format differs and
-    isn't worth the complexity for a one-shot selection call.
-    """
-
+class WikiPageSelector:
     def __init__(
         self,
         *,
         store: WikiStore,
         client: Any | None = None,
-        model: str | None = None,
+        model_id: str | None = None,
+        model_str: str | None = None,
         max_pages: int = 6,
     ):
         self.store = store
-        self.client = client or build_openai_client()
-        self.model = model or _resolve_model("WIKI_SELECTOR_MODEL", default="gpt-5.4-mini")
         self.max_pages = max_pages
+        if client and model_id:
+            self.client = client
+            self.model_id = model_id
+        else:
+            resolved_str = model_str or os.getenv("WIKI_SELECTOR_MODEL", "openai/gpt-5.4-mini")
+            self.client, self.model_id = client_for_model(resolved_str)
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
         index_content = self.store.read_page("index.md").content
         llm_started = time.perf_counter()
-        response = self.client.responses.create(
-            model=self.model,
-            input=[
+
+        response = self.client.chat.completions.create(
+            model=self.model_id,
+            messages=[
                 {"role": "system", "content": SELECTION_SYSTEM_PROMPT},
                 {
                     "role": "user",
@@ -284,27 +186,15 @@ class OpenAIWikiPageSelector:
                     ),
                 },
             ],
+            response_format={"type": "json_object"},
         )
+
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        finish_reason = response.choices[0].finish_reason if response.choices else None
+        usage = _normalize_usage(response.usage, finish_reason)
+        timing_trace = [{"call_number": 1, "duration_ms": llm_duration_ms, "stop_reason": finish_reason}]
 
-        output_text = _get_block_value(response, "output_text", "") or ""
-        # OpenAI Responses API does not expose a stop_reason identical to
-        # Anthropic's; record None so trace consumers see a consistent shape.
-        stop_reason: str | None = None
-
-        timing_trace = [{
-            "call_number": 1,
-            "duration_ms": llm_duration_ms,
-            "stop_reason": stop_reason,
-        }]
-        usage_trace = [_openai_usage_dict(
-            _get_block_value(response, "usage"),
-            stop_reason=stop_reason,
-        )]
-
-        # Parse JSON out of the plain-text response. _extract_json_payload
-        # handles the three common shapes: raw JSON, fenced ```json, and
-        # text that happens to contain a {...} block.
+        output_text = response.choices[0].message.content or "" if response.choices else ""
         try:
             data = _extract_json_payload(output_text)
             raw = data.get("page_names", []) if isinstance(data, dict) else []
@@ -323,70 +213,11 @@ class OpenAIWikiPageSelector:
             pages_read=pages_read,
             tool_trace=tool_trace,
         )
+
         return PageSelectionResult(
             pages_used=list(dict.fromkeys(["index.md", *pages_read])),
             tool_trace=tool_trace,
-            token_summary=_aggregate_usage(usage_trace, self.model),
-            timing_summary={
-                **_aggregate_timing(timing_trace),
-                "selector_wall_time_ms": int((time.perf_counter() - selector_started) * 1000),
-            },
-        )
-
-
-class AnthropicWikiPageSelector:
-    def __init__(
-        self,
-        *,
-        store: WikiStore,
-        client: AnthropicClientProtocol | None = None,
-        model: str | None = None,
-        max_pages: int = 6,
-        max_tokens: int = 1500,
-    ):
-        self.store = store
-        self.client = client or build_anthropic_client()
-        self.model = model or _resolve_model("WIKI_SELECTOR_MODEL", default="claude-sonnet-4-6")
-        self.max_pages = max_pages
-        self.max_tokens = max_tokens
-
-    def run(self, payload: dict[str, Any]) -> PageSelectionResult:
-        selector_started = time.perf_counter()
-        index_content = self.store.read_page("index.md").content
-        llm_started = time.perf_counter()
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=SELECTION_SYSTEM_PROMPT,
-            tools=TOOLS,
-            messages=[
-                {
-                    "role": "user",
-                    "content": json.dumps(
-                        {"question": payload["question"], "wiki_index": index_content},
-                        ensure_ascii=False,
-                    ),
-                }
-            ],
-        )
-        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
-        timing_trace = [{"call_number": 1, "duration_ms": llm_duration_ms, "stop_reason": _get_block_value(response, "stop_reason")}]
-        usage_trace = [_usage_dict(_get_block_value(response, "usage"), stop_reason=_get_block_value(response, "stop_reason"))]
-        content = _get_block_value(response, "content", [])
-        selected_page_names = _selection_payload_from_response(content)
-        pages_read: list[str] = []
-        tool_trace: list[dict[str, Any]] = []
-        _read_pages_payload(
-            store=self.store,
-            requested_page_names=selected_page_names,
-            max_pages=self.max_pages,
-            pages_read=pages_read,
-            tool_trace=tool_trace,
-        )
-        return PageSelectionResult(
-            pages_used=list(dict.fromkeys(["index.md", *pages_read])),
-            tool_trace=tool_trace,
-            token_summary=_aggregate_usage(usage_trace, self.model),
+            token_summary=_aggregate_usage([usage], self.model_id),
             timing_summary={
                 **_aggregate_timing(timing_trace),
                 "selector_wall_time_ms": int((time.perf_counter() - selector_started) * 1000),
