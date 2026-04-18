@@ -2,18 +2,17 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import time
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Protocol, Iterator, Literal, TypedDict
+from typing import Any, Iterator, Literal, TypedDict
 
-from anthropic import Anthropic
-from dotenv import load_dotenv
+from .providers import (
+    aggregate_usage as _aggregate_usage,
+    client_for_model,
+    extract_json_payload,
+    normalize_usage as _normalize_usage,
+)
 
-
-REPO_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(REPO_ROOT / ".env")
 
 ANSWERER_SYSTEM_PROMPT = """You are the ChemMon wiki assistant.
 
@@ -40,16 +39,6 @@ If you cannot answer from the provided pages, return:
 """
 
 
-class AnthropicMessagesClient(Protocol):
-    def create(self, **kwargs: Any) -> Any: ...
-    def stream(self, **kwargs: Any) -> Any: ...
-
-
-class AnthropicClientProtocol(Protocol):
-    @property
-    def messages(self) -> AnthropicMessagesClient: ...
-
-
 @dataclass(frozen=True)
 class AnswerResult:
     answer: str
@@ -71,227 +60,116 @@ class AnswerStreamFinal(TypedDict):
 AnswerStreamEvent = AnswerStreamDelta | AnswerStreamFinal
 
 
-def _get_block_value(block: Any, key: str, default: Any = None) -> Any:
-    if isinstance(block, dict):
-        return block.get(key, default)
-    return getattr(block, key, default)
 
 
-def _response_text(content_blocks: list[Any]) -> str:
-    parts: list[str] = []
-    for block in content_blocks:
-        if _get_block_value(block, "type") == "text":
-            parts.append(_get_block_value(block, "text", ""))
-    return "".join(parts).strip()
-
-
-def _extract_json_payload(text: str) -> dict[str, Any] | None:
-    text = text.strip()
-    if not text:
-        return None
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-    fenced = re.search(r"```json\s*(\{.*\})\s*```", text, flags=re.DOTALL)
-    if fenced:
-        try:
-            return json.loads(fenced.group(1))
-        except json.JSONDecodeError:
-            pass
-    brace_start = text.find("{")
-    brace_end = text.rfind("}")
-    if brace_start != -1 and brace_end != -1 and brace_end > brace_start:
-        try:
-            return json.loads(text[brace_start : brace_end + 1])
-        except json.JSONDecodeError:
-            pass
-    return None
-
-
-def _usage_dict(usage: Any, *, stop_reason: str | None) -> dict[str, int | str | None]:
-    input_tokens = int(_get_block_value(usage, "input_tokens", 0) or 0)
-    output_tokens = int(_get_block_value(usage, "output_tokens", 0) or 0)
-    cache_creation = int(_get_block_value(usage, "cache_creation_input_tokens", 0) or 0)
-    cache_read = int(_get_block_value(usage, "cache_read_input_tokens", 0) or 0)
-    return {
-        "stop_reason": stop_reason,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "cache_creation_input_tokens": cache_creation,
-        "cache_read_input_tokens": cache_read,
-        "total_tracked_tokens": input_tokens + output_tokens + cache_creation + cache_read,
-    }
-
-
-def _resolve_model(*env_keys: str, default: str) -> str:
-    for key in env_keys:
-        value = os.getenv(key)
-        if value:
-            return value
-    return default
-
-
-def build_anthropic_client() -> AnthropicClientProtocol:
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY is not set")
-    return Anthropic(api_key=api_key)
-
-
-class AnthropicChemMonAnswerer:
+class WikiAnswerer:
     def __init__(
         self,
         *,
-        client: AnthropicClientProtocol | None = None,
-        model: str | None = None,
+        client: Any | None = None,
+        model_id: str | None = None,
+        model_str: str | None = None,
         max_tokens: int = 2000,
     ):
-        self.client = client or build_anthropic_client()
-        self.model = model or _resolve_model("WIKI_ANSWERER_MODEL", default="claude-sonnet-4-6")
         self.max_tokens = max_tokens
-
-    def run(
-        self,
-        question: str,
-        pages: list[dict[str, Any]],
-    ) -> AnswerResult:
-        answerer_started = time.perf_counter()
-        llm_started = time.perf_counter()
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=ANSWERER_SYSTEM_PROMPT,
-            messages=[
-                {
-                    "role": "user",
-                    "content": json.dumps(
-                        {"question": question, "pages": pages},
-                        ensure_ascii=False,
-                    ),
-                }
-            ],
-        )
-        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
-        usage = _usage_dict(
-            _get_block_value(response, "usage"),
-            stop_reason=_get_block_value(response, "stop_reason"),
-        )
-        final_text = _response_text(_get_block_value(response, "content", []))
-        data = _extract_json_payload(final_text)
-        if data and "answer" in data:
-            answer = data["answer"]
-            citations = data.get("citations", [])
+        if client and model_id:
+            self.client = client
+            self.model_id = model_id
         else:
-            answer = final_text
-            citations = []
+            resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-4-6")
+            self.client, self.model_id = client_for_model(resolved_str)
 
+    def _build_messages(self, question: str, pages: list[dict[str, Any]]) -> list[dict[str, str]]:
+        return [
+            {"role": "system", "content": ANSWERER_SYSTEM_PROMPT},
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {"question": question, "pages": pages},
+                    ensure_ascii=False,
+                ),
+            },
+        ]
+
+    def _parse_answer(self, text: str) -> tuple[str, list[str]]:
+        data = extract_json_payload(text)
+        if data and "answer" in data:
+            return data["answer"], data.get("citations", [])
+        return text.strip(), []
+
+    def _build_result(self, answer: str, citations: list[str], usage: dict, finish_reason: str | None, llm_ms: int, wall_start: float) -> AnswerResult:
         return AnswerResult(
             answer=answer,
             citations=citations,
-            token_summary={
-                "model": self.model,
-                "calls": 1,
-                "input_tokens": usage["input_tokens"],
-                "output_tokens": usage["output_tokens"],
-                "cache_creation_input_tokens": usage["cache_creation_input_tokens"],
-                "cache_read_input_tokens": usage["cache_read_input_tokens"],
-                "total_tracked_tokens": usage["total_tracked_tokens"],
-                "per_call": [usage],
-            },
+            token_summary=_aggregate_usage([usage], self.model_id),
             timing_summary={
                 "calls": 1,
-                "llm_time_ms": llm_duration_ms,
-                "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
-                "per_call": [
-                    {
-                        "call_number": 1,
-                        "duration_ms": llm_duration_ms,
-                        "stop_reason": _get_block_value(response, "stop_reason"),
-                    }
-                ],
+                "llm_time_ms": llm_ms,
+                "answerer_wall_time_ms": int((time.perf_counter() - wall_start) * 1000),
+                "per_call": [{"call_number": 1, "duration_ms": llm_ms, "stop_reason": finish_reason}],
             },
         )
+
+    def run(self, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
+        started = time.perf_counter()
+
+        response = self.client.chat.completions.create(
+            model=self.model_id,
+            max_tokens=self.max_tokens,
+            messages=self._build_messages(question, pages),
+            stream=False,
+        )
+
+        llm_ms = int((time.perf_counter() - started) * 1000)
+        finish_reason = response.choices[0].finish_reason if response.choices else None
+        usage = _normalize_usage(response.usage, finish_reason)
+        text = response.choices[0].message.content or "" if response.choices else ""
+        answer, citations = self._parse_answer(text)
+
+        return self._build_result(answer, citations, usage, finish_reason, llm_ms, started)
 
     def stream(
         self,
         question: str,
         pages: list[dict[str, Any]],
     ) -> Iterator[AnswerStreamEvent]:
-        """Stream the raw model text deltas, then yield a final AnswerResult.
+        started = time.perf_counter()
+        accumulated_text = ""
+        usage_data: Any = None
+        finish_reason: str | None = None
+        any_deltas_sent = False
 
-        The model is still instructed to return JSON only (see ANSWERER_SYSTEM_PROMPT).
-        Streaming callers can extract the `answer` field progressively while the
-        request is in-flight, then rely on the final AnswerResult for citations
-        and token accounting.
-        """
-        answerer_started = time.perf_counter()
-        llm_started = time.perf_counter()
+        try:
+            response_stream = self.client.chat.completions.create(
+                model=self.model_id,
+                max_tokens=self.max_tokens,
+                messages=self._build_messages(question, pages),
+                stream=True,
+                stream_options={"include_usage": True},
+            )
 
-        with self.client.messages.stream(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=ANSWERER_SYSTEM_PROMPT,
-            messages=[
-                {
-                    "role": "user",
-                    "content": json.dumps(
-                        {"question": question, "pages": pages},
-                        ensure_ascii=False,
-                    ),
-                }
-            ],
-        ) as stream:
-            for text in stream.text_stream:
-                if text:
-                    yield {"type": "delta", "text": text}
+            for chunk in response_stream:
+                if chunk.choices:
+                    delta = chunk.choices[0].delta
+                    if delta and delta.content:
+                        accumulated_text += delta.content
+                        any_deltas_sent = True
+                        yield {"type": "delta", "text": delta.content}
+                    if chunk.choices[0].finish_reason:
+                        finish_reason = chunk.choices[0].finish_reason
+                if chunk.usage:
+                    usage_data = chunk.usage
 
-            final_message = stream.get_final_message()
-            try:
-                final_text = stream.get_final_text()
-            except Exception:
-                final_text = _response_text(_get_block_value(final_message, "content", []))
+        except Exception:
+            if any_deltas_sent:
+                raise
+            result = self.run(question, pages)
+            yield {"type": "delta", "text": result.answer}
+            yield {"type": "final", "result": result}
+            return
 
-        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
-        usage = _usage_dict(
-            _get_block_value(final_message, "usage"),
-            stop_reason=_get_block_value(final_message, "stop_reason"),
-        )
+        llm_ms = int((time.perf_counter() - started) * 1000)
+        usage = _normalize_usage(usage_data, finish_reason)
+        answer, citations = self._parse_answer(accumulated_text)
 
-        data = _extract_json_payload(final_text)
-        if data and "answer" in data:
-            answer = data["answer"]
-            citations = data.get("citations", [])
-        else:
-            answer = final_text.strip()
-            citations = []
-
-        yield {
-            "type": "final",
-            "result": AnswerResult(
-                answer=answer,
-                citations=citations,
-                token_summary={
-                    "model": self.model,
-                    "calls": 1,
-                    "input_tokens": usage["input_tokens"],
-                    "output_tokens": usage["output_tokens"],
-                    "cache_creation_input_tokens": usage["cache_creation_input_tokens"],
-                    "cache_read_input_tokens": usage["cache_read_input_tokens"],
-                    "total_tracked_tokens": usage["total_tracked_tokens"],
-                    "per_call": [usage],
-                },
-                timing_summary={
-                    "calls": 1,
-                    "llm_time_ms": llm_duration_ms,
-                    "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
-                    "per_call": [
-                        {
-                            "call_number": 1,
-                            "duration_ms": llm_duration_ms,
-                            "stop_reason": _get_block_value(final_message, "stop_reason"),
-                        }
-                    ],
-                },
-            ),
-        }
+        yield {"type": "final", "result": self._build_result(answer, citations, usage, finish_reason, llm_ms, started)}

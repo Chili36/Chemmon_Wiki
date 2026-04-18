@@ -13,8 +13,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
-from .answerer import AnthropicChemMonAnswerer
-from .page_selector import AnthropicWikiPageSelector, OpenAIWikiPageSelector
+from .answerer import WikiAnswerer
+from .page_selector import WikiPageSelector
 from .wiki_store import WikiStore
 
 
@@ -23,35 +23,25 @@ _WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
-selector_runner: AnthropicWikiPageSelector | Any | None = None
-answerer_runner: AnthropicChemMonAnswerer | Any | None = None
+selector_runner: WikiPageSelector | None = None
+answerer_runner: WikiAnswerer | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 
-def get_selector_runner() -> AnthropicWikiPageSelector | OpenAIWikiPageSelector | Any:
-    """Return a page-selector instance, dispatching by WIKI_SELECTOR_MODEL.
-
-    Model names starting with 'gpt-' are routed to the OpenAI Responses-API
-    selector; everything else goes to the Anthropic selector (which is also
-    the default). This is a simple prefix match — if we ever need multi-
-    provider routing beyond OpenAI/Anthropic, promote to a registry.
-    """
+def get_selector_runner() -> WikiPageSelector:
+    """Return a page-selector instance using the unified WikiPageSelector."""
     global selector_runner
     if selector_runner is None:
-        requested_model = os.getenv("WIKI_SELECTOR_MODEL", "")
-        if requested_model.startswith("gpt-"):
-            selector_runner = OpenAIWikiPageSelector(store=store)
-        else:
-            selector_runner = AnthropicWikiPageSelector(store=store)
+        selector_runner = WikiPageSelector(store=store)
     return selector_runner
 
 
-def get_answerer_runner() -> AnthropicChemMonAnswerer | Any:
+def get_answerer_runner() -> WikiAnswerer:
     global answerer_runner
     if answerer_runner is None:
-        answerer_runner = AnthropicChemMonAnswerer()
+        answerer_runner = WikiAnswerer()
     return answerer_runner
 
 
@@ -529,13 +519,13 @@ def ask_question(request: AskRequest) -> AskResponse:
                     "neighbors_count": len(expansion_blocks),
                 },
                 "selector": {
-                    "model": selector.model,
+                    "model": selector.model_id,
                     "tool_trace": selection_result.tool_trace,
                     "token_summary": selection_result.token_summary,
                     "timing_summary": selection_result.timing_summary,
                 },
                 "answerer": {
-                    "model": answerer.model,
+                    "model": answerer.model_id,
                     "token_summary": answer_result.token_summary,
                     "timing_summary": answer_result.timing_summary,
                 },

@@ -1,107 +1,43 @@
 from __future__ import annotations
 
 import json
+from unittest.mock import MagicMock
 
-from wiki_api.answerer import AnthropicChemMonAnswerer
-
-
-def _response(*, stop_reason: str, content: list[dict[str, object]], input_tokens: int, output_tokens: int):
-    return {
-        "stop_reason": stop_reason,
-        "content": content,
-        "usage": {
-            "input_tokens": input_tokens,
-            "output_tokens": output_tokens,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0,
-        },
-    }
+from wiki_api.answerer import WikiAnswerer
 
 
-class FakeMessages:
-    def __init__(self, responses: list[dict[str, object]]) -> None:
-        self._responses = responses
-        self.calls: list[dict[str, object]] = []
-
-    def create(self, **kwargs: object) -> dict[str, object]:
-        self.calls.append(kwargs)
-        return self._responses[len(self.calls) - 1]
-
-
-class FakeAnthropicClient:
-    def __init__(self, responses: list[dict[str, object]]) -> None:
-        self.messages = FakeMessages(responses)
-
-
-class FakeStream:
-    def __init__(self, *, deltas: list[str], final_message: dict[str, object]) -> None:
-        self.text_stream = iter(deltas)
-        self._final_message = final_message
-
-    def get_final_text(self) -> str:
-        # The answerer expects the concatenated text blocks.
-        content = self._final_message.get("content", [])
-        if not isinstance(content, list) or not content:
-            return ""
-        first = content[0]
-        if isinstance(first, dict):
-            return str(first.get("text", ""))
-        return str(getattr(first, "text", ""))
-
-    def get_final_message(self) -> dict[str, object]:
-        return self._final_message
+def _chat_response(*, content: str, prompt_tokens: int = 200, completion_tokens: int = 50):
+    msg = MagicMock()
+    msg.content = content
+    choice = MagicMock()
+    choice.message = msg
+    choice.finish_reason = "stop"
+    usage = MagicMock()
+    usage.prompt_tokens = prompt_tokens
+    usage.completion_tokens = completion_tokens
+    resp = MagicMock()
+    resp.choices = [choice]
+    resp.usage = usage
+    return resp
 
 
-class FakeStreamManager:
-    def __init__(self, stream: FakeStream) -> None:
-        self._stream = stream
-
-    def __enter__(self) -> FakeStream:
-        return self._stream
-
-    def __exit__(self, exc_type, exc, tb) -> None:  # type: ignore[no-untyped-def]
-        return None
+def _fake_client(response):
+    client = MagicMock()
+    client.chat.completions.create.return_value = response
+    return client
 
 
-class FakeStreamingMessages(FakeMessages):
-    def __init__(self, responses: list[dict[str, object]], *, deltas: list[str], final_message: dict[str, object]) -> None:
-        super().__init__(responses)
-        self._deltas = deltas
-        self._final_message = final_message
-        self.stream_calls: list[dict[str, object]] = []
-
-    def stream(self, **kwargs: object) -> FakeStreamManager:  # type: ignore[override]
-        self.stream_calls.append(kwargs)
-        return FakeStreamManager(FakeStream(deltas=self._deltas, final_message=self._final_message))
-
-
-class FakeAnthropicStreamingClient:
-    def __init__(self, *, deltas: list[str], final_message: dict[str, object]) -> None:
-        self.messages = FakeStreamingMessages([], deltas=deltas, final_message=final_message)
-
-
-def test_answerer_returns_answer_with_citations() -> None:
+def test_answerer_returns_answer_with_citations():
     answer_payload = {
         "answer": "Yes, F33 is mandatory for acrylamide even when implicit.",
         "citations": ["acrylamide-rules.md"],
     }
-    client = FakeAnthropicClient(
-        [
-            _response(
-                stop_reason="end_turn",
-                content=[{"type": "text", "text": json.dumps(answer_payload)}],
-                input_tokens=200,
-                output_tokens=50,
-            )
-        ]
-    )
+    client = _fake_client(_chat_response(content=json.dumps(answer_payload)))
 
-    answerer = AnthropicChemMonAnswerer(client=client, model="fake-model")
+    answerer = WikiAnswerer(client=client, model_id="fake-model")
     result = answerer.run(
         question="Do I need F33 for acrylamide?",
-        pages=[
-            {"page_name": "acrylamide-rules.md", "content": "F33 is mandatory for acrylamide."},
-        ],
+        pages=[{"page_name": "acrylamide-rules.md", "content": "F33 is mandatory for acrylamide."}],
     )
 
     assert result.answer == "Yes, F33 is mandatory for acrylamide even when implicit."
@@ -109,68 +45,106 @@ def test_answerer_returns_answer_with_citations() -> None:
     assert result.token_summary["calls"] == 1
     assert result.timing_summary["answerer_wall_time_ms"] >= 0
 
-    first_call = client.messages.calls[0]
-    assert "ChemMon" in first_call["system"]
-    payload = json.loads(first_call["messages"][0]["content"])
+    call_kwargs = client.chat.completions.create.call_args.kwargs
+    assert call_kwargs["model"] == "fake-model"
+    assert call_kwargs["stream"] is False
+    msgs = call_kwargs["messages"]
+    assert "ChemMon" in msgs[0]["content"]
+    payload = json.loads(msgs[1]["content"])
     assert payload["question"] == "Do I need F33 for acrylamide?"
-    assert len(payload["pages"]) == 1
 
 
-def test_answerer_handles_plain_text_response() -> None:
-    client = FakeAnthropicClient(
-        [
-            _response(
-                stop_reason="end_turn",
-                content=[{"type": "text", "text": "The wiki does not cover this topic."}],
-                input_tokens=200,
-                output_tokens=30,
-            )
-        ]
-    )
+def test_answerer_handles_plain_text_response():
+    client = _fake_client(_chat_response(content="The wiki does not cover this topic."))
 
-    answerer = AnthropicChemMonAnswerer(client=client, model="fake-model")
-    result = answerer.run(
-        question="What is the meaning of life?",
-        pages=[],
-    )
+    answerer = WikiAnswerer(client=client, model_id="fake-model")
+    result = answerer.run(question="What is the meaning of life?", pages=[])
 
     assert result.answer == "The wiki does not cover this topic."
     assert result.citations == []
-    assert result.token_summary["calls"] == 1
 
 
-def test_answerer_stream_yields_deltas_then_final_result() -> None:
+def test_answerer_stream_yields_deltas_then_final():
     answer_payload = {
-        "answer": "Yes, F33 is mandatory for acrylamide even when implicit.",
+        "answer": "Yes, F33 is mandatory.",
         "citations": ["acrylamide-rules.md"],
     }
-    final_text = json.dumps(answer_payload)
-    deltas = [final_text[:15], final_text[15:]]
-    final_message = _response(
-        stop_reason="end_turn",
-        content=[{"type": "text", "text": final_text}],
-        input_tokens=200,
-        output_tokens=50,
-    )
-    client = FakeAnthropicStreamingClient(deltas=deltas, final_message=final_message)
+    full_text = json.dumps(answer_payload)
 
-    answerer = AnthropicChemMonAnswerer(client=client, model="fake-model")
+    chunk1 = MagicMock()
+    chunk1.choices = [MagicMock()]
+    chunk1.choices[0].delta = MagicMock()
+    chunk1.choices[0].delta.content = full_text[:20]
+    chunk1.choices[0].finish_reason = None
+    chunk1.usage = None
+
+    chunk2 = MagicMock()
+    chunk2.choices = [MagicMock()]
+    chunk2.choices[0].delta = MagicMock()
+    chunk2.choices[0].delta.content = full_text[20:]
+    chunk2.choices[0].finish_reason = "stop"
+    chunk2.usage = None
+
+    chunk_final = MagicMock()
+    chunk_final.choices = []
+    usage = MagicMock()
+    usage.prompt_tokens = 200
+    usage.completion_tokens = 50
+    chunk_final.usage = usage
+
+    client = MagicMock()
+    client.chat.completions.create.return_value = iter([chunk1, chunk2, chunk_final])
+
+    answerer = WikiAnswerer(client=client, model_id="fake-model")
     events = list(
         answerer.stream(
-            question="Do I need F33 for acrylamide?",
-            pages=[{"page_name": "acrylamide-rules.md", "content": "F33 is mandatory for acrylamide."}],
+            question="Do I need F33?",
+            pages=[{"page_name": "acrylamide-rules.md", "content": "F33 is mandatory."}],
         )
     )
 
     delta_text = "".join(e["text"] for e in events if e["type"] == "delta")
-    assert delta_text == final_text
+    assert delta_text == full_text
 
     finals = [e for e in events if e["type"] == "final"]
     assert len(finals) == 1
     result = finals[0]["result"]
-    assert result.answer == answer_payload["answer"]
+    assert result.answer == "Yes, F33 is mandatory."
     assert result.citations == ["acrylamide-rules.md"]
-    assert result.token_summary["calls"] == 1
 
-    first_call = client.messages.stream_calls[0]
-    assert "ChemMon" in first_call["system"]
+    call_kwargs = client.chat.completions.create.call_args.kwargs
+    assert call_kwargs["stream"] is True
+
+
+def test_answerer_stream_falls_back_on_error():
+    answer_payload = {
+        "answer": "Fallback answer.",
+        "citations": [],
+    }
+
+    client = MagicMock()
+    client.chat.completions.create.side_effect = [
+        Exception("streaming not supported"),
+        _chat_response(content=json.dumps(answer_payload)),
+    ]
+
+    answerer = WikiAnswerer(client=client, model_id="fake-model")
+    events = list(
+        answerer.stream(
+            question="Something?",
+            pages=[],
+        )
+    )
+
+    assert client.chat.completions.create.call_count == 2
+    first_call = client.chat.completions.create.call_args_list[0].kwargs
+    assert first_call["stream"] is True
+    second_call = client.chat.completions.create.call_args_list[1].kwargs
+    assert second_call["stream"] is False
+
+    delta_text = "".join(e["text"] for e in events if e["type"] == "delta")
+    assert delta_text == "Fallback answer."
+
+    finals = [e for e in events if e["type"] == "final"]
+    assert len(finals) == 1
+    assert finals[0]["result"].answer == "Fallback answer."

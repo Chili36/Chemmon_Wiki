@@ -24,7 +24,7 @@ def request(method: str, path: str, **kwargs: object) -> httpx.Response:
 class FakeSelector:
     def __init__(self) -> None:
         self.max_pages = 6
-        self.model = "fake-claude"
+        self.model_id = "fake-claude"
         self.calls: list[dict[str, object]] = []
 
     def run(self, payload: dict[str, object]) -> PageSelectionResult:
@@ -62,7 +62,7 @@ class FakeSelector:
 
 class FakeAnswerer:
     def __init__(self) -> None:
-        self.model = "fake-claude"
+        self.model_id = "fake-claude"
         self.calls: list[dict[str, object]] = []
 
     def run(self, question: str, pages: list[dict[str, object]]) -> AnswerResult:
@@ -100,7 +100,7 @@ class FakeAnswerer:
 
 class FakeBadAnswerer:
     def __init__(self) -> None:
-        self.model = "fake-claude"
+        self.model_id = "fake-claude"
 
     def run(self, question: str, pages: list[dict[str, object]]) -> AnswerResult:
         raise ValueError("Could not extract answer from model response")
@@ -182,7 +182,7 @@ async def _stream_body(path: str, *, payload: dict[str, object]) -> tuple[int, s
 def test_ask_streams_answer_when_requested() -> None:
     class FakeStreamingAnswerer:
         def __init__(self) -> None:
-            self.model = "fake-claude"
+            self.model_id = "fake-claude"
 
         def stream(self, question: str, pages: list[dict[str, object]]):  # type: ignore[no-untyped-def]
             raw_json_1 = '{"answer":"F33 is mandatory for'
@@ -314,7 +314,7 @@ def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch) -
     class SelectorWithRelated:
         def __init__(self) -> None:
             self.max_pages = 6
-            self.model = "fake-claude"
+            self.model_id = "fake-claude"
 
         def run(self, payload: dict[str, object]) -> PageSelectionResult:
             return PageSelectionResult(
@@ -349,7 +349,7 @@ def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch) -
 
     class AnswererCitingExpansion:
         def __init__(self) -> None:
-            self.model = "fake-claude"
+            self.model_id = "fake-claude"
 
         def run(self, question: str, pages: list[dict[str, object]]) -> AnswerResult:
             return AnswerResult(
