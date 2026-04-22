@@ -35,7 +35,7 @@ The guidance describes it as a resource intended to help data providers check ex
   - Regulation (EC) No 37/2010 (veterinary residues),
   - Directive (EC) No 141/2006 (veterinary residues). (ChemMon 2026 p148)
 - If an MRL changes during the data-collection reference period, the database contains both limits with dates of applicability; EFSA determines which applies based on the **sampling date**.
-- The applied legal limit only covers **raw, unprocessed** samples (per guidance text).
+- In the **ChemMon 2026 SSD2 analytical path**, the applied legal limit note is scoped to **raw, unprocessed** samples. The FA/FF use-levels path documented below is a separate LLDB use case with marketing-date applicability. (ChemMon 2026 p148; Use-levels 2026 p18)
 
 ## Availability and authority
 
@@ -69,4 +69,3 @@ Two LLDB-backed rules enforce this in the use-levels DM:
 - `USE_LLDB02` — the reported `maxLevel` must be `≤` the MPL from LLDB valid at the marketing date.
 
 Both are **Error** severity. The in-record consistency check (`maxLevel ≤ maxPermittedLevel` as reported by the DP) is a separate rule (`USE27`); USE_LLDB02 is the authoritative cross-check against EFSA's centrally maintained MPL records.
-

@@ -48,16 +48,16 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 | `VALTYP` | `resType` / validation-type concepts | Reporting hierarchy: `chemValTyp`. |
 | `ADDFOOD` | `restrictionException` (FA/FF) | FA restrictions/exceptions: hierarchy **`FARestExc`** (used with `progLegalRef=N112A`). FF restrictions/exceptions: hierarchy **`FFRestExc`** (used with `progLegalRef=N113A`). Report `ADD00881A` ("No restriction/exception to report") when nothing applies. |
 
-## Catalogues specific to the FA/FF parallel data models
+## Catalogue usages surfaced by the FA/FF parallel data models
 
 <!-- Source: No-presence 2026 Table 1 pp. 15-16; Use-levels 2026 Table 1 pp. 19-21 -->
 
-The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] rely on additional catalogues not used by the SSD2 analytical path:
+The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] make some catalogue usages more explicit than the ordinary SSD2 analytical path. Some are shared with SSD2 analytical reporting, while others are specific to the parallel FA/FF data models:
 
 | Catalogue | Where it shows up | Hierarchy / usage |
 | --- | --- | --- |
-| `CONCLUS` | `presenceAdded` (both FA/FF DMs) | Hierarchy: **`faff`**. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`. |
-| `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. Required when `progLegalRef=N112A`. |
+| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | Hierarchy: **`faff`**. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings also use the same `faff` conclusion codes in `evalInfo.conclusion`. |
+| `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. Required when `progLegalRef=N112A` in the parallel DMs. |
 | `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. |
 | `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Two-value catalogue: `Y` / `N`. |
 
@@ -70,4 +70,3 @@ All catalogue-value validations in the FA/FF parallel DMs are enforced via `PRE�
 - Use the **most specific** LEGREF term available, to ensure correct inclusion in the intended reports and downstream reuse.
 - Reporting the generic term `N129A` (Regulation (EC) No 178/2002) will still flag records for occurrence-style reuse (see [[reporting-flags]]), but may not align with inclusion criteria for the statutory EU Annual Reports. (ChemMon 2026 p147)
 - If a needed piece of legislation is missing from `LEGREF` / `ChemMonLegRef`, contact EFSA with a suggested term during the major release consultation period (typically October–November), or earlier if there is an urgent need. (ChemMon 2026 p147)
-
