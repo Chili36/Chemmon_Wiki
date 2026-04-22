@@ -28,6 +28,12 @@ The **no-presence DM** is a sample-level data model for reporting that a specifi
 - No-presence reporting is **optional**. Commission Recommendation (EU) 2023/965 requires MS to collect at least analytical data (SSD2) or use levels ([[fa-ff-use-levels-data-model]]); no-presence may be added to identify foodstuffs where a FA/FF is specifically not used. (No-presence 2026 p4)
 - Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893698), exported to XML. Validation and acceptance follow the same flow as [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (No-presence 2026 p13, Figure 1)
 
+## Fast routing
+
+- Use this DM when the statement is: "for this sampled food, this FA/FF is **not** on the label / not added", and there is **no** analytical result to report.
+- Do **not** use this DM for positive presence. A positive finding belongs either in the SSD2 analytical path ([[food-additives-reporting]]) or, if the report is category-level rather than sample-level, in the use-levels DM ([[fa-ff-use-levels-data-model]]).
+- If the question is about sample-level identifiers, sampling date, or `sampMatCode`, this page is the right FA/FF parallel path. If it is about `prodId`, marketing date, or min/typical/max levels, it is the use-levels page instead.
+
 ## Why a separate DM
 
 <!-- Source: No-presence 2026 pp. 4-5 -->
@@ -35,6 +41,16 @@ The **no-presence DM** is a sample-level data model for reporting that a specifi
 - SSD2 is structured around measured analytical values. A record that says "this FA/FF is not used here" without an accompanying analytical measurement cannot be represented.
 - The no-presence DM fills that gap. Element naming (`progLegalRef`, `sampMatCode`, `paramCode`, `resId`, …) and controlled-terminology catalogues match SSD2 so downstream joins and dietary-exposure calculations remain coherent across both models.
 - The DM is piloted annually: the element set in this page reflects the **2026** version, which incorporates changes from 2025 pilot feedback.
+
+## Fast constraints
+
+The highest-signal constraints for retrieval are:
+
+- `presenceAdded` is fixed to **`C20A` only** in this DM. `C19A` and `C05A` are out of scope here and must move to another reporting path. (`PRE06`, `PRE10`)
+- `sampId` identifies the sampled food across multiple FA/FF records; `(paramCode, sampId)` must stay unique. (`PRE11`, `PRE12`)
+- `F33` is always required on `sampMatCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`PRE02`, `PRE08`, `PRE09`)
+- `functionOf` is required only for the additive domain (`progLegalRef=N112A`). (`PRE07`)
+- `paramCode` and `restrictionException` are domain-routed: additive records must use `addAnalysis` + `FARestExc`; flavouring records must use `flavAnalysis` + `FFRestExc`. (`PRE03`, `PRE04`, `PRE13`, `PRE14`)
 
 ## Data elements
 

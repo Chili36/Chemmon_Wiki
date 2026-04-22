@@ -13,6 +13,9 @@ related:
   - "[[business-rules-additives]]"
   - "[[fa-ff-no-presence-data-model]]"
   - "[[fa-ff-use-levels-data-model]]"
+  - "[[controlled-terminology-catalogues]]"
+  - "[[legal-limits-database]]"
+  - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
 last_updated: "2026-04-22"
@@ -41,6 +44,20 @@ Key framing rules across the three paths:
 
 The remainder of this page covers the **analytical (SSD2)** path. For the other two, follow the links above.
 
+## Shared rule anchors across the three FA/FF paths
+
+Some rule families are shared in concept but not in severity or exact field placement. The important distinctions are:
+
+| Topic | SSD2 analytical | No-presence DM | Use-levels DM |
+| --- | --- | --- | --- |
+| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
+| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39_a/b`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
+| Physical state (`F03`) | Recommended / warning path (`CHEMMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
+| Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
+| Limit comparison date | Analytical legal-limit checks use the sampling date | No separate LLDB layer in this DM | LLDB checks use the marketing date (`USE_LLDB01`, `USE_LLDB02`) |
+
+Use [[controlled-terminology-catalogues]] for the shared catalogue layer, [[legal-limits-database]] for the date-driven limit logic, and [[data-validation-and-acceptance]] for the common DCF submission flow.
+
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Scope
 
@@ -50,11 +67,11 @@ The remainder of this page covers the **analytical (SSD2)** path. For the other 
 - Matrix coding follows [[foodex2-in-chemmon]] rules. Validation is enforced by [[business-rules-additives]] and [[business-rules-cross-cutting]]. Some substances overlap with [[contaminant-reporting]] (e.g., naturally occurring substances with dual classification).
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
-## Mandatory Facets
+## Analytical (SSD2) path: matrix expectations
 
 - **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. (ChemMon 2026)
 - **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. (ChemMon 2026)
-- **F23 (Target consumer)**: required for infant formulas and follow-on formulas. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
+- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39 -->
 ### F33 legislative class: implicit vs explicit

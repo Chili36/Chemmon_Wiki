@@ -5,6 +5,41 @@ last_updated: "2026-04-22"
 
 # Log
 
+## [2026-04-22] ingest | Fresh re-pass on FA/FF no-presence and use-levels guidance
+
+Re-read both 2026 FA/FF parallel-DM source PDFs from the raw documents rather than continuing to patch the already-ingested wiki text. This pass was explicitly a trust/reset pass: verify the two new pages against the source, keep what is structurally right, and tighten the pages where retrieval or decision-order cues were still too implicit.
+
+### Source documents re-read
+
+- `Reporting guidance for ‘No-presence’ data on food additives and food flavourings - 2026` (EFSA Supporting publication 2026:EN-9939)
+- `Reporting guidance for use levels on food additives and food flavourings - 2026` (EFSA Supporting publication 2026:EN-9938)
+
+### What changed
+
+- `fa-ff-no-presence-data-model.md`
+  - Added a short **Fast routing** section so the selector can distinguish "sample-level negative without an analytical value" from both SSD2 analytical reporting and the product-category use-levels path.
+  - Added **Fast constraints** summarising the highest-signal PRE rules: `C20A`-only `presenceAdded`, `sampId`/`paramCode` uniqueness, conditional `F33`/`F03`/`F23`, additive-only `functionOf`, and the `addAnalysis` / `flavAnalysis` plus `FARestExc` / `FFRestExc` domain routing.
+
+- `fa-ff-use-levels-data-model.md`
+  - Added the same **Fast routing** and **Fast constraints** treatment, centred on `prodId`, marketing date, min/typical/max levels, LLDB-at-marketing-date, and the `C19A` / `C20A` / `C05A` combinations.
+  - Clarified one important source nuance: the element description for `conversionOrDilutionFactor` is broader than the published business rule `USE13`. The guidance text says the field is for food supplements **and** products prepared before consumption; the rule table explicitly enforces at least the food-supplement case. The wiki now states that split instead of flattening it into a single rule claim.
+
+- `food-additives-reporting.md`
+  - Added a compact **Shared rule anchors across the three FA/FF paths** table so path-sensitive differences are visible in one place: how `CONCLUS` / `presenceAdded` differs, when `F33` duplicate reporting is a warning vs an error, when `F03` / `F23` are recommendations vs blocking requirements, and which date drives the legal-limit lookup.
+  - Tightened the analytical-path facet wording so `F23` is no longer described too narrowly as only infant-formula specific; it is now framed the way the guidance uses it on the SSD2 analytical path.
+  - Added direct links to the shared catalogue, LLDB, and DCF workflow pages.
+
+### What did not change
+
+- No new pages were added. After a fresh re-read, the existing shape still holds: one shared analytical/path-selection page plus one page for each parallel DM is the right level of granularity.
+- The earlier fixes to `controlled-terminology-catalogues.md` and `legal-limits-database.md` remain valid after the fresh source pass.
+- The original 2026-04-22 ingest entry below remains as the record of the first ingest. This new entry is the independent source-backed tightening pass.
+
+### Verification
+
+- `python3 tools/health_check.py` — rerun after edits
+- `pytest -q` — rerun after edits
+
 ## [2026-04-22] ingest | FA/FF no-presence DM and use-levels DM (EN-9939, EN-9938)
 
 Ingested the 2026 EFSA reporting guidance for two FA/FF parallel data collections that sit alongside SSD2 rather than inside it:

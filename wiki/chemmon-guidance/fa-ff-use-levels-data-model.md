@@ -28,6 +28,13 @@ The **use-levels DM** collects FA/FF use levels (minimum / typical / maximum con
 - Use levels may be reported as actual/exact (in which case `minLevel`, `typicalLevel`, and `maxLevel` all equal the same value) or as a range. If the substance is not used in the category, all three levels must be 0 (USE09). (Use-levels 2026 pp. 14-15)
 - Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893177), exported to XML. Validation and acceptance mirror [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (Use-levels 2026 p17, Figure 1)
 
+## Fast routing
+
+- Use this DM when the statement is: "for this product category / food on this market date, the substance is used at these min/typical/max levels".
+- Do **not** use this DM for a measured sample result. That belongs in the SSD2 analytical path ([[food-additives-reporting]]).
+- Do **not** use this DM for a pure negative sample-level statement without levels. That belongs in [[fa-ff-no-presence-data-model]].
+- If the question is about `prodId`, `marketCountry`, marketing date, `minLevel` / `typicalLevel` / `maxLevel`, or LLDB checks at marketing date, this is the right FA/FF parallel page.
+
 ## Why a separate DM
 
 <!-- Source: Use-levels 2026 p5 -->
@@ -35,6 +42,17 @@ The **use-levels DM** collects FA/FF use levels (minimum / typical / maximum con
 - The use-levels DM is **not implemented in SSD2.** SSD2 is designed for sample-level analytical data; the use-levels DM collects category-level aggregates and introduces elements (e.g. `marketCountry`, `minLevel`/`typicalLevel`/`maxLevel`, `conversionOrDilutionFactor`, `maxPermittedLevel`) that have no SSD2 equivalent.
 - Terminology and controlled vocabularies are aligned with SSD2 where applicable (`LEGREF`, `PARAM`, `MTX`, `CONCLUS`, `ADDFOOD`, `EXPRRES`, `FUNC`, `UNIT`), so downstream joins with analytical data remain coherent.
 - The DM is piloted annually and the 2026 version reflects changes incorporated from 2025 pilot feedback.
+
+## Fast constraints
+
+The highest-signal constraints for retrieval are:
+
+- This is a **product-category** model keyed by `prodId`, not a sample-level model keyed by `sampId`.
+- `presenceAdded` accepts `C19A`, `C20A`, and `C05A`, including meaningful combinations such as `C19A$C05A` and `C20A$C05A`. `C19A` and `C20A` cannot coexist. (`USE09`, `USE18`, `USE19`)
+- `F33` is always required on `matCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`USE03`, `USE16`, `USE17`, `USE23`, `USE24`)
+- `functionOf` is required only for additive-domain records (`progLegalRef=N112A`). (`USE10`)
+- `weight`, `fatPerc`, `moistPerc`, `unit`, `conversionOrDilutionFactor`, and the three level fields are the part of this DM that has no SSD2 equivalent. (`USE11`-`USE15`, `USE25`)
+- LLDB checks here are driven by the **marketing date**, not sampling date. (`USE_LLDB01`, `USE_LLDB02`)
 
 ## Data elements
 
@@ -108,7 +126,7 @@ Twenty-nine elements, reported per product category × substance. The combinatio
 - `minLevel` (optional, `xs:double`) — minimum use level. Must be `0` when `presenceAdded=C20A` (USE09). (Use-levels 2026 p15)
 - `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
 - `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). Must also be `≤` the MPL reported by the DP (USE27). (Use-levels 2026 pp. 15-16)
-- `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. Required for **food supplements** (`matCode.F33 = 17`) and for products that must be prepared before consumption (USE13). Example: infant formula diluted 1:4 → factor 0.25. (Use-levels 2026 p16)
+- `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)
 
 ### Maximum Permitted Level check
 
