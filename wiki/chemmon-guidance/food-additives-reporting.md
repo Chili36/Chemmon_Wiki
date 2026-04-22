@@ -4,16 +4,42 @@ type: "domain-guide"
 domain: "additives"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
   - "[[business-rules]]"
+  - "[[business-rules-additives]]"
+  - "[[fa-ff-no-presence-data-model]]"
+  - "[[fa-ff-use-levels-data-model]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-22"
 ---
 
 # Food Additives and Flavourings Reporting
+
+<!-- Source: Commission Recommendation (EU) 2023/965 on FA/FF intake monitoring; Use-levels 2026 p4; No-presence 2026 p4 -->
+
+## FA/FF data collection paths
+
+FA/FF intake monitoring uses **three parallel data-collection paths**, all submitted through the EFSA DCF but with distinct data models and business rules. Commission Recommendation (EU) 2023/965 requires MS to collect at least one of (a) analytical data or (b) use levels; (c) no-presence data is an optional companion. Pick the path by what you are reporting, not by the substance:
+
+| Path | Granularity | Data model | Rule prefix | Wiki page |
+|---|---|---|---|---|
+| Analytical (measured concentrations) | Sample level | **SSD2** ChemMon | `CHEMMON…`, `GBR…`, `LL_…FA_FF` | this page + [[business-rules-additives]] |
+| Use levels (industry-reported min/typ/max) | Product-category level | Separate (**not** in SSD2) | `USE…`, `USE_LLDB…` | [[fa-ff-use-levels-data-model]] |
+| No-presence (FA/FF not on label / not added) | Sample level | SSD2-*derived* but separate | `PRE…` | [[fa-ff-no-presence-data-model]] |
+
+Key framing rules across the three paths:
+
+- Positive presence with a measured concentration → SSD2 analytical (this page). The no-presence DM explicitly rejects `C19A` (PRE06).
+- Category-level use levels reported by industry → use-levels DM. SSD2 cannot represent category-level aggregates, so use-levels is a parallel schema, not an SSD2 extension.
+- Sample-level "FA/FF not used here" without an analytical measurement → no-presence DM. SSD2 cannot carry standalone negatives, so the no-presence DM was added to close that gap.
+- All three paths use the same FA/FF controlled-terminology hierarchies (`LEGREF.faff`, `PARAM.addAnalysis`/`flavAnalysis`, `ADDFOOD.FARestExc`/`FFRestExc`, `CONCLUS.faff`, `FUNC`) so downstream joins and dietary-exposure calculations stay coherent.
+
+The remainder of this page covers the **analytical (SSD2)** path. For the other two, follow the links above.
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Scope
