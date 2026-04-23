@@ -2,9 +2,11 @@
 title: "ChemMon Business Rules"
 type: "hub"
 domain: "all"
-last_updated: "2026-04-11"
+last_updated: "2026-04-22"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 related:
   - "[[business-rules-gbr]]"
   - "[[business-rules-cross-cutting]]"
@@ -18,6 +20,8 @@ related:
   - "[[chemmon-overview]]"
   - "[[ssd2-data-model]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[fa-ff-no-presence-data-model]]"
+  - "[[fa-ff-use-levels-data-model]]"
 ---
 
 # ChemMon Business Rules
@@ -58,6 +62,17 @@ The source guidance also provides troubleshooting tips alongside the GBR and CHE
 
 - **[[business-rules-2026-changes]]** — Reference log of amended, merged, new, and deactivated rules for the 2026 data collection. Change notes only — canonical text lives in the slice files above.
 
+## Parallel rule families (FA/FF data collections)
+
+<!-- Source: No-presence 2026 Table 3; Use-levels 2026 Table 3 -->
+
+The GBR/CHEMMON/LL catalogue above validates **SSD2** ChemMon submissions. FA/FF reporting also has two parallel data collections, each with its own rule namespace that does **not** overlap with the CHEMMON IDs:
+
+- **`PRE01`–`PRE17`** — no-presence DM (17 rules; 16 Errors, 1 Warning). See [[fa-ff-no-presence-data-model]].
+- **`USE01`–`USE27`** plus **`USE_LLDB01`/`USE_LLDB02`** — use-levels DM (29 rules, all Error). See [[fa-ff-use-levels-data-model]].
+
+PRE and USE rules are not listed in the slice files because they validate different data models on different DCF submission paths. They are catalogued on the respective DM reference pages. See [[food-additives-reporting]] for the three-path overview.
+
 ## Totals
 
-131 rule definitions across the nine slices: 16 GBR + 104 CHEMMON + 11 LL. Every `CHEMMON\d+` rule ID appears exactly once in the slice files (see `tools/health_check.py` for verification).
+131 rule definitions across the nine slices: 16 GBR + 104 CHEMMON + 11 LL. Every `CHEMMON\d+` rule ID appears exactly once in the slice files (see `tools/health_check.py` for verification). The 46 FA/FF parallel-family rules (`PRE…`, `USE…`, `USE_LLDB…`) are counted separately on their DM pages.
