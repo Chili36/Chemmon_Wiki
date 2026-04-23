@@ -1,9 +1,31 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-15"
+last_updated: "2026-04-23"
 ---
 
 # Log
+
+## [2026-04-23] maintenance | Split SSD2 sampling guidance into narrow pages
+
+Refactored `ssd2-elements-sampling.md` to follow the same hub-plus-subpages pattern already used for the result group. The original sampling page had grown into a 278-line mixed page carrying too many separate decisions at once, which made retrieval less precise and created brittle deep links.
+
+**New pages:**
+
+- `ssd2-sampling-method-and-point.md` — `sampMethod`, `sampler`, `sampPoint`.
+- `ssd2-sampling-event-and-unit.md` — `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampUnitSizeUnit`.
+- `ssd2-sample-identifiers.md` — `sampId`, `origSampId`.
+- `ssd2-sampling-country.md` — `sampCountry` and the unspecific-country-code mapping.
+- `ssd2-sampling-date.md` — `sampY`, `sampM`, `sampD`.
+
+**Refactor shape:**
+
+- `ssd2-elements-sampling.md` is now a short hub with rule-first guidance and links to the narrow pages above.
+- `index.md` now lists the new pages under the SSD2 element reference section.
+- Updated internal links so existing graph expansion still has live edges:
+  - `contaminant-reporting.md` now points to `ssd2-sampling-method-and-point.md` for the `sampMethod=N011A` furan note.
+  - `ssd2-elements-matrix.md` now points to `ssd2-sampling-country.md` instead of an anchor inside the old monolithic page.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
 
 ## [2026-04-15] maintenance | Split SSD2 result element content into narrow pages
 

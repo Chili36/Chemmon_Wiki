@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-15"
+last_updated: "2026-04-23"
 ---
 
 # Index
@@ -42,7 +42,12 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 Per-element reference pages covering the ~88 SSD2 elements required for ChemMon submissions. Start at the element group that matches your question; the pages cross-link to the relevant business rules.
 
 - [ssd2-elements-programme.md](wiki/chemmon-guidance/ssd2-elements-programme.md): Programme group — `progId`, `progLegalRef`, `sampStrategy`, `progType` plus Table 2 valid combinations across all domains.
-- [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group — `sampMethod`, `sampler`, `sampPoint`, `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampId`, `sampCountry`, sampling date, `origSampId`.
+- [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group hub — fast-path rules + links to narrower sampling pages.
+- [ssd2-sampling-method-and-point.md](wiki/chemmon-guidance/ssd2-sampling-method-and-point.md): Sampling method / sampler / sampling point — `sampMethod`, `sampler`, `sampPoint`.
+- [ssd2-sampling-event-and-unit.md](wiki/chemmon-guidance/ssd2-sampling-event-and-unit.md): Sampling event and unit — `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampUnitSizeUnit`.
+- [ssd2-sample-identifiers.md](wiki/chemmon-guidance/ssd2-sample-identifiers.md): Sample identifiers — `sampId`, `origSampId`.
+- [ssd2-sampling-country.md](wiki/chemmon-guidance/ssd2-sampling-country.md): Country of sampling — `sampCountry`, reportable unspecific-country codes, pesticide constraint.
+- [ssd2-sampling-date.md](wiki/chemmon-guidance/ssd2-sampling-date.md): Sampling date — `sampY`, `sampM`, `sampD`, legal-limit timing, reporting windows.
 - [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group — `sampMatCode` (with VMPR/feed/non-food/insects coding), `sampMatText`, `origCountry`, `sampAnId`, `anMatCode`, `anMatText`.
 - [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.
 - [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group hub — fast-path rules + links to narrower per-topic pages.
