@@ -1,9 +1,28 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-22"
+last_updated: "2026-04-23"
 ---
 
 # Log
+
+## [2026-04-23] maintenance | Split SSD2 programme guidance into narrow pages
+
+Refactored `ssd2-elements-programme.md` into a short hub plus four narrower programme pages. The original page carried four separate element decisions (`progId`, `progLegalRef`, `sampStrategy`, `progType`) and the Table 2 combination logic in one mixed file, which made retrieval noisy and caused legal-reference routing questions to pull unrelated programme examples.
+
+**New pages:**
+
+- `ssd2-programme-identification.md` — `progId`.
+- `ssd2-programme-legal-reference.md` — `progLegalRef` and canonical `LEGREF` routing.
+- `ssd2-programme-strategy-and-type.md` — `sampStrategy` and `progType`.
+- `ssd2-programme-valid-combinations.md` — Table 2 valid combinations across VMPR, contaminants, and pesticides.
+
+**Refactor shape:**
+
+- `ssd2-elements-programme.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new programme pages under the SSD2 element reference section.
+- Added more precise cross-links from `controlled-terminology-catalogues.md` and `reporting-flags.md` so `LEGREF` / programme-routing questions can land on the legal-reference subpage instead of the whole programme group.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
 
 ## [2026-04-22] ingest | Fresh re-pass on FA/FF no-presence and use-levels guidance
 

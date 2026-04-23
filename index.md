@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-22"
+last_updated: "2026-04-23"
 ---
 
 # Index
@@ -41,7 +41,11 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 
 Per-element reference pages covering the ~88 SSD2 elements required for ChemMon submissions. Start at the element group that matches your question; the pages cross-link to the relevant business rules.
 
-- [ssd2-elements-programme.md](wiki/chemmon-guidance/ssd2-elements-programme.md): Programme group — `progId`, `progLegalRef`, `sampStrategy`, `progType` plus Table 2 valid combinations across all domains.
+- [ssd2-elements-programme.md](wiki/chemmon-guidance/ssd2-elements-programme.md): Programme group hub — fast-path rules + links to narrower programme pages.
+- [ssd2-programme-identification.md](wiki/chemmon-guidance/ssd2-programme-identification.md): Programme identifier — `progId` purpose, defaulting, and naming examples.
+- [ssd2-programme-legal-reference.md](wiki/chemmon-guidance/ssd2-programme-legal-reference.md): Legal reference routing — `progLegalRef`, repeatability, canonical `LEGREF` codes, and multi-domain cases.
+- [ssd2-programme-strategy-and-type.md](wiki/chemmon-guidance/ssd2-programme-strategy-and-type.md): Sampling strategy and programme type — `sampStrategy`, `progType`, and domain-specific usage.
+- [ssd2-programme-valid-combinations.md](wiki/chemmon-guidance/ssd2-programme-valid-combinations.md): Table 2 combination logic — VMPR plans, contaminant control plans, pesticides, and border-control combinations.
 - [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group — `sampMethod`, `sampler`, `sampPoint`, `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampId`, `sampCountry`, sampling date, `origSampId`.
 - [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group — `sampMatCode` (with VMPR/feed/non-food/insects coding), `sampMatText`, `origCountry`, `sampAnId`, `anMatCode`, `anMatText`.
 - [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.

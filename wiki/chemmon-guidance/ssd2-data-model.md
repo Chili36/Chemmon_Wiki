@@ -96,7 +96,7 @@ The ChemMon business rules (CHEMMON01 onward) implement and extend these validat
 
 In addition to the SSD2 logical-model overview, this wiki maintains ChemMon-focused SSD2 element reference pages derived from the annual guidance (e.g. conditional mandatory rules, ChemMon-specific conventions, and the business rules that constrain each element group):
 
-- [[ssd2-elements-programme]] — programme/legal reference/sampling strategy/programme type
+- [[ssd2-elements-programme]] — programme hub; see also [[ssd2-programme-legal-reference]] and [[ssd2-programme-valid-combinations]]
 - [[ssd2-elements-sampling]] — sampling event and sample identification/date/location
 - [[ssd2-elements-matrix]] — FoodEx2 matrix coding (`sampMatCode` / `anMatCode`) and special cases
 - [[ssd2-elements-analysis]] — laboratory, parameter, and analytical-method elements

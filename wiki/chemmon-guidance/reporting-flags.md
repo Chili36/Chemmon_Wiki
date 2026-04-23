@@ -2,7 +2,7 @@
 title: "Reporting Flags in the EFSA Scientific Data Warehouse"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-11"
+last_updated: "2026-04-23"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -12,6 +12,7 @@ related:
   - "[[chemmon-reports]]"
   - "[[business-rules]]"
   - "[[ssd2-elements-programme]]"
+  - "[[ssd2-programme-legal-reference]]"
 ---
 
 # Reporting Flags in the EFSA Scientific Data Warehouse
@@ -45,7 +46,7 @@ EFSA notes matrix and reported unit can also affect flags, and the algorithm may
 
 <!-- Source: ChemMon 2026 p149 -->
 
-- `progLegalRef` is checked via the `ChemMonLegRef` hierarchy attributes (`VMPR`, `PEST`, `OCC`, `ADD`, `FLAV`) in the LEGREF catalogue. See [[controlled-terminology-catalogues]].
+- `progLegalRef` is checked via the `ChemMonLegRef` hierarchy attributes (`VMPR`, `PEST`, `OCC`, `ADD`, `FLAV`) in the LEGREF catalogue. See [[controlled-terminology-catalogues]] and [[ssd2-programme-legal-reference]].
 - `paramCode` is checked via domain analysis hierarchies in the PARAM catalogue (`vmprParam`, `pestParam`, `chemAnalysis`, `addAnalysis`, `flavAnalysis`).
 
 ### Flag values (0–3)
@@ -72,4 +73,3 @@ EFSA notes matrix and reported unit can also affect flags, and the algorithm may
 
 - Business rules can be applied according to flags (the guidance gives the example that CHEMMON73 applies if `VMPR=1`). (ChemMon 2026 p149)
 - Validation dashboards and other downstream reports filter records using these flags (see [[chemmon-reports]]). (ChemMon 2026 p150)
-

@@ -2,7 +2,7 @@
 title: "Controlled Terminology Catalogues"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-22"
+last_updated: "2026-04-23"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
@@ -11,6 +11,8 @@ source_pages:
   - "ChemMon 2026 pp. 144-147 (Section 7; Tables 11-12); No-presence 2026 Table 1 pp. 15-16; Use-levels 2026 Table 1 pp. 19-21"
 related:
   - "[[ssd2-elements-programme]]"
+  - "[[ssd2-programme-legal-reference]]"
+  - "[[ssd2-programme-strategy-and-type]]"
   - "[[ssd2-elements-matrix]]"
   - "[[reporting-flags]]"
   - "[[chemmon-matrix-classification-algorithms]]"
@@ -40,11 +42,11 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 
 | Catalogue | Where it shows up | ChemMon hierarchy / attributes |
 | --- | --- | --- |
-| `LEGREF` | `progLegalRef` | Reporting hierarchy: `ChemMonLegRef` with domain attributes (`VMPR`, `PEST`, `OCC`, `ADD`, `FLAV`). The FA/FF parallel DMs use the sub-hierarchy **`faff`** directly (only `N112A` and `N113A` allowed). See [[reporting-flags]]. |
+| `LEGREF` | `progLegalRef` | Reporting hierarchy: `ChemMonLegRef` with domain attributes (`VMPR`, `PEST`, `OCC`, `ADD`, `FLAV`). The FA/FF parallel DMs use the sub-hierarchy **`faff`** directly (only `N112A` and `N113A` allowed). See [[ssd2-programme-legal-reference]] and [[reporting-flags]]. |
 | `PARAM` | `paramCode` | Reporting hierarchy: `ChemMonRep`; analysis hierarchies: `vmprParam`, `pestParam`, `chemAnalysis`, `addAnalysis` (FA), `flavAnalysis` (FF). See [[reporting-flags]]. |
 | `MTX` (FoodEx2) | `sampMatCode`, `anMatCode`, `matCode` (use-levels) | Reporting hierarchy (food/feed/non-food matrices). Legislative mappings are derived from MTX for domain-specific reporting (see [[chemmon-matrix-classification-algorithms]]). |
 | `UNIT` | `resUnit`, `unit` (use-levels), limits/values units | Reporting hierarchy: `chemUnit`. |
-| `SAMPSTR` | `sampStrategy` | Reporting hierarchy: `chemSampStr`. |
+| `SAMPSTR` | `sampStrategy` | Reporting hierarchy: `chemSampStr`. See [[ssd2-programme-strategy-and-type]]. |
 | `VALTYP` | `resType` / validation-type concepts | Reporting hierarchy: `chemValTyp`. |
 | `ADDFOOD` | `restrictionException` (FA/FF) | FA restrictions/exceptions: hierarchy **`FARestExc`** (used with `progLegalRef=N112A`). FF restrictions/exceptions: hierarchy **`FFRestExc`** (used with `progLegalRef=N113A`). Report `ADD00881A` ("No restriction/exception to report") when nothing applies. |
 
