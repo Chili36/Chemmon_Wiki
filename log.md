@@ -27,6 +27,90 @@ Refactored `ssd2-elements-sampling.md` to follow the same hub-plus-subpages patt
 
 No rule semantics were changed; this is a structure-and-retrieval refactor only.
 
+## [2026-04-22] ingest | Fresh re-pass on FA/FF no-presence and use-levels guidance
+
+Re-read both 2026 FA/FF parallel-DM source PDFs from the raw documents rather than continuing to patch the already-ingested wiki text. This pass was explicitly a trust/reset pass: verify the two new pages against the source, keep what is structurally right, and tighten the pages where retrieval or decision-order cues were still too implicit.
+
+### Source documents re-read
+
+- `Reporting guidance for ‘No-presence’ data on food additives and food flavourings - 2026` (EFSA Supporting publication 2026:EN-9939)
+- `Reporting guidance for use levels on food additives and food flavourings - 2026` (EFSA Supporting publication 2026:EN-9938)
+
+### What changed
+
+- `fa-ff-no-presence-data-model.md`
+  - Added a short **Fast routing** section so the selector can distinguish "sample-level negative without an analytical value" from both SSD2 analytical reporting and the product-category use-levels path.
+  - Added **Fast constraints** summarising the highest-signal PRE rules: `C20A`-only `presenceAdded`, `sampId`/`paramCode` uniqueness, conditional `F33`/`F03`/`F23`, additive-only `functionOf`, and the `addAnalysis` / `flavAnalysis` plus `FARestExc` / `FFRestExc` domain routing.
+
+- `fa-ff-use-levels-data-model.md`
+  - Added the same **Fast routing** and **Fast constraints** treatment, centred on `prodId`, marketing date, min/typical/max levels, LLDB-at-marketing-date, and the `C19A` / `C20A` / `C05A` combinations.
+  - Clarified one important source nuance: the element description for `conversionOrDilutionFactor` is broader than the published business rule `USE13`. The guidance text says the field is for food supplements **and** products prepared before consumption; the rule table explicitly enforces at least the food-supplement case. The wiki now states that split instead of flattening it into a single rule claim.
+
+- `food-additives-reporting.md`
+  - Added a compact **Shared rule anchors across the three FA/FF paths** table so path-sensitive differences are visible in one place: how `CONCLUS` / `presenceAdded` differs, when `F33` duplicate reporting is a warning vs an error, when `F03` / `F23` are recommendations vs blocking requirements, and which date drives the legal-limit lookup.
+  - Tightened the analytical-path facet wording so `F23` is no longer described too narrowly as only infant-formula specific; it is now framed the way the guidance uses it on the SSD2 analytical path.
+  - Added direct links to the shared catalogue, LLDB, and DCF workflow pages.
+
+### What did not change
+
+- No new pages were added. After a fresh re-read, the existing shape still holds: one shared analytical/path-selection page plus one page for each parallel DM is the right level of granularity.
+- The earlier fixes to `controlled-terminology-catalogues.md` and `legal-limits-database.md` remain valid after the fresh source pass.
+- The original 2026-04-22 ingest entry below remains as the record of the first ingest. This new entry is the independent source-backed tightening pass.
+
+### Verification
+
+- `python3 tools/health_check.py` — rerun after edits
+- `pytest -q` — rerun after edits
+
+## [2026-04-22] ingest | FA/FF no-presence DM and use-levels DM (EN-9939, EN-9938)
+
+Ingested the 2026 EFSA reporting guidance for two FA/FF parallel data collections that sit alongside SSD2 rather than inside it:
+
+- **No-presence DM** (EFSA Supporting Publication 2026:EN-9939, 23 pp) — sample-level reports that a FA/FF is not on the label / not added. SSD2-*derived* (element names and catalogues align) but structurally separate because SSD2 cannot carry standalone negative records without an analytical measurement.
+- **Use-levels DM** (EFSA Supporting Publication 2026:EN-9938, 30 pp) — product-category-level industry-reported minimum / typical / maximum use levels. **Not implemented in SSD2** at all — parallel schema with category-level aggregates (`prodId`, `marketCountry`, `marketYear/Month/Day`, `minLevel`/`typicalLevel`/`maxLevel`) that have no SSD2 equivalent.
+
+Both are submitted via the same EFSA DCF flow (ack → BR validation → submit → accept/reject) but with separate Excel reporting tools and separate rule namespaces (`PRE…` for no-presence, `USE…` / `USE_LLDB…` for use-levels). Commission Recommendation (EU) 2023/965 requires MS to collect at least analytical (SSD2) or use levels; no-presence is optional companion data.
+
+### Ingest passes
+
+- **Pass A (structure scan)**: read both PDFs end-to-end without writing. Built section-by-section outline (Section 1 Background, Section 2 per-element rules ×16/×29, Section 3 Methodologies cross-referenced to existing DCF page, Section 4 LLDB — use-levels only). Classified Tables 1-3 of each PDF as rule-bearing (Table 1 element type summary redundant with Section 2; Table 2 FUNC class reference; Table 3 business rules). Output: 2 new pages + 6 patches, under the ≤3-new-pages soft cap in `INGEST_WORKFLOW.md`.
+- **Pass B (rule extraction)**: wrote the two DM reference pages and patched the existing pages identified in Pass A. Rule-first order on every page; no document-order narrative; F33/F03/F23 matrix rules compressed to compact bullet lists with the specific legislative categories enumerated.
+- **Pass C (gap sweep)**: verified every `[[wiki-link]]` resolves against current page set (41 pages); verified no new orphans (new DM pages have 8 and 11 inbound links respectively); pre-existing `chemmon-background` orphan unchanged (out of scope for this pass); added back-references from `data-validation-and-acceptance.md` and `business-rules-additives.md` so navigation works in both directions.
+
+### New pages
+
+- `fa-ff-no-presence-data-model.md` (reference, `additives`) — 16 data elements documented in rule-first order, 17 PRE rules in a single table (16 Errors + 1 Warning), `C20A`-only `presenceAdded` constraint called out, pilot substance rotation note (2025: green S/tartrazine/ponceau 4R/caffeine/pulegone; 2026: BHT/sorbic acid-sorbates/coumarin/HCN/theobromine).
+- `fa-ff-use-levels-data-model.md` (reference, `additives`) — 29 data elements grouped (programme / market country + date / matrix / industry attributes / restriction / parameter / record / presence / functional class / expression basis / level values / MPL check), 27 USE rules + 2 USE_LLDB rules in a single table, `maxLevel ≥ typicalLevel ≥ minLevel` ordering rule (USE25), forbidden generic `matCode` list (USE24: A047N, A047Q, A047R, A047A, A047P, A0F3T), `conversionOrDilutionFactor` for food supplements and prepared-before-consumption products, LLDB check at marketing date.
+
+### Patches
+
+- `food-additives-reporting.md` — added a top "FA/FF data collection paths" section with a three-path table (SSD2 analytical / use-levels / no-presence) and the key framing rules that distinguish them. Added the two new PDFs to `sources` and the two DM pages to `related`. The rest of the page (still about the SSD2 path) is unchanged.
+- `business-rules.md` (hub) — new "Parallel rule families (FA/FF data collections)" section describing the PRE and USE namespaces that sit outside the 131-rule CHEMMON/GBR/LL catalogue. The CHEMMON totals line is unchanged — these are different rule namespaces on different DCF paths, not an expansion of the SSD2 rule catalogue.
+- `business-rules-additives.md` — short cross-reference paragraph pointing to the two DM pages so a reader who jumped straight to the additives slice sees the parallel families exist.
+- `legal-limits-database.md` — new FA/FF section: the same LLDB concept is used for FA/FF MPL validation, but the lookup date is the **marketing date** (use-levels) rather than the **sampling date** (SSD2 analytical). USE_LLDB01 (authorisation) and USE_LLDB02 (`maxLevel ≤ MPL`) documented.
+- `controlled-terminology-catalogues.md` — updated the main catalogues table to mention `LEGREF.faff`, `FARestExc`/`FFRestExc` hierarchies, and use-levels `matCode`/`unit`. Added a new "Catalogues specific to the FA/FF parallel data models" section covering `CONCLUS.faff` (C19A/C20A/C05A), `FUNC` (Reg. 1333/2008 Annex I functional classes), `EXPRRES.WDFat` (whole/dry/fat for use-levels `weight`), and `YESNO` (for `foodIndustry`/`widelyConsumed`/`maxPermittedLevelDefined`).
+- `data-validation-and-acceptance.md` — new trailing section explaining that FA/FF parallel DMs share the same DCF flow but use different reporting tools (Zenodo DOIs documented) and different rule namespaces.
+- `index.md` — added catalog entries for the two new DM pages; updated the `food-additives-reporting.md` summary to mention the three paths.
+
+### What was left out (explicit)
+
+- **Table 2 of each PDF (33 FA functional classes)** is referenced by page number but NOT reproduced verbatim on any wiki page. Rationale: the list is Reg. 1333/2008 Annex I content authoritatively maintained in the `FUNC` catalogue; reproducing a 33-row table on a wiki page would be document-order archiving, exactly the anti-pattern flagged in `INGEST_WORKFLOW.md`. If a retrieval question ever specifically asks "what does functional class N mean", the right response is a follow-up ingest pass into either `food-additives-reporting.md` or a new `fa-ff-functional-classes.md`, not leaving the whole table drifting across pages.
+- **Per-element XML examples** from Section 2 of each PDF — sampled where the example teaches a reusable rule (e.g. `ADD00881A` default, `C19A$C05A` combination, `marketCountry` `$` separator), not reproduced for every element.
+- **References and abbreviations pages** of both PDFs — metadata only, not durable rules.
+- **DCF UI specifics** — the source points to the DCF user manual for step-by-step UI; `data-validation-and-acceptance.md` already delegates that.
+
+Nothing is deferred that a future session is expected to close. Every rule-bearing section of both PDFs is in the wiki.
+
+### Done-gate verification
+
+- `python tools/health_check.py` — PASS (0 errors, 1 pre-existing warning: CHEMMON03 duplicate in `business-rules-cross-cutting.md` + `business-rules-pesticide.md`, which is a known EFSA source bug preserved verbatim, flagged in the 2026-04-10 log entry).
+- `pytest -q` — 38 passed in 0.63s.
+
+### Open follow-ups surfaced (not in this pass)
+
+- **`chemmon-background.md` remains an orphan** — pre-existing from the 2026-04-11 ingest; still has no inbound wiki-links. Out of scope for this pass but worth picking up.
+- **Eval state is 11 days stale** — memory says wiki 93.0% / RAG 88.7% on 2026-04-11 but neither eval has been re-run against the new DM content. Running the eval against additives-heavy questions would be the right way to measure whether the three-path framing improves the selector's page picks.
+
 ## [2026-04-15] maintenance | Split SSD2 result element content into narrow pages
 
 Refactored `ssd2-elements-result.md` to follow the "one page = one topic/decision" guideline: the page is now a short hub (overview + fast-path rules + links), and the detailed element guidance was split into narrowly-scoped pages so the selector can retrieve the right slice without pulling a 400+ line file.
