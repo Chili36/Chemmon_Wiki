@@ -10,6 +10,10 @@ source_pages:
 related:
   - "[[ssd2-elements-matrix]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-source-origin]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-legislative-descriptive]]"
   - "[[vmpr-reporting]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[business-rules-vmpr]]"
@@ -21,10 +25,10 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- In VMPR, `F01` source and `F02` part-nature must generally be present on the final matrix code, except in the feed/water and processed-composite cases described below.
+- In VMPR, `F01` source and `F02` part-nature must generally be present on the final matrix code, except in the feed/water and processed-composite cases described below. For the facet definitions, see [[foodex2-facets-source-origin]].
 - For derivative or processed terms that do not carry an implicit `F01`, add `F01` explicitly.
-- Wild game requires explicit `F21.A07RY`.
-- Feed and water samples hinge on `F23` target-consumer coding; conflicting `F23` species collapse the record into VMPR category "Other".
+- Wild game requires explicit `F21.A07RY`; see [[foodex2-facets-state-process]].
+- Feed and water samples hinge on `F23` target-consumer coding; conflicting `F23` species collapse the record into VMPR category "Other". See [[foodex2-facets-packaging-consumer]].
 - Non-food animal matrices use base term `A0C60` plus explicit `F01` and `F02`.
 
 ## Derivative and processed VMPR terms

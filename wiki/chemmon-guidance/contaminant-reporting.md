@@ -7,12 +7,16 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-source-origin]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-legislative-descriptive]]"
   - "[[ssd2-elements-matrix]]"
   - "[[ssd2-elements-result]]"
   - "[[business-rules]]"
   - "[[food-additives-reporting]]"
   - "[[pesticide-reporting]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 ---
 
 # Contaminant Reporting
@@ -30,12 +34,12 @@ Key contaminant-domain rules you'll hit frequently:
 
 - **CHEMMON09/10**: dioxins/PCBs congener reporting expectations.
 - **CHEMMON11**: moisture percentage (`moistPerc`) recommendation for mineral oils/mycotoxins.
-- **CHEMMON12**: acrylamide requires legislative class facet F33.
-- **CHEMMON14**: bisphenols require packaging material facet F19.
-- **CHEMMON15**: PAHs packaging material facet F19 recommended.
-- **CHEMMON17**: mycotoxins production-method facet F21 (organic vs conventional) recommended.
-- **CHEMMON18**: arsenic in rice process facet F28 recommended to distinguish processed vs unprocessed.
-- **CHEMMON19**: chlorates/perchlorates process facet F28 recommended.
+- **CHEMMON12**: acrylamide requires legislative class facet F33. See [[foodex2-facets-legislative-descriptive]].
+- **CHEMMON14**: bisphenols require packaging material facet F19. See [[foodex2-facets-packaging-consumer]].
+- **CHEMMON15**: PAHs packaging material facet F19 recommended. See [[foodex2-facets-packaging-consumer]].
+- **CHEMMON17**: mycotoxins production-method facet F21 (organic vs conventional) recommended. See [[foodex2-facets-state-process]].
+- **CHEMMON18**: arsenic in rice process facet F28 recommended to distinguish processed vs unprocessed. See [[foodex2-facets-state-process]].
+- **CHEMMON19**: chlorates/perchlorates process facet F28 recommended. See [[foodex2-facets-state-process]].
 - **CHEMMON20**: fish `origFishAreaCode`/text recommended (with freshwater/saltwater minimum when unknown; see [[ssd2-analysis-context]]).
 - **CHEMMON21**: fat percentage (`fatPerc`) recommended for BFRs/dioxins/3-MCPD contexts.
 

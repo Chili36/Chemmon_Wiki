@@ -10,12 +10,15 @@ sources:
 source_pages:
   - "ChemMon 2026 pp. 144-147 (Section 7; Tables 11-12); No-presence 2026 Table 1 pp. 15-16; Use-levels 2026 Table 1 pp. 19-21"
 related:
+  - "[[chemmon-data-governance-and-transparency]]"
+  - "[[chemmon-change-management]]"
   - "[[ssd2-elements-programme]]"
   - "[[ssd2-programme-legal-reference]]"
   - "[[ssd2-programme-strategy-and-type]]"
   - "[[ssd2-elements-matrix]]"
   - "[[ssd2-matrix-sampled-matrix]]"
   - "[[ssd2-analysis-parameter-coding]]"
+  - "[[ssd2-evaluation-conclusions]]"
   - "[[reporting-flags]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[fa-ff-no-presence-data-model]]"
@@ -28,7 +31,7 @@ related:
 
 ## Overview
 
-ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lists (and their hierarchies) that constrain allowed values for many SSD2 elements (e.g. `progLegalRef`, `paramCode`, `resUnit`). EFSA publishes these catalogues for reference and download via Knowledge Junction / Zenodo. (ChemMon 2026 p144)
+ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lists (and their hierarchies) that constrain allowed values for many SSD2 elements (e.g. `progLegalRef`, `paramCode`, `resUnit`). EFSA publishes these catalogues for reference and download via Knowledge Junction / Zenodo. The background rationale for catalogue mapping and machine-readable resources is in [[chemmon-data-governance-and-transparency]]. (ChemMon 2026 p144)
 
 ## How catalogues are used in validation
 
@@ -60,7 +63,7 @@ The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] make so
 
 | Catalogue | Where it shows up | Hierarchy / usage |
 | --- | --- | --- |
-| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | Hierarchy: **`faff`**. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings also use the same `faff` conclusion codes in `evalInfo.conclusion`. |
+| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | Hierarchy: **`faff`**. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings also use the same `faff` conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
 | `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. Required when `progLegalRef=N112A` in the parallel DMs. |
 | `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. |
 | `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Two-value catalogue: `Y` / `N`. |
