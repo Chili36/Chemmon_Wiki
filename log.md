@@ -5,6 +5,25 @@ last_updated: "2026-04-24"
 
 # Log
 
+## [2026-04-24] maintenance | Split ChemMon background into narrow pages
+
+Refactored `chemmon-background.md` into a short hub plus four narrower background pages. The original page mixed legal scope, single-collection rationale, domain-overlap handling, data governance, transparency, residue terminology, and annual change cadence in one file.
+
+**New pages:**
+
+- `chemmon-scope-and-legal-basis.md` — purpose, audience, domains, legal framework, and annual-report inclusion window.
+- `chemmon-single-ssd2-collection.md` — why ChemMon uses one SSD2 collection, how overlapping domains are routed, and why FCM is excluded from the 2026 guidance.
+- `chemmon-data-governance-and-transparency.md` — compound elements, catalogue conversion, Open Data, free-text reduction, Knowledge Junction resources, and the broad residue concept.
+- `chemmon-change-management.md` — revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.
+
+**Refactor shape:**
+
+- `chemmon-background.md` is now a routing hub rather than a document-order background page.
+- `index.md` now lists the four background subpages.
+- Added cross-links from overview, SSD2 model, catalogue, DCF workflow, and 2026-rule-change pages so background questions can land on the right context slice.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
 ## [2026-04-24] maintenance | Split FoodEx2 facet reference into narrow pages
 
 Refactored `foodex2-facets.md` into a short hub plus four narrower facet-family pages. The original page reproduced the full F01-F33 Table 4 reference in one file, which meant source-origin, processing, packaging, target-consumer, and legislative-class questions all retrieved the same mixed page.
