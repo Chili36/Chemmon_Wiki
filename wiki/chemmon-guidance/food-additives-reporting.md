@@ -107,7 +107,7 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Result Reporting
 
-- For food additives regulated as groups, `paramText` must state "Expressed as free acid" or "Expressed as salt". (CHEMMON106, e.g. for potassium sorbate)
+- For food additives regulated as groups, `paramText` must state "Expressed as free acid" or "Expressed as salt". (CHEMMON106, e.g. for potassium sorbate; see [[ssd2-analysis-parameter-coding]])
 - If `resType=BIN` and `resQualValue=NEG`, it is highly recommended to report the LOD -- otherwise the data cannot be used for dietary exposure estimation. (CHEMMON107)
 - Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level. (ChemMon 2026)
 

@@ -36,7 +36,7 @@ Key contaminant-domain rules you'll hit frequently:
 - **CHEMMON17**: mycotoxins production-method facet F21 (organic vs conventional) recommended.
 - **CHEMMON18**: arsenic in rice process facet F28 recommended to distinguish processed vs unprocessed.
 - **CHEMMON19**: chlorates/perchlorates process facet F28 recommended.
-- **CHEMMON20**: fish `origFishAreaCode`/text recommended (with freshwater/saltwater minimum when unknown).
+- **CHEMMON20**: fish `origFishAreaCode`/text recommended (with freshwater/saltwater minimum when unknown; see [[ssd2-analysis-context]]).
 - **CHEMMON21**: fat percentage (`fatPerc`) recommended for BFRs/dioxins/3-MCPD contexts.
 
 See [[business-rules-contaminant]] for canonical rule text.
@@ -98,7 +98,7 @@ For acrylamide, EFSA recommends providing an **ingredients list** in the FoodEx2
 - For dioxin/dioxin-like PCB reporting, all 29 congeners (17 PCDD/Fs and 12 dl-PCBs) must be reported per Commission Regulation (EU) 2023/915. (CHEMMON09)
 - For non-dioxin-like PCBs, the six indicator congeners must be reported: PCB 28, PCB 52, PCB 101, PCB 138, PCB 153, and PCB 180. (CHEMMON10)
 - Fat percentage should always be reported regardless of the expression basis. (CHEMMON21)
-- For fish samples: area of origin for fisheries (`origFishAreaCode`) must be specified. (CHEMMON20)
+- For fish samples: area of origin for fisheries (`origFishAreaCode`) must be specified. (CHEMMON20; see [[ssd2-analysis-context]])
 - If the precise fishing area is unknown, at minimum "from freshwater" or "from saltwater" must be indicated. (ChemMon 2026)
 - Fish species must be precisely reported, especially for Baltic region fish. (ChemMon 2026)
 
@@ -113,7 +113,7 @@ For acrylamide, EFSA recommends providing an **ingredients list** in the FoodEx2
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p62-63 -->
 ## Brominated Flame Retardants
 
-- For fish with BFRs, `origFishAreaCode` must be specified. (CHEMMON20)
+- For fish with BFRs, `origFishAreaCode` must be specified. (CHEMMON20; see [[ssd2-analysis-context]])
 - Fat percentage should always be reported. (CHEMMON21)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p63-64 -->

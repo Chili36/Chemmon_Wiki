@@ -15,6 +15,7 @@ related:
   - "[[ssd2-programme-strategy-and-type]]"
   - "[[ssd2-elements-matrix]]"
   - "[[ssd2-matrix-sampled-matrix]]"
+  - "[[ssd2-analysis-parameter-coding]]"
   - "[[reporting-flags]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[fa-ff-no-presence-data-model]]"
@@ -44,7 +45,7 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 | Catalogue | Where it shows up | ChemMon hierarchy / attributes |
 | --- | --- | --- |
 | `LEGREF` | `progLegalRef` | Reporting hierarchy: `ChemMonLegRef` with domain attributes (`VMPR`, `PEST`, `OCC`, `ADD`, `FLAV`). The FA/FF parallel DMs use the sub-hierarchy **`faff`** directly (only `N112A` and `N113A` allowed). See [[ssd2-programme-legal-reference]] and [[reporting-flags]]. |
-| `PARAM` | `paramCode` | Reporting hierarchy: `ChemMonRep`; analysis hierarchies: `vmprParam`, `pestParam`, `chemAnalysis`, `addAnalysis` (FA), `flavAnalysis` (FF). See [[reporting-flags]]. |
+| `PARAM` | `paramCode` | Reporting hierarchy: `ChemMonRep`; analysis hierarchies: `vmprParam`, `pestParam`, `chemAnalysis`, `addAnalysis` (FA), `flavAnalysis` (FF). See [[ssd2-analysis-parameter-coding]] and [[reporting-flags]]. |
 | `MTX` (FoodEx2) | `sampMatCode`, `anMatCode`, `matCode` (use-levels) | Reporting hierarchy (food/feed/non-food matrices). Legislative mappings are derived from MTX for domain-specific reporting (see [[chemmon-matrix-classification-algorithms]]); for SSD2 matrix-element behaviour see [[ssd2-matrix-sampled-matrix]]. |
 | `UNIT` | `resUnit`, `unit` (use-levels), limits/values units | Reporting hierarchy: `chemUnit`. |
 | `SAMPSTR` | `sampStrategy` | Reporting hierarchy: `chemSampStr`. See [[ssd2-programme-strategy-and-type]]. |

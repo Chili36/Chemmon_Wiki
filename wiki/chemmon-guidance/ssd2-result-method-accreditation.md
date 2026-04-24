@@ -11,6 +11,7 @@ source_pages:
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-elements-analysis]]"
+  - "[[ssd2-analysis-methods]]"
   - "[[ssd2-result-units-and-limits]]"
   - "[[business-rules-vmpr]]"
 ---
@@ -21,7 +22,7 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- `accredProc` is mandatory and describes the validation/accreditation status of the method linked to `anMethRefId`.
+- `accredProc` is mandatory and describes the validation/accreditation status of the method linked to `anMethRefId`. For the method-identifier and method-type fields themselves, see [[ssd2-analysis-methods]].
 - For VMPR, decision-threshold fields `CCalpha` (confirmatory) and `CCbeta` (screening) may be required depending on method accreditation and method type.
 - If `accredProc = V007A` (ISO/IEC 17025 + validated per Commission Implementing Regulation (EU) 2021/808):
   - **CHEMMON31**: for confirmation methods, `CCalpha` is mandatory.
@@ -78,4 +79,3 @@ For veterinary medicinal residues, when the analytical method is validated accor
 | --- | --- |
 | CCalpha reported for a confirmatory test | `<CCalpha>20</CCalpha>` |
 | CCbeta reported for a screening test | `<CCbeta>350</CCbeta>` |
-

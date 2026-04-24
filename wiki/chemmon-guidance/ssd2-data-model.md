@@ -99,6 +99,6 @@ In addition to the SSD2 logical-model overview, this wiki maintains ChemMon-focu
 - [[ssd2-elements-programme]] — programme hub; see also [[ssd2-programme-legal-reference]] and [[ssd2-programme-valid-combinations]]
 - [[ssd2-elements-sampling]] — sampling event and sample identification/date/location
 - [[ssd2-elements-matrix]] — matrix hub; see also [[ssd2-matrix-sampled-matrix]] and [[ssd2-matrix-vmpr-coding]]
-- [[ssd2-elements-analysis]] — laboratory, parameter, and analytical-method elements
+- [[ssd2-elements-analysis]] — analysis hub; see also [[ssd2-analysis-parameter-coding]] and [[ssd2-analysis-methods]]
 - [[ssd2-elements-result]] — result limits/values/types/expression/uncertainty
 - [[ssd2-elements-evaluation]] — evaluation codes and action elements

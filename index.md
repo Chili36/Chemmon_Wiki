@@ -52,7 +52,11 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-matrix-vmpr-coding.md](wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md): VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
 - [ssd2-matrix-origin.md](wiki/chemmon-guidance/ssd2-matrix-origin.md): Country of origin — `origCountry` and the main origin-country restrictions.
 - [ssd2-matrix-analysed-sample.md](wiki/chemmon-guidance/ssd2-matrix-analysed-sample.md): Analysed sample / analysed matrix — `sampAnId`, `anMatCode`, `anMatText`, and inheritance from sampled-matrix fields.
-- [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.
+- [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis group hub — fast-path rules + links to narrower analysis pages.
+- [ssd2-analysis-context.md](wiki/chemmon-guidance/ssd2-analysis-context.md): Analysis context — `origFishAreaCode`, `analysisY`, and `anPortSeq`.
+- [ssd2-analysis-laboratory.md](wiki/chemmon-guidance/ssd2-analysis-laboratory.md): Laboratory identity — `labId`, `labAccred`, and `labCountry`.
+- [ssd2-analysis-parameter-coding.md](wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md): Parameter typing and routing — `paramType`, `paramCode`, and `paramText`.
+- [ssd2-analysis-methods.md](wiki/chemmon-guidance/ssd2-analysis-methods.md): Analytical methods — `anMethRefId`, `anMethType`, and `anMethCode`.
 - [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group hub — fast-path rules + links to narrower per-topic pages.
 - [ssd2-result-identification.md](wiki/chemmon-guidance/ssd2-result-identification.md): Result identifier — `resId` uniqueness and naming guidance.
 - [ssd2-result-method-accreditation.md](wiki/chemmon-guidance/ssd2-result-method-accreditation.md): Method accreditation + decision thresholds — `accredProc`, `CCalpha`, `CCbeta` (VMPR-specific requirements).

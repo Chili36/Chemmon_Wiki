@@ -5,6 +5,25 @@ last_updated: "2026-04-24"
 
 # Log
 
+## [2026-04-24] maintenance | Split SSD2 analysis guidance into narrow pages
+
+Refactored `ssd2-elements-analysis.md` into a short hub plus four narrower pages. The original page mixed fish-origin context, laboratory identity, parameter routing, and analytical method classification in one file, which made retrieval pull method-type rules for queries that were really about `paramCode` hierarchy membership or `origFishAreaCode`.
+
+**New pages:**
+
+- `ssd2-analysis-context.md` — `origFishAreaCode`, `analysisY`, and `anPortSeq`.
+- `ssd2-analysis-laboratory.md` — `labId`, `labAccred`, and `labCountry`.
+- `ssd2-analysis-parameter-coding.md` — `paramType`, `paramCode`, and `paramText`.
+- `ssd2-analysis-methods.md` — `anMethRefId`, `anMethType`, and `anMethCode`.
+
+**Refactor shape:**
+
+- `ssd2-elements-analysis.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new analysis pages under the SSD2 element reference section.
+- Added more precise cross-links from the catalogue, reporting-flags, additives, contaminants, and result-method pages so parameter and method questions can land on the right subpage instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
 ## [2026-04-24] maintenance | Split SSD2 matrix guidance into narrow pages
 
 Refactored `ssd2-elements-matrix.md` into a short hub plus four narrower pages. The original page mixed general `sampMatCode` rules, VMPR-specific coding, origin-country constraints, and analysed-matrix inheritance in one file, which made selectors pull VMPR feed/wild-game detail for questions that were really about `origCountry` or `anMatCode`.
