@@ -9,6 +9,9 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-legislative-descriptive]]"
   - "[[business-rules]]"
   - "[[business-rules-additives]]"
   - "[[fa-ff-no-presence-data-model]]"
@@ -19,7 +22,7 @@ related:
   - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-22"
+last_updated: "2026-04-24"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -70,9 +73,9 @@ Use [[controlled-terminology-catalogues]] for the shared catalogue layer, [[lega
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Analytical (SSD2) path: matrix expectations
 
-- **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. (ChemMon 2026)
-- **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. (ChemMon 2026)
-- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
+- **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. See [[foodex2-facets-legislative-descriptive]]. (ChemMon 2026)
+- **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. See [[foodex2-facets-state-process]]. (ChemMon 2026)
+- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[foodex2-facets-packaging-consumer]] and [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39 -->
 ### F33 legislative class: implicit vs explicit

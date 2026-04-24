@@ -6,13 +6,18 @@ sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
   - "[[chemmon-overview]]"
+  - "[[foodex2-facets]]"
+  - "[[foodex2-facets-source-origin]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-legislative-descriptive]]"
   - "[[vmpr-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
   - "[[pesticide-reporting]]"
   - "[[baby-food-reporting]]"
   - "[[business-rules]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-24"
 ---
 
 # FoodEx2 in ChemMon
@@ -45,7 +50,7 @@ BaseTermCode#FacetHeader.FacetCode$FacetHeader.FacetCode
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p36-39 -->
 ## Mandatory Facets by Domain
 
-The table below summarises which facets are required, recommended, or not applicable for each reporting domain.
+The table below summarises which facets are required, recommended, or not applicable for each reporting domain. For the full Table 4 facet text, use the narrow facet references: [[foodex2-facets-source-origin]], [[foodex2-facets-state-process]], [[foodex2-facets-packaging-consumer]], and [[foodex2-facets-legislative-descriptive]].
 
 | Facet | VMPR | Pesticides | Contaminants | Additives | Flavourings |
 | --- | --- | --- | --- | --- | --- |

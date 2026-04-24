@@ -29,7 +29,11 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 - [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background and rationale — why the single SSD2 data collection, resolving overlapping domains, FCM exclusion, compound element flexibility, Open Data and free-text reduction, revision cadence, meaning of 'residue'.
 - [ssd2-data-model.md](wiki/chemmon-guidance/ssd2-data-model.md): SSD2 logical model overview including main entities, element types, mandatory fields, and validation levels.
 - [foodex2-in-chemmon.md](wiki/chemmon-guidance/foodex2-in-chemmon.md): How FoodEx2 is used for matrix classification in ChemMon, mandatory facets by domain, and worked coding examples.
-- [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): Full F01-F33 facet reference — per-domain descriptions of each FoodEx2 facet drawn from Table 4 of the source guidance.
+- [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): FoodEx2 facet reference hub — routing map for the narrower F01-F33 facet-family pages.
+- [foodex2-facets-source-origin.md](wiki/chemmon-guidance/foodex2-facets-source-origin.md): Source, sampled part, ingredient, and origin facets — `F01`, `F02`, `F04`, `F27`.
+- [foodex2-facets-state-process.md](wiki/chemmon-guidance/foodex2-facets-state-process.md): State, cooking, production-method, and process facets — `F03`, `F17`, `F21`, `F28`.
+- [foodex2-facets-packaging-consumer.md](wiki/chemmon-guidance/foodex2-facets-packaging-consumer.md): Packaging, part-consumed/analysed, and target-consumer facets — `F18`, `F19`, `F20`, `F23`.
+- [foodex2-facets-legislative-descriptive.md](wiki/chemmon-guidance/foodex2-facets-legislative-descriptive.md): Legislative and descriptive facets — `F06`, `F07`, `F10`, `F11`, `F31`, `F32`, `F33`.
 - [controlled-terminology-catalogues.md](wiki/chemmon-guidance/controlled-terminology-catalogues.md): Which EFSA catalogues/hierarchies ChemMon uses (LEGREF, PARAM, MTX, UNIT, etc.) and how they drive validation and domain routing.
 - [reporting-flags.md](wiki/chemmon-guidance/reporting-flags.md): How EFSA sets the five domain flags (0-3 values) from `progLegalRef` and `paramCode`, and how flags drive business-rule applicability and reports.
 - [legal-limits-database.md](wiki/chemmon-guidance/legal-limits-database.md): EFSA Legal Limits Database for MRL evaluation: what it covers, sampling-date applicability, and relationship to legal-limit rules.

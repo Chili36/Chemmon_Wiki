@@ -5,6 +5,25 @@ last_updated: "2026-04-24"
 
 # Log
 
+## [2026-04-24] maintenance | Split FoodEx2 facet reference into narrow pages
+
+Refactored `foodex2-facets.md` into a short hub plus four narrower facet-family pages. The original page reproduced the full F01-F33 Table 4 reference in one file, which meant source-origin, processing, packaging, target-consumer, and legislative-class questions all retrieved the same mixed page.
+
+**New pages:**
+
+- `foodex2-facets-source-origin.md` — `F01`, `F02`, `F04`, and `F27`.
+- `foodex2-facets-state-process.md` — `F03`, `F17`, `F21`, and `F28`.
+- `foodex2-facets-packaging-consumer.md` — `F18`, `F19`, `F20`, and `F23`.
+- `foodex2-facets-legislative-descriptive.md` — `F06`, `F07`, `F10`, `F11`, `F31`, `F32`, and `F33`.
+
+**Refactor shape:**
+
+- `foodex2-facets.md` is now a routing hub with high-signal business-rule anchors.
+- `index.md` now lists the four new facet-family pages.
+- Added cross-links from the FoodEx2 overview, VMPR, pesticide, contaminant, additives/flavourings, baby-food, and VMPR matrix pages so facet-specific questions can land on the right page instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
 ## [2026-04-24] maintenance | Split SSD2 evaluation guidance into narrow pages
 
 Refactored `ssd2-elements-evaluation.md` into a short hub plus four narrower pages. The original page mixed legal-limit declaration, result-judgement codes, enforcement actions, and additives/flavourings conclusion logic in one file, which made retrieval pull FA/FF conclusion codes for queries that were really about `evalCode` or `evalLimitType`.

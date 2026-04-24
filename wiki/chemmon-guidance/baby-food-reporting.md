@@ -9,9 +9,11 @@ related:
   - "[[vmpr-reporting]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
-last_updated: "2026-04-10"
+last_updated: "2026-04-24"
 ---
 
 # Baby Food Reporting
@@ -77,4 +79,4 @@ For **mycotoxin maximum levels** (Regulation 2023/915), the following substances
 
 ### Infant formula milk-based with packaging
 - Code: `A03QF#F28.A07HB$F18.A07NM$F19.A16RX`
-- A03QF is the base term for infant formula milk-based (liquid). F28 specifies the physical state, F18 describes the packaging type, and F19 provides additional packaging detail.
+- A03QF is the base term for infant formula milk-based (liquid). F28 specifies the physical state (see [[foodex2-facets-state-process]]), while F18 and F19 describe packaging type/material (see [[foodex2-facets-packaging-consumer]]).
