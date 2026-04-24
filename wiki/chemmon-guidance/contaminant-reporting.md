@@ -12,7 +12,7 @@ related:
   - "[[business-rules]]"
   - "[[food-additives-reporting]]"
   - "[[pesticide-reporting]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-23"
 ---
 
 # Contaminant Reporting
@@ -133,7 +133,7 @@ For acrylamide, EFSA recommends providing an **ingredients list** in the FoodEx2
 ## Furan and Alkylfurans (Furan, 2-methylfuran, 3-methylfuran)
 
 - If analysed **as consumed**, provide cooking/preparation details (time, temperature, handling) in the additional result info field (SSD2 M.20). (ChemMon 2026 Table 8)
-- For furan monitoring, follow the sampling procedures referenced by the guidance and report `sampMethod=N011A` where applicable. See [[ssd2-elements-sampling#sampmethod-sampling-method]]. (ChemMon 2026 Table 8)
+- For furan monitoring, follow the sampling procedures referenced by the guidance and report `sampMethod=N011A` where applicable. See [[ssd2-sampling-method-and-point]]. (ChemMon 2026 Table 8)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p64-65 -->
 ## Chlorates and Perchlorates
