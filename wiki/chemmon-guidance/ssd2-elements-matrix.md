@@ -11,6 +11,7 @@ source_pages:
 related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-sampling]]"
+  - "[[ssd2-sampling-country]]"
   - "[[foodex2-in-chemmon]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[vmpr-reporting]]"

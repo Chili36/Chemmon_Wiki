@@ -46,7 +46,12 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-programme-legal-reference.md](wiki/chemmon-guidance/ssd2-programme-legal-reference.md): Legal reference routing — `progLegalRef`, repeatability, canonical `LEGREF` codes, and multi-domain cases.
 - [ssd2-programme-strategy-and-type.md](wiki/chemmon-guidance/ssd2-programme-strategy-and-type.md): Sampling strategy and programme type — `sampStrategy`, `progType`, and domain-specific usage.
 - [ssd2-programme-valid-combinations.md](wiki/chemmon-guidance/ssd2-programme-valid-combinations.md): Table 2 combination logic — VMPR plans, contaminant control plans, pesticides, and border-control combinations.
-- [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group — `sampMethod`, `sampler`, `sampPoint`, `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampId`, `sampCountry`, sampling date, `origSampId`.
+- [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group hub — fast-path rules + links to narrower sampling pages.
+- [ssd2-sampling-method-and-point.md](wiki/chemmon-guidance/ssd2-sampling-method-and-point.md): Sampling method / sampler / sampling point — `sampMethod`, `sampler`, `sampPoint`.
+- [ssd2-sampling-event-and-unit.md](wiki/chemmon-guidance/ssd2-sampling-event-and-unit.md): Sampling event and unit — `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampUnitSizeUnit`.
+- [ssd2-sample-identifiers.md](wiki/chemmon-guidance/ssd2-sample-identifiers.md): Sample identifiers — `sampId`, `origSampId`.
+- [ssd2-sampling-country.md](wiki/chemmon-guidance/ssd2-sampling-country.md): Country of sampling — `sampCountry`, reportable unspecific-country codes, pesticide constraint.
+- [ssd2-sampling-date.md](wiki/chemmon-guidance/ssd2-sampling-date.md): Sampling date — `sampY`, `sampM`, `sampD`, legal-limit timing, reporting windows.
 - [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group hub — fast-path rules + links to narrower matrix pages.
 - [ssd2-matrix-sampled-matrix.md](wiki/chemmon-guidance/ssd2-matrix-sampled-matrix.md): Sampled matrix coding — `sampMatCode`, `sampMatText`, FoodEx2 detail level, and the drinking-water case.
 - [ssd2-matrix-vmpr-coding.md](wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md): VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
