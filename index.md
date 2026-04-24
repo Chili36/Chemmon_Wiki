@@ -65,7 +65,11 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-result-recovery-correction.md](wiki/chemmon-guidance/ssd2-result-recovery-correction.md): Recovery correction — `resValRec`, `resValRecCorr`.
 - [ssd2-result-expression-basis.md](wiki/chemmon-guidance/ssd2-result-expression-basis.md): Expression basis — `exprResType`, `exprResPerc` (domain-specific constraints).
 - [ssd2-result-uncertainty.md](wiki/chemmon-guidance/ssd2-result-uncertainty.md): Measurement uncertainty — `resValUncert` (recommended vs mandatory by domain).
-- [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group — `evalLowLimit`, `evalLimitType`, `evalCode`, `actTakenCode`, `evalInfo.conclusion`, `evalInfo.com`.
+- [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group hub — fast-path rules + links to narrower evaluation pages.
+- [ssd2-evaluation-limits.md](wiki/chemmon-guidance/ssd2-evaluation-limits.md): Evaluation limits — `evalLowLimit` and `evalLimitType`.
+- [ssd2-evaluation-code.md](wiki/chemmon-guidance/ssd2-evaluation-code.md): Result evaluation — `evalCode` meanings and domain-specific restrictions.
+- [ssd2-evaluation-actions.md](wiki/chemmon-guidance/ssd2-evaluation-actions.md): Follow-up and enforcement — `actTakenCode`.
+- [ssd2-evaluation-conclusions.md](wiki/chemmon-guidance/ssd2-evaluation-conclusions.md): Conclusions and comments — `evalInfo.conclusion` and `evalInfo.com`.
 
 ### Domain Guides
 

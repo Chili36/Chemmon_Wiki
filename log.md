@@ -5,6 +5,25 @@ last_updated: "2026-04-24"
 
 # Log
 
+## [2026-04-24] maintenance | Split SSD2 evaluation guidance into narrow pages
+
+Refactored `ssd2-elements-evaluation.md` into a short hub plus four narrower pages. The original page mixed legal-limit declaration, result-judgement codes, enforcement actions, and additives/flavourings conclusion logic in one file, which made retrieval pull FA/FF conclusion codes for queries that were really about `evalCode` or `evalLimitType`.
+
+**New pages:**
+
+- `ssd2-evaluation-limits.md` — `evalLowLimit` and `evalLimitType`.
+- `ssd2-evaluation-code.md` — `evalCode`.
+- `ssd2-evaluation-actions.md` — `actTakenCode`.
+- `ssd2-evaluation-conclusions.md` — `evalInfo.conclusion` and `evalInfo.com`.
+
+**Refactor shape:**
+
+- `ssd2-elements-evaluation.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new evaluation pages under the SSD2 element reference section.
+- Added more precise cross-links from the legal-limits, catalogue, additives, and result pages so evaluation questions can land on the right subpage instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
 ## [2026-04-24] maintenance | Split SSD2 analysis guidance into narrow pages
 
 Refactored `ssd2-elements-analysis.md` into a short hub plus four narrower pages. The original page mixed fish-origin context, laboratory identity, parameter routing, and analytical method classification in one file, which made retrieval pull method-type rules for queries that were really about `paramCode` hierarchy membership or `origFishAreaCode`.

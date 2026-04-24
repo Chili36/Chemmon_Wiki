@@ -14,6 +14,7 @@ related:
   - "[[fa-ff-no-presence-data-model]]"
   - "[[fa-ff-use-levels-data-model]]"
   - "[[controlled-terminology-catalogues]]"
+  - "[[ssd2-evaluation-conclusions]]"
   - "[[legal-limits-database]]"
   - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
@@ -50,7 +51,7 @@ Some rule families are shared in concept but not in severity or exact field plac
 
 | Topic | SSD2 analytical | No-presence DM | Use-levels DM |
 | --- | --- | --- | --- |
-| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
+| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` (see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
 | Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39_a/b`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
 | Physical state (`F03`) | Recommended / warning path (`CHEMMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
 | Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
