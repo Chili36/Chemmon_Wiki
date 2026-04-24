@@ -2,10 +2,11 @@
 title: "2026 Business Rule Changes"
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-04-10"
+last_updated: "2026-04-24"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
+  - "[[chemmon-change-management]]"
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
   - "[[business-rules-pesticide]]"
@@ -20,7 +21,7 @@ related:
 
 ## Overview
 
-Annual delta of business rule changes for the 2026 ChemMon data collection. This file is a reference log of **what changed** — it does not contain canonical rule definitions. The definitive text of each rule lives in its respective slice file (referenced below each entry). Use this file to understand what's new, what's been tightened, and what's been retired since the 2025 guidance.
+Annual delta of business rule changes for the 2026 ChemMon data collection. This file is a reference log of **what changed** — it does not contain canonical rule definitions. The definitive text of each rule lives in its respective slice file (referenced below each entry). Use this file to understand what's new, what's been tightened, and what's been retired since the 2025 guidance. For the revision cadence and why ordinary rule changes usually lag by one sampling cycle, see [[chemmon-change-management]].
 
 ## Amended rules
 

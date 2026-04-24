@@ -7,12 +7,16 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-source-origin]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-legislative-descriptive]]"
   - "[[ssd2-elements-matrix]]"
   - "[[ssd2-elements-result]]"
   - "[[business-rules]]"
   - "[[food-additives-reporting]]"
   - "[[pesticide-reporting]]"
-last_updated: "2026-04-23"
+last_updated: "2026-04-24"
 ---
 
 # Contaminant Reporting
@@ -30,13 +34,13 @@ Key contaminant-domain rules you'll hit frequently:
 
 - **CHEMMON09/10**: dioxins/PCBs congener reporting expectations.
 - **CHEMMON11**: moisture percentage (`moistPerc`) recommendation for mineral oils/mycotoxins.
-- **CHEMMON12**: acrylamide requires legislative class facet F33.
-- **CHEMMON14**: bisphenols require packaging material facet F19.
-- **CHEMMON15**: PAHs packaging material facet F19 recommended.
-- **CHEMMON17**: mycotoxins production-method facet F21 (organic vs conventional) recommended.
-- **CHEMMON18**: arsenic in rice process facet F28 recommended to distinguish processed vs unprocessed.
-- **CHEMMON19**: chlorates/perchlorates process facet F28 recommended.
-- **CHEMMON20**: fish `origFishAreaCode`/text recommended (with freshwater/saltwater minimum when unknown).
+- **CHEMMON12**: acrylamide requires legislative class facet F33. See [[foodex2-facets-legislative-descriptive]].
+- **CHEMMON14**: bisphenols require packaging material facet F19. See [[foodex2-facets-packaging-consumer]].
+- **CHEMMON15**: PAHs packaging material facet F19 recommended. See [[foodex2-facets-packaging-consumer]].
+- **CHEMMON17**: mycotoxins production-method facet F21 (organic vs conventional) recommended. See [[foodex2-facets-state-process]].
+- **CHEMMON18**: arsenic in rice process facet F28 recommended to distinguish processed vs unprocessed. See [[foodex2-facets-state-process]].
+- **CHEMMON19**: chlorates/perchlorates process facet F28 recommended. See [[foodex2-facets-state-process]].
+- **CHEMMON20**: fish `origFishAreaCode`/text recommended (with freshwater/saltwater minimum when unknown; see [[ssd2-analysis-context]]).
 - **CHEMMON21**: fat percentage (`fatPerc`) recommended for BFRs/dioxins/3-MCPD contexts.
 
 See [[business-rules-contaminant]] for canonical rule text.
@@ -98,7 +102,7 @@ For acrylamide, EFSA recommends providing an **ingredients list** in the FoodEx2
 - For dioxin/dioxin-like PCB reporting, all 29 congeners (17 PCDD/Fs and 12 dl-PCBs) must be reported per Commission Regulation (EU) 2023/915. (CHEMMON09)
 - For non-dioxin-like PCBs, the six indicator congeners must be reported: PCB 28, PCB 52, PCB 101, PCB 138, PCB 153, and PCB 180. (CHEMMON10)
 - Fat percentage should always be reported regardless of the expression basis. (CHEMMON21)
-- For fish samples: area of origin for fisheries (`origFishAreaCode`) must be specified. (CHEMMON20)
+- For fish samples: area of origin for fisheries (`origFishAreaCode`) must be specified. (CHEMMON20; see [[ssd2-analysis-context]])
 - If the precise fishing area is unknown, at minimum "from freshwater" or "from saltwater" must be indicated. (ChemMon 2026)
 - Fish species must be precisely reported, especially for Baltic region fish. (ChemMon 2026)
 
@@ -113,7 +117,7 @@ For acrylamide, EFSA recommends providing an **ingredients list** in the FoodEx2
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p62-63 -->
 ## Brominated Flame Retardants
 
-- For fish with BFRs, `origFishAreaCode` must be specified. (CHEMMON20)
+- For fish with BFRs, `origFishAreaCode` must be specified. (CHEMMON20; see [[ssd2-analysis-context]])
 - Fat percentage should always be reported. (CHEMMON21)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p63-64 -->

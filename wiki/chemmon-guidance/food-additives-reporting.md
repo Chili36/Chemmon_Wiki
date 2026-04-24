@@ -9,16 +9,20 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-state-process]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-legislative-descriptive]]"
   - "[[business-rules]]"
   - "[[business-rules-additives]]"
   - "[[fa-ff-no-presence-data-model]]"
   - "[[fa-ff-use-levels-data-model]]"
   - "[[controlled-terminology-catalogues]]"
+  - "[[ssd2-evaluation-conclusions]]"
   - "[[legal-limits-database]]"
   - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-22"
+last_updated: "2026-04-24"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -50,7 +54,7 @@ Some rule families are shared in concept but not in severity or exact field plac
 
 | Topic | SSD2 analytical | No-presence DM | Use-levels DM |
 | --- | --- | --- | --- |
-| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
+| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` (see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
 | Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39_a/b`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
 | Physical state (`F03`) | Recommended / warning path (`CHEMMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
 | Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
@@ -69,9 +73,9 @@ Use [[controlled-terminology-catalogues]] for the shared catalogue layer, [[lega
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Analytical (SSD2) path: matrix expectations
 
-- **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. (ChemMon 2026)
-- **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. (ChemMon 2026)
-- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
+- **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. See [[foodex2-facets-legislative-descriptive]]. (ChemMon 2026)
+- **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. See [[foodex2-facets-state-process]]. (ChemMon 2026)
+- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[foodex2-facets-packaging-consumer]] and [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39 -->
 ### F33 legislative class: implicit vs explicit
@@ -107,7 +111,7 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Result Reporting
 
-- For food additives regulated as groups, `paramText` must state "Expressed as free acid" or "Expressed as salt". (CHEMMON106, e.g. for potassium sorbate)
+- For food additives regulated as groups, `paramText` must state "Expressed as free acid" or "Expressed as salt". (CHEMMON106, e.g. for potassium sorbate; see [[ssd2-analysis-parameter-coding]])
 - If `resType=BIN` and `resQualValue=NEG`, it is highly recommended to report the LOD -- otherwise the data cannot be used for dietary exposure estimation. (CHEMMON107)
 - Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level. (ChemMon 2026)
 

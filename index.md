@@ -26,10 +26,18 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 ### Overview & References
 
 - [chemmon-overview.md](wiki/chemmon-guidance/chemmon-overview.md): High-level explanation of ChemMon purpose, reporting domains, data submission cycle, and the role of business rules.
-- [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background and rationale — why the single SSD2 data collection, resolving overlapping domains, FCM exclusion, compound element flexibility, Open Data and free-text reduction, revision cadence, meaning of 'residue'.
+- [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background hub — routing map for legal basis, single SSD2 collection rationale, data governance, and change management.
+- [chemmon-scope-and-legal-basis.md](wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md): ChemMon purpose, audience, covered domains, legal framework, and annual-report inclusion window.
+- [chemmon-single-ssd2-collection.md](wiki/chemmon-guidance/chemmon-single-ssd2-collection.md): Why ChemMon uses one SSD2 collection, how overlapping domains are routed, and why FCM is excluded from 2026 guidance.
+- [chemmon-data-governance-and-transparency.md](wiki/chemmon-guidance/chemmon-data-governance-and-transparency.md): Compound elements, catalogue conversion, Open Data, free-text reduction, Knowledge Junction resources, and the broad "residue" concept.
+- [chemmon-change-management.md](wiki/chemmon-guidance/chemmon-change-management.md): Revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.
 - [ssd2-data-model.md](wiki/chemmon-guidance/ssd2-data-model.md): SSD2 logical model overview including main entities, element types, mandatory fields, and validation levels.
 - [foodex2-in-chemmon.md](wiki/chemmon-guidance/foodex2-in-chemmon.md): How FoodEx2 is used for matrix classification in ChemMon, mandatory facets by domain, and worked coding examples.
-- [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): Full F01-F33 facet reference — per-domain descriptions of each FoodEx2 facet drawn from Table 4 of the source guidance.
+- [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): FoodEx2 facet reference hub — routing map for the narrower F01-F33 facet-family pages.
+- [foodex2-facets-source-origin.md](wiki/chemmon-guidance/foodex2-facets-source-origin.md): Source, sampled part, ingredient, and origin facets — `F01`, `F02`, `F04`, `F27`.
+- [foodex2-facets-state-process.md](wiki/chemmon-guidance/foodex2-facets-state-process.md): State, cooking, production-method, and process facets — `F03`, `F17`, `F21`, `F28`.
+- [foodex2-facets-packaging-consumer.md](wiki/chemmon-guidance/foodex2-facets-packaging-consumer.md): Packaging, part-consumed/analysed, and target-consumer facets — `F18`, `F19`, `F20`, `F23`.
+- [foodex2-facets-legislative-descriptive.md](wiki/chemmon-guidance/foodex2-facets-legislative-descriptive.md): Legislative and descriptive facets — `F06`, `F07`, `F10`, `F11`, `F31`, `F32`, `F33`.
 - [controlled-terminology-catalogues.md](wiki/chemmon-guidance/controlled-terminology-catalogues.md): Which EFSA catalogues/hierarchies ChemMon uses (LEGREF, PARAM, MTX, UNIT, etc.) and how they drive validation and domain routing.
 - [reporting-flags.md](wiki/chemmon-guidance/reporting-flags.md): How EFSA sets the five domain flags (0-3 values) from `progLegalRef` and `paramCode`, and how flags drive business-rule applicability and reports.
 - [legal-limits-database.md](wiki/chemmon-guidance/legal-limits-database.md): EFSA Legal Limits Database for MRL evaluation: what it covers, sampling-date applicability, and relationship to legal-limit rules.
@@ -57,7 +65,11 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-matrix-vmpr-coding.md](wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md): VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
 - [ssd2-matrix-origin.md](wiki/chemmon-guidance/ssd2-matrix-origin.md): Country of origin — `origCountry` and the main origin-country restrictions.
 - [ssd2-matrix-analysed-sample.md](wiki/chemmon-guidance/ssd2-matrix-analysed-sample.md): Analysed sample / analysed matrix — `sampAnId`, `anMatCode`, `anMatText`, and inheritance from sampled-matrix fields.
-- [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.
+- [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis group hub — fast-path rules + links to narrower analysis pages.
+- [ssd2-analysis-context.md](wiki/chemmon-guidance/ssd2-analysis-context.md): Analysis context — `origFishAreaCode`, `analysisY`, and `anPortSeq`.
+- [ssd2-analysis-laboratory.md](wiki/chemmon-guidance/ssd2-analysis-laboratory.md): Laboratory identity — `labId`, `labAccred`, and `labCountry`.
+- [ssd2-analysis-parameter-coding.md](wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md): Parameter typing and routing — `paramType`, `paramCode`, and `paramText`.
+- [ssd2-analysis-methods.md](wiki/chemmon-guidance/ssd2-analysis-methods.md): Analytical methods — `anMethRefId`, `anMethType`, and `anMethCode`.
 - [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group hub — fast-path rules + links to narrower per-topic pages.
 - [ssd2-result-identification.md](wiki/chemmon-guidance/ssd2-result-identification.md): Result identifier — `resId` uniqueness and naming guidance.
 - [ssd2-result-method-accreditation.md](wiki/chemmon-guidance/ssd2-result-method-accreditation.md): Method accreditation + decision thresholds — `accredProc`, `CCalpha`, `CCbeta` (VMPR-specific requirements).
@@ -66,7 +78,11 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-result-recovery-correction.md](wiki/chemmon-guidance/ssd2-result-recovery-correction.md): Recovery correction — `resValRec`, `resValRecCorr`.
 - [ssd2-result-expression-basis.md](wiki/chemmon-guidance/ssd2-result-expression-basis.md): Expression basis — `exprResType`, `exprResPerc` (domain-specific constraints).
 - [ssd2-result-uncertainty.md](wiki/chemmon-guidance/ssd2-result-uncertainty.md): Measurement uncertainty — `resValUncert` (recommended vs mandatory by domain).
-- [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group — `evalLowLimit`, `evalLimitType`, `evalCode`, `actTakenCode`, `evalInfo.conclusion`, `evalInfo.com`.
+- [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group hub — fast-path rules + links to narrower evaluation pages.
+- [ssd2-evaluation-limits.md](wiki/chemmon-guidance/ssd2-evaluation-limits.md): Evaluation limits — `evalLowLimit` and `evalLimitType`.
+- [ssd2-evaluation-code.md](wiki/chemmon-guidance/ssd2-evaluation-code.md): Result evaluation — `evalCode` meanings and domain-specific restrictions.
+- [ssd2-evaluation-actions.md](wiki/chemmon-guidance/ssd2-evaluation-actions.md): Follow-up and enforcement — `actTakenCode`.
+- [ssd2-evaluation-conclusions.md](wiki/chemmon-guidance/ssd2-evaluation-conclusions.md): Conclusions and comments — `evalInfo.conclusion` and `evalInfo.com`.
 
 ### Domain Guides
 

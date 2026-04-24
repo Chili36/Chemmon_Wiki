@@ -13,6 +13,7 @@ related:
   - "[[business-rules]]"
   - "[[ssd2-elements-programme]]"
   - "[[ssd2-programme-legal-reference]]"
+  - "[[ssd2-analysis-parameter-coding]]"
 ---
 
 # Reporting Flags in the EFSA Scientific Data Warehouse
@@ -47,7 +48,7 @@ EFSA notes matrix and reported unit can also affect flags, and the algorithm may
 <!-- Source: ChemMon 2026 p149 -->
 
 - `progLegalRef` is checked via the `ChemMonLegRef` hierarchy attributes (`VMPR`, `PEST`, `OCC`, `ADD`, `FLAV`) in the LEGREF catalogue. See [[controlled-terminology-catalogues]] and [[ssd2-programme-legal-reference]].
-- `paramCode` is checked via domain analysis hierarchies in the PARAM catalogue (`vmprParam`, `pestParam`, `chemAnalysis`, `addAnalysis`, `flavAnalysis`).
+- `paramCode` is checked via domain analysis hierarchies in the PARAM catalogue (`vmprParam`, `pestParam`, `chemAnalysis`, `addAnalysis`, `flavAnalysis`). See [[ssd2-analysis-parameter-coding]].
 
 ### Flag values (0–3)
 
