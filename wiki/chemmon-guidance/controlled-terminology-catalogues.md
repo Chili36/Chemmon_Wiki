@@ -10,6 +10,8 @@ sources:
 source_pages:
   - "ChemMon 2026 pp. 144-147 (Section 7; Tables 11-12); No-presence 2026 Table 1 pp. 15-16; Use-levels 2026 Table 1 pp. 19-21"
 related:
+  - "[[chemmon-data-governance-and-transparency]]"
+  - "[[chemmon-change-management]]"
   - "[[ssd2-elements-programme]]"
   - "[[ssd2-programme-legal-reference]]"
   - "[[ssd2-programme-strategy-and-type]]"
@@ -29,7 +31,7 @@ related:
 
 ## Overview
 
-ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lists (and their hierarchies) that constrain allowed values for many SSD2 elements (e.g. `progLegalRef`, `paramCode`, `resUnit`). EFSA publishes these catalogues for reference and download via Knowledge Junction / Zenodo. (ChemMon 2026 p144)
+ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lists (and their hierarchies) that constrain allowed values for many SSD2 elements (e.g. `progLegalRef`, `paramCode`, `resUnit`). EFSA publishes these catalogues for reference and download via Knowledge Junction / Zenodo. The background rationale for catalogue mapping and machine-readable resources is in [[chemmon-data-governance-and-transparency]]. (ChemMon 2026 p144)
 
 ## How catalogues are used in validation
 
