@@ -1,9 +1,123 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-23"
+last_updated: "2026-04-24"
 ---
 
 # Log
+
+## [2026-04-24] maintenance | Split ChemMon background into narrow pages
+
+Refactored `chemmon-background.md` into a short hub plus four narrower background pages. The original page mixed legal scope, single-collection rationale, domain-overlap handling, data governance, transparency, residue terminology, and annual change cadence in one file.
+
+**New pages:**
+
+- `chemmon-scope-and-legal-basis.md` — purpose, audience, domains, legal framework, and annual-report inclusion window.
+- `chemmon-single-ssd2-collection.md` — why ChemMon uses one SSD2 collection, how overlapping domains are routed, and why FCM is excluded from the 2026 guidance.
+- `chemmon-data-governance-and-transparency.md` — compound elements, catalogue conversion, Open Data, free-text reduction, Knowledge Junction resources, and the broad residue concept.
+- `chemmon-change-management.md` — revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.
+
+**Refactor shape:**
+
+- `chemmon-background.md` is now a routing hub rather than a document-order background page.
+- `index.md` now lists the four background subpages.
+- Added cross-links from overview, SSD2 model, catalogue, DCF workflow, and 2026-rule-change pages so background questions can land on the right context slice.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
+## [2026-04-24] maintenance | Split FoodEx2 facet reference into narrow pages
+
+Refactored `foodex2-facets.md` into a short hub plus four narrower facet-family pages. The original page reproduced the full F01-F33 Table 4 reference in one file, which meant source-origin, processing, packaging, target-consumer, and legislative-class questions all retrieved the same mixed page.
+
+**New pages:**
+
+- `foodex2-facets-source-origin.md` — `F01`, `F02`, `F04`, and `F27`.
+- `foodex2-facets-state-process.md` — `F03`, `F17`, `F21`, and `F28`.
+- `foodex2-facets-packaging-consumer.md` — `F18`, `F19`, `F20`, and `F23`.
+- `foodex2-facets-legislative-descriptive.md` — `F06`, `F07`, `F10`, `F11`, `F31`, `F32`, and `F33`.
+
+**Refactor shape:**
+
+- `foodex2-facets.md` is now a routing hub with high-signal business-rule anchors.
+- `index.md` now lists the four new facet-family pages.
+- Added cross-links from the FoodEx2 overview, VMPR, pesticide, contaminant, additives/flavourings, baby-food, and VMPR matrix pages so facet-specific questions can land on the right page instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
+## [2026-04-24] maintenance | Split SSD2 evaluation guidance into narrow pages
+
+Refactored `ssd2-elements-evaluation.md` into a short hub plus four narrower pages. The original page mixed legal-limit declaration, result-judgement codes, enforcement actions, and additives/flavourings conclusion logic in one file, which made retrieval pull FA/FF conclusion codes for queries that were really about `evalCode` or `evalLimitType`.
+
+**New pages:**
+
+- `ssd2-evaluation-limits.md` — `evalLowLimit` and `evalLimitType`.
+- `ssd2-evaluation-code.md` — `evalCode`.
+- `ssd2-evaluation-actions.md` — `actTakenCode`.
+- `ssd2-evaluation-conclusions.md` — `evalInfo.conclusion` and `evalInfo.com`.
+
+**Refactor shape:**
+
+- `ssd2-elements-evaluation.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new evaluation pages under the SSD2 element reference section.
+- Added more precise cross-links from the legal-limits, catalogue, additives, and result pages so evaluation questions can land on the right subpage instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
+## [2026-04-24] maintenance | Split SSD2 analysis guidance into narrow pages
+
+Refactored `ssd2-elements-analysis.md` into a short hub plus four narrower pages. The original page mixed fish-origin context, laboratory identity, parameter routing, and analytical method classification in one file, which made retrieval pull method-type rules for queries that were really about `paramCode` hierarchy membership or `origFishAreaCode`.
+
+**New pages:**
+
+- `ssd2-analysis-context.md` — `origFishAreaCode`, `analysisY`, and `anPortSeq`.
+- `ssd2-analysis-laboratory.md` — `labId`, `labAccred`, and `labCountry`.
+- `ssd2-analysis-parameter-coding.md` — `paramType`, `paramCode`, and `paramText`.
+- `ssd2-analysis-methods.md` — `anMethRefId`, `anMethType`, and `anMethCode`.
+
+**Refactor shape:**
+
+- `ssd2-elements-analysis.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new analysis pages under the SSD2 element reference section.
+- Added more precise cross-links from the catalogue, reporting-flags, additives, contaminants, and result-method pages so parameter and method questions can land on the right subpage instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
+## [2026-04-24] maintenance | Split SSD2 matrix guidance into narrow pages
+
+Refactored `ssd2-elements-matrix.md` into a short hub plus four narrower pages. The original page mixed general `sampMatCode` rules, VMPR-specific coding, origin-country constraints, and analysed-matrix inheritance in one file, which made selectors pull VMPR feed/wild-game detail for questions that were really about `origCountry` or `anMatCode`.
+
+**New pages:**
+
+- `ssd2-matrix-sampled-matrix.md` — `sampMatCode`, `sampMatText`, FoodEx2 detail level, and the drinking-water case.
+- `ssd2-matrix-vmpr-coding.md` — VMPR-specific matrix coding, including derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
+- `ssd2-matrix-origin.md` — `origCountry` and the main origin-country restrictions.
+- `ssd2-matrix-analysed-sample.md` — `sampAnId`, `anMatCode`, `anMatText`, and the default inheritance logic.
+
+**Refactor shape:**
+
+- `ssd2-elements-matrix.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new matrix pages under the SSD2 element reference section.
+- Added more precise cross-links from the matrix-algorithms, VMPR, catalogue, facet, and SSD2 data-model pages so matrix questions can land on the right subpage instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
+
+## [2026-04-23] maintenance | Split SSD2 programme guidance into narrow pages
+
+Refactored `ssd2-elements-programme.md` into a short hub plus four narrower programme pages. The original page carried four separate element decisions (`progId`, `progLegalRef`, `sampStrategy`, `progType`) and the Table 2 combination logic in one mixed file, which made retrieval noisy and caused legal-reference routing questions to pull unrelated programme examples.
+
+**New pages:**
+
+- `ssd2-programme-identification.md` — `progId`.
+- `ssd2-programme-legal-reference.md` — `progLegalRef` and canonical `LEGREF` routing.
+- `ssd2-programme-strategy-and-type.md` — `sampStrategy` and `progType`.
+- `ssd2-programme-valid-combinations.md` — Table 2 valid combinations across VMPR, contaminants, and pesticides.
+
+**Refactor shape:**
+
+- `ssd2-elements-programme.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new programme pages under the SSD2 element reference section.
+- Added more precise cross-links from `controlled-terminology-catalogues.md` and `reporting-flags.md` so `LEGREF` / programme-routing questions can land on the legal-reference subpage instead of the whole programme group.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
 
 ## [2026-04-23] maintenance | Split SSD2 sampling guidance into narrow pages
 

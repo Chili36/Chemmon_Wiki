@@ -9,6 +9,8 @@ source_pages:
   - "pp. 64-73 (Section 2, elements M.01-M.20)"
 related:
   - "[[ssd2-elements-evaluation]]"
+  - "[[ssd2-evaluation-code]]"
+  - "[[ssd2-evaluation-limits]]"
   - "[[ssd2-data-model]]"
   - "[[ssd2-result-units-and-limits]]"
   - "[[ssd2-result-value-and-type]]"
@@ -25,7 +27,7 @@ related:
 
 ## Overview
 
-The result group captures the numeric and qualitative outputs of the analysis: detection/quantification limits, the measured value, units, recovery, expression basis (whole/fat/dry weight), result type, and measurement uncertainty. See [[ssd2-elements-evaluation]] for how the result is compared against legal limits.
+The result group captures the numeric and qualitative outputs of the analysis: detection/quantification limits, the measured value, units, recovery, expression basis (whole/fat/dry weight), result type, and measurement uncertainty. See [[ssd2-elements-evaluation]] for the judgement layer; jump straight to [[ssd2-evaluation-limits]] for declared limits or [[ssd2-evaluation-code]] for the result assessment itself.
 
 This page is intentionally kept short and acts as a navigation hub plus a "fast path" summary. Detailed per-element guidance is split into narrowly-scoped subpages (below) so the wiki stays retrievable and reusable.
 
