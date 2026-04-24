@@ -75,6 +75,6 @@ Use it only for repeated analysis of the same sample with the same method when t
 Do not use `anPortSeq` when results are assessed against a legal limit in the ordinary sense. In those cases either:
 
 - report the result from the most accurate/reliable analysis, or
-- if equally accurate techniques were used, report the mean value instead
+- if equally accurate techniques were used, report the mean value instead and also report the date of the last component result and the analytical method that is most applicable to the mean result
 
 Counter-analyses and confirmation runs should also not be represented through `anPortSeq`; only the result that is actually evaluated should be reported. (ChemMon 2026 p58)

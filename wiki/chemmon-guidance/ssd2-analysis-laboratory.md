@@ -46,7 +46,7 @@ related:
 
 ### Pesticide-specific values
 
-For pesticide monitoring, the guidance highlights two values:
+For pesticide monitoring, only these two `LABACC` values are valid:
 
 | Code | Meaning |
 | --- | --- |
