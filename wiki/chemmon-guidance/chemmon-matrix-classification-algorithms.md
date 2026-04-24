@@ -2,7 +2,7 @@
 title: "ChemMon Matrix Classification Algorithms (VMPR, Pesticides)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -10,6 +10,8 @@ source_pages:
   - "pp. 40-42 (FoodEx2 mapping and general considerations)"
 related:
   - "[[ssd2-elements-matrix]]"
+  - "[[ssd2-matrix-sampled-matrix]]"
+  - "[[ssd2-matrix-vmpr-coding]]"
   - "[[vmpr-reporting]]"
   - "[[pesticide-reporting]]"
   - "[[controlled-terminology-catalogues]]"
@@ -23,7 +25,7 @@ related:
 
 ## Overview
 
-For the **National and Annual Reports** in the VMPR and pesticide domains, EFSA applies domain-specific **matrix-classification algorithms** that interpret the reported FoodEx2 matrix code (`sampMatCode`) and group samples into the legislative/reportable matrix groups required by the sectoral legislation. (ChemMon 2026 p97)
+For the **National and Annual Reports** in the VMPR and pesticide domains, EFSA applies domain-specific **matrix-classification algorithms** that interpret the reported FoodEx2 matrix code (`sampMatCode`) and group samples into the legislative/reportable matrix groups required by the sectoral legislation. This page is about the downstream grouping layer; for constructing the matrix code itself, start at [[ssd2-matrix-sampled-matrix]] or [[ssd2-matrix-vmpr-coding]]. (ChemMon 2026 p97)
 
 The guidance notes these algorithms are published on EFSA Knowledge Junction alongside other supporting tools, and are intended to help data providers verify that samples/results will be classified as expected based on the FoodEx2 codes they submit. (ChemMon 2026 p97)
 
@@ -48,4 +50,3 @@ The guidance notes these algorithms are published on EFSA Knowledge Junction alo
 <!-- Source: ChemMon 2026 p41 -->
 
 EFSA recommends that data providers check, in the validation dashboards, that samples are being flagged/classified as expected (e.g. EU coordinated programme flagging for pesticides) **before accepting** datasets. This avoids discovering systematic classification issues only after data have been accepted. (ChemMon 2026 p41)
-

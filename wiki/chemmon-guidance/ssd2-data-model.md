@@ -7,9 +7,11 @@ sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
   - "[[chemmon-overview]]"
+  - "[[chemmon-single-ssd2-collection]]"
+  - "[[chemmon-data-governance-and-transparency]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 ---
 
 # SSD2 Data Model
@@ -19,7 +21,7 @@ last_updated: "2026-04-11"
 
 - The Standard Sample Description version 2 (SSD2) is a harmonised data format for describing food and feed samples, the analytical methods applied to them, and the results obtained. (SSD2 p7-9)
 - SSD2 provides a common language across EU Member States so that data submitted to EFSA can be aggregated, compared, and analysed consistently regardless of the originating country or laboratory. (SSD2 p7)
-- All ChemMon reporting domains use SSD2 as the mandatory submission format through the Data Collection Framework. See [[chemmon-overview]] for how the domains are organised. (ChemMon 2026 p10-12)
+- All ChemMon reporting domains use SSD2 as the mandatory submission format through the Data Collection Framework. See [[chemmon-overview]] for how the domains are organised and [[chemmon-single-ssd2-collection]] for the consolidation rationale. (ChemMon 2026 p10-12)
 
 <!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p10-18 -->
 ## Main Entities
@@ -50,7 +52,7 @@ SSD2 elements fall into three types:
 
 - **Simple elements**: single-value fields such as `sampId` (sample identifier) or `analysisY` (analysis year). Each carries one value per record. (SSD2 p19)
 - **Repeatable elements**: elements that may appear more than once within a record, such as multiple parameter codes for a screening result. (SSD2 p19-20)
-- **Compound elements**: elements composed of a base term plus optional facets, following FoodEx2 encoding conventions. `sampMatCode` and `anMatCode` are the primary compound elements. The base term identifies the food category; facets add detail such as processing state, source animal, or production method. (SSD2 p20-22)
+- **Compound elements**: elements composed of a base term plus optional facets, following FoodEx2 encoding conventions. `sampMatCode` and `anMatCode` are the primary compound elements. The base term identifies the food category; facets add detail such as processing state, source animal, or production method. For the ChemMon rationale behind compound-element flexibility, see [[chemmon-data-governance-and-transparency]]. (SSD2 p20-22)
 
 <!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p22-30; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p10-14 -->
 ## Key Mandatory Elements
@@ -98,7 +100,7 @@ In addition to the SSD2 logical-model overview, this wiki maintains ChemMon-focu
 
 - [[ssd2-elements-programme]] — programme hub; see also [[ssd2-programme-legal-reference]] and [[ssd2-programme-valid-combinations]]
 - [[ssd2-elements-sampling]] — sampling event and sample identification/date/location
-- [[ssd2-elements-matrix]] — FoodEx2 matrix coding (`sampMatCode` / `anMatCode`) and special cases
-- [[ssd2-elements-analysis]] — laboratory, parameter, and analytical-method elements
+- [[ssd2-elements-matrix]] — matrix hub; see also [[ssd2-matrix-sampled-matrix]] and [[ssd2-matrix-vmpr-coding]]
+- [[ssd2-elements-analysis]] — analysis hub; see also [[ssd2-analysis-parameter-coding]] and [[ssd2-analysis-methods]]
 - [[ssd2-elements-result]] — result limits/values/types/expression/uncertainty
-- [[ssd2-elements-evaluation]] — evaluation codes and action elements
+- [[ssd2-elements-evaluation]] — evaluation hub; see also [[ssd2-evaluation-code]] and [[ssd2-evaluation-conclusions]]

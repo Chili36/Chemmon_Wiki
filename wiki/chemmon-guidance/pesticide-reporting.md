@@ -7,12 +7,14 @@ sources:
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
+  - "[[foodex2-facets-packaging-consumer]]"
+  - "[[foodex2-facets-state-process]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[business-rules]]"
   - "[[contaminant-reporting]]"
   - "[[vmpr-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 ---
 
 # Pesticide Residues Reporting
@@ -22,7 +24,7 @@ last_updated: "2026-04-11"
 
 - Pesticide residues is one of five [[chemmon-overview|ChemMon]] reporting domains, covering monitoring and enforcement under Regulation (EC) No 396/2005. (ChemMon 2026 p25)
 - Covers EU coordinated programmes, national monitoring programmes, and targeted enforcement sampling. (ChemMon 2026 p25-26)
-- Matrix coding follows [[foodex2-in-chemmon]] rules. Copper reporting overlaps with [[contaminant-reporting]] (different F20 codes apply depending on domain).
+- Matrix coding follows [[foodex2-in-chemmon]] rules. Copper reporting overlaps with [[contaminant-reporting]]; different `F20` and `F28` codes apply depending on domain, so use [[foodex2-facets-packaging-consumer]] and [[foodex2-facets-state-process]] for the facet definitions.
 
 ## Mandatory Legal References
 
