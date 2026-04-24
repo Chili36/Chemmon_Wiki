@@ -47,5 +47,5 @@ The guidance allows unspecific codes such as `AA`, `XC`, `XD`, `XE`, and `XX` wh
 ## Related business rules
 
 - `CHEMMON95` — for pesticide records with `evalCode = J003A` (non-compliant), `origCountry` must not be `XX`, `AA`, `EU`, `XC`, `XD`, or `XE`. See [[business-rules-pesticide]].
-- `CHEMMON99` — for import programmes (`K038A` / `K019A` with border-control context), `origCountry` cannot equal `sampCountry`. See [[business-rules-cross-cutting]].
+- `CHEMMON99` — for import/monitoring records at border-control context (`K038A` / `K019A` / `E010A`), `origCountry` cannot equal `sampCountry`. See [[business-rules-cross-cutting]].
 - `GBR13` — `origArea` must be geographically within `origCountry`. See [[business-rules-gbr]].
