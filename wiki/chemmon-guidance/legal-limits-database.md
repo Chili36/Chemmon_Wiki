@@ -11,6 +11,7 @@ source_pages:
 related:
   - "[[business-rules-legal-limits]]"
   - "[[ssd2-elements-result]]"
+  - "[[ssd2-evaluation-limits]]"
   - "[[chemmon-reports]]"
   - "[[fa-ff-use-levels-data-model]]"
   - "[[food-additives-reporting]]"
@@ -47,7 +48,7 @@ The guidance describes it as a resource intended to help data providers check ex
 
 ## Relationship to legal-limit business rules
 
-See [[business-rules-legal-limits]] for the validation rules that compare reported results against legal limits as part of the ChemMon validation layer.
+See [[business-rules-legal-limits]] for the validation rules that compare reported results against legal limits as part of the ChemMon validation layer. For the SSD2 fields that explicitly carry a declared limit and limit type, see [[ssd2-evaluation-limits]].
 
 ## FA/FF Maximum Permitted Levels — checked at the marketing date
 
