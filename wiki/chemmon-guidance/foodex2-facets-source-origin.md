@@ -80,8 +80,12 @@ related:
 ## Related Business Rules
 
 - `CHEMMON76`: for VMPR with the same `sampEventId`, the `F01` species/breed facet must be identical. See [[business-rules-vmpr]].
-- `CHEMMON12`: for acrylamide, `F04` ingredient detail is recommended for specific composite and baby-food contexts, while `F33` remains mandatory. See [[business-rules-contaminant]] and [[contaminant-reporting]].
+- `CHEMMON12`: for acrylamide, `F33` legislative class is mandatory. See [[business-rules-contaminant]] and [[contaminant-reporting]].
 - `CHEMMON108`: additives/flavourings require matrix specificity for food colour/additive classification. See [[business-rules-additives]].
+
+## Related Guidance
+
+- For acrylamide, `F04` ingredient detail is recommended for specific composite and baby-food contexts, but this is guidance rather than the `CHEMMON12` validator condition. See [[contaminant-reporting]].
 
 ## Navigation
 
