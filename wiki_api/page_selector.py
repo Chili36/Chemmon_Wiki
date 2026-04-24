@@ -123,7 +123,6 @@ class WikiPageSelector:
                     ),
                 },
             ],
-            response_format={"type": "json_object"},
         )
 
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
