@@ -26,7 +26,11 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 ### Overview & References
 
 - [chemmon-overview.md](wiki/chemmon-guidance/chemmon-overview.md): High-level explanation of ChemMon purpose, reporting domains, data submission cycle, and the role of business rules.
-- [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background and rationale — why the single SSD2 data collection, resolving overlapping domains, FCM exclusion, compound element flexibility, Open Data and free-text reduction, revision cadence, meaning of 'residue'.
+- [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background hub — routing map for legal basis, single SSD2 collection rationale, data governance, and change management.
+- [chemmon-scope-and-legal-basis.md](wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md): ChemMon purpose, audience, covered domains, legal framework, and annual-report inclusion window.
+- [chemmon-single-ssd2-collection.md](wiki/chemmon-guidance/chemmon-single-ssd2-collection.md): Why ChemMon uses one SSD2 collection, how overlapping domains are routed, and why FCM is excluded from 2026 guidance.
+- [chemmon-data-governance-and-transparency.md](wiki/chemmon-guidance/chemmon-data-governance-and-transparency.md): Compound elements, catalogue conversion, Open Data, free-text reduction, Knowledge Junction resources, and the broad "residue" concept.
+- [chemmon-change-management.md](wiki/chemmon-guidance/chemmon-change-management.md): Revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.
 - [ssd2-data-model.md](wiki/chemmon-guidance/ssd2-data-model.md): SSD2 logical model overview including main entities, element types, mandatory fields, and validation levels.
 - [foodex2-in-chemmon.md](wiki/chemmon-guidance/foodex2-in-chemmon.md): How FoodEx2 is used for matrix classification in ChemMon, mandatory facets by domain, and worked coding examples.
 - [foodex2-facets.md](wiki/chemmon-guidance/foodex2-facets.md): FoodEx2 facet reference hub — routing map for the narrower F01-F33 facet-family pages.

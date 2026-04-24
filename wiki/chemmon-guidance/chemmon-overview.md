@@ -5,6 +5,10 @@ domain: "all"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
+  - "[[chemmon-background]]"
+  - "[[chemmon-scope-and-legal-basis]]"
+  - "[[chemmon-single-ssd2-collection]]"
+  - "[[chemmon-data-governance-and-transparency]]"
   - "[[ssd2-data-model]]"
   - "[[business-rules]]"
   - "[[reporting-flags]]"
@@ -15,7 +19,7 @@ related:
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 ---
 
 # ChemMon Overview
@@ -23,7 +27,7 @@ last_updated: "2026-04-11"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p6-10 -->
 ## What ChemMon Is
 
-- ChemMon is EFSA's annual data collection exercise in which EU Member States and participating countries submit analytical results on chemical substances found in food and feed. (ChemMon 2026 p6-8)
+- ChemMon is EFSA's annual data collection exercise in which EU Member States and participating countries submit analytical results on chemical substances found in food and feed. For background scope and legal basis, see [[chemmon-scope-and-legal-basis]]. (ChemMon 2026 p6-8)
 - The data feeds EFSA's scientific outputs: annual reports on pesticide residues, veterinary medicinal product residues, contaminant occurrence, and dietary exposure assessments. (ChemMon 2026 p6-7)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p1, p7-8 -->
@@ -47,7 +51,7 @@ ChemMon covers five distinct reporting domains, each with its own regulatory bas
 | Food additives | Occurrence data on permitted food additives for re-evaluation exposure assessments. See [[food-additives-reporting]]. |
 | Food flavourings | Occurrence data on flavouring substances used in or on food. See [[food-additives-reporting]]. |
 
-Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not every parameter belongs in every domain, and routing rules determine the correct destination for each submission. (ChemMon 2026 p7-10)
+Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not every parameter belongs in every domain, and routing rules determine the correct destination for each submission. The rationale for the single SSD2 collection and overlapping-domain handling is in [[chemmon-single-ssd2-collection]]. (ChemMon 2026 p7-10)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p10-14 -->
 ## Data Submission
@@ -77,4 +81,4 @@ Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not e
 ## Transparency Regulation
 
 - Regulation (EU) 2019/1381 on the transparency and sustainability of EU risk assessment in the food chain governs how ChemMon data is made available. (ChemMon 2026 p8)
-- Under the Transparency Regulation, EFSA proactively publishes submitted data while protecting confidential business information and personal data in accordance with the regulation's provisions. (ChemMon 2026 p8)
+- Under the Transparency Regulation, EFSA proactively publishes submitted data while protecting confidential business information and personal data in accordance with the regulation's provisions. See [[chemmon-data-governance-and-transparency]] for the background on Open Data and free-text reduction. (ChemMon 2026 p8)
