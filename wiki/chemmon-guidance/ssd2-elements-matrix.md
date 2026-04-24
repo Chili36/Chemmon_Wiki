@@ -2,7 +2,7 @@
 title: "SSD2 Elements: Matrix (sampMatCode)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-11"
+last_updated: "2026-04-23"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -10,6 +10,7 @@ source_pages:
 related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-sampling]]"
+  - "[[ssd2-sampling-country]]"
   - "[[foodex2-in-chemmon]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[vmpr-reporting]]"
@@ -205,7 +206,7 @@ Goods whose production involved more than one country will be deemed to originat
 
 ### Unspecific country codes
 
-The unspecific country codes `AA`, `XC`, `XD`, `XE`, `XX` may be used when the true origin is not known — see the [[ssd2-elements-sampling#sampcountry-country-of-sampling]] page for the Table 3 mapping. Note that for **non-compliant results**, these codes cannot be used.
+The unspecific country codes `AA`, `XC`, `XD`, `XE`, `XX` may be used when the true origin is not known — see [[ssd2-sampling-country]] for the Table 3 mapping. Note that for **non-compliant results**, these codes cannot be used.
 
 ### Related business rules
 
