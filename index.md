@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-23"
+last_updated: "2026-04-24"
 ---
 
 # Index
@@ -47,7 +47,11 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-programme-strategy-and-type.md](wiki/chemmon-guidance/ssd2-programme-strategy-and-type.md): Sampling strategy and programme type — `sampStrategy`, `progType`, and domain-specific usage.
 - [ssd2-programme-valid-combinations.md](wiki/chemmon-guidance/ssd2-programme-valid-combinations.md): Table 2 combination logic — VMPR plans, contaminant control plans, pesticides, and border-control combinations.
 - [ssd2-elements-sampling.md](wiki/chemmon-guidance/ssd2-elements-sampling.md): Sampling group — `sampMethod`, `sampler`, `sampPoint`, `sampEventId`, `sampUnitType`, `sampUnitSize`, `sampId`, `sampCountry`, sampling date, `origSampId`.
-- [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group — `sampMatCode` (with VMPR/feed/non-food/insects coding), `sampMatText`, `origCountry`, `sampAnId`, `anMatCode`, `anMatText`.
+- [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group hub — fast-path rules + links to narrower matrix pages.
+- [ssd2-matrix-sampled-matrix.md](wiki/chemmon-guidance/ssd2-matrix-sampled-matrix.md): Sampled matrix coding — `sampMatCode`, `sampMatText`, FoodEx2 detail level, and the drinking-water case.
+- [ssd2-matrix-vmpr-coding.md](wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md): VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
+- [ssd2-matrix-origin.md](wiki/chemmon-guidance/ssd2-matrix-origin.md): Country of origin — `origCountry` and the main origin-country restrictions.
+- [ssd2-matrix-analysed-sample.md](wiki/chemmon-guidance/ssd2-matrix-analysed-sample.md): Analysed sample / analysed matrix — `sampAnId`, `anMatCode`, `anMatText`, and inheritance from sampled-matrix fields.
 - [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis / laboratory / parameter / method — `origFishAreaCode`, `analysisY`, `anPortSeq`, `labId`, `labAccred`, `labCountry`, `paramType`, `paramCode`, `paramText`, `anMethRefId`, `anMethType`, `anMethCode`.
 - [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group hub — fast-path rules + links to narrower per-topic pages.
 - [ssd2-result-identification.md](wiki/chemmon-guidance/ssd2-result-identification.md): Result identifier — `resId` uniqueness and naming guidance.

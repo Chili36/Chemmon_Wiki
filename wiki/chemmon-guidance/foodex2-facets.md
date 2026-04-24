@@ -2,7 +2,7 @@
 title: "FoodEx2 Facet Reference (F01-F33)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -10,6 +10,7 @@ source_pages:
 related:
   - "[[foodex2-in-chemmon]]"
   - "[[ssd2-elements-matrix]]"
+  - "[[ssd2-matrix-vmpr-coding]]"
   - "[[vmpr-reporting]]"
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
@@ -25,7 +26,7 @@ related:
 
 FoodEx2 sample matrix codes are built from a **base term** (from the MTX catalogue) plus optional **facets** that add descriptive attributes. Each facet has a code in the form `F<number>` (F01 through F33). The relevance and requirement for each facet **depends on the reporting domain** — a facet may be mandatory for contaminants but ignored for pesticides, or vice versa.
 
-This page summarises Table 4 from the source guidance: which facets matter in which domains, and what each facet is used for. For base term coding and general FoodEx2 rules see [[foodex2-in-chemmon]]; for sampMatCode element-level guidance see [[ssd2-elements-matrix]].
+This page summarises Table 4 from the source guidance: which facets matter in which domains, and what each facet is used for. For base term coding and general FoodEx2 rules see [[foodex2-in-chemmon]]; for sampMatCode element-level guidance start at [[ssd2-elements-matrix]] and use [[ssd2-matrix-vmpr-coding]] for VMPR-specific matrix cases.
 
 ## Facet reference matrix
 

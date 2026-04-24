@@ -1,9 +1,28 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-23"
+last_updated: "2026-04-24"
 ---
 
 # Log
+
+## [2026-04-24] maintenance | Split SSD2 matrix guidance into narrow pages
+
+Refactored `ssd2-elements-matrix.md` into a short hub plus four narrower pages. The original page mixed general `sampMatCode` rules, VMPR-specific coding, origin-country constraints, and analysed-matrix inheritance in one file, which made selectors pull VMPR feed/wild-game detail for questions that were really about `origCountry` or `anMatCode`.
+
+**New pages:**
+
+- `ssd2-matrix-sampled-matrix.md` — `sampMatCode`, `sampMatText`, FoodEx2 detail level, and the drinking-water case.
+- `ssd2-matrix-vmpr-coding.md` — VMPR-specific matrix coding, including derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
+- `ssd2-matrix-origin.md` — `origCountry` and the main origin-country restrictions.
+- `ssd2-matrix-analysed-sample.md` — `sampAnId`, `anMatCode`, `anMatText`, and the default inheritance logic.
+
+**Refactor shape:**
+
+- `ssd2-elements-matrix.md` is now a short hub with fast-path guidance and subpage links.
+- `index.md` now lists the new matrix pages under the SSD2 element reference section.
+- Added more precise cross-links from the matrix-algorithms, VMPR, catalogue, facet, and SSD2 data-model pages so matrix questions can land on the right subpage instead of the old monolith.
+
+No rule semantics were changed; this is a structure-and-retrieval refactor only.
 
 ## [2026-04-23] maintenance | Split SSD2 programme guidance into narrow pages
 

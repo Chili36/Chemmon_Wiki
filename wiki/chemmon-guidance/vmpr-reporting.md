@@ -8,9 +8,10 @@ related:
   - "[[chemmon-overview]]"
   - "[[foodex2-in-chemmon]]"
   - "[[chemmon-matrix-classification-algorithms]]"
+  - "[[ssd2-matrix-vmpr-coding]]"
   - "[[business-rules]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-11"
+last_updated: "2026-04-24"
 ---
 
 # VMPR Reporting
@@ -59,7 +60,7 @@ Each VMPR sample carries a sampling strategy code describing how it was selected
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p45-48 -->
 ## FoodEx2 Coding for VMPR
 
-VMPR has specific FoodEx2 requirements beyond the general rules in [[foodex2-in-chemmon]]:
+VMPR has specific FoodEx2 requirements beyond the general rules in [[foodex2-in-chemmon]]. For the element-level matrix guidance behind these rules, see [[ssd2-matrix-vmpr-coding]]:
 
 - **F01 (Source) and F02 (Part-nature)** are always required -- these two facets must be present on every VMPR sample. (ChemMon 2026 p45)
 - **Wild game**: F21.A07RY (production method = wild/hunted) is mandatory for wild game samples. (ChemMon 2026 p46)
