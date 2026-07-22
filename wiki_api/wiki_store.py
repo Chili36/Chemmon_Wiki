@@ -31,6 +31,7 @@ class WikiPage:
     related: list[str]
     content: str
     body: str
+    domain: str = "all"
 
 
 def split_frontmatter(raw: str) -> tuple[dict[str, Any], str]:
@@ -129,6 +130,7 @@ class WikiStore:
             str(item) for item in frontmatter.get("related", []) if isinstance(item, str)
         ]
         summary = self._summaries.get(page_name, "")
+        domain = str(frontmatter.get("domain") or "all").strip().lower()
         return WikiPage(
             name=normalized_name,
             title=title,
@@ -137,6 +139,7 @@ class WikiStore:
             related=related,
             content=raw,
             body=body,
+            domain=domain,
         )
 
     def catalog(self) -> list[WikiPage]:

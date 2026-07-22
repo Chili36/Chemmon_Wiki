@@ -14,6 +14,7 @@ from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from .answerer import WikiAnswerer
+from .context_pack import select_pages
 from .page_selector import WikiPageSelector
 from .wiki_store import WikiStore
 
@@ -81,6 +82,56 @@ class AskResponse(BaseModel):
     citations: list[str]
     pages_used: list[str]
     pages: list[PageSummary]
+    trace: dict[str, Any]
+
+
+class ContextPackRequest(BaseModel):
+    search_term: str = Field(
+        description="The caller's query, e.g. a parameter name being coded.",
+    )
+    context: dict[str, Any] = Field(
+        default_factory=dict,
+        description=(
+            "Caller context. Recognised key: `domain` -- a reporting domain "
+            "(vmpr, pesticide, contaminant, additives, baby-food). Common "
+            "aliases are accepted, including the PARAM catalogue hierarchy "
+            "names (vmprParam, pestParam, chemAnalysis, addAnalysis, "
+            "flavAnalysis). Unknown values degrade to relevance-only "
+            "selection rather than erroring."
+        ),
+    )
+    topics: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Optional semantic hints about what the caller is doing, e.g. "
+            "['analysis parameter coding', 'residue definition']. Used to rank "
+            "pages. Pass topics, never page names."
+        ),
+    )
+    max_pages: int = Field(default=6, ge=1, le=10)
+    include_page_content: bool = True
+
+
+class ContextPackPage(BaseModel):
+    page_name: str
+    title: str
+    summary: str
+    domain: str
+    selected_by: str = Field(
+        description="Why this page was included: domain, cross-cutting, or relevance.",
+    )
+    sources: list[str] = Field(default_factory=list)
+    related: list[str] = Field(default_factory=list)
+    content: str | None = None
+
+
+class ContextPackResponse(BaseModel):
+    search_term: str
+    domain: str | None = Field(
+        description="Normalised reporting domain, or null if unrecognised/absent.",
+    )
+    pages_used: list[str]
+    pages: list[ContextPackPage]
     trace: dict[str, Any]
 
 
@@ -648,3 +699,69 @@ def ask_question(request: AskRequest) -> AskResponse:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
     return _build_response(answer_result=answer_result, answerer_total_ms=answerer_total_ms)
+
+
+@app.post(
+    "/wiki/context-pack",
+    response_model=ContextPackResponse,
+    summary="Fetch domain-scoped guidance pages (no LLM)",
+    description=(
+        "Return the ChemMon guidance pages that bear on a query, selected from "
+        "the `domain` frontmatter each page declares. Runs no LLM, so it is "
+        "safe on a latency-sensitive path such as query deconstruction before "
+        "retrieval. Callers pass a reporting domain and optional topic hints; "
+        "this service resolves which pages apply and reports how in `trace`."
+    ),
+)
+def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
+    started = time.perf_counter()
+    requested_domain = request.context.get("domain") or request.context.get(
+        "reporting_domain"
+    )
+    logger.info(
+        "context_pack_request %s",
+        json.dumps(
+            {
+                "search_term": request.search_term,
+                "domain": requested_domain,
+                "topics": request.topics,
+                "max_pages": request.max_pages,
+            },
+            ensure_ascii=False,
+        ),
+    )
+
+    selected, trace = select_pages(
+        store,
+        search_term=request.search_term,
+        domain=requested_domain,
+        topics=request.topics,
+        max_pages=request.max_pages,
+    )
+
+    pages = [
+        ContextPackPage(
+            page_name=item.page.name,
+            title=item.page.title,
+            summary=item.page.summary,
+            domain=item.page.domain,
+            selected_by=item.selected_by,
+            sources=item.page.sources,
+            related=item.page.related,
+            content=(
+                store.clean_content_for_model(item.page)
+                if request.include_page_content
+                else None
+            ),
+        )
+        for item in selected
+    ]
+    trace["request_wall_time_ms"] = int((time.perf_counter() - started) * 1000)
+
+    return ContextPackResponse(
+        search_term=request.search_term,
+        domain=trace.get("normalized_domain"),
+        pages_used=[page.page_name for page in pages],
+        pages=pages,
+        trace=trace,
+    )
