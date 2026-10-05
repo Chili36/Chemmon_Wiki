@@ -5,8 +5,7 @@ Validates:
   1. Frontmatter schema compliance for every page under wiki/chemmon-guidance/
   2. Every [[wiki-link]] resolves to an existing page
   3. Rule-ID uniqueness — CHEMMON IDs are checked across the slice files.
-     This is not a source-completeness check. Duplicates surface as
-     warnings (the source guidance has a known CHEMMON03 duplicate).
+     This is not a semantic-completeness check. Duplicate definitions surface as warnings.
   4. No prose reference to the old `raw/chemmon-guidance/` path remains in
      any tracked file under the repo root or the wiki directory.
   5. Index/service registration, source files, metadata dates and related links.
@@ -24,6 +23,7 @@ Usage:
 from __future__ import annotations
 
 import re
+import json
 import sys
 from datetime import date
 from dataclasses import dataclass, field
@@ -35,6 +35,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 try:
     from wiki_api.wiki_store import INDEX_ENTRY_RE, ROOT_PAGE_PATHS, WikiStore, split_frontmatter
+    from wiki_api.source_review import source_review_status, rule_inventory_status
 except ImportError as exc:
     print(f"ERROR: could not import wiki_api.wiki_store: {exc}")
     sys.exit(2)
@@ -75,6 +76,8 @@ RULE_ID_TABLE_ROW_RE = re.compile(
 class HealthReport:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+    source_review: dict = field(default_factory=dict)
+    rule_inventory: dict = field(default_factory=dict)
 
     def error(self, msg: str) -> None:
         self.errors.append(msg)
@@ -89,12 +92,12 @@ class HealthReport:
             return False
         return True
 
-    def print_summary(self) -> None:
+    def print_summary(self, strict: bool = False) -> None:
         for w in self.warnings:
             print(f"WARN:  {w}")
         for e in self.errors:
             print(f"ERROR: {e}")
-        status = "PASS" if not self.errors else "FAIL"
+        status = "PASS" if self.is_clean(strict) else "FAIL"
         print(
             f"\nHEALTH CHECK: {status} "
             f"({len(self.errors)} error(s), {len(self.warnings)} warning(s))"
@@ -277,13 +280,31 @@ def run_health_check(root: Path = REPO_ROOT) -> HealthReport:
     if root == REPO_ROOT:
         check_no_old_path_references(report, file_contents)
 
+    report.source_review = source_review_status(root)
+    report.rule_inventory = rule_inventory_status(root)
+    for label, status in (("source review", report.source_review), ("rule inventory", report.rule_inventory)):
+        if status['status'] == 'invalid':
+            report.error(f"{label}: invalid record: {status['error']}")
+        elif status['status'] != 'current':
+            report.warn(f"{label}: {status['status']}; reviewed coverage is not established for this corpus")
+    for finding in report.source_review.get('open_findings', []):
+        report.warn(f"source finding {finding['id']}: {finding['observation']}")
+    for field_name in ('missing_active_ids', 'unexpected_wiki_ids', 'duplicate_wiki_ids', 'inactive_wiki_ids'):
+        values = report.rule_inventory.get(field_name, [])
+        if values:
+            report.warn(f"rule inventory {field_name}: {len(values)}; see tools/source_review.py for IDs and locators")
     return report
 
 
 def main(argv: list[str]) -> int:
     strict = "--strict" in argv
     report = run_health_check()
-    report.print_summary()
+    if "--json" in argv:
+        print(json.dumps({"errors": report.errors, "warnings": report.warnings,
+            "source_review": report.source_review, "rule_inventory": report.rule_inventory,
+            "structural_pass": report.is_clean(strict=strict)}, indent=2, ensure_ascii=False))
+    else:
+        report.print_summary(strict=strict)
     return 0 if report.is_clean(strict=strict) else 1
 
 

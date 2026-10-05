@@ -19,6 +19,10 @@ ROOT_PAGES = {
     "SCHEMA.md": "Wiki Schema",
     "INGEST_WORKFLOW.md": "Ingest Workflow",
     "log.md": "Wiki Log",
+    "SOURCE_REVIEW.md": "Source Review",
+    "MAINTENANCE_WORKFLOW.md": "Maintenance Workflow",
+    "EVALUATION.md": "Answer Quality Evaluation",
+    "RUNTIME_POLICY.md": "ChemMon Evidence Policy",
     "2026-10-05-foodex2-parity.md": "Improvement Plan",
 }
 ROOT_PAGE_PATHS = {name: name for name in ROOT_PAGES}
@@ -157,10 +161,10 @@ class WikiStore:
             names = [name for name in ROOT_PAGES if name in self.allowed_page_names()] + names
         return [self.read_page(name) for name in names]
 
-    def selector_catalog(self) -> str:
+    def selector_catalog(self, *, use_hints: bool = True) -> str:
         """Topic metadata is for discovery; it is not answer evidence."""
         return "\n".join(
-            f"- {p.name} | {p.page_type} | domain={p.domain} | {p.select_when or p.summary or p.title}"
+            f"- {p.name} | {p.page_type} | domain={p.domain} | {(p.select_when if use_hints else None) or p.summary or p.title}"
             for p in self.catalog()
         )
 

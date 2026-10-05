@@ -1,5 +1,6 @@
 ---
 title: "Food Additives and Flavourings Reporting"
+select_when: "Identify which FA/FF path applies: SSD2 analytical results, no-presence records, or aggregated use levels. Compare field names and requirement strength before choosing a detailed model page."
 type: "domain-guide"
 domain: "additives"
 sources:
@@ -22,7 +23,7 @@ related:
   - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -55,7 +56,7 @@ Some rule families are shared in concept but not in severity or exact field plac
 | Topic | SSD2 analytical | No-presence DM | Use-levels DM |
 | --- | --- | --- | --- |
 | Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` (see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
-| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39_a/b`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
+| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
 | Physical state (`F03`) | Recommended / warning path (`CHEMMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
 | Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
 | Limit comparison date | Analytical legal-limit checks use the sampling date | No separate LLDB layer in this DM | LLDB checks use the marketing date (`USE_LLDB01`, `USE_LLDB02`) |
@@ -120,7 +121,7 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 
 | Rule | Description | Status |
 | --- | --- | --- |
-| CHEMMON39_a/b | Legislative class validation | Merged 2026 |
+| CHEMMON39 | Legislative class validation | Merged 2026 |
 | CHEMMON84_a | Result type validation | Amended 2026 |
 | CHEMMON86 | Physical-state facet recommendation | Amended 2026 |
 | CHEMMON106 | Potassium sorbate `paramText` requirement | New 2026 |

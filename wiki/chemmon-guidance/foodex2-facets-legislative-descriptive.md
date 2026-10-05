@@ -2,7 +2,7 @@
 title: "FoodEx2 Facets: Legislative and Descriptive Facets"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -98,7 +98,7 @@ related:
 ## Related Business Rules
 
 - `CHEMMON12`: for acrylamide, `F33` is mandatory. See [[business-rules-contaminant]] and [[contaminant-reporting]].
-- `CHEMMON39_a/b`: `F33` is mandatory for food additives and flavourings. See [[business-rules-additives]] and [[food-additives-reporting]].
+- `CHEMMON39`: `F33` is mandatory for food additives and flavourings. See [[business-rules-additives]] and [[food-additives-reporting]].
 - `CHEMMON91`: for VMPR, only one `F33` legislative class under the VR classes should be reported per sample. See [[business-rules-vmpr]].
 - `CHEMMON109`: implicit `F33` makes explicit `F33` unnecessary for FA/FF. See [[business-rules-additives]].
 

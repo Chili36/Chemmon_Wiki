@@ -11,8 +11,7 @@ from wiki_api.wiki_store import ROOT_PAGE_PATHS
 def test_health_check_has_no_errors() -> None:
     """The wiki must not have any hard errors.
 
-    Warnings are permitted (e.g. the pre-existing CHEMMON03 duplicate in the
-    source guidance surfaces as a warning, not an error).
+    Warnings are permitted for explicitly documented source-coverage gaps.
     """
     report = run_health_check()
     assert report.errors == [], (
@@ -20,13 +19,13 @@ def test_health_check_has_no_errors() -> None:
     )
 
 
-def test_health_check_chemmon03_duplicate_surfaces_as_warning() -> None:
-    """The known CHEMMON03 duplicate in the source guidance should be
-    flagged as a warning so future maintainers see it."""
+def test_review_reports_real_source_gaps_not_a_source_duplicate():
     report = run_health_check()
-    assert any("CHEMMON03" in w for w in report.warnings), (
-        "expected a warning about the CHEMMON03 duplicate; got: " + str(report.warnings)
-    )
+    assert report.rule_inventory['status'] == 'current'
+    assert 'GBR103' in report.rule_inventory['missing_active_ids']
+    assert report.rule_inventory['duplicate_wiki_ids'] == {}
+    assert report.rule_inventory['unexpected_wiki_ids'] == []
+    assert not any('rule CHEMMON03 defined' in w for w in report.warnings)
 
 
 @pytest.fixture
@@ -80,3 +79,11 @@ def test_health_detects_catalog_and_provenance_faults(small_wiki, fault, expecte
         with (small_wiki / "index.md").open("a") as index:
             index.write("- [Unserved](unserved.md): Unserved page\n")
     assert any(expected in error for error in run_health_check(small_wiki).errors)
+
+
+def test_strict_health_output_matches_failure_status(capsys):
+    from tools.health_check import HealthReport
+    report = HealthReport(warnings=['open finding'])
+    report.print_summary(strict=True)
+    assert 'FAIL' in capsys.readouterr().out
+    assert not report.is_clean(strict=True)

@@ -1,12 +1,13 @@
 ---
 title: "Contaminant-Specific Business Rules"
+select_when: "Named contaminant CHEMMON rules: substance-specific matrix facets and result reporting, including acrylamide, dioxins, arsenic and mineral oils."
 type: "rule-reference"
 domain: "contaminant"
-last_updated: "2026-04-10"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Annex B"
+  - "Tables 9-10, pp. 98-143"
 related:
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
@@ -15,13 +16,13 @@ related:
 
 # Contaminant-Specific Business Rules
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Annex B -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143 -->
 
 ## Overview
 
 CHEMMON rules that apply exclusively to the chemical contaminant (CONT) reporting domain. These rules cover dioxin/PCB congener reporting, matrix-specific facet requirements (acrylamide, bisphenols, PAHs, mycotoxins, arsenic, chlorates, BFRs, fish origin, 3-MCPDs), expression-of-result defaults for feed, recovery correction reporting, and 2026 programme type restrictions.
 
-Rules that span contaminants *and* other domains (e.g. CHEMMON37, CHEMMON44, CHEMMON79_a/b/c, CHEMMON97) are in [[business-rules-cross-cutting]]. For contaminant reporting guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, and nitrates, see [[contaminant-reporting]].
+Rules that span contaminants *and* other domains (e.g. CHEMMON37, CHEMMON44, CHEMMON79, CHEMMON97) are in [[business-rules-cross-cutting]]. For contaminant reporting guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, and nitrates, see [[contaminant-reporting]].
 
 ## Contaminant CHEMMON Rules
 

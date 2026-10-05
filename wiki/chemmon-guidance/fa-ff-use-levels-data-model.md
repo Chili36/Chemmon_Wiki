@@ -1,8 +1,9 @@
 ---
 title: "FA/FF Use-levels Data Model"
+select_when: "FA/FF use levels and aggregated product data: prodId/matCode, marketing date, min/typical/max levels, dilution, USE rules and USE23 error. Use for this collection, not SSD2 results."
 type: "reference"
 domain: "additives"
-last_updated: "2026-04-22"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:

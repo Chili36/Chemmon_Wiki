@@ -101,14 +101,14 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 The full 131-rule catalog is sliced into nine files by applicability. Start at the hub if you're unsure which slice to open; otherwise jump directly to the relevant domain or tier.
 
 - [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — explains the three groups of business rules (GBR/CHEMMON/subset-specific) and links to the nine slice files by domain/tier.
-- [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): General Business Rules (16 rules) applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.
-- [business-rules-cross-cutting.md](wiki/chemmon-guidance/business-rules-cross-cutting.md): CHEMMON rules (46 rules) marked "All" or applying to multiple domains — analytical method, result value & type, sampling & programme, cross-domain matrix, evaluation & action, FoodEx2 validation.
-- [business-rules-vmpr.md](wiki/chemmon-guidance/business-rules-vmpr.md): VMPR-specific rules (11 CHEMMON rules) — accreditation, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
-- [business-rules-pesticide.md](wiki/chemmon-guidance/business-rules-pesticide.md): Pesticide-specific rules (14 CHEMMON rules) — country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
-- [business-rules-contaminant.md](wiki/chemmon-guidance/business-rules-contaminant.md): Contaminant-specific rules (19 CHEMMON rules) — dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression.
-- [business-rules-additives.md](wiki/chemmon-guidance/business-rules-additives.md): Food additives & flavourings rules (12 CHEMMON rules) — F33 legislative classes, expression type, physical state, 2026 substance-specific requirements.
+- [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): Selected General Business Rules applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.
+- [business-rules-cross-cutting.md](wiki/chemmon-guidance/business-rules-cross-cutting.md): CHEMMON rules marked "All" or applying to multiple domains — analytical method, result value & type, sampling & programme, cross-domain matrix, evaluation & action, FoodEx2 validation.
+- [business-rules-vmpr.md](wiki/chemmon-guidance/business-rules-vmpr.md): VMPR-specific rules — accreditation, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
+- [business-rules-pesticide.md](wiki/chemmon-guidance/business-rules-pesticide.md): Pesticide-specific rules — country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
+- [business-rules-contaminant.md](wiki/chemmon-guidance/business-rules-contaminant.md): Contaminant-specific rules — dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression.
+- [business-rules-additives.md](wiki/chemmon-guidance/business-rules-additives.md): Food additives & flavourings rules — F33 legislative classes, expression type, physical state, 2026 substance-specific requirements.
 - [business-rules-baby-food.md](wiki/chemmon-guidance/business-rules-baby-food.md): Baby food exclusion rules (CHEMMON55, CHEMMON63) — matrix coding consistency for baby food programmes and VMPR legal framework exclusion.
-- [business-rules-legal-limits.md](wiki/chemmon-guidance/business-rules-legal-limits.md): Legal Limit rules (11 rules) comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
+- [business-rules-legal-limits.md](wiki/chemmon-guidance/business-rules-legal-limits.md): Legal Limit rules comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
 - [business-rules-2026-changes.md](wiki/chemmon-guidance/business-rules-2026-changes.md): Reference log of amended, merged, new, and deactivated rules for the 2026 data collection.
 
 ## Source Layer

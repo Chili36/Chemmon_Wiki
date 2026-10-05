@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Sampling: Date of Sampling"
+select_when: "SSD2 sampling year, month and day, reporting-year relationship and date exceptions. PRE sampling dates and USE marketing dates have separate models."
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:

@@ -1,5 +1,6 @@
 ---
 title: "SSD2 Data Model"
+select_when: "SSD2 structure and field families; use for orientation or general data-model questions, then select field-specific pages for exact constraints."
 type: "reference"
 domain: "all"
 sources:
@@ -11,7 +12,7 @@ related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # SSD2 Data Model

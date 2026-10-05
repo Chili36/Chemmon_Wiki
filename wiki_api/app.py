@@ -12,10 +12,13 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
+from openai import APIError
 
 from .answerer import AnswerResult, WikiAnswerer
 from .page_selector import WikiPageSelector
 from .wiki_store import WikiStore
+from .evidence import selected_names, full_evidence, bounded_pack
+from .source_review import source_review_status, rule_inventory_status
 
 
 _WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
@@ -45,9 +48,18 @@ def get_answerer_runner() -> WikiAnswerer:
     return answerer_runner
 
 
-class AskRequest(BaseModel):
-    question: str = Field(min_length=1, pattern=r"\S", description="The user's question about ChemMon reporting.")
+class SelectionRequest(BaseModel):
+    question: str = Field(min_length=1, pattern=r"\S", max_length=20000, description="Question about ChemMon reporting.")
     max_pages: int = Field(default=6, ge=1, le=10)
+    selector_model: str | None = Field(default=None, min_length=1, max_length=200, pattern=r"^\S+$")
+
+
+class ContextPackRequest(SelectionRequest):
+    max_chars: int = Field(default=60000, ge=2000, le=120000)
+
+
+class AskRequest(SelectionRequest):
+    answerer_model: str | None = Field(default=None, min_length=1, max_length=200, pattern=r"^\S+$")
     stream: bool = Field(
         default=False,
         description=(
@@ -86,7 +98,7 @@ class AskResponse(BaseModel):
 
 app = FastAPI(
     title="ChemMon Wiki API",
-    version="0.2.0",
+    version="0.3.0",
     description="Wiki-owned Q&A API for EFSA Chemical Monitoring reporting guidance.",
 )
 
@@ -102,7 +114,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
 # Per-million-token pricing for cost attribution in the trace.
-# Only covers models we actually use; unknown models fall back to zero cost.
+# Configured estimates only; unknown model pricing is explicitly unavailable.
 _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     # (input_price_per_mtok, output_price_per_mtok)
     "claude-haiku-4-5-20251001": (1.0, 5.0),
@@ -114,20 +126,79 @@ _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
 }
 
 
-def _compute_call_cost(token_summary: dict[str, Any]) -> float:
+def _compute_call_cost(token_summary: dict[str, Any]) -> float | None:
     """Compute USD cost for a single LLM call's token summary.
 
-    Returns 0.0 if the model is not in the pricing table (unknown models
-    contribute nothing to the aggregated cost rather than crashing).
+    Returns None for unknown pricing; a skipped call costs zero.
+    Prices are configured estimates, not live quotations.
     """
+    if token_summary.get("calls") == 0:
+        return 0.0
     model = token_summary.get("model", "")
     prices = _MODEL_PRICING_USD_PER_MTOK.get(model)
     if prices is None:
-        return 0.0
+        return None
     input_price, output_price = prices
     input_tokens = int(token_summary.get("input_tokens", 0) or 0)
     output_tokens = int(token_summary.get("output_tokens", 0) or 0)
     return (input_tokens * input_price + output_tokens * output_price) / 1_000_000
+
+
+def _total_cost(*summaries: dict[str, Any]) -> float | None:
+    costs = [_compute_call_cost(summary) for summary in summaries]
+    return None if any(c is None for c in costs) else round(sum(costs), 6)
+
+
+def _select(request: SelectionRequest, limit: int | None = None):
+    try:
+        selector = WikiPageSelector(store=store, model_str=request.selector_model) if request.selector_model else get_selector_runner()
+        result = selector.run({"question": request.question, "max_pages": limit if limit is not None else request.max_pages})
+        return selector, result
+    except APIError as exc:
+        raise HTTPException(status_code=503, detail="Model provider request failed; check provider availability and server configuration.") from exc
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+def _selection_trace(selector, result) -> dict:
+    return {"model": selector.model_id, "tool_trace": result.tool_trace,
+            "token_summary": result.token_summary, "timing_summary": result.timing_summary,
+            "estimated_cost_usd": _compute_call_cost(result.token_summary)}
+
+
+@app.post("/wiki/select")
+def select_pages(request: SelectionRequest) -> dict[str, Any]:
+    selector, result = _select(request)
+    names = selected_names(store, result.pages_used, request.max_pages)
+    return {"pages_used": names, "pages": [dict(
+                {k: v for k, v in full_evidence(store, n).items() if k not in {"content", "citable", "evidence_kind"}},
+                evidence_kind="selection", citable=False) for n in names],
+            "trace": _selection_trace(selector, result)}
+
+
+@app.get("/wiki/review-status")
+def review_status() -> dict[str, Any]:
+    return {"source_review": source_review_status(store.root), "rule_inventory": rule_inventory_status(store.root)}
+
+
+@app.post("/wiki/context-pack")
+def context_pack(request: ContextPackRequest) -> dict[str, Any]:
+    started = time.perf_counter()
+    names, trace = [], {"model": None, "token_summary": {"calls": 0}, "reason": "policy consumes the sole page slot"}
+    if request.max_pages > 1:
+        selector, result = _select(request, request.max_pages - 1)
+        names = selected_names(store, result.pages_used, request.max_pages - 1)
+        trace = _selection_trace(selector, result)
+    try:
+        pack = bounded_pack(store, names, request.max_pages, request.max_chars)
+    except (ValueError, OSError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    # Only the selector runs: callers receive evidence, never an intermediate answer.
+    pack.update({"schema_version": 1, "question": request.question,
+                 "review": source_review_status(store.root),
+                 "trace": {"selector": trace, "answerer_calls": 0,
+                           "request_wall_time_ms": int((time.perf_counter() - started) * 1000)}})
+    return pack
 
 
 # Related summaries are optional navigation hints. Full pages always take
@@ -421,25 +492,13 @@ def ask_question(request: AskRequest) -> AskResponse:
     # should approximately sum to request_wall_time_ms (modulo FastAPI and
     # network-to-client overhead, which is reported as 'overhead').
     selector_start = time.perf_counter()
-    try:
-        selector = get_selector_runner()
-        selection_result = selector.run({"question": request.question, "max_pages": request.max_pages})
-    except (RuntimeError, ValueError) as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    selector, selection_result = _select(request)
     selector_end = time.perf_counter()
 
     page_read_start = time.perf_counter()
-    allowed_topics = set(store.list_pages())
-    selected_page_names = list(dict.fromkeys(
-        store.normalize_page_name(name) for name in selection_result.pages_used
-        if store.normalize_page_name(name) in allowed_topics
-    ))[:request.max_pages]
-    pages_raw = [store.read_page(page_name) for page_name in selected_page_names]
-    page_contents = [
-        {"page_name": page.name, "content": store.clean_content_for_model(page),
-         "sources": page.sources, "source_pages": list(page.source_pages), "evidence_kind": "full"}
-        for page in pages_raw
-    ]
+    selected_page_names = selected_names(store, selection_result.pages_used, request.max_pages)
+    pages_raw = [store.read_page(name) for name in selected_page_names]
+    page_contents = [full_evidence(store, name) for name in selected_page_names]
     page_read_end = time.perf_counter()
 
     # Optional navigation hints use only remaining slots; never replace evidence.
@@ -498,7 +557,9 @@ def ask_question(request: AskRequest) -> AskResponse:
     graph_expansion_ms = int((graph_expansion_end - graph_expansion_start) * 1000)
 
     try:
-        answerer = get_answerer_runner() if pages_raw else None
+        answerer = (WikiAnswerer(model_str=request.answerer_model) if request.answerer_model else get_answerer_runner()) if pages_raw else None
+    except APIError as exc:
+        raise HTTPException(status_code=503, detail="Model provider request failed; check provider availability and server configuration.") from exc
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
@@ -557,11 +618,8 @@ def ask_question(request: AskRequest) -> AskResponse:
                         int(selection_result.token_summary["total_tracked_tokens"])
                         + int(answer_result.token_summary["total_tracked_tokens"])
                     ),
-                    "total_cost_usd": round(
-                        _compute_call_cost(selection_result.token_summary)
-                        + _compute_call_cost(answer_result.token_summary),
-                        6,
-                    ),
+                    "total_cost_usd": _total_cost(selection_result.token_summary, answer_result.token_summary),
+                    "cost_basis": "configured estimate; null when pricing is unknown",
                 },
                 "phase_timings_ms": {
                     "selector_total": selector_total_ms,
@@ -677,6 +735,8 @@ def ask_question(request: AskRequest) -> AskResponse:
     answerer_start = time.perf_counter()
     try:
         answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
+    except APIError as exc:
+        raise HTTPException(status_code=503, detail="Model provider request failed; check provider availability and server configuration.") from exc
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)

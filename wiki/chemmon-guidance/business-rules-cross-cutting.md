@@ -1,12 +1,13 @@
 ---
 title: "Cross-Cutting CHEMMON Business Rules"
+select_when: "Named cross-domain CHEMMON rules: analytical methods, result shape, sample/programme consistency, action-taken warnings, domain routing. Select when their conditions are relevant."
 type: "rule-reference"
 domain: "cross-cutting"
-last_updated: "2026-04-10"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Annex B"
+  - "Tables 9-10, pp. 98-143"
 related:
   - "[[business-rules]]"
   - "[[business-rules-gbr]]"
@@ -20,15 +21,15 @@ related:
 
 # Cross-Cutting CHEMMON Business Rules
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Annex B -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143 -->
 
 ## Overview
 
-CHEMMON rules that apply to **every reporting domain** (marked "All" in the source guidance) or to **multiple domains simultaneously** (e.g. PPP/VMPR, CONT/FA/FF, PPP/CONT/FA/FF). These are the rules that a deterministic selector should always inject alongside any domain-specific file, because they define the baseline validation every ChemMon submission is subject to.
+This page groups CHEMMON rules shared by multiple reporting domains. Read each rule's domain and trigger conditions before applying it. Select relevant rules alongside domain guidance when the question needs them.
 
-Grouped by the same sub-sections as the source guidance so readers familiar with Annex B can navigate quickly. Domain-specific rules live in [[business-rules-vmpr]], [[business-rules-pesticide]], [[business-rules-contaminant]], [[business-rules-additives]], and [[business-rules-baby-food]]. General Business Rules (GBR) are in [[business-rules-gbr]].
+Rules are grouped here by topic; the source definitions are in Table 10, pp. 113-143. Domain-specific rules live in [[business-rules-vmpr]], [[business-rules-pesticide]], [[business-rules-contaminant]], [[business-rules-additives]], and [[business-rules-baby-food]]. General Business Rules (GBR) are in [[business-rules-gbr]].
 
-> **Note on CHEMMON03**: The source guidance defines CHEMMON03 twice — once as an analytical method rule (below) and a second time as a PPP country-consistency rule in [[business-rules-pesticide]]. Both entries are preserved verbatim pending human review.
+> **Source review (5 October 2026):** Table 10 contains CHEMON03 once, for the analytical method. The former country-consistency duplicate was a wiki attribution error and has been removed. The wiki spelling CHEMMON maps to CHEMON in this source. Full semantic review of the remaining rule descriptions is still open.
 
 ## Analytical Method Rules
 
@@ -39,7 +40,7 @@ Grouped by the same sub-sections as the source guidance so readers familiar with
 | CHEMMON30 | Error | If `evalCode` = J003A (Above MRL/ML), `anMethType` must be Confirmation (AT08A). Non-compliant findings require a confirmatory method. | All |
 | CHEMMON33 | Warning | If `resType` = BIN (binary), `anMethType` should be Screening (AT06A). Binary results are expected from screening methods. | All |
 | CHEMMON34 | Warning | If `anMethType` = Confirmation (AT08A), `resType` should not be BIN. Confirmation methods should provide quantitative results. | All |
-| CHEMMON79_a/b/c | Error | Contaminant/additive/flavouring analytical method code cannot be Unknown, Unspecified, or Classification not possible. A specific method must be declared. (Merged 2026) | CONT/FA/FF |
+| CHEMMON79 | Error | Contaminant/additive/flavouring analytical method code cannot be Unknown, Unspecified, or Classification not possible. A specific method must be declared. (Merged 2026) | CONT/FA/FF |
 
 ## Result Value & Type Rules
 
@@ -65,7 +66,6 @@ Grouped by the same sub-sections as the source guidance so readers familiar with
 
 | Rule ID | Severity | Description | Domain |
 | --- | --- | --- | --- |
-| CHEMMON01 | Error | Unique `sampId` per sample across all collections. Sample identifiers must not be reused. | All |
 | CHEMMON22 | Warning | If `origSampId` is reported (follow-up sample), `sampStrategy` should be ST30A (Suspect sampling). Follow-up samples arise from targeted investigations. | All |
 | CHEMMON43 | Error | For pesticides/VMPR, `sampY` (sampling year) must be <= submission year minus 1. Data must be submitted within the expected reporting window. | PPP/VMPR |
 | CHEMMON50 | Error | Programme type validation for K018A/K009A with N027A. Specific programme types require matching legal references. (Amended 2026; absorbs CHEMMON49) | All |
@@ -92,7 +92,7 @@ Grouped by the same sub-sections as the source guidance so readers familiar with
 | --- | --- | --- | --- |
 | CHEMMON26 | Error | If `actTakenCode` = Follow-up investigation, `evalInfo.conclusion` should be reported to explain the basis for the follow-up. | All |
 | CHEMMON35 | Warning | `evalLimitType` should be one of: W002A (MRL), W005A (ML), W006A (Action level), W012A (Reference point for action), W001A (ADI), W007A (Benchmark dose), W008A (Health-based guidance value), or W990A (Other). | All |
-| CHEMMON37 | Error | For CONT/ADD/FLAV domains, if `evalCode` = Detected or Above limit, `actTakenCode` is mandatory. An enforcement action must be recorded for positive/non-compliant findings. | CONT/FA/FF |
+| CHEMMON37 | Warning | For contaminants, additives or flavourings, when `evalCode` = J041A (Detected) or J003A (Above maximum permissible quantities), `actTakenCode` should be reported (Table 10, p. 121). | CONT/FA/FF |
 | CHEMMON65 | Error | `evalInfo.resAssess` can only be J037A (Compliant) or J038A (Non-compliant). No other assessment outcomes are accepted. | All |
 | CHEMMON66_a | Warning | If `evalInfo.resAssess` = J037A (Compliant) but `evalCode` indicates Above or Detected, `evalInfo.conclusion` should be reported to explain the compliant assessment. | All |
 | CHEMMON66_b | Warning | If `evalInfo.resAssess` = J038A (Non-compliant) but `evalCode` does not indicate Above or Detected, `evalInfo.conclusion` should be reported to explain the non-compliant assessment. | All |
@@ -105,3 +105,11 @@ Grouped by the same sub-sections as the source guidance so readers familiar with
 | --- | --- | --- | --- |
 | FOODEX2_SAMMAT | Error | `sampMatCode` must follow FoodEx2 coding rules. The sampled matrix must be a valid FoodEx2 term with correct facet usage. | All |
 | FOODEX2_ANMAT | Error | `anMatCode` must follow FoodEx2 coding rules. The analysed matrix must be a valid FoodEx2 term with correct facet usage. | All |
+
+## Import-control matrix and origin
+
+<!-- Source: ChemMon 2026 Table 10, p. 129 -->
+
+| Rule ID | Severity | Description | Domain |
+| --- | --- | --- | --- |
+| CHEMMON64 | Error | For samples under Regulation (EU) 2019/1793 (`progLegalRef` N317A), `origCountry` and `sampMatCode` must be values listed in that regulation. | N317A |

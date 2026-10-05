@@ -46,16 +46,16 @@ The source guidance also provides troubleshooting tips alongside the GBR and CHE
 
 ### By tier
 
-- **[[business-rules-gbr]]** — General Business Rules (16 rules) that apply across all EFSA SSD2 data collections: sampling event consistency, geographic validation, result value/unit rules.
-- **[[business-rules-cross-cutting]]** — CHEMMON rules (46 rules) marked "All" or applying to multiple domains: analytical method, result value & type, sampling & programme, cross-domain matrix rules, evaluation & action, FoodEx2 validation.
-- **[[business-rules-legal-limits]]** — Legal Limit rules (11 rules) comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
+- **[[business-rules-gbr]]** — General Business Rules that apply across all EFSA SSD2 data collections: sampling event consistency, geographic validation, result value/unit rules.
+- **[[business-rules-cross-cutting]]** — CHEMMON rules marked "All" or applying to multiple domains: analytical method, result value & type, sampling & programme, cross-domain matrix rules, evaluation & action, FoodEx2 validation.
+- **[[business-rules-legal-limits]]** — Legal Limit rules comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
 
 ### By reporting domain
 
-- **[[business-rules-vmpr]]** — VMPR-specific rules (11 CHEMMON rules): accreditation, feed/water facets, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
-- **[[business-rules-pesticide]]** — Pesticide-specific rules (14 CHEMMON rules): country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
-- **[[business-rules-contaminant]]** — Contaminant-specific rules (19 CHEMMON rules): dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression, 2026 programme restrictions.
-- **[[business-rules-additives]]** — Food additives & flavourings rules (12 CHEMMON rules): F33 legislative classes, expression type, physical state, 2026 substance-specific `paramText` and matrix restrictions.
+- **[[business-rules-vmpr]]** — VMPR-specific rules: accreditation, feed/water facets, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
+- **[[business-rules-pesticide]]** — Pesticide-specific rules: country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
+- **[[business-rules-contaminant]]** — Contaminant-specific rules: dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression, 2026 programme restrictions.
+- **[[business-rules-additives]]** — Food additives & flavourings rules: F33 legislative classes, expression type, physical state, 2026 substance-specific `paramText` and matrix restrictions.
 - **[[business-rules-baby-food]]** — Baby food exclusion rules (CHEMMON55, CHEMMON63): matrix coding consistency for baby food programmes and VMPR legal framework exclusion. See [[baby-food-reporting]].
 
 ### Annual delta
@@ -73,12 +73,14 @@ The GBR/CHEMMON/LL catalogue above validates **SSD2** ChemMon submissions. FA/FF
 
 PRE and USE rules are not listed in the slice files because they validate different data models on different DCF submission paths. They are catalogued on the respective DM reference pages. See [[food-additives-reporting]] for the three-path overview.
 
-## Totals
+## Coverage status
 
-The existing catalogue records 131 rule definitions across the nine slices:
-16 GBR + 104 CHEMMON + 11 LL. These are documented catalogue counts, not a
-source-completeness verdict from the health check. The checker reports
-duplicate CHEMMON table-row IDs; CHEMMON03 is a known source duplicate.
-An independently source-checked inventory is needed to detect missing rules.
-The 46 FA/FF parallel-family rules (`PRE…`, `USE…`, `USE_LLDB…`) are counted
-separately on their DM pages.
+The source-derived inventory records **92 GBR, 104 CHEMON, 11 LL, 17 PRE and
+29 USE IDs**, including inactive rows. Source CHEMON IDs are mapped to the
+wiki's CHEMMON spelling. The GBR page is a selected subset, not the full table.
+The source review tracks missing active GBR definitions and unreviewed semantic
+coverage. Equal totals do not prove equivalent rule coverage.
+
+See [[SOURCE_REVIEW]] and [[MAINTENANCE_WORKFLOW]] for findings, review scope
+and the procedure for checking source drift. PRE/USE coverage counts do not
+establish that their field descriptions and exceptions have all been reviewed.

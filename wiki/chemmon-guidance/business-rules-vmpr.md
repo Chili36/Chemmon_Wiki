@@ -1,12 +1,13 @@
 ---
 title: "VMPR-Specific Business Rules"
+select_when: "Named VMPR CHEMMON rules: method accreditation, matrix facets, evaluation and geographic consistency. Check scope and collection year."
 type: "rule-reference"
 domain: "vmpr"
-last_updated: "2026-04-10"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Annex B"
+  - "Tables 9-10, pp. 98-143"
 related:
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
@@ -17,7 +18,7 @@ related:
 
 # VMPR-Specific Business Rules
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Annex B -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143 -->
 
 ## Overview
 

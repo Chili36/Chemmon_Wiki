@@ -782,3 +782,25 @@ Aligned the repo with community best practices that have crystallized around Kar
 - Expanded contaminant-reporting.md with 9 new substance sections: dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, and nitrates.
 - Expanded food-additives-reporting.md with result reporting rules, 4 new worked examples, restriction/exception coding, and conclusion reporting.
 - Updated index.md with revised page descriptions and the new baby food page.
+
+## 2026-10-05 — Source review, evaluation tools and evidence export
+
+Implemented the FoodEx2 parity plan on `codex/chemmon-foodex2-parity`.
+Source-led review corrected GBR27–29, GBR2/101 scope, CHEMON attribution and
+merged IDs, missing CHEMON64, CHEMON37 severity, and LL preconditions/exceptions.
+The old claim of a duplicate CHEMMON03 in the PDF was wrong: it was a wiki error.
+The source inventory now compares five namespaces independently of wiki IDs;
+67 missing active non-biological GBR definitions remain explicit review backlog.
+A fresh local catalogue query corroborates the earlier sheep/goat F23 correction.
+
+Added scoped review manifests with source/corpus hashes, preparation/inventory
+commands, health/CI drift checks, maintenance and review navigation, 20 selection
+hints, and 16 draft evaluation cases with reserved held-out cases. Evaluation
+compares selectors or answers on frozen evidence and separates citation membership
+from human correctness/support grades. Saved dry runs made zero provider calls;
+human-reviewed labels and a live quality baseline remain pending.
+
+Added inspectable selection, review-status and bounded context-pack endpoints,
+provenance, non-citable policy and selection metadata, request-local model
+overrides, and unknown-cost handling. Offline tests cover the new boundaries.
+No source PDFs, credentials, model defaults or deployed services were changed.

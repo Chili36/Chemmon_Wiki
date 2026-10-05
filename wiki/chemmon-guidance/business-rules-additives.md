@@ -1,12 +1,13 @@
 ---
 title: "Food Additives & Flavourings Business Rules"
+select_when: "SSD2 FA/FF CHEMMON rule severity, implicit F33, F03/F23 recommendations and 2026 changes. PRE and USE belong to separate data-model pages."
 type: "rule-reference"
 domain: "additives"
-last_updated: "2026-04-22"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Annex B"
+  - "Tables 9-10, pp. 98-143"
 related:
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
@@ -18,13 +19,13 @@ related:
 
 # Food Additives & Flavourings Business Rules
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Annex B -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143 -->
 
 ## Overview
 
 CHEMMON rules that apply exclusively to the food additives and flavourings (FA/FF) reporting domain. These rules cover MRL evaluation code restrictions, mandatory F33 legislative class facets, sampling year validation, expression-of-result type requirements, physical state reporting, target consumer facets, substance-specific `paramText` requirements, and matrix code restrictions. Several rules are new or amended for 2026.
 
-Rules that span additives *and* other domains (e.g. CHEMMON37, CHEMMON44, CHEMMON79_a/b/c, CHEMMON97) are in [[business-rules-cross-cutting]]. Legal limit rules for food additives/flavourings (LL_01/02/03 FA_FF) are in [[business-rules-legal-limits]]. For food additives reporting guidance including F33 coding, expression types, restrictions/exceptions, and worked examples, see [[food-additives-reporting]].
+Rules that span additives *and* other domains (e.g. CHEMMON37, CHEMMON44, CHEMMON79, CHEMMON97) are in [[business-rules-cross-cutting]]. Legal limit rules for food additives/flavourings (LL_01/02/03 FA_FF) are in [[business-rules-legal-limits]]. For food additives reporting guidance including F33 coding, expression types, restrictions/exceptions, and worked examples, see [[food-additives-reporting]].
 
 FA/FF reporting also has **two parallel data models** outside SSD2, each with its own rule namespace: `PRE…` rules on [[fa-ff-no-presence-data-model]] and `USE…` / `USE_LLDB…` rules on [[fa-ff-use-levels-data-model]]. Those rule IDs are not listed in this file because they validate different DCF submission paths; they do not overlap with the CHEMMON IDs below.
 
@@ -33,7 +34,7 @@ FA/FF reporting also has **two parallel data models** outside SSD2, each with it
 | Rule ID | Severity | Description | Domain |
 | --- | --- | --- | --- |
 | CHEMMON36 | Warning | When `evalLimitType` = MRL, `evalCode` must be one of J002A, J003A, J031A, or J029A. Other evaluation codes are not valid for MRL-based assessments. | FA/FF |
-| CHEMMON39_a/b | Error | F33 (legislative classes) facet is mandatory for food additives and flavourings. The applicable food category legislation must be declared. (Merged 2026) | FA/FF |
+| CHEMMON39 | Error | F33 (legislative classes) facet is mandatory for food additives and flavourings. The applicable food category legislation must be declared. (Merged 2026) | FA/FF |
 | CHEMMON43_b | Warning | For additives/flavourings, `sampY` must be < submission year minus 1. (New 2026; becomes Error in 2027) | FA/FF |
 | CHEMMON84_a | Error | `exprResType` (expression of result type) is mandatory for food additives and flavourings. (Amended 2026) | FA/FF |
 | CHEMMON86 | Warning | F03 (physical state) facet is recommended for specific food categories where physical state affects legal limits. (Amended 2026) | FA/FF |

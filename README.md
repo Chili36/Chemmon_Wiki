@@ -74,6 +74,9 @@ Main endpoints:
 - `GET /wiki/search?q=resLOQ`: search topic titles, summaries and body text
 - `GET /wiki/view`: browser-based wiki viewer
 - `POST /wiki/ask`: ask a question, get a grounded answer with citations
+- `POST /wiki/select`: inspect selected topic metadata and selector usage
+- `POST /wiki/context-pack`: bounded policy and full evidence, without an answer call
+- `GET /wiki/review-status`: scoped audit freshness and rule-inventory gaps
 
 ### Evidence and navigation contracts
 
@@ -97,13 +100,45 @@ The change from the previous release affects clients relying on `index.md` in
 `pages_used`, automatic related summaries, or a topic-only `/wiki/pages` list.
 Use the returned `type` to exclude orientation documents where needed.
 
+## Evidence for downstream applications
+
+`/wiki/select` accepts `question`, `max_pages` and optional `selector_model`.
+`/wiki/ask` also accepts `answerer_model`. Overrides apply to that request only;
+server defaults and credentials stay unchanged. Use `provider/model` names from
+providers already configured on the server. These endpoints use the server's
+provider credentials, so restrict access when deploying outside a trusted network.
+
+`/wiki/context-pack` accepts the same selection fields plus `max_chars` (2,000–120,000,
+default 60,000). Its `max_pages` **includes one mandatory policy slot**. A one-page
+budget therefore returns policy only, with `status: budget_exhausted`, and makes
+no model calls. Larger budgets leave the remaining slots for topic evidence.
+Oversized pages are omitted whole and listed with a budget reason. The character
+budget covers page content including policy; metadata is excluded.
+
+The response includes `citable_pages`, `evidence_kind` (`policy` or `full`),
+source filenames, PDF locators, page hashes, review status and selector trace.
+Policy is not citable. Context-pack never calls the answer model or returns an
+intermediate answer. Ask retains its topic-page budget, optional summary expansion
+and existing SSE contract. Unknown model pricing is returned as null.
+
+```sh
+curl -s http://localhost:8005/wiki/context-pack \
+  -H 'Content-Type: application/json' \
+  -d '{"question":"What does GBR28 require for BIN?","max_pages":3,"max_chars":30000}'
+```
+
+See [source review](SOURCE_REVIEW.md), [maintenance workflow](MAINTENANCE_WORKFLOW.md)
+and [evaluation guide](EVALUATION.md). No default model change or vector database
+is justified by offline checks; both remain evaluation decisions.
+
 ## Maintenance and roadmap
 
 Run `python tools/health_check.py` and `pytest -q` after changes. GitHub Actions
 runs both checks on pull requests and pushes to main or `codex/**` branches.
 The health check validates topic metadata, dates, links including `related`,
-local sources, index/API registration and duplicate CHEMMON IDs. The known
-CHEMMON03 source duplicate remains a warning. These checks do not establish
+local sources, index/API registration and duplicate CHEMMON IDs. The
+source-derived inventory and scoped review report missing coverage and drift.
+These checks do not establish
 rule completeness or semantic accuracy.
 
 See the [improvement plan](docs/plans/2026-10-05-foodex2-parity.md) for milestone

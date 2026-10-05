@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Evaluation: Action Taken"
+select_when: "Action taken after SSD2 results; distinguish CHEMMON37 recommendations for contaminants/FA/FF from VMPR/pesticide CHEMMON85 conditions."
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -21,7 +22,7 @@ related:
 - `actTakenCode` reports enforcement or follow-up action taken after a non-conformity or above-limit finding.
 - Multiple actions may be reported.
 - For VMPR and pesticides, action reporting is mandatory when the result is non-compliant.
-- For contaminants, additives, and flavourings, action reporting becomes mandatory in the positive/non-compliant cases defined by the business rules.
+- For contaminants, additives and flavourings with `evalCode` J041A or J003A, action reporting is recommended; CHEMMON37 is a Warning.
 
 ## actTakenCode — Action taken
 
@@ -33,12 +34,12 @@ related:
 
 Report the action taken when a non-conformity is identified or the measured substance is found above the level of concern. This is especially important for understanding market consequences in pesticide and VMPR reporting. (ChemMon 2026 p75)
 
-### Mandatory cases
+### Requirements and recommendations
 
 - VMPR and pesticides: mandatory for non-compliant results.
-- Contaminants/additives/flavourings: mandatory in the positive/non-compliant cases captured by `CHEMMON37`. (ChemMon 2026 p75)
+- Contaminants/additives/flavourings: recommended when `evalCode` is J041A or J003A; `CHEMMON37` is a Warning (Table 10, p. 121).
 
 ## Related business rules
 
-- `CHEMMON37` — for contaminants/additives/flavourings, positive or above-limit findings require `actTakenCode`. See [[business-rules-cross-cutting]].
+- `CHEMMON37` — for contaminants/additives/flavourings, `evalCode` J041A or J003A should have `actTakenCode`; missing values trigger a Warning (Table 10, p. 121). See [[business-rules-cross-cutting]].
 - `CHEMMON85` — for VMPR and pesticides with non-compliant results, `actTakenCode` is mandatory. See [[business-rules-cross-cutting]].

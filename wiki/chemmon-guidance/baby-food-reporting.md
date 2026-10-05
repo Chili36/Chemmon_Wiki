@@ -1,5 +1,6 @@
 ---
 title: "Baby Food Reporting"
+select_when: "Infant/baby food scope, matrix classification and exclusions; use with the relevant reporting domain instead of transferring all baby-food rules to VMPR."
 type: "domain-guide"
 domain: "baby-food"
 sources:
@@ -13,7 +14,7 @@ related:
   - "[[foodex2-facets-packaging-consumer]]"
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Baby Food Reporting

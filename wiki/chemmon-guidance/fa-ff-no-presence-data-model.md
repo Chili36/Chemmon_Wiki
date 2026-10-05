@@ -1,8 +1,9 @@
 ---
 title: "FA/FF No-presence Data Model"
+select_when: "No-presence FA/FF records: sampId/sampMatCode, presenceAdded, sampling date, PRE rules and PRE15 warning. Use for this collection, not SSD2 results or use levels."
 type: "reference"
 domain: "additives"
-last_updated: "2026-04-22"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
 source_pages:

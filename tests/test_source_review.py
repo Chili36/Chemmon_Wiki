@@ -1,0 +1,101 @@
+from pathlib import Path
+import json
+import pytest
+from wiki_api.source_review import corpus_snapshot, source_review_status, rule_inventory_status, wiki_rule_definitions
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture
+def reviewed(tmp_path):
+    (tmp_path/'docs').mkdir()
+    (tmp_path/'chemmon_docs').mkdir()
+    (tmp_path/'wiki/chemmon-guidance').mkdir(parents=True)
+    (tmp_path/'chemmon_docs/source.pdf').write_bytes(b'original source')
+    (tmp_path/'wiki/chemmon-guidance/topic.md').write_text('# Original topic')
+    (tmp_path/'index.md').write_text('# Original index')
+    record = {'version': 1, 'reviewed_at': '2026-01-01', 'reviewer': 'Test', 'scope': ['One section'],
+              'limitations': ['Not exhaustive'], 'snapshot': corpus_snapshot(tmp_path),
+              'findings': [{'id': 'test', 'status': 'open', 'source': 'chemmon_docs/source.pdf', 'locator': 'p.1',
+                            'observation': 'Missing exception', 'action': 'Review exception', 'wiki_pages': ['topic.md']}]}
+    (tmp_path/'docs/source-review.json').write_text(json.dumps(record))
+    return tmp_path
+
+
+def test_review_current_does_not_hide_open_findings(reviewed):
+    status = source_review_status(reviewed)
+    assert status['status'] == 'current'
+    assert status['open_findings'][0]['id'] == 'test'
+
+
+@pytest.mark.parametrize('change', ['source', 'topic', 'index', 'add', 'remove'])
+def test_review_detects_corpus_drift_and_retains_findings(reviewed, change):
+    path = {'source': 'chemmon_docs/source.pdf', 'topic': 'wiki/chemmon-guidance/topic.md',
+            'index': 'index.md', 'add': 'wiki/chemmon-guidance/new.md', 'remove': 'wiki/chemmon-guidance/topic.md'}[change]
+    if change == 'remove':
+        (reviewed/path).unlink()
+    else:
+        (reviewed/path).write_bytes(b'changed')
+    status = source_review_status(reviewed)
+    assert status['status'] == 'stale'
+    assert path in status['changed_paths']
+    assert status['open_findings']
+
+
+@pytest.mark.parametrize('fault', ['hash', 'path', 'resolution', 'duplicate', 'source', 'date', 'scope'])
+def test_malformed_review_cannot_look_current(reviewed, fault):
+    path = reviewed/'docs/source-review.json'
+    record = json.loads(path.read_text())
+    if fault == 'hash': record['snapshot']['index.md'] = 'not-a-hash'
+    if fault == 'path': record['snapshot']['../escape'] = 'a'*64
+    if fault == 'resolution': record['findings'][0]['status'] = 'resolved'
+    if fault == 'duplicate': record['findings'].append(record['findings'][0])
+    if fault == 'source': record['findings'][0]['source'] = 'missing.pdf'
+    if fault == 'date': record['reviewed_at'] = '2999-01-01'
+    if fault == 'scope': record['scope'] = []
+    path.write_text(json.dumps(record))
+    assert source_review_status(reviewed)['status'] == 'invalid'
+
+
+def test_rule_inventory_is_source_derived_and_explicit_about_inactive_rules():
+    record = json.loads((ROOT/'docs/rule-inventory.json').read_text())
+    assert record['source_counts'] == {'GBR':92, 'CHEMMON':104, 'LL':11, 'PRE':17, 'USE':29}
+    rules = {r['wiki_id']: r for r in record['rules']}
+    assert rules['CHEMMON84_a']['source_id'] == 'CHEMON84_a'
+    assert rules['LL_01_FA_FF']['pdf_page'] == 142
+    assert rules['LL_04_b']['pdf_page'] == 143
+    assert rules['GBR1']['status'] == 'inactive'
+    assert rules['CHEMMON49']['status'] == 'inactive'
+    assert rules['GBR6']['applicability'] == 'biological-only'
+    result = rule_inventory_status(ROOT)
+    assert result['status'] == 'current'
+    assert len(result['missing_active_ids']) == 67
+    assert 'GBR1' not in result['missing_active_ids']
+    assert 'GBR6' not in result['missing_active_ids']
+    assert result['unexpected_wiki_ids'] == result['inactive_wiki_ids'] == []
+
+
+def test_rule_inventory_refuses_stale_pdf(reviewed):
+    record = json.loads((ROOT/'docs/rule-inventory.json').read_text())
+    (reviewed/'docs/rule-inventory.json').write_text(json.dumps(record))
+    result = rule_inventory_status(reviewed)
+    assert result['status'] == 'stale'
+    assert 'missing_active_ids' not in result
+
+
+def test_canonical_rule_extraction_excludes_annual_change_notes(tmp_path):
+    d=tmp_path/'wiki/chemmon-guidance'; d.mkdir(parents=True)
+    (d/'business-rules-gbr.md').write_text('| GBR1 | Error | definition |\n')
+    (d/'business-rules-2026-changes.md').write_text('| GBR1 | Removed |\n')
+    assert wiki_rule_definitions(tmp_path) == {'GBR1': ['business-rules-gbr.md']}
+
+
+def test_supporting_catalogue_report_drift_invalidates_review(reviewed):
+    from wiki_api.source_review import sha256
+    evidence=reviewed/'docs/catalogue-check.json';evidence.write_text('{"rows":[]}')
+    path=reviewed/'docs/source-review.json';record=json.loads(path.read_text())
+    record['supporting_artifacts']={'docs/catalogue-check.json':sha256(evidence)}
+    path.write_text(json.dumps(record))
+    assert source_review_status(reviewed)['status']=='current'
+    evidence.write_text('{"rows":["changed"]}')
+    assert source_review_status(reviewed)['status']=='stale'

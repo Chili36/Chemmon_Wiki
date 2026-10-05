@@ -2,11 +2,11 @@
 title: "Baby Food Business Rules"
 type: "rule-reference"
 domain: "baby-food"
-last_updated: "2026-04-10"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Annex B"
+  - "Tables 9-10, pp. 98-143"
 related:
   - "[[business-rules]]"
   - "[[baby-food-reporting]]"
@@ -16,7 +16,7 @@ related:
 
 # Baby Food Business Rules
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Annex B -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143 -->
 
 ## Overview
 

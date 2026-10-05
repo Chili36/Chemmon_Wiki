@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Matrix: VMPR-Specific Matrix Coding"
+select_when: "VMPR matrix coding: F01/F02 exceptions for feed/water and processed/composite food, feed F23, sheep/goat coding, F33 groups and worked matrix examples."
 type: "reference"
 domain: "vmpr"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:

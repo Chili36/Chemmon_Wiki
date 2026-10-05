@@ -1,8 +1,9 @@
 ---
 title: "2026 Business Rule Changes"
+select_when: "Changes effective for the 2026 collection, merged or deactivated IDs and future transition notes. Use canonical rule pages for the operative conditions."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -38,8 +39,8 @@ Annual delta of business rule changes for the 2026 ChemMon data collection. This
 
 ## Merged rules
 
-- **CHEMMON39_a/b** -- Previously separate food additive and flavouring legislative class rules consolidated into a single pair. Defined in [[business-rules-additives]].
-- **CHEMMON79_a/b/c** -- Contaminant, additive, and flavouring analytical method validation rules consolidated. Method code cannot be Unknown/Unspecified/Classification not possible. Defined in [[business-rules-cross-cutting]].
+- **CHEMMON39** -- Previous CHEMON39_a and CHEMON39_b rules are merged into CHEMON39 in 2026. Defined in [[business-rules-additives]].
+- **CHEMMON79** -- Previous CHEMON79_a, CHEMON79_b and CHEMON79_c rules are merged into CHEMON79 in 2026. Method code cannot be Unknown/Unspecified/Classification not possible. Defined in [[business-rules-cross-cutting]].
 
 ## New rules
 

@@ -97,9 +97,11 @@ class WikiPageSelector:
         model_id: str | None = None,
         model_str: str | None = None,
         max_pages: int = 6,
+        use_hints: bool = True,
     ):
         self.store = store
         self.max_pages = max_pages
+        self.use_hints = use_hints
         if client and model_id:
             self.client = client
             self.model_id = model_id
@@ -112,7 +114,7 @@ class WikiPageSelector:
         max_pages = int(payload.get("max_pages", self.max_pages))
         if not 1 <= max_pages <= 10:
             raise ValueError("max_pages must be between 1 and 10")
-        catalog = self.store.selector_catalog()
+        catalog = self.store.selector_catalog(use_hints=self.use_hints)
         llm_started = time.perf_counter()
 
         response = self.client.chat.completions.create(

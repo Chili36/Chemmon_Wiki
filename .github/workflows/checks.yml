@@ -16,4 +16,6 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
       - run: python tools/health_check.py
+      - run: python tools/source_review.py
+      - run: python tools/evaluate.py --output /tmp/chemmon-evaluation-dry.json
       - run: pytest -q

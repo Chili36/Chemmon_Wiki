@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Programme: Valid Table 2 Combinations"
+select_when: "Valid combinations of programme legal reference, programme type, sampling strategy and domain in Table 2; requires the actual programme context."
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:

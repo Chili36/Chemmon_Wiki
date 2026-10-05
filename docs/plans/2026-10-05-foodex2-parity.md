@@ -2,7 +2,7 @@
 
 Baseline: 5 October 2026. Compared with the FoodEx2 wiki in `LLM Knowledge Base`.
 ChemMon has 70 topic pages, four immutable source PDFs and 38 passing tests.
-The existing health check reports the documented CHEMMON03 duplicate.
+The initial health check reported a CHEMMON03 duplicate, then attributed to the source. Milestone 2 source review later established that it was a wiki error.
 
 ## Milestone 1: reliable evidence and usable navigation
 
@@ -37,45 +37,70 @@ run when these changes reach GitHub.
 
 ## Milestone 2: source coverage and maintenance
 
-- Create a scoped source-to-wiki review record with source/page evidence,
-  findings, resolutions, corpus fingerprints and explicit coverage limitations.
-- Audit page families against the full relevant source sections, including
-  exceptions, recommendation strength, collection path and applicable year.
-- Reconcile overlap with FoodEx2 using verified source/catalogue evidence.
-- Establish an independently source-checked rule inventory for CHEMMON, GBR,
-  LL, PRE and USE families. Existing wiki IDs alone cannot prove completeness.
-- Add stale-audit reporting and a documented maintenance workflow. Structural
-  success must never be presented as proof of semantic completeness.
+Implemented on `codex/chemmon-foodex2-parity`:
 
-Acceptance: reproducible review scope, actionable open findings, and drift
-warnings when reviewed evidence changes. No exhaustive claim for unreviewed text.
+- [x] Scoped review with source locators, findings/resolutions, corpus hashes and
+  explicit limits in `docs/source-review.json` and `SOURCE_REVIEW.md`.
+- [x] Reviewed complete selected rule rows and relevant VMPR/FA/FF sections for
+  exceptions, severity and collection-path differences. Corrected confirmed
+  GBR, CHEMON attribution, action-reporting and LL defects in related pages.
+- [x] Reconciled sheep/goat F23 with a read-only local FoodEx2 catalogue query;
+  saved the database hash, query and result.
+- [x] Independently extracted rule inventory from PDF columns: 92 GBR,
+  104 CHEMON, 11 LL, 17 PRE and 29 USE IDs, including inactive entries.
+- [x] Added stale/invalid/missing audit reporting, preparation and inventory
+  tools, JSON health output, maintenance instructions and CI freshness checks.
+
+Acceptance met for a scoped, reproducible review. Four open findings remain:
+67 omitted active non-biological GBRs, remaining CHEMON semantic review,
+conflicting FoodEx2 example versions, and unreviewed PRE/USE field semantics.
+These are visible backlog, not an exhaustive-completeness claim.
 
 ## Milestone 3: measured answer quality
 
-- Assemble reviewed selection and answer cases across SSD2, reporting domains,
-  and the three additives/flavourings collection paths, including ambiguity
-  and insufficient-evidence cases.
-- Keep held-out evaluation questions separate from source ingestion.
-- Add a dry-run evaluation harness and measure required-page recall, incorrect
-  domain selection, answer correctness, citation support, latency and cost.
-- Add situation-based `select_when` hints where they improve distinguishability.
-- Compare selector and answer models with frozen evidence and recorded settings
-  before changing defaults. Existing credentials stay unchanged in milestone 1;
-  no live model benchmark is part of its offline verification.
+Implementation ready; quality acceptance remains open:
 
-Acceptance: a reproducible baseline with human-reviewed labels and stated limits,
-followed by a demonstrated improvement over the same baseline.
+- [x] Created 16 source-informed draft cases: 10 development and 6 reserved
+  held-out cases, including ambiguity and insufficient evidence. Review queue:
+  `evals/REVIEW.md`. They were authored after the source-led content changes.
+- [x] Implemented offline validation and explicit live comparison modes for
+  selection and frozen-evidence answers. Record corpus/catalogue/prompt hashes,
+  model settings, recall, wrong-domain/path selections, tokens, latency, failures
+  and optional cost estimates. Unknown pricing is null.
+- [x] Added fingerprint-bound human answer grading for correctness and citation
+  support, distinct from mechanical citation membership.
+- [x] Added 20 situation-based selection hints and a summary/hints comparison
+  switch. No model defaults changed.
+- [x] Saved dry-run reports for both configured model names. No API calls made.
+- [ ] Human review of labels and live baseline/model comparisons.
+- [ ] Demonstrate improvement against that same reviewed baseline before
+  accepting model/default changes. Dry runs do not meet this criterion.
 
 ## Milestone 4: downstream integration
 
-- Add a bounded `/wiki/context-pack` response with evidence, provenance and a
-  compact ChemMon-specific decision policy.
-- Add inspectable selection results and per-request model overrides.
-- Consider vector retrieval only after an endpoint comparison demonstrates a
-  useful quality/latency trade-off. Keep Markdown the authored source of truth.
+Implemented and tested:
 
-Acceptance: callers can consume evidence without an intermediate answer, and
-integration tests enforce the same evidence budget and provenance contracts.
+- [x] `/wiki/context-pack` returns full evidence, source locators, page hashes,
+  review status and a compact ChemMon decision policy, without an answer call.
+- [x] Policy occupies one page slot. Page and character budgets are enforced;
+  oversized pages are omitted whole with reasons. Only full evidence is citable.
+- [x] `/wiki/select` exposes selection metadata/trace; `/wiki/review-status`
+  exposes audit and inventory results. Selection metadata is not citable.
+- [x] Per-request selector/answerer overrides leave shared defaults unchanged.
+- [x] Retained Markdown retrieval. Vector retrieval is deferred until a measured
+  endpoint comparison justifies its cost and complexity.
+
+Acceptance met by integration tests for budgets, provenance, model isolation and
+zero answer calls for context export. No deployment or live-provider verification
+is included in this branch's offline checks.
+
+## Branch verification
+
+113 tests pass. Health reports zero errors and five documented coverage warnings.
+Source and inventory fingerprints are current. Both evaluation dry runs complete
+with zero model calls and unmeasured quality/cost scores. Browser review confirms
+new maintenance navigation and the rendered source-review page. All 81 listed
+navigation pages are readable from the local preview on port 8006.
 
 ## Implementation boundaries
 

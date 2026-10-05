@@ -103,7 +103,7 @@ visible `Source:` line so source locators remain adjacent to the relevant claims
 
 Canonical rule definitions belong in the nine `business-rules-*.md` files;
 the annual-change page describes deltas. The health check reports duplicate
-CHEMMON table-row IDs, including the documented CHEMMON03 source duplicate.
+CHEMMON table-row IDs, and compares definitions with the source-derived rule inventory. The former CHEMMON03 duplicate was a wiki error, corrected on 5 October 2026.
 It does **not** prove missing-rule coverage: that requires an independently
 source-checked inventory. GBR, LL, PRE and USE completeness is also pending
 that source audit.
