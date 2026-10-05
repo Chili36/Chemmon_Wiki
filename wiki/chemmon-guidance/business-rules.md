@@ -2,7 +2,7 @@
 title: "ChemMon Business Rules"
 type: "hub"
 domain: "all"
-last_updated: "2026-04-22"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
@@ -75,4 +75,10 @@ PRE and USE rules are not listed in the slice files because they validate differ
 
 ## Totals
 
-131 rule definitions across the nine slices: 16 GBR + 104 CHEMMON + 11 LL. Every `CHEMMON\d+` rule ID appears exactly once in the slice files (see `tools/health_check.py` for verification). The 46 FA/FF parallel-family rules (`PRE…`, `USE…`, `USE_LLDB…`) are counted separately on their DM pages.
+The existing catalogue records 131 rule definitions across the nine slices:
+16 GBR + 104 CHEMMON + 11 LL. These are documented catalogue counts, not a
+source-completeness verdict from the health check. The checker reports
+duplicate CHEMMON table-row IDs; CHEMMON03 is a known source duplicate.
+An independently source-checked inventory is needed to detect missing rules.
+The 46 FA/FF parallel-family rules (`PRE…`, `USE…`, `USE_LLDB…`) are counted
+separately on their DM pages.

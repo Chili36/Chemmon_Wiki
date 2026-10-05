@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import pytest
 from pathlib import Path
 from unittest.mock import MagicMock
 
@@ -30,7 +31,7 @@ def _fake_client(response):
 
 
 def _store() -> WikiStore:
-    return WikiStore(Path("/Users/davidfoster/Dev/Chemmon_Wiki"))
+    return WikiStore(Path(__file__).resolve().parents[1])
 
 
 def test_selector_picks_pages_from_json():
@@ -40,7 +41,7 @@ def test_selector_picks_pages_from_json():
     selector = WikiPageSelector(store=_store(), client=client, model_id="fake-model")
     result = selector.run({"question": "What is ChemMon?"})
 
-    assert "index.md" in result.pages_used
+    assert "index.md" not in result.pages_used
     assert "chemmon-overview.md" in result.pages_used
     assert result.token_summary["calls"] == 1
 
@@ -51,7 +52,8 @@ def test_selector_picks_pages_from_json():
     assert "ChemMon" in msgs[0]["content"]
     user_payload = json.loads(msgs[1]["content"])
     assert "question" in user_payload
-    assert "wiki_index" in user_payload
+    assert "catalog" in user_payload
+    assert user_payload["max_pages"] == 6
 
 
 def test_selector_handles_fenced_json():
@@ -71,13 +73,34 @@ def test_selector_handles_empty_page_list():
     selector = WikiPageSelector(store=_store(), client=client, model_id="fake-model")
     result = selector.run({"question": "Hello"})
 
-    assert result.pages_used == ["index.md"]
+    assert result.pages_used == []
 
 
 def test_selector_handles_plain_text_fallback():
     client = _fake_client(_chat_response(content="I don't know which pages to select."))
 
     selector = WikiPageSelector(store=_store(), client=client, model_id="fake-model")
-    result = selector.run({"question": "Something weird"})
+    with pytest.raises(ValueError, match="page_names array"):
+        selector.run({"question": "Something weird"})
 
-    assert result.pages_used == ["index.md"]
+
+@pytest.mark.parametrize("limit", [1, 2, 7])
+def test_page_limit_counts_only_topic_evidence(limit):
+    store = _store()
+    candidates = store.list_pages()[:8]
+    names = ["index.md", "README.md", "unknown.md", *candidates, candidates[0]]
+    client = _fake_client(_chat_response(content=json.dumps({"page_names": names})))
+    selector = WikiPageSelector(store=store, client=client, model_id="fake-model")
+    result = selector.run({"question": "test", "max_pages": limit})
+    assert result.pages_used == candidates[:limit]
+    assert selector.max_pages == 6
+    payload = json.loads(client.chat.completions.create.call_args.kwargs["messages"][1]["content"])
+    assert payload["max_pages"] == limit
+    assert "README.md" not in payload["catalog"]
+
+
+@pytest.mark.parametrize("content", ['{"page_names":"x.md"}', '{"page_names":[12]}', '{"page_names":["unknown.md"]}'])
+def test_selector_rejects_invalid_selections(content):
+    selector = WikiPageSelector(store=_store(), client=_fake_client(_chat_response(content=content)), model_id="fake-model")
+    with pytest.raises(ValueError):
+        selector.run({"question": "test"})

@@ -1,9 +1,40 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Log
+
+## [2026-10-05] correction and runtime | First FoodEx2 parity milestone
+
+- Patched `vmpr-reporting.md` against the supplied ChemMon 2026 guidance,
+  pp. 33–36. Restored the explicit F01/F02 exceptions on p. 33 and replaced
+  the incomplete, mislabelled sheep/goat code list with the scoped F23.A07VF
+  child-descriptor requirement on p. 36 and a link to the canonical matrix page.
+  The PDF repeats A18EX for two goat labels; the wiki now flags the ambiguity
+  and requires catalogue verification instead of asserting an unchecked fix.
+  No source document was changed and no new domain page was created.
+- Corrected maintenance claims in `SCHEMA.md` and `business-rules.md`: duplicate
+  detection does not establish completeness against an expected rule inventory.
+- Removed index-as-evidence, made final page budgets strict and request-local,
+  and made related summaries opt-in, explicitly labelled and non-citable.
+  Model context retains source/page locators. Invalid selection output errors
+  explicitly; empty selection avoids an answer-model call.
+- Added metadata-driven viewer navigation, orientation pages, full-text search,
+  domain filtering, inline wiki links and backlinks. Added local checks for
+  index/API consistency, source files, metadata dates and related links, plus CI.
+- Added the phased implementation plan under `docs/plans/` and documented the
+  changed API defaults. Verification: 69 tests passed; health check has zero
+  errors and the known CHEMMON03 warning; all 77 catalogue pages load in the
+  local preview. Browser checks covered navigation, search, domain filtering,
+  inline wiki links and backlinks. Verification uses local test doubles, not
+  paid model calls. The existing deployment was not restarted or replaced.
+
+Scope and remaining work: this is a targeted correction and runtime pass, not
+a whole-source ingest or completeness audit. Source coverage/fingerprints,
+an independently verified rule inventory, reviewed held-out answer evaluations,
+model comparisons and context-pack integration remain in later milestones.
+Other source/page-locator claims have not been comprehensively re-audited.
 
 ## [2026-04-24] maintenance | Split ChemMon background into narrow pages
 

@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Index
@@ -12,6 +12,8 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 - [README.md](README.md): Repo overview, current status, directory layout, and working conventions.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.
 - [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, wiki-link convention, and source-comment convention. Required reading before editing any wiki page.
+- [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Source-ingest procedure, rule-first writing, gap checks and evaluation separation.
+- [Improvement plan](docs/plans/2026-10-05-foodex2-parity.md): Phased work and acceptance criteria for reliability, source audits, evaluation and downstream integration.
 - [log.md](log.md): Chronological record of ingests and maintenance work.
 
 ## Guiding Principles

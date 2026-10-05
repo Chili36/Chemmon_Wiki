@@ -2,7 +2,7 @@
 title: "Wiki Schema"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-10"
+last_updated: "2026-10-05"
 ---
 
 # Schema
@@ -64,6 +64,7 @@ Every wiki page declares a `domain` field. Allowed values:
 | Field | Type | Notes |
 |---|---|---|
 | `source_pages` | list of strings | Page ranges in the source PDF, e.g. `["pp. 21-45"]`. Use when specific pages matter for verification. |
+| `select_when` | string | Optional situation-based selection hint, at most 400 characters. Describe the decision the page helps resolve; otherwise the selector uses the index summary. |
 
 ## Conventions
 
@@ -90,7 +91,8 @@ Rule text and prose claims are attributed to source documents via HTML comments 
 **CHEMMON03**: ...
 ```
 
-The comment is invisible in rendered output but lets a human or LLM verify a claim against the canonical PDF.
+The comment is invisible in the human viewer. Model evidence preserves it as a
+visible `Source:` line so source locators remain adjacent to the relevant claims.
 
 ### Rule ID conventions
 
@@ -99,7 +101,12 @@ The comment is invisible in rendered output but lets a human or LLM verify a cla
 - **Legal Limit rules**: `LL_01 VMPR`, `LL_02 PPP`, `LL_03 FA_FF`, etc.
 - **FoodEx2 validation**: `FOODEX2_SAMMAT`, `FOODEX2_ANMAT`.
 
-Every `CHEMMON\d+` rule ID must appear **exactly once** across the 8 `business-rules-*.md` slice files. The health check enforces this to prevent duplication or silent drops during maintenance.
+Canonical rule definitions belong in the nine `business-rules-*.md` files;
+the annual-change page describes deltas. The health check reports duplicate
+CHEMMON table-row IDs, including the documented CHEMMON03 source duplicate.
+It does **not** prove missing-rule coverage: that requires an independently
+source-checked inventory. GBR, LL, PRE and USE completeness is also pending
+that source audit.
 
 ## Example: valid frontmatter block
 
