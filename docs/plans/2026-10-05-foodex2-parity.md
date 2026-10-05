@@ -51,10 +51,16 @@ Implemented on `codex/chemmon-foodex2-parity`:
 - [x] Added stale/invalid/missing audit reporting, preparation and inventory
   tools, JSON health output, maintenance instructions and CI freshness checks.
 
-Acceptance met for a scoped, reproducible review. Four open findings remain:
-67 omitted active non-biological GBRs, remaining CHEMON semantic review,
-conflicting FoodEx2 example versions, and unreviewed PRE/USE field semantics.
-These are visible backlog, not an exhaustive-completeness claim.
+- [x] Completed the full Table 9 comparison and added all 67 omitted applicable
+  active GBR definitions in three focused references. The source-derived check
+  now confirms exactly one definition for each of the 83 applicable GBR IDs.
+- [x] Qualified the conflicting A02RH cheese examples using a recorded local
+  MTX 17.2 query; retained the historical catalogue-version limitation and
+  Warning/Error distinctions. Corrected related example and rule-reference defects.
+
+Acceptance met for a scoped, reproducible review. Two open findings remain:
+remaining CHEMON semantic review and unreviewed PRE/USE field semantics.
+The 2013 foundation and the rest of the 2026 prose are not exhaustively reviewed.
 
 ## Milestone 3: measured answer quality
 
@@ -96,11 +102,16 @@ is included in this branch's offline checks.
 
 ## Branch verification
 
-113 tests pass. Health reports zero errors and five documented coverage warnings.
-Source and inventory fingerprints are current. Both evaluation dry runs complete
-with zero model calls and unmeasured quality/cost scores. Browser review confirms
-new maintenance navigation and the rendered source-review page. All 81 listed
-navigation pages are readable from the local preview on port 8006.
+114 tests pass. Health reports zero errors and two documented semantic-review
+warnings. Source and inventory fingerprints are current, with no missing,
+duplicate, unexpected or inactive canonical rule IDs. All 84 listed navigation
+pages return readable content from the local preview on port 8006; browser
+review confirms the new GBR navigation and rendered date-rule tables.
+
+The two saved evaluation dry runs describe the earlier corpus snapshot, made
+zero model calls and have unmeasured quality/cost scores. They are historical
+workflow checks, not a quality baseline for the expanded corpus. Human review
+and live evaluation remain pending; no model defaults have changed.
 
 ## Implementation boundaries
 

@@ -2,7 +2,7 @@
 title: "SSD2 Sampling: Sample Identifiers"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -49,7 +49,10 @@ Each sample must be identified by a unique sample identification reference not l
 
 ### Related business rules
 
-See `GBR2` for sampling-event consistency and `CHEMMON01` for unique sample identification across collections.
+See [[business-rules-gbr]]: `GBR2` governs sampling-event descriptors, `GBR3`
+keeps sample/matrix descriptors and `sampEventId` constant for a shared `sampId`,
+and `GBR101` defines result uniqueness using a four-field key with an explicit
+parameter exception. These are distinct requirements.
 
 ## origSampId — Original sample identifier
 

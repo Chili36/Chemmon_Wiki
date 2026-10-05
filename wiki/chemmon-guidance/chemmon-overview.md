@@ -19,7 +19,7 @@ related:
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # ChemMon Overview
@@ -65,7 +65,7 @@ Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not e
 
 1. **Sampling**: Member States collect food and feed samples during the calendar year according to national monitoring and control plans.
 2. **Submission**: Data providers prepare SSD2-formatted files and upload them to the appropriate DCF dataset, typically by 31 August of the following year for pesticide residues and by 30 June for VMPR.
-3. **Validation**: EFSA runs automated business rules (CHEMMON01 onward) against the submitted data. Failing records are flagged for correction. See [[business-rules]].
+3. **Validation**: EFSA runs automated business rules against the submitted data. Failing records are flagged for correction. See [[business-rules]].
 4. **Publication**: Validated data is used in EFSA's annual scientific reports and supporting publications.
 
 (ChemMon 2026 p6-8)
@@ -73,7 +73,7 @@ Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not e
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p14-16 -->
 ## Business Rules
 
-- Submissions are validated by a numbered set of business rules (CHEMMON01 through CHEMMON109 and beyond) that check element presence, allowed values, inter-element consistency, and domain-specific constraints. (ChemMon 2026 p14-16)
+- Submissions are validated by business rules that check element presence, allowed values, inter-element consistency, and domain-specific constraints. (ChemMon 2026 p14-16) Rule numbering has gaps; use the source-derived inventory in [[business-rules]] instead of inferring IDs from a numeric range.
 - Rules are classified by severity: errors block acceptance, warnings flag potential issues but allow submission. (ChemMon 2026 p14)
 - The full rule catalogue is maintained in [[business-rules]].
 

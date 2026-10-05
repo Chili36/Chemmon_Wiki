@@ -9,6 +9,9 @@ sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 related:
   - "[[business-rules-gbr]]"
+  - "[[business-rules-gbr-consistency]]"
+  - "[[business-rules-gbr-results]]"
+  - "[[business-rules-gbr-dates]]"
   - "[[business-rules-cross-cutting]]"
   - "[[business-rules-vmpr]]"
   - "[[business-rules-pesticide]]"
@@ -36,9 +39,9 @@ related:
 - **Business rules take precedence** when they conflict with prose sections of the guidance.
 - Matrix coding rules reference [[foodex2-in-chemmon]] for FoodEx2 usage.
 
-This page is a **hub**: the canonical rule definitions live in the nine slice files below, grouped by applicability so the selector can inject just what a query actually needs. When in doubt, start with [[business-rules-cross-cutting]] — it applies to every domain.
+This page is a **hub**: the canonical rule definitions live in the topic and domain references below. Use the rule's conditions and domain column to determine applicability; a page containing cross-domain rules does not mean every row applies to every submission.
 
-<!-- Source: ChemMon 2026 pp. 97-113 (Tables 9-10) -->
+<!-- Source: ChemMon 2026 pp. 97-143 (Tables 9-10) -->
 
 The source guidance also provides troubleshooting tips alongside the GBR and CHEMMON rule lists (Tables 9 and 10). This wiki focuses on the rule definitions and how they relate to ChemMon reporting; troubleshooting text is not fully transcribed.
 
@@ -46,7 +49,10 @@ The source guidance also provides troubleshooting tips alongside the GBR and CHE
 
 ### By tier
 
-- **[[business-rules-gbr]]** — General Business Rules that apply across all EFSA SSD2 data collections: sampling event consistency, geographic validation, result value/unit rules.
+- **[[business-rules-gbr]]** — General Business Rules index and 16 core definitions: sample/event consistency, sampling/origin geography, result shape, units and uniqueness.
+- **[[business-rules-gbr-consistency]]** — 12 GBR definitions: shared identifiers, processing geography, matrix/method text and sample-size units.
+- **[[business-rules-gbr-results]]** — 20 GBR definitions: percentages, evaluation limits, decision thresholds, recovery and uncertainty, including Warning rules GBR22/42.
+- **[[business-rules-gbr-dates]]** — 35 GBR definitions: calendar validity, day/month ranges, current date/year and chronological order.
 - **[[business-rules-cross-cutting]]** — CHEMMON rules marked "All" or applying to multiple domains: analytical method, result value & type, sampling & programme, cross-domain matrix rules, evaluation & action, FoodEx2 validation.
 - **[[business-rules-legal-limits]]** — Legal Limit rules comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
 
@@ -77,9 +83,11 @@ PRE and USE rules are not listed in the slice files because they validate differ
 
 The source-derived inventory records **92 GBR, 104 CHEMON, 11 LL, 17 PRE and
 29 USE IDs**, including inactive rows. Source CHEMON IDs are mapped to the
-wiki's CHEMMON spelling. The GBR page is a selected subset, not the full table.
-The source review tracks missing active GBR definitions and unreviewed semantic
-coverage. Equal totals do not prove equivalent rule coverage.
+wiki's CHEMMON spelling. All **83 active, non-biological GBR definitions** have
+been compared with the full Table 9 rows and are covered once across four pages;
+the two inactive and seven biological-only GBR IDs remain in the source inventory.
+The source review still tracks unreviewed CHEMON and PRE/USE semantic coverage.
+Equal totals do not prove equivalent rule coverage or valid submissions.
 
 See [[SOURCE_REVIEW]] and [[MAINTENANCE_WORKFLOW]] for findings, review scope
 and the procedure for checking source drift. PRE/USE coverage counts do not

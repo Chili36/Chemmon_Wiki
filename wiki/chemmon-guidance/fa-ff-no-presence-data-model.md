@@ -121,6 +121,15 @@ All 17 rules in this DM are prefixed `PRE`. All are currently **Active**. Sixtee
 | PRE16 | Error | `repYear`, if reported, = data collection year |
 | PRE17 | Error | `(sampD, sampM, sampY)` must be a valid date |
 
+## Version-sensitive cheese example
+
+The source's p. 9 example uses `A02RH` (Soft-ripened cheese), with F33.A0C5F
+implicit. The checked local MTX 17.2 snapshot agrees. ChemMon's analytical
+example p. 39 instead prints an explicit F33: do not copy that duplicate into
+this path. PRE15 assigns Warning severity. See [[foodex2-in-chemmon]] for the
+version-specific reconciliation and evidence; this does not establish the
+catalogue release originally intended by the ChemMon example.
+
 ## Pilot substance rotation
 
 <!-- Source: No-presence 2026 p5, footnote 4 -->

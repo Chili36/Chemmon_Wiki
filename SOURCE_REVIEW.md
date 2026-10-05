@@ -12,6 +12,13 @@ received independent human sign-off and does not certify the whole wiki.
 - **GBR101 corrected:** the uniqueness key includes `paramCode.base`, `sampId`,
   `sampAnId` and `anPortSeq`, with an exception for RF-XXXX-XXX-XXX. Source p. 112.
   GBR2 now preserves the `progId` / `progLegalRef` exclusion (p. 98).
+- **GBR coverage completed:** reviewed the complete Table 9 rows, pp. 98–112,
+  and added all 67 omitted active, non-biological definitions. The 83 applicable
+  rules are now covered once across the core, consistency, numeric-result and
+  date references. GBR22/42 retain Warning severity; two inactive and seven
+  biological-only IDs are documented separately. GBR3/4 now retain the related
+  event/sample identifiers as well as the descriptor fields. This is an
+  assistant source comparison, not an independently certified validator.
 - **CHEMON attribution corrected:** Table 10 has one CHEMON03, for the analytical
   method. The alleged source duplicate was a wiki error. Unsupported CHEMMON01,
   CHEMMON02 and the country-consistency CHEMMON03 entries were removed. The
@@ -33,25 +40,33 @@ received independent human sign-off and does not certify the whole wiki.
   pp. 7–8 and USE23 p. 27. Explicit duplication of implicit F33 warns in the
   first two paths, and is an Error for use levels. The field names and F03
   recommendation/requirement distinctions remain separate.
+- **Cheese example qualified by catalogue version:** ChemMon p. 39 prints an
+  explicit F33 for A02RH; both parallel guides p. 9 treat it as implicit. Local
+  MTX 17.2 (valid from 14 July 2026) confirms implicit F33.A0C5F. The wiki now
+  gives a version-qualified example, adds the sliced-state facet only when
+  known, and preserves the source discrepancy and different rule severities.
+  Query, attributes and database hash are saved in
+  `reports/source-review/2026-10-05-cheese-catalogue-check.json`. The historical
+  catalogue release intended by ChemMon p. 39 is still unknown; this check
+  does not establish that the source example was correct in an earlier release.
+- **Related summary defects corrected:** removed a leftover unsupported
+  CHEMMON01 cross-reference, restored VMPR F01/F02 exceptions in the FoodEx2
+  overview (p. 33), and corrected the omelette's explicit-F33 label and the
+  syrup-type code A1B1Y in the additive worked examples (p. 40).
 
 ## What remains open
 
-1. **GBR coverage is partial.** The source has 92 IDs, including inactive and
-   biological-only rows. The wiki's 16-row subset omits 67 active, non-biological
-   rules. These cover date validity, identifiers, percentage fields, limits,
-   uncertainty and other consistency conditions. Do not use the page as a full
-   validator. Add and review these by topic from complete Table 9 rows.
-2. **CHEMON semantic review is incomplete.** Correct ID coverage does not prove
+1. **CHEMON semantic review is incomplete.** Correct ID coverage does not prove
    that conditions, domains, severity, catalogue labels or exceptions match.
    Review the remaining Table 10 definitions against their full rows before
    describing the wiki as submission-ready guidance.
-3. **Some worked FoodEx2 examples need version reconciliation.** ChemMon p. 39
-   shows an explicit F33 for A02RH while the parallel guidance treats that
-   category as implicit. Resolve using the intended catalogue release and
-   record its provenance; do not copy an example across paths unquestioningly.
-4. **The 2013 SSD2 foundation and the rest of the 2026 prose are not exhaustively
+2. **PRE/USE field semantics need further review.** The ID inventory and scoped
+   facet checks do not establish that every field, condition and exception has
+   been compared with the complete source sections and rules.
+3. **The 2013 SSD2 foundation and the rest of the 2026 prose are not exhaustively
    reviewed.** Nor are PRE/USE field descriptions fully certified by the rule-ID
-   inventory. Current legal changes or later catalogues require fresh sources.
+   inventory. Worked examples outside the scoped checks, current legal changes
+   and later catalogues require fresh verification.
 
 ## Reproducibility
 

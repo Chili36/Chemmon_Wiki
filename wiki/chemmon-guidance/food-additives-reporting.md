@@ -143,11 +143,17 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 
 | Product | FoodEx2 Code | Notes |
 | --- | --- | --- |
-| Cheese with legislative class | `A02RH#F03.A06JA$F33.A0C5F` | FA-01.7.2 Ripened cheese |
+| Soft-ripened cheese, sliced | `A02RH#F03.A06JA` | Local MTX 17.2: F33.A0C5F (FA-01.7.2 Ripened cheese) is implicit; add F03 only for the known sliced state. See version note below. |
 | Wine, red | `A03MX` | Implicit F33=FA-14.2.2 Wine and products |
-| Omelette, plain | `A03YN#F33.A0C33` | Implicit F33=FA-10.2 Processed eggs |
+| Omelette, plain | `A03YN#F33.A0C33` | Explicit F33=FA-10.2 Processed eggs in the supplied ChemMon p. 40 example |
 | Infant formula milk/soya-based liquid | `A03QH` | Implicit F33=FA-13.1.1 Infant formulae |
-| Vitamin supplements syrup | `A03SL#F03.A1BY$F33.A0C15` | FA-17.2 supplements liquid form |
+| Vitamin supplements syrup | `A03SL#F03.A1B1Y$F33.A0C15` | FA-17.2 supplements liquid form; A1B1Y is the syrup-type code printed on ChemMon p. 40 |
+
+**Cheese version note:** ChemMon p. 39 prints an explicit F33 for A02RH, while
+both parallel FA/FF guides p. 9 list it as implicit. The cheese row above uses
+the locally checked MTX 17.2 snapshot; [[foodex2-in-chemmon]] records the
+discrepancy, query provenance and limits. Other rows reproduce the supplied
+2026 guidance examples and are not a validation against every catalogue release.
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Restriction/Exception

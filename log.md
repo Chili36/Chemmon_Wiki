@@ -804,3 +804,30 @@ Added inspectable selection, review-status and bounded context-pack endpoints,
 provenance, non-citable policy and selection metadata, request-local model
 overrides, and unknown-cost handling. Offline tests cover the new boundaries.
 No source PDFs, credentials, model defaults or deployed services were changed.
+
+## 2026-10-05 — Complete applicable GBR coverage and qualify FoodEx2 examples
+
+Reviewed Table 9 pp. 98–112, including continuations, severity, comments and
+exceptions. Added 67 missing active non-biological rules across identifier/text/
+unit consistency, numeric-result constraints and date references. All 83
+applicable GBR IDs now have exactly one canonical definition; the two inactive
+and seven biological-only rows remain documented separately. GBR22/42 retain
+Warning severity. Expanded GBR3/4 descriptor lists and related identifiers,
+registered the new pages in the selector catalogue and viewer, and added a
+regression comparison against the independent source-ID inventory.
+
+Compared the A02RH examples in all three 2026 guides and queried the local MTX
+17.2 catalogue read-only. Recorded catalogue metadata, database hash, queries
+and returned term attributes. The wiki now gives a version-qualified example
+without duplicate F33 and adds sliced-state F03 only when known. The historical
+catalogue edition intended by ChemMon p. 39 remains unknown and is stated as
+a limitation. Corrected the omelette explicit-F33 label, syrup-type A1B1Y typo,
+leftover unsupported CHEMMON01 reference, overview VMPR facet exceptions and
+outdated continuous-rule-numbering claims.
+
+Closed SRC-007 and scoped SRC-009; recorded the additional corrections as
+SRC-011. SRC-008 (remaining CHEMON semantics) and SRC-010 (remaining PRE/USE
+field semantics) stay open. Refreshed the reviewed corpus fingerprints only
+after the content comparison. Verification: 114 tests pass; health has zero
+errors and two review warnings; all 84 pages are readable from the preview.
+Prior dry-run evaluation reports remain historical; no provider calls were made.

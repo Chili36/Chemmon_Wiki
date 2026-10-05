@@ -69,10 +69,23 @@ def test_rule_inventory_is_source_derived_and_explicit_about_inactive_rules():
     assert rules['GBR6']['applicability'] == 'biological-only'
     result = rule_inventory_status(ROOT)
     assert result['status'] == 'current'
-    assert len(result['missing_active_ids']) == 67
+    assert result['missing_active_ids'] == []
     assert 'GBR1' not in result['missing_active_ids']
     assert 'GBR6' not in result['missing_active_ids']
     assert result['unexpected_wiki_ids'] == result['inactive_wiki_ids'] == []
+
+
+def test_all_applicable_gbr_source_ids_have_one_canonical_definition():
+    """Compare the wiki to the independently extracted PDF inventory."""
+    record = json.loads((ROOT/'docs/rule-inventory.json').read_text())
+    expected = {r['wiki_id'] for r in record['rules']
+                if r['family'] == 'GBR' and r['status'] == 'active'
+                and r['applicability'] != 'biological-only'}
+    definitions = {key: pages for key, pages in wiki_rule_definitions(ROOT).items()
+                   if key.startswith('GBR')}
+    assert len(expected) == 83
+    assert definitions.keys() == expected
+    assert all(len(pages) == 1 for pages in definitions.values())
 
 
 def test_rule_inventory_refuses_stale_pdf(reviewed):

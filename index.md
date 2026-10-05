@@ -20,7 +20,7 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 
 - Chemical monitoring reporting follows EFSA's annual call for data and the associated guidance documents. Code and report samples according to the current year's guidance, not prior years.
 - When the guidance is ambiguous, prefer the interpretation that maintains data quality and regulatory compliance over the one that is easier to implement.
-- Business rules (CHEMMON01-CHEMMON109+) are the authoritative validation layer. If a business rule and a prose section of the guidance conflict, the business rule takes precedence.
+- Business rules are the authoritative validation layer. If a business rule and a prose section of the guidance conflict, the business rule takes precedence. Use the source-derived inventory for valid IDs; numbering is not continuous.
 - Reporting domains (chemical DCF, biological/zoonoses DCF) have specific routing rules. Not all parameters belong in the same domain.
 
 ## ChemMon Guidance
@@ -98,10 +98,13 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 
 ### Business Rules
 
-The full 131-rule catalog is sliced into nine files by applicability. Start at the hub if you're unsure which slice to open; otherwise jump directly to the relevant domain or tier.
+Rule references are grouped by topic and reporting domain. All 83 active GBR definitions not marked biological-only are covered across four pages. The source review records remaining semantic-review gaps for other families; rule-ID coverage alone does not certify a complete validator.
 
-- [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — explains the three groups of business rules (GBR/CHEMMON/subset-specific) and links to the nine slice files by domain/tier.
-- [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): Selected General Business Rules applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.
+- [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — explains GBR/CHEMMON/subset-specific rules and routes to topic and domain references, with separate PRE/USE collection paths.
+- [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): General Business Rules index and 16 core rules — sample/event consistency, sampling/origin geography, result shape, units and uniqueness; inactive and biological-only scope notes.
+- [business-rules-gbr-consistency.md](wiki/chemmon-guidance/business-rules-gbr-consistency.md): 12 generic SSD2 rules for shared portion/organisation/laboratory/method identifiers, processing geography, Other matrix text, unclassifiable methods and sample-size units.
+- [business-rules-gbr-results.md](wiki/chemmon-guidance/business-rules-gbr-results.md): 20 generic SSD2 rules for percentages, fat/dry-weight conditions, evaluation-limit comparisons, positive thresholds/recovery/uncertainty and CCalpha/CCbeta; GBR22/42 are Warnings.
+- [business-rules-gbr-dates.md](wiki/chemmon-guidance/business-rules-gbr-dates.md): 35 generic SSD2 rules for valid calendar dates, future dates, reporting year, day/month ranges, required months and production/expiry/sampling/analysis/slaughter order.
 - [business-rules-cross-cutting.md](wiki/chemmon-guidance/business-rules-cross-cutting.md): CHEMMON rules marked "All" or applying to multiple domains — analytical method, result value & type, sampling & programme, cross-domain matrix, evaluation & action, FoodEx2 validation.
 - [business-rules-vmpr.md](wiki/chemmon-guidance/business-rules-vmpr.md): VMPR-specific rules — accreditation, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
 - [business-rules-pesticide.md](wiki/chemmon-guidance/business-rules-pesticide.md): Pesticide-specific rules — country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.

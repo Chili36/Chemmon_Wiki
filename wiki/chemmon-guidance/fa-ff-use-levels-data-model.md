@@ -75,6 +75,12 @@ Twenty-nine elements, reported per product category × substance. The combinatio
 
 ### Matrix description
 
+The source's p. 9 cheese example uses `A02RH`, with F33.A0C5F implicit, which
+matches the checked local MTX 17.2 snapshot. Do not copy the explicit F33 from
+the conflicting ChemMon p. 39 example: **USE23 makes that duplication an Error**.
+See [[foodex2-in-chemmon]] for catalogue provenance and the unresolved historical
+edition of the ChemMon example.
+
 - `matCode` (mandatory, `MTX`/FoodEx2) — FoodEx2 base term plus required facets; see [[foodex2-in-chemmon]] for base-term rules.
   - **F33 (legislative class)** must always be present, implicitly or explicitly (USE16). **USE23 is an Error (not a Warning):** if F33 is implicit in the base term, do not add an explicit F33. (Use-levels 2026 pp. 7-8)
   - **F03 (physical state)** must be explicitly added if not implicit, for the same list of legislative categories as the no-presence DM (01.5, 01.6, 01.8, 01.9, 01.10, 06.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5, 17 excl. infants/young children). (USE17)

@@ -22,7 +22,7 @@ def test_health_check_has_no_errors() -> None:
 def test_review_reports_real_source_gaps_not_a_source_duplicate():
     report = run_health_check()
     assert report.rule_inventory['status'] == 'current'
-    assert 'GBR103' in report.rule_inventory['missing_active_ids']
+    assert report.rule_inventory['missing_active_ids'] == []
     assert report.rule_inventory['duplicate_wiki_ids'] == {}
     assert report.rule_inventory['unexpected_wiki_ids'] == []
     assert not any('rule CHEMMON03 defined' in w for w in report.warnings)
