@@ -99,7 +99,7 @@ visible `Source:` line so source locators remain adjacent to the relevant claims
 - **GBR rules**: `GBR2`, `GBR12`, `GBR27` — General Business Rules from SSD2.
 - **CHEMMON rules**: preserve source IDs and suffixes, such as `CHEMMON03`, `CHEMMON84_a` and `CHEMMON90_b`. The PDF spells the prefix `CHEMON`; the wiki uses `CHEMMON` as an explicit alias. Numbering has gaps and merged IDs; do not infer a continuous range.
 - **Legal Limit rules**: `LL_01_VMPR`, `LL_02_PPP`, `LL_03_FA_FF`, etc.; preserve the source-derived inventory's underscore form.
-- **FoodEx2 validation**: `FOODEX2_SAMMAT`, `FOODEX2_ANMAT`.
+- **FoodEx2 validation**: `FOODEX2_SAMPMAT`, `FOODEX2_ANMAT`.
 
 Canonical SSD2 rule definitions belong in the topic/domain
 `business-rules-*.md` files; the annual-change page describes deltas. PRE and
@@ -109,7 +109,7 @@ reporting missing, unexpected, duplicate and inactive definitions. The former
 CHEMMON03 duplicate was a wiki error, corrected on 5 October 2026.
 ID coverage is complete for applicable active rows, including all 83 generic
 rules, but this does **not** prove that every description matches its source.
-See [[SOURCE_REVIEW]] for the remaining semantic-review scope.
+See [[SOURCE_REVIEW]] for completed source comparisons, unresolved PDF wording and review limits.
 
 ## Example: valid frontmatter block
 

@@ -112,3 +112,43 @@ def test_supporting_catalogue_report_drift_invalidates_review(reviewed):
     assert source_review_status(reviewed)['status']=='current'
     evidence.write_text('{"rows":["changed"]}')
     assert source_review_status(reviewed)['status']=='stale'
+
+
+def test_reviewed_chemon_pre_use_severities_match_independent_source_evidence():
+    """Guard against losing a rule or promoting a Warning during later edits."""
+    import re
+    from wiki_api.source_review import sha256
+    report = json.loads((ROOT/'reports/source-review/2026-10-05-broader-review.json').read_text())
+    inventory = json.loads((ROOT/'docs/rule-inventory.json').read_text())
+    expected = {r['wiki_id']: r for r in inventory['rules']
+                if r['family'] in {'CHEMMON', 'PRE', 'USE'}}
+    reviewed_rows = {r['wiki_id']: r for r in report['rules']}
+    assert len(reviewed_rows) == len(report['rules']) == 150
+    assert reviewed_rows.keys() == expected.keys()
+    assert all(sha256(ROOT/p) == digest for p, digest in report['sources'].items())
+    definitions = wiki_rule_definitions(ROOT)
+    for key, source in reviewed_rows.items():
+        assert source['status'] == expected[key]['status']
+        assert source['pdf_page'] == expected[key]['pdf_page']
+        if source['status'] == 'inactive':
+            assert key not in definitions
+            continue
+        assert definitions[key] == [source['canonical_page']]
+        text = (ROOT/'wiki/chemmon-guidance'/source['canonical_page']).read_text()
+        row = next(line for line in text.splitlines()
+                   if re.match(r'^\|\s*' + re.escape(key) + r'\s*\|', line))
+        cells = [cell.strip() for cell in row.split('|')[1:-1]]
+        assert len(cells) == (5 if source['family'] == 'CHEMMON' else 4)
+        assert cells[1] == source['severity'], key
+        assert int(re.split(r'[-–]', cells[-1])[0]) == source['pdf_page'], key
+
+
+def test_reviewed_parallel_field_inventory_has_no_omitted_names():
+    """Coverage guard only; field meanings were compared with the full PDFs."""
+    report = json.loads((ROOT/'reports/source-review/2026-10-05-broader-review.json').read_text())
+    for model, count, page in [('PRE', 18, 'fa-ff-no-presence-data-model.md'),
+                                ('USE', 31, 'fa-ff-use-levels-data-model.md')]:
+        fields = [f for f in report['fields'] if f['model'] == model]
+        assert len(fields) == len({f['name'] for f in fields}) == count
+        text = (ROOT/'wiki/chemmon-guidance'/page).read_text()
+        assert all('`' + field['name'] + '`' in text for field in fields)

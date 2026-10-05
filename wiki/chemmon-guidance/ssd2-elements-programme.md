@@ -2,7 +2,7 @@
 title: "SSD2 Elements: Programme"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -53,7 +53,7 @@ The most load-bearing rules for this group are:
 - `CHEMMON50`, `CHEMMON51` — pesticides `progType` / `sampStrategy` constraints with `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
 - `CHEMMON96`, `CHEMMON97` — valid strategy combinations for VMPR and other domains with `K005A`. See [[business-rules-cross-cutting]].
 - `CHEMMON101` — `N422A` requires `progType=K019A` and `sampStrategy=ST30A`. See [[business-rules-pesticide]].
-- `CHEMMON104`, `CHEMMON105` — exclusivity rules for `N422A` and `N317A`. See [[business-rules-pesticide]] and [[business-rules-contaminant]].
+- `CHEMMON104`, `CHEMMON105` — exclusivity for N422A and N317A. See [[business-rules-pesticide]] and [[business-rules-cross-cutting]].
 
 ## Relevant Policy
 

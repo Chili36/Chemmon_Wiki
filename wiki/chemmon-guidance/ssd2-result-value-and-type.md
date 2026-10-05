@@ -88,7 +88,7 @@ As mentioned also in section M.04, for food additives and food flavourings, if `
 
 ### Related business rule
 
-**CHEMMON24** — `resQualValue` must equal NEG unless the parameter is MOAHs.
+**CHEMMON24** — `resQualValue` must equal NEG except for the specific parameter RF-00011484-PAR (MOAHs 3 to 7 ring), not all MOAHs (Table 10 p. 118).
 
 ## resType — Type of result
 

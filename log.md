@@ -831,3 +831,32 @@ field semantics) stay open. Refreshed the reviewed corpus fingerprints only
 after the content comparison. Verification: 114 tests pass; health has zero
 errors and two review warnings; all 84 pages are readable from the preview.
 Prior dry-run evaluation reports remain historical; no provider calls were made.
+
+## 2026-10-05 — Complete broader CHEMON and PRE/USE source comparison
+
+At the user's request, proceeded with broader source review while recording
+independent human review as unavailable and deferred. Read complete ChemMon
+Table 10 pp.113–143 and the PRE/USE introductions, field sections, examples and
+Tables1–3. Compared 100 active/four inactive CHEMON rows, 17 PRE and 29 USE rules,
+and all 49 parallel-model fields. Reconciled relevant ChemMon field prose and
+related rule summaries. Source PDFs remain unchanged.
+
+Corrected matrix-versus-parameter scope, Error/Warning labels, sampling-year
+inequality, decision-threshold exceptions, evaluation codes, programme/domain
+conditions, field spelling, additive parameter scope and MPL interpretation.
+Added source pages and scope to canonical CHEMON rows and severity/page columns
+to PRE/USE tables. Documented overall assessment and the pesticide counting
+exception. Preserved all identified source ambiguities instead of inventing
+executable predicates or live-catalogue aliases.
+
+Closed SRC-008/010; opened SRC-012/013/014 for ambiguous Boolean grouping,
+USE19 zero-level wording and CONCLUS hierarchy spelling. Saved independent
+source severity evidence and the complete field checklist in the broader-review
+report. Added regression checks for rule/field coverage, severity and page
+locators. Adjusted table wrapping so short labels and field names stay readable.
+
+Verification: 116 tests pass; health has zero errors and three documented source
+warnings; review/inventory fingerprints are current with no missing, duplicate,
+unexpected or inactive canonical rule IDs. Browser checks confirm rendered USE
+rule columns and source notes. No live model evaluation or human-approved
+benchmark is claimed; evaluation cases remain draft.

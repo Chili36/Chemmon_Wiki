@@ -7,6 +7,11 @@ labels are in `evals/cases.json`. These are assistant-authored candidate labels,
 not human-reviewed gold answers. No demonstrated model-quality improvement is
 claimed until labels and answer outputs have been independently reviewed.
 
+Independent human review is unavailable for this work, as confirmed on 5 October
+2026. It is deferred; the source review can proceed without it. Evaluation labels
+remain draft, and no live model comparison or human-approved quality score is
+claimed. The grading instructions below are retained for future availability.
+
 ## Offline validation
 
 ```sh

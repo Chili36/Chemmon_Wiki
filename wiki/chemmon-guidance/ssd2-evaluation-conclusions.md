@@ -2,7 +2,7 @@
 title: "SSD2 Evaluation: Conclusions and Comments"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -24,7 +24,7 @@ related:
 - `evalInfo.conclusion` classifies the reason or interpretation behind an outcome.
 - `evalInfo.com` is the free-text explanation field.
 - Use these fields when an apparently above-limit result is still considered compliant for a documented reason, when follow-up investigations need explanation, or when additives/flavourings require label/natural-occurrence interpretation.
-- For additives/flavourings, `evalInfo.conclusion` uses the same `CONCLUS.faff` code family that also appears as `presenceAdded` in the parallel DMs.
+- For additives/flavourings, `evalInfo.conclusion` uses the FA/FF CONCLUS codes that also appear as `presenceAdded` in the parallel DMs; the PDFs differ in hierarchy spelling, as noted below.
 
 ## evalInfo.conclusion / evalInfo.com — Conclusion and comment
 
@@ -46,7 +46,7 @@ related:
 
 ### Additives and flavourings
 
-For additives and flavourings, `evalInfo.conclusion` is strongly recommended to indicate whether the substance was present on the label, added, or naturally occurring. The relevant codes come from the `CONCLUS.faff` hierarchy:
+For additives and flavourings, `evalInfo.conclusion` is strongly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the hierarchy `CONCLUS.fa_ff`; the parallel PRE/USE guides write `CONCLUS.faff`. The shared codes below agree, but this source comparison does not establish that both hierarchy names are valid aliases in a live catalogue. Use the target collection’s catalogue configuration:
 
 | Code | Meaning |
 | --- | --- |
@@ -59,6 +59,6 @@ Combinations such as `C20A$C05A` are valid when the substance is not declared/ad
 ## Related business rules
 
 - `CHEMMON26` — follow-up investigation should be accompanied by `evalInfo.conclusion`. See [[business-rules-cross-cutting]].
-- `CHEMMON66_a` / `CHEMMON66_b` — conclusion should explain compliant/non-compliant assessments that do not line up with the simple above/detected pattern. See [[business-rules-cross-cutting]].
+- `CHEMMON66_a` / `CHEMMON66_b` — Warning conditions for assessment/evaluation differences: retain the Presence limit condition in 66_a and all three negative conditions in 66_b. The source mixes and/or without parentheses; consult the full rows and wording note. See [[business-rules-cross-cutting]].
 - `CHEMMON87` — `evalInfo.conclusion` is highly recommended for additives/flavourings. See [[business-rules-additives]].
 - `CHEMMON88` — `evalInfo.restrictionException` is highly recommended for additives/flavourings. See [[business-rules-additives]].

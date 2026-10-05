@@ -1,6 +1,9 @@
 # Evaluation case review queue
 
-All cases below are **draft**. A human reviewer should verify the source, accepted page alternatives, forbidden selections and answer rubric before setting `human-reviewed` and recording their name in `evals/cases.json`. No model output constitutes that approval.
+Independent human review is **unavailable and deferred** (user decision, 5 October
+2026). Broader PDF source comparison is recorded separately in `SOURCE_REVIEW.md`;
+it does not change these cases to human-reviewed. All cases below remain **draft**.
+If independent review becomes available, a human reviewer should verify the source, accepted page alternatives, forbidden selections and answer rubric before setting `human-reviewed` and recording their name in `evals/cases.json`. No model output constitutes that approval.
 
 ## units-bin (development)
 

@@ -2,7 +2,7 @@
 title: "SSD2 Result: Recovery and Recovery Correction (resValRec, resValRecCorr)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-15"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -71,6 +71,6 @@ Unless otherwise specified, the result expressed is considered by EFSA as **not 
 
 - **CHEMMON04** — `resValRec` should be ≥ 1%.
 - **CHEMMON05** — `resValRec` should be between 50% and 150%.
-- **CHEMMON42** — If `resValRecCorr` = Yes, `resValRec` must be reported and should be in 70-120% range.
+- **CHEMMON42** — If `resValRecCorr=Y`, `resValRec` should be reported (Warning). The error message mentions 70–120%, but the rule description is a presence condition; use CHEMMON04/05 for their separate range warnings (Table 10, p. 122).
 - **CHEMMON80** — For contaminants, `resValRecCorr` should be reported.
 

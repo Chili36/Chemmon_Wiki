@@ -99,7 +99,7 @@ related:
 
 - `CHEMMON12`: for acrylamide, `F33` is mandatory. See [[business-rules-contaminant]] and [[contaminant-reporting]].
 - `CHEMMON39`: `F33` is mandatory for food additives and flavourings. See [[business-rules-additives]] and [[food-additives-reporting]].
-- `CHEMMON91`: for VMPR, only one `F33` legislative class under the VR classes should be reported per sample. See [[business-rules-vmpr]].
+- `CHEMMON91`: for VMPR, only one F33 under A1ANN (Veterinary Medicinal Product Residues Classes) should be reported for `sampMatCode` and for `anMatCode`. See [[business-rules-vmpr]].
 - `CHEMMON109`: implicit `F33` makes explicit `F33` unnecessary for FA/FF. See [[business-rules-additives]].
 
 ## Navigation

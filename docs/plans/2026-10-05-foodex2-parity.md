@@ -58,8 +58,15 @@ Implemented on `codex/chemmon-foodex2-parity`:
   MTX 17.2 query; retained the historical catalogue-version limitation and
   Warning/Error distinctions. Corrected related example and rule-reference defects.
 
-Acceptance met for a scoped, reproducible review. Two open findings remain:
-remaining CHEMON semantic review and unreviewed PRE/USE field semantics.
+- [x] Completed broader source review: all 100 active CHEMON rules and four
+  inactive rows, all 17 PRE and 29 USE rules, all 49 PRE/USE fields, full row
+  continuations and examples. Corrected semantic defects and related summaries;
+  added scope/source-page columns and an independent severity evidence report.
+
+Acceptance met for a scoped, reproducible review. SRC-008 and SRC-010 are closed.
+Three source uncertainties remain explicit: CHEMON Boolean grouping, USE19 zero
+levels and CONCLUS hierarchy spelling. Independent human review is unavailable
+and deferred at the user's request; source comparison proceeded without it.
 The 2013 foundation and the rest of the 2026 prose are not exhaustively reviewed.
 
 ## Milestone 3: measured answer quality
@@ -78,7 +85,8 @@ Implementation ready; quality acceptance remains open:
 - [x] Added 20 situation-based selection hints and a summary/hints comparison
   switch. No model defaults changed.
 - [x] Saved dry-run reports for both configured model names. No API calls made.
-- [ ] Human review of labels and live baseline/model comparisons.
+- [ ] Independent human label/answer review: **unavailable and deferred** (user
+  decision, 5 October 2026). Cases remain draft. Live comparisons have not run.
 - [ ] Demonstrate improvement against that same reviewed baseline before
   accepting model/default changes. Dry runs do not meet this criterion.
 
@@ -102,16 +110,19 @@ is included in this branch's offline checks.
 
 ## Branch verification
 
-114 tests pass. Health reports zero errors and two documented semantic-review
+116 tests pass. Health reports zero errors and three documented source-wording
 warnings. Source and inventory fingerprints are current, with no missing,
 duplicate, unexpected or inactive canonical rule IDs. All 84 listed navigation
 pages return readable content from the local preview on port 8006; browser
-review confirms the new GBR navigation and rendered date-rule tables.
+review confirms the GBR navigation, rendered date-rule tables and the new
+USE severity/source-page columns. Table words now remain intact, with horizontal
+scrolling when needed.
 
 The two saved evaluation dry runs describe the earlier corpus snapshot, made
 zero model calls and have unmeasured quality/cost scores. They are historical
 workflow checks, not a quality baseline for the expanded corpus. Human review
-and live evaluation remain pending; no model defaults have changed.
+is unavailable and deferred. Live evaluation has not run; no model defaults
+have changed.
 
 ## Implementation boundaries
 

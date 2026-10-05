@@ -1,7 +1,8 @@
 # Source review — 5 October 2026
 
-This is a scoped, assistant-conducted review of the supplied PDFs. It has not
-received independent human sign-off and does not certify the whole wiki.
+This is a scoped, assistant-conducted review of the supplied PDFs. Independent human
+review is unavailable and deferred at the user’s request. This source comparison
+does not certify the whole wiki or establish model-answer quality.
 
 ## Findings and corrections
 
@@ -54,19 +55,70 @@ received independent human sign-off and does not certify the whole wiki.
   overview (p. 33), and corrected the omelette's explicit-F33 label and the
   syrup-type code A1B1Y in the additive worked examples (p. 40).
 
+## Broader comparison completed
+
+The full ChemMon Table 10 (pp. 113–143) has now been compared, including
+continuations, error-message columns, comments, inactive rows and named
+DOMAIN/FOODEX2 rules. All **100 active CHEMON definitions** now show scope,
+severity and source page. The four inactive CHEMON IDs remain documented.
+The source totals are 51 active Errors and 49 active Warnings.
+
+The PRE and USE comparison covers their complete field sections, examples and
+Tables 1–3: **18 PRE fields / 17 rules** and **31 USE fields / 29 rules**. PRE
+has 16 Errors and one Warning; all USE rules are Errors. Field optionality,
+repeatability, catalogue restrictions, identifiers, dates and numeric conventions
+were checked alongside the rule tables, rather than inferred from rule IDs.
+
+Significant corrections include:
+
+- CHEMON92 validates the sampled/analysed **matrix** base terms in VetDrugRes,
+  not the parameter code. CHEMON100 includes all six VMPR evaluation codes,
+  including J041A. Related matrix, analysis and annual-change summaries agree.
+- CHEMON26 is Warning; CHEMON33 is Error despite “should” in its description.
+  CHEMON43_b accepts sampling year **≤** submission year minus one in 2026.
+- CHEMON31 preserves the P002A exception; CHEMON45 preserves unvalidated-method
+  and not-summed exceptions. CHEMON46 includes both J003A and J031A.
+- CHEMON54 maps N317A to increased import controls, and CHEMON36/54/83/105 are
+  no longer confined to an unsupported single domain. CHEMON83 tests the
+  presence of facet F10.A18PX, not equality to a matrix base code.
+- Result-assessment fields use the source spelling `evalInfo.resAsses`.
+  The evaluation reference now explains its relationship with `evalCode` and
+  the pesticide annual-report exception to assessment-based counting.
+- CHEMON106 is a potassium-sorbate recommendation. CHEMON107 names six
+  parameters and requires the BIN-and-NEG trigger. Broader LOD recommendations
+  in field prose remain distinguished from that narrower validation row.
+- USE maximum-permitted-level guidance now distinguishes a numeric MPL from
+  Quantum satis and applies the limit to combined added/naturally occurring
+  amounts. Optional `minLevel`, exact-level conventions, preparation factors
+  and the mandatory full marketing date remain explicit. PRE `resId` and USE
+  `recId` are kept separate. Source shorthand does not create new schema fields.
+
+`reports/source-review/2026-10-05-broader-review.json` records each reviewed
+rule, independently extracted source severity, page, canonical reference and
+all 49 field names/requirements. Rendered spot checks covered ChemMon pp. 120,
+129, 133, 136; PRE pp. 15, 16, 21; USE pp. 21, 26, 27. Regression checks compare
+canonical rule coverage, severity and page locators with the independent source
+record; they do not claim to test every sentence's meaning.
+
 ## What remains open
 
-1. **CHEMON semantic review is incomplete.** Correct ID coverage does not prove
-   that conditions, domains, severity, catalogue labels or exceptions match.
-   Review the remaining Table 10 definitions against their full rows before
-   describing the wiki as submission-ready guidance.
-2. **PRE/USE field semantics need further review.** The ID inventory and scoped
-   facet checks do not establish that every field, condition and exception has
-   been compared with the complete source sections and rules.
-3. **The 2013 SSD2 foundation and the rest of the 2026 prose are not exhaustively
-   reviewed.** Nor are PRE/USE field descriptions fully certified by the rule-ID
-   inventory. Worked examples outside the scoped checks, current legal changes
-   and later catalogues require fresh verification.
+1. **Boolean grouping in CHEMON66_a/85/93 (SRC-012).** The PDFs mix “and” and
+   “or” without parentheses. The wiki gives the contextual reading and retains
+   every condition, but exact boundary behaviour needs the collection's
+   executable rule definition. No invented predicate is certified here.
+2. **USE19 zero-level condition (SRC-013).** The description says “typical or
+   maximum”; the error message differs and mistypes C19A as C10A. Both levels
+   zero fail the added-substance condition. Whether each must independently
+   be positive cannot be settled from this PDF wording alone.
+3. **CONCLUS hierarchy spelling (SRC-014).** ChemMon p. 76 says `fa_ff`;
+   the parallel guides say `faff`. C19A/C20A/C05A agree. No live catalogue alias
+   equivalence has been established; use the target collection's configuration.
+
+These are source uncertainties, not uncompleted table review or requests for
+human sign-off. The 2013 SSD2 foundation and remaining ChemMon prose are not
+exhaustively reviewed. Current legal changes and later catalogues are outside
+this fixed-edition comparison. The previously documented cheese example's
+historical catalogue edition is still unknown.
 
 ## Reproducibility
 

@@ -127,7 +127,7 @@ In cases where neither the LOD nor LOQ is provided, results cannot be used in ex
 
 ### VMPR rule
 
-For veterinary monitoring, **one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` must be reported for each result**. (ChemMon 2026 p67)
+The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` for each result. The full validation rule CHEMMON45 (pp. 123-124) explicitly excludes unvalidated methods and `resInfo.notSummed=Y`; preserve those exceptions when describing the rule.
 
 ### Example
 
@@ -138,7 +138,7 @@ For veterinary monitoring, **one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` m
 ### Related business rules
 
 - **CHEMMON44** — `resLOQ` must be reported unless method is unvalidated, `notSummed = Y`, domain is VMPR, or `resType` = BIN.
-- **CHEMMON45** — At least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` must be reported.
+- **CHEMMON45** — If the method is not unvalidated and `resInfo.notSummed` is not Y, report at least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` (Table 10, pp. 123-124).
 - **CHEMMON78** — If `resType` = BIN, `resLOQ` must be empty.
 - **CHEMMON82** — `resLOQ` cannot be a placeholder value (99999, 999, 9999, 999999, 9999999).
 

@@ -86,9 +86,14 @@ The source-derived inventory records **92 GBR, 104 CHEMON, 11 LL, 17 PRE and
 wiki's CHEMMON spelling. All **83 active, non-biological GBR definitions** have
 been compared with the full Table 9 rows and are covered once across four pages;
 the two inactive and seven biological-only GBR IDs remain in the source inventory.
-The source review still tracks unreviewed CHEMON and PRE/USE semantic coverage.
-Equal totals do not prove equivalent rule coverage or valid submissions.
+All **100 active CHEMON rules**, the four inactive CHEMON rows, **17 PRE rules**,
+**29 USE/USE_LLDB rules** and **49 PRE/USE fields** have now been compared with
+the complete source rows and field sections. Canonical tables show source pages
+and severity. Three source ambiguities remain visible in the review record:
+Boolean grouping, USE19 zero-level wording and CONCLUS hierarchy spelling.
+This assistant source comparison does not certify an executable validator or
+prove valid submissions.
 
 See [[SOURCE_REVIEW]] and [[MAINTENANCE_WORKFLOW]] for findings, review scope
-and the procedure for checking source drift. PRE/USE coverage counts do not
-establish that their field descriptions and exceptions have all been reviewed.
+and the procedure for checking source drift. Independent human review is
+unavailable; the review record distinguishes verified text from source ambiguity.

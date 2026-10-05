@@ -59,7 +59,10 @@ The highest-signal constraints for retrieval are:
 
 <!-- Source: Use-levels 2026 Section 2 (pp. 6-16); Table 1 (pp. 19-21) -->
 
-Twenty-nine elements, reported per product category × substance. The combination `(paramCode, prodId)` must be unique (USE20); sample-identifying fields must stay constant per `prodId` (USE01).
+Table 1 contains **31 named elements**, described in 29 field sections because
+the three marketing-date components share §2.5. Records represent product
+category × substance. The combination `(paramCode, prodId)` must be unique
+(USE20); the product descriptors named in USE01 must stay constant per `prodId`.
 
 ### Programme identification
 
@@ -131,14 +134,14 @@ edition of the ChemMon example.
 
 - `additionalInfo` (optional, ≤250 chars) — free-text notes on the reported product. (Use-levels 2026 p15)
 - `minLevel` (optional, `xs:double`) — minimum use level. Must be `0` when `presenceAdded=C20A` (USE09). (Use-levels 2026 p15)
-- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
-- `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). Must also be `≤` the MPL reported by the DP (USE27). (Use-levels 2026 pp. 15-16)
+- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09). USE19 imposes a non-zero condition for added substances; its “typical or maximum” wording is discussed below. If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
+- `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09). USE19 applies for C19A; see the source-wording note below. Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). USE27 compares it with the MPL reported by the DP, separately from the LLDB comparison. (Use-levels 2026 pp. 15-16, 28)
 - `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)
 
 ### Maximum Permitted Level check
 
-- `maxPermittedLevelDefined` (mandatory, `YESNO`) — `Y` if the regulation (or Quantum satis) defines an MPL for this substance-category-restriction combination; `N` otherwise. (USE14) (Use-levels 2026 p16)
-- `maxPermittedLevel` (dependent mandatory, `xs:integer`, ≤10 digits) — numeric MPL value; required when `maxPermittedLevelDefined=Y` (USE15). Combined with the amount naturally present in the matrix where applicable. (Use-levels 2026 p16)
+- `maxPermittedLevelDefined` (mandatory, `YESNO`) — `Y` for a defined MPL; `N` otherwise, including the Quantum satis alternative without a numeric MPL. Do not treat Quantum satis itself as a defined numeric maximum. (USE14; Use-levels 2026 p16 and Table 1 p21)
+- `maxPermittedLevel` (dependent mandatory; Table 1 prints `xs:integer (10)`) — required when `maxPermittedLevelDefined=Y` (USE15). This is the permitted limit for the **combined amount added and naturally occurring**, not an instruction to add a measured natural amount to the legal limit. (Use-levels 2026 §2.29 p16)
 
 ## Business rules
 
@@ -146,37 +149,68 @@ edition of the ChemMon example.
 
 Twenty-seven operational rules (`USE01`–`USE27`) plus two LLDB-backed rules (`USE_LLDB01`, `USE_LLDB02`). All are **Active** and **Error** severity.
 
-| Rule | What it enforces |
-|---|---|
-| USE01 | `(matCode, repCountry, marketCountry, brandName, manufacturer, foodIndustry, widelyConsumed, marketYear, marketMonth, marketDay)` must be constant per `prodId` |
-| USE02 | `repYear` = data collection year |
-| USE03 | F23 mandatory if F33 = 13 (foods for specific groups) |
-| USE04 | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or `ADD00881A`) |
-| USE05 | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or `ADD00881A`) |
-| USE06 | `foodIndustry` ∈ allowed `YESNO` codes |
-| USE07 | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) |
-| USE08 | `widelyConsumed` ∈ allowed `YESNO` codes |
-| USE09 | If `presenceAdded=C20A`, `minLevel = typicalLevel = maxLevel = 0` |
-| USE10 | `functionOf` mandatory when `progLegalRef=N112A` |
-| USE11 | `fatPerc` mandatory when `weight = fat` |
-| USE12 | `moistPerc` mandatory when `weight = dry matter` |
-| USE13 | `conversionOrDilutionFactor` mandatory when `matCode.F33 = 17` (food supplements) |
-| USE14 | `maxPermittedLevelDefined` ∈ allowed `YESNO` codes |
-| USE15 | `maxPermittedLevel` mandatory when `maxPermittedLevelDefined=Y` |
-| USE16 | F33 mandatory on `matCode` if not implicitly assigned |
-| USE17 | F03 mandatory for the specific legislative categories (same list as PRE09) |
-| USE18 | `C19A` and `C20A` cannot coexist on one record |
-| USE19 | If `presenceAdded=C19A`, `typicalLevel` and `maxLevel` cannot be 0 |
-| USE20 | `(paramCode, prodId)` must be unique |
-| USE21 | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` |
-| USE22 | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` |
-| USE23 | If F33 is implicit in `matCode`, an explicit F33 cannot be reported |
-| USE24 | `matCode` must not be one of the forbidden generic codes (`A047N`, `A047Q`, `A047R`, `A047A`, `A047P`, `A0F3T`) |
-| USE25 | `maxLevel ≥ typicalLevel ≥ minLevel` |
-| USE26 | `(marketDay, marketMonth, marketYear)` must be a valid date |
-| USE27 | `maxLevel ≤ MPL` reported by the DP (consistency between reported `maxLevel` and reported `maxPermittedLevel`) |
-| USE_LLDB01 | `paramCode` must be authorised in this legislative category with this restriction/exception per Reg. 1333/2008 / 1334/2008 (cross-check against [[legal-limits-database]]) |
-| USE_LLDB02 | `maxLevel ≤ MPL` from the Legal Limit Database at the marketing date (cross-check against [[legal-limits-database]]) |
+| Rule | Severity | What it enforces | Source page |
+|---|---|---|---|
+| USE01 | Error | `(matCode, repCountry, marketCountry, brandName, manufacturer, foodIndustry, widelyConsumed, marketYear, marketMonth, marketDay)` must be constant per `prodId` | 24 |
+| USE02 | Error | `repYear` = data collection year | 24 |
+| USE03 | Error | F23 mandatory if F33 = 13 (foods for specific groups) | 24 |
+| USE04 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or `ADD00881A`) | 24 |
+| USE05 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or `ADD00881A`) | 24 |
+| USE06 | Error | `foodIndustry` must be Y for a food-industry manufacturer or N for a food additive/flavouring producer | 25 |
+| USE07 | Error | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) | 25 |
+| USE08 | Error | If supplied, `widelyConsumed` must be Y for widely consumed products or N otherwise | 25 |
+| USE09 | Error | If `presenceAdded=C20A`, `minLevel = typicalLevel = maxLevel = 0` | 25 |
+| USE10 | Error | `functionOf` mandatory when `progLegalRef=N112A` | 25 |
+| USE11 | Error | `fatPerc` mandatory when `weight = fat` | 25 |
+| USE12 | Error | `moistPerc` mandatory when `weight = dry matter` | 25 |
+| USE13 | Error | `conversionOrDilutionFactor` mandatory for legislative category 17 (food supplements, excluding supplements for infants and young children); §2.27 also covers products needing preparation | 25 |
+| USE14 | Error | `maxPermittedLevelDefined` must be Y or N | 25 |
+| USE15 | Error | `maxPermittedLevel` mandatory when `maxPermittedLevelDefined=Y` | 26 |
+| USE16 | Error | F33 mandatory on `matCode` if not implicitly assigned | 26 |
+| USE17 | Error | F03 mandatory for the specific legislative categories (same list as PRE09) | 26 |
+| USE18 | Error | `C19A` and `C20A` cannot coexist on one record | 27 |
+| USE19 | Error | If `presenceAdded=C19A`, the source says the typical **or** maximum level cannot be 0; see the unresolved wording note below before implementing a predicate | 27 |
+| USE20 | Error | `(paramCode, prodId)` must be unique | 27 |
+| USE21 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` | 27 |
+| USE22 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` | 27 |
+| USE23 | Error | If F33 is implicit in `matCode`, an explicit F33 cannot be reported | 27 |
+| USE24 | Error | `matCode` must not be one of the forbidden generic codes (`A047N`, `A047Q`, `A047R`, `A047A`, `A047P`, `A0F3T`) | 27 |
+| USE25 | Error | `maxLevel ≥ typicalLevel ≥ minLevel` | 27 |
+| USE26 | Error | `(marketDay, marketMonth, marketYear)` must be a valid date | 27 |
+| USE27 | Error | `maxLevel ≤ MPL` reported by the DP (consistency between reported `maxLevel` and reported `maxPermittedLevel`) | 28 |
+| USE_LLDB01 | Error | `paramCode` must be authorised in this legislative category with this restriction/exception per Reg. 1333/2008 / 1334/2008 (cross-check against [[legal-limits-database]]) | 28 |
+| USE_LLDB02 | Error | `maxLevel ≤ MPL` from the Legal Limit Database at the marketing date (cross-check against [[legal-limits-database]]) | 28 |
+
+## Source wording and field details
+
+The complete field sections (§§2.1–2.29), Table 1 and all 29 USE/USE_LLDB rows
+were compared on 5 October 2026. The following distinctions matter:
+
+- **USE19 (p. 27):** the description uses “typical or maximum” and code C19A;
+  the error message uses “nor … nor … greater than 0” and mistypes the code
+  as C10A. §2.17 confirms C19A. Both levels being zero does not satisfy the
+  added-substance condition, but the PDF is not a sufficient basis to assert
+  that *each* must independently be positive. Confirm the executable rule
+  before deciding the boundary case `typicalLevel=0, maxLevel>0`.
+- **Optional minimum:** `minLevel` is optional in §2.24/Table 1; report zero
+  in the USE09 no-addition case, and the exact value when the exact-level
+  convention in §2.25 applies. Do not invent a zero for every omitted minimum.
+- **As consumed:** §§2.24–2.26 highly recommend reporting levels as consumed.
+  §2.27 describes the conversion/dilution factor more broadly than USE13's
+  category-17 trigger. For the source's 100-at-1:4 example, the stated factor
+  is 0.25; its application gives 25 in the same unit. Do not silently apply
+  that factor again to values already expressed as consumed.
+- **F23:** §2.7 p. 8 discusses infants, but USE03 and Table 1 explicitly
+  require the facet for legislative category 13. Preserve the rule's scope.
+- **USE27 (p. 28):** its description states the failure (`maxLevel` exceeds
+  the reported MPL); its error column states the passing condition, `≤`.
+  USE_LLDB02 checks the separate MPL from the legal-limit database.
+- `marketCountry`, `presenceAdded` and `functionOf` are repeatable types.
+  `weight` uses EXPRRES.WDFat, not an arbitrary free-text “fat” value; `unit`
+  uses UNIT.chemUnit. Table 1 prints lengths 5 for `progLegalRef`, `weight`
+  and `unit`, 9 for `restrictionException`, and 400 for `paramCode`.
+- Source shorthand `progLegRef` does not rename the declared `progLegalRef`
+  field. The USE record identifier is `recId`; PRE uses `resId`.
 
 ## LLDB cross-check at marketing date
 

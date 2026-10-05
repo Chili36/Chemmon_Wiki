@@ -21,7 +21,7 @@ related:
 
 - `actTakenCode` reports enforcement or follow-up action taken after a non-conformity or above-limit finding.
 - Multiple actions may be reported.
-- For VMPR and pesticides, action reporting is mandatory when the result is non-compliant.
+- For VMPR/pesticides, CHEMMON85 requires action reporting for J038A assessment, or empty assessment with detected/above-limit evaluation; see the complete rule and its source-wording note.
 - For contaminants, additives and flavourings with `evalCode` J041A or J003A, action reporting is recommended; CHEMMON37 is a Warning.
 
 ## actTakenCode — Action taken
@@ -36,10 +36,10 @@ Report the action taken when a non-conformity is identified or the measured subs
 
 ### Requirements and recommendations
 
-- VMPR and pesticides: mandatory for non-compliant results.
+- VMPR/pesticides: CHEMMON85 uses both `evalCode` and `evalInfo.resAsses`; do not reduce it to a numerical exceedance alone.
 - Contaminants/additives/flavourings: recommended when `evalCode` is J041A or J003A; `CHEMMON37` is a Warning (Table 10, p. 121).
 
 ## Related business rules
 
 - `CHEMMON37` — for contaminants/additives/flavourings, `evalCode` J041A or J003A should have `actTakenCode`; missing values trigger a Warning (Table 10, p. 121). See [[business-rules-cross-cutting]].
-- `CHEMMON85` — for VMPR and pesticides with non-compliant results, `actTakenCode` is mandatory. See [[business-rules-cross-cutting]].
+- `CHEMMON85` — for VMPR/PPP, `actTakenCode` is mandatory for J038A assessment, or empty assessment with J041A/J003A evaluation. Table 10 p. 133 mixes “and/or” without parentheses; [[business-rules-cross-cutting]] records the contextual reading and its limitation.

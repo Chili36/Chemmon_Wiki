@@ -45,7 +45,7 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 - `CHEMMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
 - `CHEMMON23`, `CHEMMON30`, `CHEMMON33`, `CHEMMON34` — analytical-method type rules. See [[business-rules-cross-cutting]].
 - `CHEMMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes. See [[business-rules-cross-cutting]].
-- `CHEMMON92` — VMPR `paramCode` base term must be in `vetDrugRes`. See [[business-rules-vmpr]].
+- `CHEMMON92` — VMPR `sampMatCode` and `anMatCode` base terms must belong to the VetDrugRes matrix hierarchy; this is not a parameter-code rule. See [[business-rules-vmpr]].
 
 ## Relevant Policy
 

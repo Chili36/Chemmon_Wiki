@@ -2,7 +2,7 @@
 title: "SSD2 Analysis: Parameter Type, Code, and Text"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -102,5 +102,5 @@ For food additives regulated as groups, `paramText` must state whether the resul
 ## Related business rules
 
 - `CHEMMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
-- `CHEMMON92` — in VMPR, the base term of `paramCode` must belong to `vetDrugRes`. See [[business-rules-vmpr]].
+- `CHEMMON92` validates the VMPR **matrix** base terms (`sampMatCode`, `anMatCode`) against VetDrugRes, not `paramCode`. See [[business-rules-vmpr]].
 - `CHEMMON106` — potassium sorbate `paramText` should specify free-acid vs salt expression. See [[business-rules-additives]].
