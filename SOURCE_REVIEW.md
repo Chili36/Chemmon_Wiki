@@ -100,25 +100,52 @@ all 49 field names/requirements. Rendered spot checks covered ChemMon pp. 120,
 canonical rule coverage, severity and page locators with the independent source
 record; they do not claim to test every sentence's meaning.
 
-## What remains open
+## Contextual reassessment of the three wording findings
 
-1. **Boolean grouping in CHEMON66_a/85/93 (SRC-012).** The PDFs mix “and” and
-   “or” without parentheses. The wiki gives the contextual reading and retains
-   every condition, but exact boundary behaviour needs the collection's
-   executable rule definition. No invented predicate is certified here.
-2. **USE19 zero-level condition (SRC-013).** The description says “typical or
-   maximum”; the error message differs and mistypes C19A as C10A. Both levels
-   zero fail the added-substance condition. Whether each must independently
-   be positive cannot be settled from this PDF wording alone.
-3. **CONCLUS hierarchy spelling (SRC-014).** ChemMon p. 76 says `fa_ff`;
-   the parallel guides say `faff`. C19A/C20A/C05A agree. No live catalogue alias
-   equivalence has been established; use the target collection's configuration.
+A further close reading on 5 October 2026, requested by the user, resolved
+SRC-012/013/014 as wiki content findings. A separate GPT-6 Astra review at the
+highest available reasoning setting (`ultra`) read the original passages and
+surrounding text without first reading the wiki conclusions. The parent review
+checked the same evidence. This is additional assistant reasoning, not human
+sign-off or a test of EFSA's live validator.
 
-These are source uncertainties, not uncompleted table review or requests for
-human sign-off. The 2013 SSD2 foundation and remaining ChemMon prose are not
-exhaustively reviewed. Current legal changes and later catalogues are outside
-this fixed-edition comparison. The previously documented cheese example's
-historical catalogue edition is still unknown.
+1. **CHEMON66_a/85/93 grouping (SRC-012): resolved with high confidence.**
+   The full context, including pp. 75–78 and the warning/comment columns, gives
+   the intended grouping. In 66_a, the compliant assessment governs both
+   numerical-evaluation alternatives. In 85, both reporting domains share the
+   same test: non-compliant assessment, or absent assessment with detected /
+   above-limit evaluation. In 93, the VMPR, non-import and domestic-origin
+   restrictions govern that entire test. The cross-cutting reference now
+   shows explicit parentheses and the reasons for them. The missing
+   parentheses are an editorial weakness, not an unresolved reading.
+2. **USE19 (SRC-013): resolved as the strongest contextual interpretation,
+   with moderately high confidence.** Its error message describes failure
+   when neither typical nor maximum is greater than zero (p. 27). Therefore
+   the supported reading is **at least one positive level**, when presence
+   includes C19A. With the separate USE25 ordering satisfied,
+   `typicalLevel=0, maxLevel>0` satisfies that reading. Required fields and
+   examples with two positive values do not require both to be positive.
+   The C10A error-message code is a typo, contradicted by the description
+   and consistent C19A field definition/examples (pp. 13–14). The wiki gives
+   this interpretation explicitly instead of leaving the edge case unanswered.
+3. **CONCLUS spelling (SRC-014): resolved as a documentation naming discrepancy.**
+   ChemMon p. 76 uses `fa_ff`; PRE p. 11 and USE p. 13 use `faff`. The identical
+   codes, meanings and examples establish the same conceptual code family;
+   PRE deliberately restricts its allowed value to C20A. Retain the source
+   spellings, but do not treat them as a disagreement about code meanings.
+   Whether software accepts both hierarchy identifiers remains a separate
+   configuration question; this review does not assert interchangeable aliases.
+
+No open content findings remain in this scoped review. The underlying wording
+issues and interpretive confidence remain visible. The 2013 SSD2 foundation and
+remaining ChemMon prose are not exhaustively reviewed. Current legal changes,
+later catalogues and live validation behaviour are outside this fixed-edition
+comparison. The cheese example's historical catalogue edition is still unknown.
+
+The original broader-review evidence report is retained unchanged, including
+its then-open finding references. Its finding dispositions are superseded by
+`reports/source-review/2026-10-05-contextual-reassessment.json` and the current
+manifest; source-severity evidence and field inventory are unchanged.
 
 ## Reproducibility
 

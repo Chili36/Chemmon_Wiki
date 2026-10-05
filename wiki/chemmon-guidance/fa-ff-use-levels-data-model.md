@@ -134,7 +134,7 @@ edition of the ChemMon example.
 
 - `additionalInfo` (optional, ≤250 chars) — free-text notes on the reported product. (Use-levels 2026 p15)
 - `minLevel` (optional, `xs:double`) — minimum use level. Must be `0` when `presenceAdded=C20A` (USE09). (Use-levels 2026 p15)
-- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09). USE19 imposes a non-zero condition for added substances; its “typical or maximum” wording is discussed below. If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
+- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09). The contextual reading of USE19 requires at least one of typicalLevel/maxLevel to be positive for added substances; see the rationale below. If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
 - `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09). USE19 applies for C19A; see the source-wording note below. Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). USE27 compares it with the MPL reported by the DP, separately from the LLDB comparison. (Use-levels 2026 pp. 15-16, 28)
 - `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)
 
@@ -169,7 +169,7 @@ Twenty-seven operational rules (`USE01`–`USE27`) plus two LLDB-backed rules (`
 | USE16 | Error | F33 mandatory on `matCode` if not implicitly assigned | 26 |
 | USE17 | Error | F03 mandatory for the specific legislative categories (same list as PRE09) | 26 |
 | USE18 | Error | `C19A` and `C20A` cannot coexist on one record | 27 |
-| USE19 | Error | If `presenceAdded=C19A`, the source says the typical **or** maximum level cannot be 0; see the unresolved wording note below before implementing a predicate | 27 |
+| USE19 | Error | If `presenceAdded` includes C19A, at least one of `typicalLevel` or `maxLevel` must be >0. This is the contextual reading of the description and error message together; see the source note below | 27 |
 | USE20 | Error | `(paramCode, prodId)` must be unique | 27 |
 | USE21 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` | 27 |
 | USE22 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` | 27 |
@@ -186,12 +186,20 @@ Twenty-seven operational rules (`USE01`–`USE27`) plus two LLDB-backed rules (`
 The complete field sections (§§2.1–2.29), Table 1 and all 29 USE/USE_LLDB rows
 were compared on 5 October 2026. The following distinctions matter:
 
-- **USE19 (p. 27):** the description uses “typical or maximum” and code C19A;
-  the error message uses “nor … nor … greater than 0” and mistypes the code
-  as C10A. §2.17 confirms C19A. Both levels being zero does not satisfy the
-  added-substance condition, but the PDF is not a sufficient basis to assert
-  that *each* must independently be positive. Confirm the executable rule
-  before deciding the boundary case `typicalLevel=0, maxLevel>0`.
+- **USE19 (p. 27), contextual reading:** when `presenceAdded` includes C19A
+  (also in a combination such as `C19A$C05A`), require
+  `typicalLevel > 0 OR maxLevel > 0`. The error message describes the failure
+  where **neither** level is greater than zero. That is the clearest reading of
+  “typical or maximum” in the description; it does not say to reject every
+  zero typical value. The message's C10A is a typo: the description and §2.17
+  pp. 12–14 consistently use C19A. Under this interpretation, `typicalLevel=0,
+  maxLevel>0` satisfies USE19. USE25 separately requires
+  `maxLevel >= typicalLevel >= minLevel` when a minimum is supplied; its order
+  means a positive typical level cannot compensate for a zero maximum.
+  The model reports product/category ranges (§§2.24–2.26), while the positive
+  exact-level examples do not add a requirement that both fields be positive.
+  This source interpretation resolves the wiki guidance; it is not a recorded
+  test of EFSA's live validator or a guarantee that a record meets every rule.
 - **Optional minimum:** `minLevel` is optional in §2.24/Table 1; report zero
   in the USE09 no-addition case, and the exact value when the exact-level
   convention in §2.25 applies. Do not invent a zero for every omitted minimum.

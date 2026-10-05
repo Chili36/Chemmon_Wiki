@@ -46,7 +46,7 @@ related:
 
 ### Additives and flavourings
 
-For additives and flavourings, `evalInfo.conclusion` is strongly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the hierarchy `CONCLUS.fa_ff`; the parallel PRE/USE guides write `CONCLUS.faff`. The shared codes below agree, but this source comparison does not establish that both hierarchy names are valid aliases in a live catalogue. Use the target collection’s catalogue configuration:
+For additives and flavourings, `evalInfo.conclusion` is strongly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the hierarchy `CONCLUS.fa_ff`; the parallel PRE/USE guides write `CONCLUS.faff`. The identical codes, labels and examples establish the same FA/FF concept family. Treat the underscore difference as a documentation naming discrepancy, not a different meaning for the submitted codes. Preserve each source’s spelling when discussing its hierarchy; a software catalogue lookup must use the configured identifier:
 
 | Code | Meaning |
 | --- | --- |
@@ -59,6 +59,6 @@ Combinations such as `C20A$C05A` are valid when the substance is not declared/ad
 ## Related business rules
 
 - `CHEMMON26` — follow-up investigation should be accompanied by `evalInfo.conclusion`. See [[business-rules-cross-cutting]].
-- `CHEMMON66_a` / `CHEMMON66_b` — Warning conditions for assessment/evaluation differences: retain the Presence limit condition in 66_a and all three negative conditions in 66_b. The source mixes and/or without parentheses; consult the full rows and wording note. See [[business-rules-cross-cutting]].
+- `CHEMMON66_a` / `CHEMMON66_b` — Warning conditions for assessment/evaluation differences: retain the Presence limit condition in 66_a and all three negative conditions in 66_b. The warning text and assessment guidance establish the grouping; consult the full rows and contextual reading. See [[business-rules-cross-cutting]].
 - `CHEMMON87` — `evalInfo.conclusion` is highly recommended for additives/flavourings. See [[business-rules-additives]].
 - `CHEMMON88` — `evalInfo.restrictionException` is highly recommended for additives/flavourings. See [[business-rules-additives]].

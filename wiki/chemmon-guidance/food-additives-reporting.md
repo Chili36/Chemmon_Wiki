@@ -45,7 +45,7 @@ Key framing rules across the three paths:
 - Positive presence with a measured concentration → SSD2 analytical (this page). The no-presence DM explicitly rejects `C19A` (PRE06).
 - Category-level use levels reported by industry → use-levels DM. SSD2 cannot represent category-level aggregates, so use-levels is a parallel schema, not an SSD2 extension.
 - Sample-level "FA/FF not used here" without an analytical measurement → no-presence DM. SSD2 cannot carry standalone negatives, so the no-presence DM was added to close that gap.
-- The three paths share FA/FF catalogue families (`LEGREF`, `PARAM`, `ADDFOOD`, `CONCLUS`, `FUNC`). Preserve each collection’s hierarchy restrictions. For CONCLUS, ChemMon p. 76 prints `fa_ff`, whereas PRE/USE print `faff`; the named C19A/C20A/C05A codes agree, but the live hierarchy alias is not verified here.
+- The three paths share FA/FF catalogue families (`LEGREF`, `PARAM`, `ADDFOOD`, `CONCLUS`, `FUNC`). Preserve each collection’s hierarchy restrictions. For CONCLUS, ChemMon p. 76 prints `fa_ff`, whereas PRE/USE print `faff`; the matching C19A/C20A/C05A codes and examples establish the same concept family. Retain the spelling difference as a source note; do not infer software aliases from it.
 
 The remainder of this page covers the **analytical (SSD2)** path. For the other two, follow the links above.
 

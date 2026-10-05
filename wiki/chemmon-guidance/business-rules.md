@@ -89,11 +89,13 @@ the two inactive and seven biological-only GBR IDs remain in the source inventor
 All **100 active CHEMON rules**, the four inactive CHEMON rows, **17 PRE rules**,
 **29 USE/USE_LLDB rules** and **49 PRE/USE fields** have now been compared with
 the complete source rows and field sections. Canonical tables show source pages
-and severity. Three source ambiguities remain visible in the review record:
-Boolean grouping, USE19 zero-level wording and CONCLUS hierarchy spelling.
+and severity. A further contextual reading resolved the three content findings:
+CHEMON grouping is explicit, USE19 requires at least one positive level under
+the documented interpretation, and CONCLUS has a naming discrepancy for the
+same concept family. Source notes and the supporting rationale remain visible.
 This assistant source comparison does not certify an executable validator or
 prove valid submissions.
 
 See [[SOURCE_REVIEW]] and [[MAINTENANCE_WORKFLOW]] for findings, review scope
 and the procedure for checking source drift. Independent human review is
-unavailable; the review record distinguishes verified text from source ambiguity.
+unavailable; the review record distinguishes direct source statements from contextual interpretation.

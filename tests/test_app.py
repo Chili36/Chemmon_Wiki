@@ -576,7 +576,15 @@ def test_review_status_exposes_scope_and_remaining_work():
     assert status['source_review']['status'] == 'current'
     assert status['source_review']['scope']
     assert status['source_review']['limitations']
-    assert status['source_review']['open_findings']
+    # A completed review can legitimately have no open findings. The endpoint
+    # must expose the manifest's actual backlog, including the empty case.
+    record = json.loads((app_module.store.root/'docs/source-review.json').read_text())
+    assert status['source_review']['open_findings'] == [
+        finding for finding in record['findings'] if finding['status'] == 'open'
+    ]
+    assert status['source_review']['resolved_count'] == sum(
+        finding['status'] == 'resolved' for finding in record['findings']
+    )
     assert status['rule_inventory']['source_counts']['GBR'] == 92
 
 

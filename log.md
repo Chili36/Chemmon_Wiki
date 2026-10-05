@@ -860,3 +860,23 @@ warnings; review/inventory fingerprints are current with no missing, duplicate,
 unexpected or inactive canonical rule IDs. Browser checks confirm rendered USE
 rule columns and source notes. No live model evaluation or human-approved
 benchmark is claimed; evaluation cases remain draft.
+
+## 2026-10-05 — Reassess source wording with a separate model reading
+
+The user requested a smarter-model reading of the three source issues. A
+separate GPT-6 Astra review at ultra reasoning read the original passages and
+surrounding context without first seeing the wiki conclusions. Parent and
+independent readings agree: the context supports explicit CHEMON grouping;
+USE19 is best read as requiring at least one positive typical/maximum level;
+and CONCLUS fa_ff/faff is a naming discrepancy for the same concept family.
+
+Resolved SRC-012/013/014 as wiki content findings, retaining source wording,
+reasoning, confidence and the distinction from live-validator behaviour. Added
+parenthesized triggers and the USE19 edge-case interpretation to the references.
+The original broader-review evidence remains unchanged; a separate reassessment
+report supersedes its finding dispositions. Human review remains unavailable.
+This is a source interpretation review, not a benchmark of the wiki's models.
+
+Verification: 116 tests pass, including review-status coverage corrected to
+allow a legitimately empty backlog. Health and source fingerprints are current
+with zero errors/warnings and all 14 findings resolved within their stated scope.

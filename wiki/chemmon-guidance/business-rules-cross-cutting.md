@@ -97,10 +97,10 @@ Rules are grouped here by topic; the source definitions are in Table 10, pp. 113
 | CHEMMON36 | Warning | If `evalLimitType` is W002A (MRL), `evalCode` should be J002A (below/equal to limit), J003A (above limit), J031A (compliant due to measurement uncertainty), or J029A (result not evaluated). | All; W002A trigger | 121 |
 | CHEMMON37 | Warning | For contaminants, additives or flavourings, when `evalCode` = J041A (Detected) or J003A (Above maximum permissible quantities), `actTakenCode` should be reported (Table 10, p. 121). | CONT/FA/FF | 121 |
 | CHEMMON65 | Error | `evalInfo.resAsses` can only be J037A (Compliant) or J038A (Non-compliant). Preserve the source field spelling `resAsses`. | All | 129 |
-| CHEMMON66_a | Warning | For a compliant assessment (`evalInfo.resAsses` J037A) conflicting with `evalCode` J003A, or with detected J041A and Presence limit W012A, report `evalInfo.conclusion`. See the source-wording note below before implementing Boolean logic. | All | 129 |
+| CHEMMON66_a | Warning | For a compliant assessment (`evalInfo.resAsses` J037A) conflicting with `evalCode` J003A, or with detected J041A and Presence limit W012A, report `evalInfo.conclusion`. See the parenthesized contextual reading below. | All | 129 |
 | CHEMMON66_b | Warning | If `evalInfo.resAsses` is J038A AND `evalCode` is not J003A AND `evalCode` is not J041A AND `evalLimitType` is not W012A, report `evalInfo.conclusion`. Keep all three negative conditions; this is not simply the negation of CHEMMON66_a. | All | 130 |
 | CHEMMON67 | Warning | `evalInfo.sampTkAsses` and `evalInfo.sampEventAsses` should not be reported; the source says they will not be used for pesticide/VMPR report analysis. | All | 130 |
-| CHEMMON85 | Error | For VMPR/PPP, report `actTakenCode` when result assessment is J038A (Non-compliant), or when assessment is empty and `evalCode` is J041A (Detected) or J003A (Above maximum permissible quantities). See the source-wording note below. | VMPR/PPP | 133 |
+| CHEMMON85 | Error | For VMPR/PPP, report `actTakenCode` when result assessment is J038A (Non-compliant), or when assessment is empty and `evalCode` is J041A (Detected) or J003A (Above maximum permissible quantities). See the parenthesized contextual reading below. | VMPR/PPP | 133 |
 
 ## FoodEx2 Validation Rules
 
@@ -120,15 +120,35 @@ Rules are grouped here by topic; the source definitions are in Table 10, pp. 113
 
 ## Source wording and inactive rows
 
-The Table 10 descriptions mix “and” and “or” without parentheses in
-CHEMON66_a (p. 129), CHEMON85 (p. 133) and CHEMON93 (p. 136). The summaries
-above group the assessment/evaluation alternatives under the stated domain
-and, for CHEMON93, origin/programme conditions. This is a contextual reading,
-not a verified executable EFSA predicate. The error-message columns abbreviate
-these conditions and are not a substitute for the full description. In
-particular, keep the Presence condition in CHEMON66_a and the three separate
-negative conditions in CHEMON66_b. Resolve exact Boolean precedence against
-the collection's executable rules before implementing these as a validator.
+The descriptions in CHEMON66_a (p. 129), CHEMON85 (p. 133) and CHEMON93
+(p. 136) omit parentheses, but the surrounding guidance resolves their intended
+reading. Pages 76–78 explain why an overall assessment can differ from the
+numerical evaluation; the error/comment columns identify the affected domains
+and non-compliant cases. Read the conditions as follows:
+
+- **CHEMON66_a:** a compliant assessment **AND** (evaluation above the limit
+  **OR** (detected evaluation **AND** Presence limit)) calls for a conclusion.
+  In codes: `resAsses=J037A AND (evalCode=J003A OR
+  (evalCode=J041A AND evalLimitType=W012A))`. The warning message explicitly
+  says the assessment is compliant, so that condition covers both alternatives.
+- **CHEMON85:** (VMPR **OR** PPP) **AND** (non-compliant assessment **OR**
+  (assessment empty **AND** (detected **OR** above-limit evaluation))) requires
+  `actTakenCode`. In codes, the second group is `resAsses=J038A OR
+  (resAsses empty AND evalCode IN {J041A,J003A})`. The domain restriction
+  applies to both alternatives; a VMPR flag alone does not trigger the rule.
+- **CHEMON93:** VMPR **AND** `progType != K038A` **AND** origin country equals
+  reporting-organisation country **AND** the same assessment/evaluation group
+  as CHEMON85 calls for at least one of `sampArea`, `origArea`,
+  `origFishAreaCode`, `procArea`. The comment explicitly limits this to
+  domestic-origin, non-compliant VMPR cases; the final “or” does not remove
+  those restrictions.
+
+These are contextual interpretations of the published guidance, recorded with
+their rationale; they have not been tested against EFSA's live implementation.
+The pesticide annual-report counting exception on p. 78 is a separate process
+and does not remove the assessment condition printed in CHEMON85. Preserve
+CHEMON66_b's three negative conditions as written; it is not simply the logical
+negation of CHEMON66_a.
 
 CHEMON47 and CHEMON81 are inactive because CHEMON40 covers their result-value
 cases; CHEMON49 is inactive because CHEMON50 incorporates it; CHEMON53 is

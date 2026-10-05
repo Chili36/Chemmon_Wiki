@@ -76,7 +76,7 @@ The **pesticide EU Annual Report is an exception**: its compliance counts use
 Where assessment and evaluation differ, the field guidance calls for a reason
 in `evalInfo.conclusion`; CHEMMON66_a/b are the narrower Warning conditions.
 See [[ssd2-evaluation-conclusions]] and [[business-rules-cross-cutting]] for the
-source's ambiguous Boolean wording. The source also says `sampEventAsses`,
+parenthesized contextual reading of the source conditions. The source also says `sampEventAsses`,
 `sampTkAsses` and `sampAnAsses` are not used for these non-compliance counts.
 (ChemMon 2026 pp. 77–78)
 

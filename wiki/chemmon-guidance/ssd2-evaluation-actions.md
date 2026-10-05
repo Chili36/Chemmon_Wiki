@@ -42,4 +42,4 @@ Report the action taken when a non-conformity is identified or the measured subs
 ## Related business rules
 
 - `CHEMMON37` — for contaminants/additives/flavourings, `evalCode` J041A or J003A should have `actTakenCode`; missing values trigger a Warning (Table 10, p. 121). See [[business-rules-cross-cutting]].
-- `CHEMMON85` — for VMPR/PPP, `actTakenCode` is mandatory for J038A assessment, or empty assessment with J041A/J003A evaluation. Table 10 p. 133 mixes “and/or” without parentheses; [[business-rules-cross-cutting]] records the contextual reading and its limitation.
+- `CHEMMON85` — for VMPR/PPP, `actTakenCode` is mandatory for J038A assessment, or empty assessment with J041A/J003A evaluation. The surrounding assessment guidance and Table 10 p. 133 support this grouping; [[business-rules-cross-cutting]] gives the explicit conditions and rationale.

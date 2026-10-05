@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "reviewed_at": "2026-10-05",
+  "reviewers": [
+    "Codex parent close reading",
+    "Independent delegated GPT-6 Astra close reading"
+  ],
+  "delegated_review": {
+    "requested_model": "gpt-6-astra",
+    "requested_reasoning_effort": "ultra",
+    "context": "No forked conversation; exact source files/pages and questions supplied; reviewer formed assessment without reading previous wiki conclusions.",
+    "user_authorization": "User requested reading the passages with a smarter model."
+  },
+  "supersedes_finding_dispositions_in": {
+    "path": "reports/source-review/2026-10-05-broader-review.json",
+    "sha256": "0e549c70a60b80e1f29fc2ba3b82d5a6004a1c7af0fa77f0fe0da92d783bae3f"
+  },
+  "sources": {
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf": "5988380167d3c0029ddab95719cc71b90a296b2675ce6613053d6615be5a13cf",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf": "6d4ef5db15ea29c14266203e8deeaba4bf64a9d5ccea8b6307c74dd8e5185cac",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf": "473edb8d03366a828c7d0bb0c9709dcf64c8f3b03fceb56b94842f78dcf549bb"
+  },
+  "scope": "Interpretation of SRC-012/013/014 only. Original source inventory/severity evidence unchanged.",
+  "resolutions": [
+    {
+      "finding": "SRC-012",
+      "status": "resolved",
+      "basis": "contextual interpretation",
+      "confidence": "high",
+      "pages": {
+        "ChemMon": [
+          75,
+          76,
+          77,
+          78,
+          129,
+          130,
+          133,
+          136
+        ]
+      },
+      "intended_triggers": {
+        "CHEMON66_a": "R=J037A AND (evalCode=J003A OR (evalCode=J041A AND evalLimitType=W012A))",
+        "CHEMON85": "(is_vet=1 OR is_pest=1) AND (R=J038A OR (R empty AND evalCode IN {J041A,J003A}))",
+        "CHEMON93": "is_vet=1 AND progType!=K038A AND origCountry=reportingOrgCountry AND (R=J038A OR (R empty AND evalCode IN {J041A,J003A}))"
+      },
+      "notation": "R means evalInfo.resAsses. Expressions describe the triggering condition; they are not executable EFSA code.",
+      "rationale": [
+        "66_a warning text explicitly requires a compliant assessment; pp.76–78 explain the discrepancy with numerical evaluation.",
+        "p.75 makes action reporting mandatory for non-compliant VMPR and pesticide results; pp.77–78 explain assessment override. Both domains and both evaluation alternatives share the conditions in 85.",
+        "93 comment explicitly limits the rule to non-compliant domestic-origin VMPR Plan1/2 cases; the initial restrictions cannot be discarded by the final or."
+      ],
+      "qualifications": [
+        "Preserve the Presence condition in 66_a and literal negative conjunctions in 66_b; 66_b is not the exact Boolean complement.",
+        "The pesticide annual-report counting exception is separate and does not erase 85 assessment conditions."
+      ]
+    },
+    {
+      "finding": "SRC-013",
+      "status": "resolved",
+      "basis": "strongest contextual interpretation",
+      "confidence": "moderately high",
+      "pages": {
+        "USE": [
+          7,
+          13,
+          14,
+          15,
+          25,
+          27
+        ]
+      },
+      "intended_condition": "presenceAdded includes C19A implies (typicalLevel>0 OR maxLevel>0)",
+      "rationale": [
+        "The error message describes neither level being greater than zero, i.e. failure of at least one positive.",
+        "Required fields do not imply positivity; positive examples are not exhaustive exclusions.",
+        "Category-level reporting, USE09 all-zero absence and USE25 ordering are consistent with the reading.",
+        "C10A in the error is a typo: description, field section and examples consistently use C19A."
+      ],
+      "examples": [
+        {
+          "presenceAdded": "C19A",
+          "minLevel": 0,
+          "typicalLevel": 0,
+          "maxLevel": 10,
+          "interpretation": "Satisfies interpreted USE19 and USE25; other rules still apply."
+        },
+        {
+          "presenceAdded": "C19A",
+          "minLevel": 0,
+          "typicalLevel": 0,
+          "maxLevel": 0,
+          "interpretation": "Fails interpreted USE19."
+        },
+        {
+          "presenceAdded": "C19A",
+          "minLevel": 0,
+          "typicalLevel": 10,
+          "maxLevel": 0,
+          "interpretation": "One positive satisfies interpreted USE19, but fails USE25 ordering."
+        }
+      ],
+      "qualifications": [
+        "Not an observed live acceptance test; do not present the interpretation as confirmed executable behaviour."
+      ]
+    },
+    {
+      "finding": "SRC-014",
+      "status": "resolved",
+      "basis": "shared-code and example comparison",
+      "confidence": "high for conceptual meaning; no assertion about live aliases",
+      "pages": {
+        "ChemMon": [
+          76
+        ],
+        "PRE": [
+          11
+        ],
+        "USE": [
+          13
+        ]
+      },
+      "conclusion": "fa_ff/faff is a documentation naming discrepancy for the same FA/FF CONCLUS concept family; PRE deliberately allows only C20A.",
+      "rationale": [
+        "The codes C19A/C20A/C05A, labels and combinations agree across the relevant field sections."
+      ],
+      "qualifications": [
+        "Preserve source spellings. A software lookup must use the target configuration; the two identifier strings are not asserted to be valid aliases."
+      ]
+    }
+  ],
+  "limitations": [
+    "No independent human review.",
+    "No EFSA executable validation or live catalogue alias lookup.",
+    "A second model reading supplies an independent interpretation, not regulatory authority or a measured model-quality benchmark."
+  ]
+}

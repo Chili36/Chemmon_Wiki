@@ -64,9 +64,11 @@ Implemented on `codex/chemmon-foodex2-parity`:
   added scope/source-page columns and an independent severity evidence report.
 
 Acceptance met for a scoped, reproducible review. SRC-008 and SRC-010 are closed.
-Three source uncertainties remain explicit: CHEMON Boolean grouping, USE19 zero
-levels and CONCLUS hierarchy spelling. Independent human review is unavailable
-and deferred at the user's request; source comparison proceeded without it.
+The subsequent contextual reading, including a separate GPT-6 Astra/ultra
+review of the original passages, resolves SRC-012/013/014 for wiki content.
+Explicit grouping, the at-least-one-positive USE19 interpretation and the
+CONCLUS naming discrepancy remain documented with rationale and confidence.
+Independent human review is unavailable and deferred at the user's request.
 The 2013 foundation and the rest of the 2026 prose are not exhaustively reviewed.
 
 ## Milestone 3: measured answer quality
@@ -110,8 +112,8 @@ is included in this branch's offline checks.
 
 ## Branch verification
 
-116 tests pass. Health reports zero errors and three documented source-wording
-warnings. Source and inventory fingerprints are current, with no missing,
+116 tests pass. Health reports zero errors and zero warnings after the
+contextual reassessment resolved the three content findings. Source and inventory fingerprints are current, with no missing,
 duplicate, unexpected or inactive canonical rule IDs. All 84 listed navigation
 pages return readable content from the local preview on port 8006; browser
 review confirms the GBR navigation, rendered date-rule tables and the new
