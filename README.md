@@ -57,6 +57,12 @@ WIKI_SELECTOR_MODEL=claude-sonnet-4-6
 WIKI_ANSWERER_MODEL=claude-sonnet-5-5
 ```
 
+Sonnet 5.5 answer calls default to 8,192 output tokens, shared between thinking
+and the answer. A token-limited response is retried once with up to 16,384
+tokens; usage and timing include both attempts. Streaming retries are allowed
+only before visible text has been emitted. Further truncation is returned as
+an error, not a completed answer.
+
 Run it locally with:
 
 ```bash

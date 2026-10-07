@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import Any, Iterator, Literal, TypedDict
 
 from .providers import (
+    aggregate_timing as _aggregate_timing,
     aggregate_usage as _aggregate_usage,
     client_for_model,
     extract_json_payload,
@@ -71,15 +72,20 @@ class WikiAnswerer:
         client: Any | None = None,
         model_id: str | None = None,
         model_str: str | None = None,
-        max_tokens: int = 2000,
+        max_tokens: int | None = None,
     ):
-        self.max_tokens = max_tokens
         if client and model_id:
             self.client = client
             self.model_id = model_id
         else:
             resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-5-5")
             self.client, self.model_id = client_for_model(resolved_str)
+        self._sonnet55 = self.model_id.split("/")[-1] == "claude-sonnet-5-5"
+        # Sonnet 5.5 shares this allowance between adaptive thinking and text.
+        self.max_tokens = max_tokens if max_tokens is not None else (8192 if self._sonnet55 else 2000)
+
+    def _retry_budget(self, budget: int) -> int:
+        return max(budget, min(budget * 2, 16384)) if self._sonnet55 else budget
 
     def _build_messages(self, question: str, pages: list[dict[str, Any]]) -> list[dict[str, str]]:
         return [
@@ -94,41 +100,49 @@ class WikiAnswerer:
         ]
 
     def _parse_answer(self, text: str) -> tuple[str, list[str]]:
+        if not text.strip():
+            raise RuntimeError("The answer model returned no answer. Please try a narrower question.")
         data = extract_json_payload(text)
         if data and "answer" in data:
             return data["answer"], data.get("citations", [])
         return text.strip(), []
 
-    def _build_result(self, answer: str, citations: list[str], usage: dict, finish_reason: str | None, llm_ms: int, wall_start: float) -> AnswerResult:
+    def _build_result(self, answer: str, citations: list[str], usages: list[dict], timings: list[dict], wall_start: float) -> AnswerResult:
         return AnswerResult(
             answer=answer,
             citations=citations,
-            token_summary=_aggregate_usage([usage], self.model_id),
+            token_summary=_aggregate_usage(usages, self.model_id),
             timing_summary={
-                "calls": 1,
-                "llm_time_ms": llm_ms,
+                **_aggregate_timing(timings),
                 "answerer_wall_time_ms": int((time.perf_counter() - wall_start) * 1000),
-                "per_call": [{"call_number": 1, "duration_ms": llm_ms, "stop_reason": finish_reason}],
             },
         )
 
     def run(self, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
         started = time.perf_counter()
+        usages, timings = [], []
+        budget = self.max_tokens
+        for attempt in range(2):
+            call_started = time.perf_counter()
+            response = self.client.chat.completions.create(
+                model=self.model_id,
+                max_tokens=budget,
+                messages=self._build_messages(question, pages),
+                stream=False,
+            )
+            finish_reason = response.choices[0].finish_reason if response.choices else None
+            usages.append(_normalize_usage(response.usage, finish_reason))
+            timings.append({"call_number": attempt + 1, "duration_ms": int((time.perf_counter() - call_started) * 1000), "stop_reason": finish_reason})
+            if finish_reason not in {"length", "max_tokens"}:
+                break
+            retry_budget = self._retry_budget(budget)
+            if attempt or retry_budget <= budget:
+                raise RuntimeError("The answer exceeded its output limit. Please try a narrower question.")
+            budget = retry_budget
 
-        response = self.client.chat.completions.create(
-            model=self.model_id,
-            max_tokens=self.max_tokens,
-            messages=self._build_messages(question, pages),
-            stream=False,
-        )
-
-        llm_ms = int((time.perf_counter() - started) * 1000)
-        finish_reason = response.choices[0].finish_reason if response.choices else None
-        usage = _normalize_usage(response.usage, finish_reason)
         text = response.choices[0].message.content or "" if response.choices else ""
         answer, citations = self._parse_answer(text)
-
-        return self._build_result(answer, citations, usage, finish_reason, llm_ms, started)
+        return self._build_result(answer, citations, usages, timings, started)
 
     def stream(
         self,
@@ -136,42 +150,53 @@ class WikiAnswerer:
         pages: list[dict[str, Any]],
     ) -> Iterator[AnswerStreamEvent]:
         started = time.perf_counter()
-        accumulated_text = ""
-        usage_data: Any = None
-        finish_reason: str | None = None
-        any_deltas_sent = False
+        usages, timings = [], []
+        budget = self.max_tokens
+        for attempt in range(2):
+            accumulated_text = ""
+            usage_data: Any = None
+            finish_reason: str | None = None
+            any_deltas_sent = False
+            call_started = time.perf_counter()
+            try:
+                response_stream = self.client.chat.completions.create(
+                    model=self.model_id,
+                    max_tokens=budget,
+                    messages=self._build_messages(question, pages),
+                    stream=True,
+                    stream_options={"include_usage": True},
+                )
+                for chunk in response_stream:
+                    if chunk.choices:
+                        delta = chunk.choices[0].delta
+                        if delta and delta.content:
+                            accumulated_text += delta.content
+                            any_deltas_sent = True
+                            yield {"type": "delta", "text": delta.content}
+                        if chunk.choices[0].finish_reason:
+                            finish_reason = chunk.choices[0].finish_reason
+                    if chunk.usage:
+                        usage_data = chunk.usage
+            except Exception:
+                if any_deltas_sent or usages:
+                    raise
+                result = self.run(question, pages)
+                yield {"type": "delta", "text": result.answer}
+                yield {"type": "final", "result": result}
+                return
 
-        try:
-            response_stream = self.client.chat.completions.create(
-                model=self.model_id,
-                max_tokens=self.max_tokens,
-                messages=self._build_messages(question, pages),
-                stream=True,
-                stream_options={"include_usage": True},
-            )
+            usages.append(_normalize_usage(usage_data, finish_reason))
+            timings.append({"call_number": attempt + 1, "duration_ms": int((time.perf_counter() - call_started) * 1000), "stop_reason": finish_reason})
+            if finish_reason not in {"length", "max_tokens"}:
+                break
+            retry_budget = self._retry_budget(budget)
+            # Once visible text has been sent, retrying would concatenate two
+            # different answers. Let the endpoint send an SSE error, never done.
+            if any_deltas_sent or attempt or retry_budget <= budget:
+                raise RuntimeError("The answer exceeded its output limit. Please try a narrower question.")
+            budget = retry_budget
 
-            for chunk in response_stream:
-                if chunk.choices:
-                    delta = chunk.choices[0].delta
-                    if delta and delta.content:
-                        accumulated_text += delta.content
-                        any_deltas_sent = True
-                        yield {"type": "delta", "text": delta.content}
-                    if chunk.choices[0].finish_reason:
-                        finish_reason = chunk.choices[0].finish_reason
-                if chunk.usage:
-                    usage_data = chunk.usage
-
-        except Exception:
-            if any_deltas_sent:
-                raise
-            result = self.run(question, pages)
-            yield {"type": "delta", "text": result.answer}
-            yield {"type": "final", "result": result}
-            return
-
-        llm_ms = int((time.perf_counter() - started) * 1000)
-        usage = _normalize_usage(usage_data, finish_reason)
+        if finish_reason is None:
+            raise RuntimeError("The answer stream ended without a completion status.")
         answer, citations = self._parse_answer(accumulated_text)
-
-        yield {"type": "final", "result": self._build_result(answer, citations, usage, finish_reason, llm_ms, started)}
+        yield {"type": "final", "result": self._build_result(answer, citations, usages, timings, started)}
