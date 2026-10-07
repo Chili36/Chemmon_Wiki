@@ -119,6 +119,7 @@ _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     # (input_price_per_mtok, output_price_per_mtok)
     "claude-haiku-4-5-20251001": (1.0, 5.0),
     "claude-sonnet-4-6": (3.0, 15.0),
+    "claude-sonnet-5-5": (2.0, 10.0),
     "claude-opus-4-6": (15.0, 75.0),
     "claude-3-7-sonnet-latest": (3.0, 15.0),
     "gpt-5.4-mini": (0.75, 4.50),

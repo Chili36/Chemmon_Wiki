@@ -78,7 +78,7 @@ class WikiAnswerer:
             self.client = client
             self.model_id = model_id
         else:
-            resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-4-6")
+            resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-5-5")
             self.client, self.model_id = client_for_model(resolved_str)
 
     def _build_messages(self, question: str, pages: list[dict[str, Any]]) -> list[dict[str, str]]:
