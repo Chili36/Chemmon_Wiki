@@ -971,3 +971,18 @@ answerer already fails on `main` because GPT-5 models reject `max_tokens`
 Verification: 6 of 6 raw outputs were pure JSON; six questions in ask and
 stream modes had citations, and the streamed text equalled the final answer.
 151 tests pass.
+
+## 2026-10-13 — Page selector: structured output and Haiku 5.5
+
+At the user's request the selector moves from `gpt-5.4-mini` to
+`claude-haiku-5-5`. Claude selectors could not run before: the selector sent
+`response_format: {"type": "json_object"}`, which Anthropic rejects (it
+accepts only `json_schema`). The selector now sends a strict `json_schema`
+(`page_names`) for Anthropic and OpenAI, both verified, and no format for
+other providers. This supersedes PR #17.
+
+Selection eval (live, `tools/evaluate.py --mode select`): Haiku 5.5 completed
+16 of 16 cases with required-page recall 1.0 on both splits and no
+wrong-domain selections; mean selection time about 2.4 s against about 1.0 s
+for gpt-5.4-mini, whose recall varied between runs (0.89 to 1.0). The 16
+cases are draft labels, so this is a sanity check, not a benchmark.

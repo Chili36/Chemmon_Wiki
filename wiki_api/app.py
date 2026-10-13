@@ -118,6 +118,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     # (input_price_per_mtok, output_price_per_mtok)
     "claude-haiku-4-5-20251001": (1.0, 5.0),
+    "claude-haiku-5-5": (0.10, 0.50),  # prompts up to 100K tokens
     "claude-sonnet-4-6": (3.0, 15.0),
     "claude-sonnet-5-5": (2.0, 10.0),
     "claude-opus-4-6": (15.0, 75.0),
