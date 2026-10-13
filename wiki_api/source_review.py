@@ -18,6 +18,7 @@ def sha256(path: Path) -> str:
 
 def corpus_snapshot(root: Path) -> dict[str, str]:
     paths = sorted((root / 'chemmon_docs').glob('*.pdf'))
+    paths += sorted(p for p in (root / 'chemmon_docs/datasets').rglob('*') if p.is_file())
     paths += sorted((root / 'wiki/chemmon-guidance').glob('*.md'))
     paths += [root / 'index.md']
     return {p.relative_to(root).as_posix(): sha256(p) for p in paths if p.is_file()}

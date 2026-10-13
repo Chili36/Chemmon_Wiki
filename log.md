@@ -880,3 +880,34 @@ This is a source interpretation review, not a benchmark of the wiki's models.
 Verification: 116 tests pass, including review-status coverage corrected to
 allow a legitimately empty backlog. Health and source fingerprints are current
 with zero errors/warnings and all 14 findings resolved within their stated scope.
+
+## 2026-10-13 — Ingest rd-bridge dataset; add residue-definition-by-matrix page (#19)
+
+Source: rd-bridge `104448e98ccf47695b8360f46c9524a156195962` (residue map last
+changed 2026-10-11; 684 definitions, 77 vary by commodity, 83 exceptions),
+plus ChemMon 2026 pp. 60, 143 and 148.
+
+Added the first dataset source. `tools/ingest_rd_bridge.py` copies
+`residue_param_map.json` and `DATA_SOURCES.md` verbatim from a pinned commit
+into `chemmon_docs/datasets/rd-bridge/` with a checksum manifest, and reports
+changed definitions and citing pages on each new version. The health check now
+rejects hand-edited snapshots and dataset-cited codes that are missing from
+the cited records or paired with the wrong scope. Dataset files are part of
+the source-review fingerprint.
+
+Created `pesticide-residue-definition-by-matrix.md`: residue definitions can
+differ by Annex I commodity, so the pesticide `paramCode` follows the sampled
+matrix. Grounded in ChemMon p. 60 and LL_04/LL_04_b p. 143, with worked codes
+for acetamiprid, 2-phenylphenol and thiabendazole. Patched (links only)
+`ssd2-analysis-parameter-coding.md`, `pesticide-reporting.md`,
+`business-rules-legal-limits.md` and `legal-limits-database.md`. The existing
+paramCode page had no home for this concept, so a new page was justified.
+
+Left out: the full list of the 77 food-dependent substances (#20), MRL values,
+and historical (as-of-date) definitions, which rd-bridge does not hold yet.
+
+Verification: `/wiki/ask` answered acetamiprid in cow milk vs apples
+(`RF-00003326-PAR` vs `RF-0014-001-PPP`) and thiabendazole in honey
+(`RF-0416-001-PPP`) correctly from the new page. The first response's
+structured `citations` array was empty although the answer cited the page
+inline; the answerer was not changed.

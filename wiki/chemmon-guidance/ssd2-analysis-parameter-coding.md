@@ -2,7 +2,7 @@
 title: "SSD2 Analysis: Parameter Type, Code, and Text"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-10-13"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -15,6 +15,7 @@ related:
   - "[[food-additives-reporting]]"
   - "[[business-rules-cross-cutting]]"
   - "[[business-rules-vmpr]]"
+  - "[[pesticide-residue-definition-by-matrix]]"
 ---
 
 # SSD2 Analysis: Parameter Type, Code, and Text
@@ -56,7 +57,7 @@ related:
 
 ### Domain-specific notes
 
-- Pesticides: for legal-limit compliance, the full residue definition should be analysed; individual `P002A` components are still useful as supporting data.
+- Pesticides: for legal-limit compliance, the full residue definition should be analysed; individual `P002A` components are still useful as supporting data. Some pesticides have different residue definitions, and so different `paramCode`s, for different commodities; see [[pesticide-residue-definition-by-matrix]].
 - VMPR: for negative screening results, reporting only the single components (`P002A`) can be sufficient; EFSA may generate the corresponding complex parameter internally.
 - Contaminants: individual substance/congener data are important in addition to any group/sum.
 - Food additives: individual substances must be reported as expressed by the legislation, and the sum should also be reported when MPLs are regulated at the sum level. (ChemMon 2026 pp. 60-61)

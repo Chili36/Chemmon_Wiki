@@ -2,7 +2,7 @@
 title: "Legal Limits Database (MRLs and Other Limits)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-22"
+last_updated: "2026-10-13"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
@@ -15,6 +15,7 @@ related:
   - "[[chemmon-reports]]"
   - "[[fa-ff-use-levels-data-model]]"
   - "[[food-additives-reporting]]"
+  - "[[pesticide-residue-definition-by-matrix]]"
 ---
 
 # Legal Limits Database (MRLs and Other Limits)
@@ -47,6 +48,8 @@ The guidance describes it as a resource intended to help data providers check ex
 - Data providers must still rely on the legislation as the official source of legal limits. (ChemMon 2026 p148)
 
 ## Relationship to legal-limit business rules
+
+For pesticides, LL_04 uses the database's plausible matrix/`paramCode` combinations to check that the reported code matches the residue definition for the sampled matrix; see [[pesticide-residue-definition-by-matrix]].
 
 See [[business-rules-legal-limits]] for the validation rules that compare reported results against legal limits as part of the ChemMon validation layer. For the SSD2 fields that explicitly carry a declared limit and limit type, see [[ssd2-evaluation-limits]].
 

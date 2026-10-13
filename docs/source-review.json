@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "reviewed_at": "2026-10-05",
-  "reviewer": "Codex (assistant source review with independent GPT-6 Astra/ultra passage reassessment; human review unavailable)",
+  "reviewed_at": "2026-10-13",
+  "reviewer": "Codex (assistant source review with independent GPT-6 Astra/ultra passage reassessment; human review unavailable; 2026-10-13 dataset ingest and #19 page by Claude Opus 5.5 assistant)",
   "scope": [
     "Independent five-family ID/status inventory from full source table columns: ChemMon Tables 9/10 pp.98–143, PRE Table3 pp.19–21, USE Table3 pp.24–28.",
     "Full semantic comparison of all applicable active GBR Table 9 rows, all CHEMON/LL Table 10 rows including inactive/named-rule rows, full continuations, severity, scope, triggers and exceptions.",
@@ -9,22 +9,27 @@
     "FA/FF F33/F03 path distinctions: ChemMon pp.38–39 and CHEMON109 p.141; parallel §2.7 pp.7–8 and PRE15/USE23 rows.",
     "A02RH source discrepancy: ChemMon p.39 versus parallel guidance p.9; version-qualified local MTX 17.2 check of implicit F33, F03 label and reportability. Adjacent ChemMon p.40 example corrections: explicit omelette F33 and syrup-type A1B1Y.",
     "Complete PRE pp.4–21 and USE pp.4–28 field sections/examples/Tables1–3: 49 fields, 17 PRE and 29 USE/USE_LLDB rules; source type/length/catalogue/requiredness and numeric conventions compared. Reconciled related ChemMon prose pp.65–68,74–78.",
-    "Contextual reassessment of SRC-012/013/014 against surrounding field prose, comments and examples; separate GPT-6 Astra/ultra reading corroborated explicit grouping, USE19 at-least-one-positive interpretation and CONCLUS naming discrepancy."
+    "Contextual reassessment of SRC-012/013/014 against surrounding field prose, comments and examples; separate GPT-6 Astra/ultra reading corroborated explicit grouping, USE19 at-least-one-positive interpretation and CONCLUS naming discrepancy.",
+    "2026-10-13: new pesticide-residue-definition-by-matrix page and four link patches against ChemMon pp. 60, 143, 148; worked codes for residue_id 10, 210, 2058 checked against pinned rd-bridge 104448e by the health check; Annex I names 1000000/1020000/1040000 checked against the EU Pesticides Database products API."
   ],
   "limitations": [
-    "Not an exhaustive review of the four PDFs or all 73 topic pages.",
+    "Not an exhaustive review of the four PDFs or all 74 topic pages.",
     "2013 SSD2 foundational text not re-audited; newer 2026 collection conditions govern the reviewed scope.",
     "ID/status inventory is not a rule-description correctness score.",
     "Held-out evaluation cases were authored after content changes and remain draft; independent human review is unavailable and deferred.",
     "No latest-law or live-catalogue verification; source editions and local catalogue snapshot only.",
     "The MTX 17.2 cheese check does not identify the historical catalogue release intended by ChemMon p.39; the PDF discrepancy remains explicitly documented.",
-    "CHEMON grouping and USE19 positivity are documented contextual interpretations, not tested live-validator predicates. CONCLUS source spellings do not establish interchangeable software aliases."
+    "CHEMON grouping and USE19 positivity are documented contextual interpretations, not tested live-validator predicates. CONCLUS source spellings do not establish interchangeable software aliases.",
+    "rd-bridge is a derived, non-official, latest-version dataset; the EFSA Legal Limits database used by LL_04 was not available for comparison."
   ],
   "snapshot": {
     "chemmon_docs/EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf": "6208be1617c039ed652a2f96c1d4562993f4088d5dd945c145bff939be14202b",
     "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf": "5988380167d3c0029ddab95719cc71b90a296b2675ce6613053d6615be5a13cf",
     "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf": "6d4ef5db15ea29c14266203e8deeaba4bf64a9d5ccea8b6307c74dd8e5185cac",
     "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf": "473edb8d03366a828c7d0bb0c9709dcf64c8f3b03fceb56b94842f78dcf549bb",
+    "chemmon_docs/datasets/rd-bridge/DATA_SOURCES.md": "c40c3770a825005449a313d5bf8961b8f5249acdce33c219b72366f5264131df",
+    "chemmon_docs/datasets/rd-bridge/manifest.json": "ba60aaeab8b98e5c7a7e5b61852dd849b87afa4f58c3d9a41600c00476df6a2b",
+    "chemmon_docs/datasets/rd-bridge/residue_param_map.json": "d72232137cb0a6849802bc3a17e39808166dad8e8717dbabe69515037f950730",
     "wiki/chemmon-guidance/baby-food-reporting.md": "42eeb612984541f71f26ce136fe0f998f60780e5fffc24ae6d9862042f1200e2",
     "wiki/chemmon-guidance/business-rules-2026-changes.md": "c7a4504105a516156e59879f0d4c2cf369b3ab221090638bd73d39fecdbfe667",
     "wiki/chemmon-guidance/business-rules-additives.md": "97c409d28e63952a4805b003409333967b3b6dded6802bf26ceed78fd0504fa9",
@@ -35,7 +40,7 @@
     "wiki/chemmon-guidance/business-rules-gbr-dates.md": "1cf558ea3524473a738264a572357e06c09850f1de8a6916f5094c086f8240dd",
     "wiki/chemmon-guidance/business-rules-gbr-results.md": "9383f975541f336f34ad70ba4bb69921e3e6e044a9a87a4382b7119c30731abf",
     "wiki/chemmon-guidance/business-rules-gbr.md": "f1afc9913b9aae935640a936c8969be9c41ca45322834e9eb26e2ddbf62b4cd7",
-    "wiki/chemmon-guidance/business-rules-legal-limits.md": "a4b3d44d958a8e3151005de841b5baf9bde3730de0d4dcc156519f07a9dff83e",
+    "wiki/chemmon-guidance/business-rules-legal-limits.md": "4a294d5557763f5bc71e2c2f5101d69d538c91bec5501f60c455ae2442bc337c",
     "wiki/chemmon-guidance/business-rules-pesticide.md": "94bf375090362ed1f80e55c04da88f4dc60d0f9a45ec9c4d9efe258af2b56dc6",
     "wiki/chemmon-guidance/business-rules-vmpr.md": "6896e0d84577512b9042b021a215ffcb4d38581566d30f7a941b194279969c8e",
     "wiki/chemmon-guidance/business-rules.md": "9788fa83228d2bee877b705fc9069ef29e06c659a5ad9ffd6aebb789c4b1e282",
@@ -59,13 +64,14 @@
     "wiki/chemmon-guidance/foodex2-facets-state-process.md": "7652b428144a2564e5c548c2c248c6e9b089b197d1e14425de2855db2dc1be1a",
     "wiki/chemmon-guidance/foodex2-facets.md": "4e503ce7ad06438d0b9c8f80ecc4496ee08a2dc33f5b5fd0050a8793e56b5130",
     "wiki/chemmon-guidance/foodex2-in-chemmon.md": "04602e505b2ec6a17672ea197a98b7ec0db5b7fe04cdc2b1f01c3792c305f028",
-    "wiki/chemmon-guidance/legal-limits-database.md": "0fd28409a2ca5c3fb18a2f3d0b14e6a61c9630243e11be13ba8515adf9cee85d",
-    "wiki/chemmon-guidance/pesticide-reporting.md": "fc6bd9f018ef95bd4b7234dc1c8c107fc172ab584a1d16059dc332b34bfa55aa",
+    "wiki/chemmon-guidance/legal-limits-database.md": "d35d62e4dc69305bb6504c4a57094f409075174d7937e5828d1a2695c0c1707a",
+    "wiki/chemmon-guidance/pesticide-reporting.md": "059801a26aa9bf90b67388c7dc5ee10b3eee13e897e5527b9c4bfee5bb6c35fa",
+    "wiki/chemmon-guidance/pesticide-residue-definition-by-matrix.md": "b8551bb75c4343a9eaeafa144904686472de8266831a94f30e6e22865fdc030e",
     "wiki/chemmon-guidance/reporting-flags.md": "d431193a085fe1d10d2ae0f5f40b509fbfd6644e7e5eb487b4b1ecd7ba2b2df1",
     "wiki/chemmon-guidance/ssd2-analysis-context.md": "222cf1bc8e738d20e16dfeab9f363aad0f99adde373b950655b1af126160c5f8",
     "wiki/chemmon-guidance/ssd2-analysis-laboratory.md": "cbda950b95018d77d829ad8314f893b717974955d7799a00aeff8f9309a65360",
     "wiki/chemmon-guidance/ssd2-analysis-methods.md": "73e4e996f5f51a4993b8df164ad6b7b9d2de494627654d06b988b806ac27e1ef",
-    "wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md": "38e88226e745e285c474b58063d2fd8622f0794a56e912effb2dd63f20851982",
+    "wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md": "261d84997ea74c09cd0e35627c21bbfc797a144348952f5c2b9d24d93608d6b5",
     "wiki/chemmon-guidance/ssd2-data-model.md": "f0f0ea19efc3c7b66fc664cc15e6861f6a2a60eb583df43630a75d22d47a8c47",
     "wiki/chemmon-guidance/ssd2-elements-analysis.md": "38d90645e0673ad66b34acc67cc2a0028f1c3248aad9e92d0a378f3e743c4218",
     "wiki/chemmon-guidance/ssd2-elements-evaluation.md": "2c7f980b699ce85972900fc200201c0f644536882698c58cfadec9f6c31b7df0",
@@ -98,7 +104,7 @@
     "wiki/chemmon-guidance/ssd2-sampling-event-and-unit.md": "bd01d848e2ffc6b79422a7ccbcb8df61995ecaa5cbc4137bdea0619f1b3ddb42",
     "wiki/chemmon-guidance/ssd2-sampling-method-and-point.md": "0037ee26a8fd2bc639d5928c04a18e0e70daffe155f7c2425ab43cd509cb1465",
     "wiki/chemmon-guidance/vmpr-reporting.md": "6aaaa43fab9d67985bce4d80c6786747cb9054746fb2a5e8f69582fa1c0f77a1",
-    "index.md": "3631acb2c2b85b35ae111c51de9ea5921fadd7b003738ce34de20df6ec7db56e"
+    "index.md": "3781261b0aad2dbe0adc3a4a6d09b5a1f10fd68199b9bd382f6f583a3811b20e"
   },
   "supporting_artifacts": {
     "reports/source-review/2026-10-05-catalogue-check.json": "1c189cc19e4b854a26ebb19236b9f20b35ba5d85064913fb451290f51cad076b",
