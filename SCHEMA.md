@@ -104,12 +104,18 @@ sources) use a locator naming the file, the snapshot commit and the records:
 ```
 
 The health check reads the text from such a comment to the next `Source:`
-comment. Every PARAM code and Annex I commodity code in it must occur in the
-cited records. In table rows, a code beside Annex I codes must be the
+comment. Every PARAM code and every Annex I commodity code written in
+backticks (`` `1020000` ``) in it must occur in the cited records. In table rows, a code beside Annex I codes must be the
 whole-residue code of an exception with exactly those included and excluded
 codes, and a code in a row marked "Default" must be a default code. A
 locator whose commit differs from the current snapshot is a warning until the
 page is re-checked. These checks catch code drift, not wording errors.
+
+### Generated pages
+
+A page rendered from a dataset says so in an HTML comment under its title and
+is never edited by hand. `pesticide-residue-definitions-by-food.md` is the
+first; see [[INGEST_WORKFLOW]].
 
 ### Rule ID conventions
 

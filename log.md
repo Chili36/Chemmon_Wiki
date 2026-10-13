@@ -911,3 +911,32 @@ Verification: `/wiki/ask` answered acetamiprid in cow milk vs apples
 (`RF-0416-001-PPP`) correctly from the new page. The first response's
 structured `citations` array was empty although the answer cited the page
 inline; the answerer was not changed.
+
+## 2026-10-13 — Generated list of pesticides whose residue definition changes by food (#20)
+
+Source: rd-bridge `104448e` (unchanged since #19) and a new snapshot of EU
+Annex I product codes and names from the EU Pesticides Database API (381
+products, retrieved 2026-10-13).
+
+Created `pesticide-residue-definitions-by-food.md`, rendered by
+`tools/rd_bridge_page.py`: all 77 of 684 definitions that differ by commodity
+(83 exceptions), one row per scope, with a completeness statement, snapshot
+date, Annex I legend, interpreted-footnote notes and attribution. Rows whose
+rd-bridge link is `near`, `ambiguous` or `none` show "no trustworthy PARAM
+code" (six rows). Page size about 27.6k characters.
+Patched (link only) `pesticide-residue-definition-by-matrix.md`.
+
+Ingest: `tools/ingest_rd_bridge.py` regenerates the page; the health check
+fails if it differs from the generator's output. Annex I code detection now
+requires backticks, after a compound number in a definition was misread.
+`.github/workflows/rd-bridge-refresh.yml` runs the ingest daily and opens a PR
+when rd-bridge changes.
+
+Verification: `/wiki/ask` with live models gave `RF-00007630-PAR` for
+thiabendazole in milk with the snapshot caveat, `RF-00003326-PAR` for
+acetamiprid in bovine meat, and "no, not listed" for glyphosate. The list
+question exceeded this branch's 2,000-token answer limit; with 8,192 (the
+Sonnet 5.5 branch default) it finished at 2,918 tokens and listed the
+pesticides correctly, apart from naming ethephon (a cereals exception) among
+animal rows without a code. A general programme question selected the same
+four pages before and after; the list page was not selected for it.

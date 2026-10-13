@@ -16,6 +16,7 @@ related:
   - "[[pesticide-reporting]]"
   - "[[ssd2-matrix-sampled-matrix]]"
   - "[[chemmon-matrix-classification-algorithms]]"
+  - "[[pesticide-residue-definitions-by-food]]"
 select_when: "Choosing which pesticide paramCode or residue definition to report for a sampled food, or why the PARAM code for the same pesticide differs between foods such as plant products, animal products, milk or honey, including LL_04 errors about the residue definition for the sample analysed."
 ---
 
@@ -68,6 +69,7 @@ What the examples teach:
 
 ## Finding the definition for other pesticides
 
+- [[pesticide-residue-definitions-by-food]] lists every pesticide whose definition differs by commodity in the pinned snapshot, with scopes and whole-residue codes. A pesticide not on that list has one definition for all foods.
 - The EU Pesticides Database and EFSA's Legal Limits database are the reference sources for residue definitions and validated matrix/`paramCode` combinations.
 - [rd-bridge](https://github.com/Chili36/rd-bridge) is a derived, **non-official** bridge from EU residue definitions and their commodity scopes to EFSA PARAM codes, maintained with evidence and flags for uncertain links. Its `resolve` command takes a FoodEx2 code and a pesticide and returns the applicable definition and code, or the candidate definitions when the food cannot be placed in one Annex I commodity. Use it as a lookup aid; LL_04 validation against the Legal Limits database decides.
 - Processed and composite foods may not map cleanly to one Annex I commodity. Do not guess the scope; check the candidates.

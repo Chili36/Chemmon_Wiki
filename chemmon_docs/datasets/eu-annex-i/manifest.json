@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "kind": "api",
+  "dataset": "eu-annex-i",
+  "description": "Annex I product codes and English names from the EU Pesticides Database (European Commission, DG SANTE); fields: product_id, product_parent_id, product_code, product_name.",
+  "url": "https://api.datalake.sante.service.ec.europa.eu/sante/pesticides/pesticide-residues-products?format=json&language=EN&api-version=v3.0",
+  "retrieved_at": "2026-10-13",
+  "files": {
+    "products.json": {
+      "sha256": "9dd93533556b329652089027102b01ad3addd49a24b66eea438aaa63168650a4"
+    }
+  },
+  "summary": {
+    "products": 381
+  }
+}

@@ -166,6 +166,21 @@ thiabendazole are rd-bridge interpretations. The Legal Limits database
 itself, which LL_04 uses, was not available for comparison. Assistant review;
 no human review.
 
+## Generated list of food-dependent residue definitions — 13 October 2026
+
+Scope: `pesticide-residue-definitions-by-food.md` (issue #20), generated from
+rd-bridge `104448e` and the EU Annex I product names retrieved on 13 October
+2026. The health check regenerates the page and compares it byte for byte, and
+checks every code against the cited records. The generator's choices were
+reviewed instead of each row: rows with rd-bridge `near`, `ambiguous` or `none`
+links show no code; five interpreted footnote scopes are marked; names of
+sub-groups are qualified by their parent group. All 51 Annex I codes used were
+read in the rendered legend.
+
+Limits: completeness holds for the snapshot's 684 definitions, not for
+substances outside the EU Pesticides Database. The list is latest-version
+only. Assistant review; no human review.
+
 ## Reproducibility
 
 `docs/source-review.json` records scope, findings, resolutions and hashes for all

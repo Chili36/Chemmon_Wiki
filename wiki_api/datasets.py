@@ -7,7 +7,7 @@ cite claims from it with a claim-adjacent comment such as::
 
     <!-- Source: datasets/rd-bridge/residue_param_map.json @ 104448e, residue_id 10, 210 -->
 
-Every PARAM code and Annex I commodity code after that comment, up to the next
+Every PARAM code and backticked Annex I commodity code after that comment, up to the next
 ``Source:`` comment, must appear in the cited records. This catches drift when
 a new snapshot changes a code; it does not check prose meaning.
 """
@@ -30,7 +30,8 @@ DATASET_LOCATOR_RE = re.compile(
     r"^\s*(datasets/[^\s@,]+)\s*@\s*([0-9a-f]{7,40})\s*,\s*residue_id\s+(\d+(?:\s*,\s*\d+)*)\s*$"
 )
 PARAM_CODE_RE = re.compile(r"\bRF-[0-9A-Z]+(?:-[0-9A-Z]+)+\b")
-ANNEX_CODE_RE = re.compile(r"(?<![\w-])[01]\d{6}(?![\w-])")
+# Annex I codes are written in backticks, so compound numbers such as "AE 0172747" are not read as codes.
+ANNEX_CODE_RE = re.compile(r"`([01]\d{6})`")
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -38,15 +39,24 @@ def sha256_bytes(data: bytes) -> str:
 
 
 def read_manifest(dataset_dir: Path) -> dict[str, Any]:
+    """Validate a manifest. Git snapshots pin a commit; API snapshots record a URL and retrieval date."""
     manifest = json.loads((dataset_dir / MANIFEST_NAME).read_text(encoding="utf-8"))
     if not isinstance(manifest, dict) or manifest.get("version") != 1:
         raise ValueError("unsupported manifest")
-    if not re.fullmatch(r"[0-9a-f]{40}", str(manifest.get("commit", ""))):
-        raise ValueError("commit must be a full 40-character SHA")
-    for key in ("commit_date", "dataset_changed_at", "ingested_at"):
+    if manifest.get("kind", "git") == "git":
+        if not re.fullmatch(r"[0-9a-f]{40}", str(manifest.get("commit", ""))):
+            raise ValueError("commit must be a full 40-character SHA")
+        dates = ("commit_date", "dataset_changed_at", "ingested_at")
+        if not manifest.get("repository"):
+            raise ValueError("missing repository")
+    elif manifest["kind"] == "api":
+        dates = ("retrieved_at",)
+        if not str(manifest.get("url", "")).startswith("https://"):
+            raise ValueError("api snapshot needs an https url")
+    else:
+        raise ValueError(f"unknown manifest kind {manifest['kind']}")
+    for key in dates:
         date.fromisoformat(str(manifest.get(key)))
-    if not manifest.get("repository"):
-        raise ValueError("missing repository")
     files = manifest.get("files")
     if not isinstance(files, dict) or not files:
         raise ValueError("files must be a nonempty object")
@@ -104,9 +114,16 @@ def residue_index(records: Any) -> dict[int, dict[str, Any]]:
             isinstance(e, dict) and isinstance(e.get("commodity_codes"), list) for e in exceptions
         ):
             raise ValueError(f"residue_id {record['residue_id']}: malformed exceptions")
+        for exception in exceptions:
+            codes = exception["commodity_codes"] + (exception.get("except_codes") or [])
+            codes += [r.get(k) for r in exception.get("repairs") or [] for k in ("from", "to")]
+            if not all(isinstance(c, str) and re.fullmatch(r"\d{1,7}", c) for c in codes):
+                raise ValueError(f"residue_id {record['residue_id']}: commodity codes must be digits")
         for scope in [record["default"], *exceptions]:
-            if not isinstance(scope.get("param_codes", []), list):
-                raise ValueError(f"residue_id {record['residue_id']}: param_codes must be a list")
+            if not isinstance(scope.get("param_codes", []), list) or not all(
+                isinstance(c, str) for c in scope.get("param_codes") or []
+            ):
+                raise ValueError(f"residue_id {record['residue_id']}: param_codes must be a list of strings")
         index[record["residue_id"]] = record
     return index
 

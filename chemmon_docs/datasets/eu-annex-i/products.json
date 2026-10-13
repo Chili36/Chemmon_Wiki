@@ -1,0 +1,2288 @@
+[
+ {
+  "product_id": 1,
+  "product_parent_id": null,
+  "product_code": "0100000",
+  "product_name": "FRUITS, FRESH or FROZEN; TREE NUTS"
+ },
+ {
+  "product_id": 2,
+  "product_parent_id": 1,
+  "product_code": "0110000",
+  "product_name": "Citrus fruits"
+ },
+ {
+  "product_id": 3,
+  "product_parent_id": 2,
+  "product_code": "0110010",
+  "product_name": "Grapefruits"
+ },
+ {
+  "product_id": 4,
+  "product_parent_id": 2,
+  "product_code": "0110020",
+  "product_name": "Oranges"
+ },
+ {
+  "product_id": 5,
+  "product_parent_id": 2,
+  "product_code": "0110030",
+  "product_name": "Lemons"
+ },
+ {
+  "product_id": 6,
+  "product_parent_id": 2,
+  "product_code": "0110040",
+  "product_name": "Limes"
+ },
+ {
+  "product_id": 7,
+  "product_parent_id": 2,
+  "product_code": "0110050",
+  "product_name": "Mandarins"
+ },
+ {
+  "product_id": 8,
+  "product_parent_id": 2,
+  "product_code": "0110990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 9,
+  "product_parent_id": 1,
+  "product_code": "0120000",
+  "product_name": "Tree nuts"
+ },
+ {
+  "product_id": 10,
+  "product_parent_id": 9,
+  "product_code": "0120010",
+  "product_name": "Almonds"
+ },
+ {
+  "product_id": 11,
+  "product_parent_id": 9,
+  "product_code": "0120020",
+  "product_name": "Brazil nuts"
+ },
+ {
+  "product_id": 12,
+  "product_parent_id": 9,
+  "product_code": "0120030",
+  "product_name": "Cashew nuts"
+ },
+ {
+  "product_id": 13,
+  "product_parent_id": 9,
+  "product_code": "0120040",
+  "product_name": "Chestnuts"
+ },
+ {
+  "product_id": 14,
+  "product_parent_id": 9,
+  "product_code": "0120050",
+  "product_name": "Coconuts"
+ },
+ {
+  "product_id": 15,
+  "product_parent_id": 9,
+  "product_code": "0120060",
+  "product_name": "Hazelnuts/cobnuts"
+ },
+ {
+  "product_id": 16,
+  "product_parent_id": 9,
+  "product_code": "0120070",
+  "product_name": "Macadamias"
+ },
+ {
+  "product_id": 17,
+  "product_parent_id": 9,
+  "product_code": "0120080",
+  "product_name": "Pecans"
+ },
+ {
+  "product_id": 18,
+  "product_parent_id": 9,
+  "product_code": "0120090",
+  "product_name": "Pine nut kernels"
+ },
+ {
+  "product_id": 19,
+  "product_parent_id": 9,
+  "product_code": "0120100",
+  "product_name": "Pistachios"
+ },
+ {
+  "product_id": 20,
+  "product_parent_id": 9,
+  "product_code": "0120110",
+  "product_name": "Walnuts"
+ },
+ {
+  "product_id": 21,
+  "product_parent_id": 9,
+  "product_code": "0120990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 22,
+  "product_parent_id": 1,
+  "product_code": "0130000",
+  "product_name": "Pome fruits"
+ },
+ {
+  "product_id": 23,
+  "product_parent_id": 22,
+  "product_code": "0130010",
+  "product_name": "Apples"
+ },
+ {
+  "product_id": 24,
+  "product_parent_id": 22,
+  "product_code": "0130020",
+  "product_name": "Pears"
+ },
+ {
+  "product_id": 25,
+  "product_parent_id": 22,
+  "product_code": "0130030",
+  "product_name": "Quinces"
+ },
+ {
+  "product_id": 26,
+  "product_parent_id": 22,
+  "product_code": "0130040",
+  "product_name": "Medlars"
+ },
+ {
+  "product_id": 27,
+  "product_parent_id": 22,
+  "product_code": "0130050",
+  "product_name": "Loquats/Japanese medlars"
+ },
+ {
+  "product_id": 28,
+  "product_parent_id": 22,
+  "product_code": "0130990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 29,
+  "product_parent_id": 1,
+  "product_code": "0140000",
+  "product_name": "Stone fruits"
+ },
+ {
+  "product_id": 30,
+  "product_parent_id": 29,
+  "product_code": "0140010",
+  "product_name": "Apricots"
+ },
+ {
+  "product_id": 31,
+  "product_parent_id": 29,
+  "product_code": "0140020",
+  "product_name": "Cherries (sweet)"
+ },
+ {
+  "product_id": 32,
+  "product_parent_id": 29,
+  "product_code": "0140030",
+  "product_name": "Peaches"
+ },
+ {
+  "product_id": 33,
+  "product_parent_id": 29,
+  "product_code": "0140040",
+  "product_name": "Plums"
+ },
+ {
+  "product_id": 34,
+  "product_parent_id": 29,
+  "product_code": "0140990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 35,
+  "product_parent_id": 1,
+  "product_code": "0150000",
+  "product_name": "Berries and small fruits"
+ },
+ {
+  "product_id": 36,
+  "product_parent_id": 35,
+  "product_code": "0151000",
+  "product_name": "(a) grapes"
+ },
+ {
+  "product_id": 37,
+  "product_parent_id": 36,
+  "product_code": "0151010",
+  "product_name": "Table grapes"
+ },
+ {
+  "product_id": 38,
+  "product_parent_id": 36,
+  "product_code": "0151020",
+  "product_name": "Wine grapes"
+ },
+ {
+  "product_id": 39,
+  "product_parent_id": 35,
+  "product_code": "0152000",
+  "product_name": "(b) strawberries"
+ },
+ {
+  "product_id": 40,
+  "product_parent_id": 35,
+  "product_code": "0153000",
+  "product_name": "(c) cane fruits"
+ },
+ {
+  "product_id": 41,
+  "product_parent_id": 40,
+  "product_code": "0153010",
+  "product_name": "Blackberries"
+ },
+ {
+  "product_id": 42,
+  "product_parent_id": 40,
+  "product_code": "0153020",
+  "product_name": "Dewberries"
+ },
+ {
+  "product_id": 43,
+  "product_parent_id": 40,
+  "product_code": "0153030",
+  "product_name": "Raspberries (red and yellow)"
+ },
+ {
+  "product_id": 44,
+  "product_parent_id": 40,
+  "product_code": "0153990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 45,
+  "product_parent_id": 35,
+  "product_code": "0154000",
+  "product_name": "(d) other small fruits and berries"
+ },
+ {
+  "product_id": 46,
+  "product_parent_id": 45,
+  "product_code": "0154010",
+  "product_name": "Blueberries"
+ },
+ {
+  "product_id": 47,
+  "product_parent_id": 45,
+  "product_code": "0154020",
+  "product_name": "Cranberries"
+ },
+ {
+  "product_id": 48,
+  "product_parent_id": 45,
+  "product_code": "0154030",
+  "product_name": "Currants (black, red and white)"
+ },
+ {
+  "product_id": 49,
+  "product_parent_id": 45,
+  "product_code": "0154040",
+  "product_name": "Gooseberries (green, red and yellow)"
+ },
+ {
+  "product_id": 50,
+  "product_parent_id": 45,
+  "product_code": "0154050",
+  "product_name": "Rose hips"
+ },
+ {
+  "product_id": 51,
+  "product_parent_id": 45,
+  "product_code": "0154060",
+  "product_name": "Mulberries (black and white)"
+ },
+ {
+  "product_id": 52,
+  "product_parent_id": 45,
+  "product_code": "0154070",
+  "product_name": "Azaroles/Mediterranean medlars"
+ },
+ {
+  "product_id": 53,
+  "product_parent_id": 45,
+  "product_code": "0154080",
+  "product_name": "Elderberries"
+ },
+ {
+  "product_id": 54,
+  "product_parent_id": 45,
+  "product_code": "0154990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 55,
+  "product_parent_id": 1,
+  "product_code": "0160000",
+  "product_name": "Miscellaneous fruitswith"
+ },
+ {
+  "product_id": 56,
+  "product_parent_id": 55,
+  "product_code": "0161000",
+  "product_name": "(a) edible peel"
+ },
+ {
+  "product_id": 57,
+  "product_parent_id": 56,
+  "product_code": "0161010",
+  "product_name": "Dates"
+ },
+ {
+  "product_id": 58,
+  "product_parent_id": 56,
+  "product_code": "0161020",
+  "product_name": "Figs"
+ },
+ {
+  "product_id": 59,
+  "product_parent_id": 56,
+  "product_code": "0161030",
+  "product_name": "Table olives"
+ },
+ {
+  "product_id": 60,
+  "product_parent_id": 56,
+  "product_code": "0161040",
+  "product_name": "Kumquats"
+ },
+ {
+  "product_id": 61,
+  "product_parent_id": 56,
+  "product_code": "0161050",
+  "product_name": "Carambolas"
+ },
+ {
+  "product_id": 62,
+  "product_parent_id": 56,
+  "product_code": "0161060",
+  "product_name": "Kaki/Japanese persimmons"
+ },
+ {
+  "product_id": 63,
+  "product_parent_id": 56,
+  "product_code": "0161070",
+  "product_name": "Jambuls/jambolans"
+ },
+ {
+  "product_id": 64,
+  "product_parent_id": 56,
+  "product_code": "0161990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 65,
+  "product_parent_id": 55,
+  "product_code": "0162000",
+  "product_name": "(b) inedible peel, small"
+ },
+ {
+  "product_id": 66,
+  "product_parent_id": 65,
+  "product_code": "0162010",
+  "product_name": "Kiwi fruits (green, red, yellow)"
+ },
+ {
+  "product_id": 67,
+  "product_parent_id": 65,
+  "product_code": "0162020",
+  "product_name": "Litchis/lychees"
+ },
+ {
+  "product_id": 68,
+  "product_parent_id": 65,
+  "product_code": "0162030",
+  "product_name": "Passionfruits/maracujas"
+ },
+ {
+  "product_id": 69,
+  "product_parent_id": 65,
+  "product_code": "0162040",
+  "product_name": "Prickly pears/cactus fruits"
+ },
+ {
+  "product_id": 70,
+  "product_parent_id": 65,
+  "product_code": "0162050",
+  "product_name": "Star apples/cainitos"
+ },
+ {
+  "product_id": 71,
+  "product_parent_id": 65,
+  "product_code": "0162060",
+  "product_name": "American persimmons/Virginia kaki"
+ },
+ {
+  "product_id": 72,
+  "product_parent_id": 65,
+  "product_code": "0162990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 73,
+  "product_parent_id": 55,
+  "product_code": "0163000",
+  "product_name": "(c) inedible peel, large"
+ },
+ {
+  "product_id": 74,
+  "product_parent_id": 73,
+  "product_code": "0163010",
+  "product_name": "Avocados"
+ },
+ {
+  "product_id": 75,
+  "product_parent_id": 73,
+  "product_code": "0163020",
+  "product_name": "Bananas"
+ },
+ {
+  "product_id": 76,
+  "product_parent_id": 73,
+  "product_code": "0163030",
+  "product_name": "Mangoes"
+ },
+ {
+  "product_id": 77,
+  "product_parent_id": 73,
+  "product_code": "0163040",
+  "product_name": "Papayas"
+ },
+ {
+  "product_id": 78,
+  "product_parent_id": 73,
+  "product_code": "0163050",
+  "product_name": "Granate apples/pomegranates"
+ },
+ {
+  "product_id": 79,
+  "product_parent_id": 73,
+  "product_code": "0163060",
+  "product_name": "Cherimoyas"
+ },
+ {
+  "product_id": 80,
+  "product_parent_id": 73,
+  "product_code": "0163070",
+  "product_name": "Guavas"
+ },
+ {
+  "product_id": 81,
+  "product_parent_id": 73,
+  "product_code": "0163080",
+  "product_name": "Pineapples"
+ },
+ {
+  "product_id": 82,
+  "product_parent_id": 73,
+  "product_code": "0163090",
+  "product_name": "Breadfruits"
+ },
+ {
+  "product_id": 83,
+  "product_parent_id": 73,
+  "product_code": "0163100",
+  "product_name": "Durians"
+ },
+ {
+  "product_id": 84,
+  "product_parent_id": 73,
+  "product_code": "0163110",
+  "product_name": "Soursops/guanabanas"
+ },
+ {
+  "product_id": 85,
+  "product_parent_id": 73,
+  "product_code": "0163990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 86,
+  "product_parent_id": null,
+  "product_code": "0200000",
+  "product_name": "VEGETABLES, FRESH or FROZEN"
+ },
+ {
+  "product_id": 87,
+  "product_parent_id": 86,
+  "product_code": "0210000",
+  "product_name": "Root and tuber vegetables"
+ },
+ {
+  "product_id": 88,
+  "product_parent_id": 87,
+  "product_code": "0211000",
+  "product_name": "(a) potatoes"
+ },
+ {
+  "product_id": 89,
+  "product_parent_id": 87,
+  "product_code": "0212000",
+  "product_name": "(b) tropical root and tuber vegetables"
+ },
+ {
+  "product_id": 90,
+  "product_parent_id": 89,
+  "product_code": "0212010",
+  "product_name": "Cassava roots/manioc"
+ },
+ {
+  "product_id": 91,
+  "product_parent_id": 89,
+  "product_code": "0212020",
+  "product_name": "Sweet potatoes"
+ },
+ {
+  "product_id": 92,
+  "product_parent_id": 89,
+  "product_code": "0212030",
+  "product_name": "Yams"
+ },
+ {
+  "product_id": 93,
+  "product_parent_id": 89,
+  "product_code": "0212040",
+  "product_name": "Arrowroots"
+ },
+ {
+  "product_id": 94,
+  "product_parent_id": 89,
+  "product_code": "0212990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 95,
+  "product_parent_id": 87,
+  "product_code": "0213000",
+  "product_name": "(c) other root and tuber vegetables except sugar beets"
+ },
+ {
+  "product_id": 96,
+  "product_parent_id": 95,
+  "product_code": "0213010",
+  "product_name": "Beetroots"
+ },
+ {
+  "product_id": 97,
+  "product_parent_id": 95,
+  "product_code": "0213020",
+  "product_name": "Carrots"
+ },
+ {
+  "product_id": 98,
+  "product_parent_id": 95,
+  "product_code": "0213030",
+  "product_name": "Celeriacs/turnip rooted celeries"
+ },
+ {
+  "product_id": 99,
+  "product_parent_id": 95,
+  "product_code": "0213040",
+  "product_name": "Horseradishes"
+ },
+ {
+  "product_id": 100,
+  "product_parent_id": 95,
+  "product_code": "0213050",
+  "product_name": "Jerusalem artichokes"
+ },
+ {
+  "product_id": 101,
+  "product_parent_id": 95,
+  "product_code": "0213060",
+  "product_name": "Parsnips"
+ },
+ {
+  "product_id": 102,
+  "product_parent_id": 95,
+  "product_code": "0213070",
+  "product_name": "Parsley roots/Hamburg roots parsley"
+ },
+ {
+  "product_id": 103,
+  "product_parent_id": 95,
+  "product_code": "0213080",
+  "product_name": "Radishes"
+ },
+ {
+  "product_id": 104,
+  "product_parent_id": 95,
+  "product_code": "0213090",
+  "product_name": "Salsifies"
+ },
+ {
+  "product_id": 105,
+  "product_parent_id": 95,
+  "product_code": "0213100",
+  "product_name": "Swedes/rutabagas"
+ },
+ {
+  "product_id": 106,
+  "product_parent_id": 95,
+  "product_code": "0213110",
+  "product_name": "Turnips"
+ },
+ {
+  "product_id": 107,
+  "product_parent_id": 95,
+  "product_code": "0213990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 108,
+  "product_parent_id": 86,
+  "product_code": "0220000",
+  "product_name": "Bulb vegetables"
+ },
+ {
+  "product_id": 109,
+  "product_parent_id": 108,
+  "product_code": "0220010",
+  "product_name": "Garlic"
+ },
+ {
+  "product_id": 110,
+  "product_parent_id": 108,
+  "product_code": "0220020",
+  "product_name": "Onions"
+ },
+ {
+  "product_id": 111,
+  "product_parent_id": 108,
+  "product_code": "0220030",
+  "product_name": "Shallots"
+ },
+ {
+  "product_id": 112,
+  "product_parent_id": 108,
+  "product_code": "0220040",
+  "product_name": "Spring onions/green onions and Welsh onions"
+ },
+ {
+  "product_id": 113,
+  "product_parent_id": 108,
+  "product_code": "0220990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 114,
+  "product_parent_id": 86,
+  "product_code": "0230000",
+  "product_name": "Fruiting vegetables"
+ },
+ {
+  "product_id": 115,
+  "product_parent_id": 114,
+  "product_code": "0231000",
+  "product_name": "(a) Solanaceae and Malvaceae"
+ },
+ {
+  "product_id": 116,
+  "product_parent_id": 115,
+  "product_code": "0231010",
+  "product_name": "Tomatoes"
+ },
+ {
+  "product_id": 117,
+  "product_parent_id": 115,
+  "product_code": "0231020",
+  "product_name": "Sweet peppers/bell peppers"
+ },
+ {
+  "product_id": 118,
+  "product_parent_id": 115,
+  "product_code": "0231030",
+  "product_name": "Aubergines/eggplants"
+ },
+ {
+  "product_id": 119,
+  "product_parent_id": 115,
+  "product_code": "0231040",
+  "product_name": "Okra/lady's fingers"
+ },
+ {
+  "product_id": 120,
+  "product_parent_id": 115,
+  "product_code": "0231990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 121,
+  "product_parent_id": 114,
+  "product_code": "0232000",
+  "product_name": "(b) cucurbits with edible peel"
+ },
+ {
+  "product_id": 122,
+  "product_parent_id": 121,
+  "product_code": "0232010",
+  "product_name": "Cucumbers"
+ },
+ {
+  "product_id": 123,
+  "product_parent_id": 121,
+  "product_code": "0232020",
+  "product_name": "Gherkins"
+ },
+ {
+  "product_id": 124,
+  "product_parent_id": 121,
+  "product_code": "0232030",
+  "product_name": "Courgettes"
+ },
+ {
+  "product_id": 125,
+  "product_parent_id": 121,
+  "product_code": "0232990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 126,
+  "product_parent_id": 114,
+  "product_code": "0233000",
+  "product_name": "(c) cucurbits with inedible peel"
+ },
+ {
+  "product_id": 127,
+  "product_parent_id": 126,
+  "product_code": "0233010",
+  "product_name": "Melons"
+ },
+ {
+  "product_id": 128,
+  "product_parent_id": 126,
+  "product_code": "0233020",
+  "product_name": "Pumpkins"
+ },
+ {
+  "product_id": 129,
+  "product_parent_id": 126,
+  "product_code": "0233030",
+  "product_name": "Watermelons"
+ },
+ {
+  "product_id": 130,
+  "product_parent_id": 126,
+  "product_code": "0233990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 131,
+  "product_parent_id": 114,
+  "product_code": "0234000",
+  "product_name": "(d) sweet corn"
+ },
+ {
+  "product_id": 132,
+  "product_parent_id": 114,
+  "product_code": "0239000",
+  "product_name": "(e) other fruiting vegetables"
+ },
+ {
+  "product_id": 133,
+  "product_parent_id": 86,
+  "product_code": "0240000",
+  "product_name": "Brassica vegetables(excluding brassica roots and brassica baby leaf crops)"
+ },
+ {
+  "product_id": 134,
+  "product_parent_id": 133,
+  "product_code": "0241000",
+  "product_name": "(a) flowering brassica"
+ },
+ {
+  "product_id": 135,
+  "product_parent_id": 134,
+  "product_code": "0241010",
+  "product_name": "Broccoli"
+ },
+ {
+  "product_id": 136,
+  "product_parent_id": 134,
+  "product_code": "0241020",
+  "product_name": "Cauliflowers"
+ },
+ {
+  "product_id": 137,
+  "product_parent_id": 134,
+  "product_code": "0241990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 138,
+  "product_parent_id": 133,
+  "product_code": "0242000",
+  "product_name": "(b) head brassica"
+ },
+ {
+  "product_id": 139,
+  "product_parent_id": 138,
+  "product_code": "0242010",
+  "product_name": "Brussels sprouts"
+ },
+ {
+  "product_id": 140,
+  "product_parent_id": 138,
+  "product_code": "0242020",
+  "product_name": "Head cabbages"
+ },
+ {
+  "product_id": 141,
+  "product_parent_id": 138,
+  "product_code": "0242990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 142,
+  "product_parent_id": 133,
+  "product_code": "0243000",
+  "product_name": "(c) leafy brassica"
+ },
+ {
+  "product_id": 143,
+  "product_parent_id": 142,
+  "product_code": "0243010",
+  "product_name": "Chinese cabbages/pe-tsai"
+ },
+ {
+  "product_id": 144,
+  "product_parent_id": 142,
+  "product_code": "0243020",
+  "product_name": "Kales"
+ },
+ {
+  "product_id": 145,
+  "product_parent_id": 142,
+  "product_code": "0243990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 146,
+  "product_parent_id": 133,
+  "product_code": "0244000",
+  "product_name": "(d) kohlrabies"
+ },
+ {
+  "product_id": 147,
+  "product_parent_id": 86,
+  "product_code": "0250000",
+  "product_name": "Leaf vegetables, herbs and edible flowers"
+ },
+ {
+  "product_id": 148,
+  "product_parent_id": 147,
+  "product_code": "0251000",
+  "product_name": "(a) lettuces and salad plants"
+ },
+ {
+  "product_id": 149,
+  "product_parent_id": 148,
+  "product_code": "0251010",
+  "product_name": "Lamb's lettuces/corn salads"
+ },
+ {
+  "product_id": 150,
+  "product_parent_id": 148,
+  "product_code": "0251020",
+  "product_name": "Lettuces"
+ },
+ {
+  "product_id": 151,
+  "product_parent_id": 148,
+  "product_code": "0251030",
+  "product_name": "Escaroles/broad-leaved endives"
+ },
+ {
+  "product_id": 152,
+  "product_parent_id": 148,
+  "product_code": "0251040",
+  "product_name": "Cresses and other sprouts and shoots"
+ },
+ {
+  "product_id": 153,
+  "product_parent_id": 148,
+  "product_code": "0251050",
+  "product_name": "Land cresses"
+ },
+ {
+  "product_id": 154,
+  "product_parent_id": 148,
+  "product_code": "0251060",
+  "product_name": "Roman rocket/rucola"
+ },
+ {
+  "product_id": 155,
+  "product_parent_id": 148,
+  "product_code": "0251070",
+  "product_name": "Red mustards"
+ },
+ {
+  "product_id": 156,
+  "product_parent_id": 148,
+  "product_code": "0251080",
+  "product_name": "Baby leaf crops (including brassica species)"
+ },
+ {
+  "product_id": 157,
+  "product_parent_id": 148,
+  "product_code": "0251990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 158,
+  "product_parent_id": 147,
+  "product_code": "0252000",
+  "product_name": "(b) spinaches and similar leaves"
+ },
+ {
+  "product_id": 159,
+  "product_parent_id": 158,
+  "product_code": "0252010",
+  "product_name": "Spinaches"
+ },
+ {
+  "product_id": 160,
+  "product_parent_id": 158,
+  "product_code": "0252020",
+  "product_name": "Purslanes"
+ },
+ {
+  "product_id": 161,
+  "product_parent_id": 158,
+  "product_code": "0252030",
+  "product_name": "Chards/beet leaves"
+ },
+ {
+  "product_id": 162,
+  "product_parent_id": 158,
+  "product_code": "0252990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 163,
+  "product_parent_id": 147,
+  "product_code": "0253000",
+  "product_name": "(c) grape leaves and similar species"
+ },
+ {
+  "product_id": 164,
+  "product_parent_id": 147,
+  "product_code": "0254000",
+  "product_name": "(d) watercresses"
+ },
+ {
+  "product_id": 165,
+  "product_parent_id": 147,
+  "product_code": "0255000",
+  "product_name": "(e) witloofs/Belgian endives"
+ },
+ {
+  "product_id": 166,
+  "product_parent_id": 147,
+  "product_code": "0256000",
+  "product_name": "(f) herbs and edible flowers"
+ },
+ {
+  "product_id": 167,
+  "product_parent_id": 166,
+  "product_code": "0256010",
+  "product_name": "Chervil"
+ },
+ {
+  "product_id": 168,
+  "product_parent_id": 166,
+  "product_code": "0256020",
+  "product_name": "Chives"
+ },
+ {
+  "product_id": 169,
+  "product_parent_id": 166,
+  "product_code": "0256030",
+  "product_name": "Celery leaves"
+ },
+ {
+  "product_id": 170,
+  "product_parent_id": 166,
+  "product_code": "0256040",
+  "product_name": "Parsley"
+ },
+ {
+  "product_id": 171,
+  "product_parent_id": 166,
+  "product_code": "0256050",
+  "product_name": "Sage"
+ },
+ {
+  "product_id": 172,
+  "product_parent_id": 166,
+  "product_code": "0256060",
+  "product_name": "Rosemary"
+ },
+ {
+  "product_id": 173,
+  "product_parent_id": 166,
+  "product_code": "0256070",
+  "product_name": "Thyme"
+ },
+ {
+  "product_id": 174,
+  "product_parent_id": 166,
+  "product_code": "0256080",
+  "product_name": "Basil and edible flowers"
+ },
+ {
+  "product_id": 175,
+  "product_parent_id": 166,
+  "product_code": "0256090",
+  "product_name": "Laurel/bay leaves"
+ },
+ {
+  "product_id": 176,
+  "product_parent_id": 166,
+  "product_code": "0256100",
+  "product_name": "Tarragon"
+ },
+ {
+  "product_id": 177,
+  "product_parent_id": 166,
+  "product_code": "0256990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 178,
+  "product_parent_id": 86,
+  "product_code": "0260000",
+  "product_name": "Legume vegetables"
+ },
+ {
+  "product_id": 179,
+  "product_parent_id": 178,
+  "product_code": "0260010",
+  "product_name": "Beans (with pods)"
+ },
+ {
+  "product_id": 180,
+  "product_parent_id": 178,
+  "product_code": "0260020",
+  "product_name": "Beans (without pods)"
+ },
+ {
+  "product_id": 181,
+  "product_parent_id": 178,
+  "product_code": "0260030",
+  "product_name": "Peas (with pods)"
+ },
+ {
+  "product_id": 182,
+  "product_parent_id": 178,
+  "product_code": "0260040",
+  "product_name": "Peas (without pods)"
+ },
+ {
+  "product_id": 183,
+  "product_parent_id": 178,
+  "product_code": "0260050",
+  "product_name": "Lentils"
+ },
+ {
+  "product_id": 184,
+  "product_parent_id": 178,
+  "product_code": "0260990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 185,
+  "product_parent_id": 86,
+  "product_code": "0270000",
+  "product_name": "Stem vegetables"
+ },
+ {
+  "product_id": 186,
+  "product_parent_id": 185,
+  "product_code": "0270010",
+  "product_name": "Asparagus"
+ },
+ {
+  "product_id": 187,
+  "product_parent_id": 185,
+  "product_code": "0270020",
+  "product_name": "Cardoons"
+ },
+ {
+  "product_id": 188,
+  "product_parent_id": 185,
+  "product_code": "0270030",
+  "product_name": "Celeries"
+ },
+ {
+  "product_id": 189,
+  "product_parent_id": 185,
+  "product_code": "0270040",
+  "product_name": "Florence fennels"
+ },
+ {
+  "product_id": 190,
+  "product_parent_id": 185,
+  "product_code": "0270050",
+  "product_name": "Globe artichokes"
+ },
+ {
+  "product_id": 191,
+  "product_parent_id": 185,
+  "product_code": "0270060",
+  "product_name": "Leeks"
+ },
+ {
+  "product_id": 192,
+  "product_parent_id": 185,
+  "product_code": "0270070",
+  "product_name": "Rhubarbs"
+ },
+ {
+  "product_id": 193,
+  "product_parent_id": 185,
+  "product_code": "0270080",
+  "product_name": "Bamboo shoots"
+ },
+ {
+  "product_id": 194,
+  "product_parent_id": 185,
+  "product_code": "0270090",
+  "product_name": "Palm hearts"
+ },
+ {
+  "product_id": 195,
+  "product_parent_id": 185,
+  "product_code": "0270990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 196,
+  "product_parent_id": 86,
+  "product_code": "0280000",
+  "product_name": "Fungi, mosses and lichens"
+ },
+ {
+  "product_id": 197,
+  "product_parent_id": 196,
+  "product_code": "0280010",
+  "product_name": "Cultivated fungi"
+ },
+ {
+  "product_id": 198,
+  "product_parent_id": 196,
+  "product_code": "0280020",
+  "product_name": "Wild fungi"
+ },
+ {
+  "product_id": 199,
+  "product_parent_id": 196,
+  "product_code": "0280990",
+  "product_name": "Mosses and lichens"
+ },
+ {
+  "product_id": 200,
+  "product_parent_id": 86,
+  "product_code": "0290000",
+  "product_name": "Algae and prokaryotes organisms"
+ },
+ {
+  "product_id": 201,
+  "product_parent_id": null,
+  "product_code": "0300000",
+  "product_name": "PULSES"
+ },
+ {
+  "product_id": 202,
+  "product_parent_id": 201,
+  "product_code": "0300010",
+  "product_name": "Beans"
+ },
+ {
+  "product_id": 203,
+  "product_parent_id": 201,
+  "product_code": "0300020",
+  "product_name": "Lentils"
+ },
+ {
+  "product_id": 204,
+  "product_parent_id": 201,
+  "product_code": "0300030",
+  "product_name": "Peas"
+ },
+ {
+  "product_id": 205,
+  "product_parent_id": 201,
+  "product_code": "0300040",
+  "product_name": "Lupins/lupini beans"
+ },
+ {
+  "product_id": 206,
+  "product_parent_id": 201,
+  "product_code": "0300990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 207,
+  "product_parent_id": null,
+  "product_code": "0400000",
+  "product_name": "OILSEEDS AND OIL FRUITS"
+ },
+ {
+  "product_id": 208,
+  "product_parent_id": 207,
+  "product_code": "0401000",
+  "product_name": "Oilseeds"
+ },
+ {
+  "product_id": 209,
+  "product_parent_id": 208,
+  "product_code": "0401010",
+  "product_name": "Linseeds"
+ },
+ {
+  "product_id": 210,
+  "product_parent_id": 208,
+  "product_code": "0401020",
+  "product_name": "Peanuts/groundnuts"
+ },
+ {
+  "product_id": 211,
+  "product_parent_id": 208,
+  "product_code": "0401030",
+  "product_name": "Poppy seeds"
+ },
+ {
+  "product_id": 212,
+  "product_parent_id": 208,
+  "product_code": "0401040",
+  "product_name": "Sesame seeds"
+ },
+ {
+  "product_id": 213,
+  "product_parent_id": 208,
+  "product_code": "0401050",
+  "product_name": "Sunflower seeds"
+ },
+ {
+  "product_id": 214,
+  "product_parent_id": 208,
+  "product_code": "0401060",
+  "product_name": "Rapeseeds/canola seeds"
+ },
+ {
+  "product_id": 215,
+  "product_parent_id": 208,
+  "product_code": "0401070",
+  "product_name": "Soyabeans"
+ },
+ {
+  "product_id": 216,
+  "product_parent_id": 208,
+  "product_code": "0401080",
+  "product_name": "Mustard seeds"
+ },
+ {
+  "product_id": 217,
+  "product_parent_id": 208,
+  "product_code": "0401090",
+  "product_name": "Cotton seeds"
+ },
+ {
+  "product_id": 218,
+  "product_parent_id": 208,
+  "product_code": "0401100",
+  "product_name": "Pumpkin seeds"
+ },
+ {
+  "product_id": 219,
+  "product_parent_id": 208,
+  "product_code": "0401110",
+  "product_name": "Safflower seeds"
+ },
+ {
+  "product_id": 220,
+  "product_parent_id": 208,
+  "product_code": "0401120",
+  "product_name": "Borage seeds"
+ },
+ {
+  "product_id": 221,
+  "product_parent_id": 208,
+  "product_code": "0401130",
+  "product_name": "Gold of pleasure seeds"
+ },
+ {
+  "product_id": 222,
+  "product_parent_id": 208,
+  "product_code": "0401140",
+  "product_name": "Hemp seeds"
+ },
+ {
+  "product_id": 223,
+  "product_parent_id": 208,
+  "product_code": "0401150",
+  "product_name": "Castor beans"
+ },
+ {
+  "product_id": 224,
+  "product_parent_id": 208,
+  "product_code": "0401990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 225,
+  "product_parent_id": 207,
+  "product_code": "0402000",
+  "product_name": "Oil fruits"
+ },
+ {
+  "product_id": 226,
+  "product_parent_id": 225,
+  "product_code": "0402010",
+  "product_name": "Olives for oil production"
+ },
+ {
+  "product_id": 227,
+  "product_parent_id": 225,
+  "product_code": "0402020",
+  "product_name": "Oil palms kernels"
+ },
+ {
+  "product_id": 228,
+  "product_parent_id": 225,
+  "product_code": "0402030",
+  "product_name": "Oil palms fruits"
+ },
+ {
+  "product_id": 229,
+  "product_parent_id": 225,
+  "product_code": "0402040",
+  "product_name": "Kapok"
+ },
+ {
+  "product_id": 230,
+  "product_parent_id": 225,
+  "product_code": "0402990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 231,
+  "product_parent_id": null,
+  "product_code": "0500000",
+  "product_name": "CEREALS"
+ },
+ {
+  "product_id": 232,
+  "product_parent_id": 231,
+  "product_code": "0500010",
+  "product_name": "Barley"
+ },
+ {
+  "product_id": 233,
+  "product_parent_id": 231,
+  "product_code": "0500020",
+  "product_name": "Buckwheat and other pseudocereals"
+ },
+ {
+  "product_id": 234,
+  "product_parent_id": 231,
+  "product_code": "0500030",
+  "product_name": "Maize/corn"
+ },
+ {
+  "product_id": 235,
+  "product_parent_id": 231,
+  "product_code": "0500040",
+  "product_name": "Common millet/proso millet"
+ },
+ {
+  "product_id": 236,
+  "product_parent_id": 231,
+  "product_code": "0500050",
+  "product_name": "Oat"
+ },
+ {
+  "product_id": 237,
+  "product_parent_id": 231,
+  "product_code": "0500060",
+  "product_name": "Rice"
+ },
+ {
+  "product_id": 238,
+  "product_parent_id": 231,
+  "product_code": "0500070",
+  "product_name": "Rye"
+ },
+ {
+  "product_id": 239,
+  "product_parent_id": 231,
+  "product_code": "0500080",
+  "product_name": "Sorghum"
+ },
+ {
+  "product_id": 240,
+  "product_parent_id": 231,
+  "product_code": "0500090",
+  "product_name": "Wheat"
+ },
+ {
+  "product_id": 241,
+  "product_parent_id": 231,
+  "product_code": "0500990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 242,
+  "product_parent_id": null,
+  "product_code": "0600000",
+  "product_name": "TEAS, COFFEE, HERBAL INFUSIONS, COCOA AND CAROBS"
+ },
+ {
+  "product_id": 243,
+  "product_parent_id": 242,
+  "product_code": "0610000",
+  "product_name": "Teas"
+ },
+ {
+  "product_id": 244,
+  "product_parent_id": 242,
+  "product_code": "0620000",
+  "product_name": "Coffee beans"
+ },
+ {
+  "product_id": 245,
+  "product_parent_id": 242,
+  "product_code": "0630000",
+  "product_name": "Herbal infusions from"
+ },
+ {
+  "product_id": 246,
+  "product_parent_id": 245,
+  "product_code": "0631000",
+  "product_name": "(a) flowers"
+ },
+ {
+  "product_id": 247,
+  "product_parent_id": 246,
+  "product_code": "0631010",
+  "product_name": "Chamomile"
+ },
+ {
+  "product_id": 248,
+  "product_parent_id": 246,
+  "product_code": "0631020",
+  "product_name": "Hibiscus/roselle"
+ },
+ {
+  "product_id": 249,
+  "product_parent_id": 246,
+  "product_code": "0631030",
+  "product_name": "Rose"
+ },
+ {
+  "product_id": 250,
+  "product_parent_id": 246,
+  "product_code": "0631040",
+  "product_name": "Jasmine"
+ },
+ {
+  "product_id": 251,
+  "product_parent_id": 246,
+  "product_code": "0631050",
+  "product_name": "Lime/linden"
+ },
+ {
+  "product_id": 252,
+  "product_parent_id": 246,
+  "product_code": "0631990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 253,
+  "product_parent_id": 245,
+  "product_code": "0632000",
+  "product_name": "(b) leaves and herbs"
+ },
+ {
+  "product_id": 254,
+  "product_parent_id": 253,
+  "product_code": "0632010",
+  "product_name": "Strawberry"
+ },
+ {
+  "product_id": 255,
+  "product_parent_id": 253,
+  "product_code": "0632020",
+  "product_name": "Rooibos"
+ },
+ {
+  "product_id": 256,
+  "product_parent_id": 253,
+  "product_code": "0632030",
+  "product_name": "Mate/maté"
+ },
+ {
+  "product_id": 257,
+  "product_parent_id": 253,
+  "product_code": "0632990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 258,
+  "product_parent_id": 245,
+  "product_code": "0633000",
+  "product_name": "(c) roots"
+ },
+ {
+  "product_id": 259,
+  "product_parent_id": 258,
+  "product_code": "0633010",
+  "product_name": "Valerian"
+ },
+ {
+  "product_id": 260,
+  "product_parent_id": 258,
+  "product_code": "0633020",
+  "product_name": "Ginseng"
+ },
+ {
+  "product_id": 261,
+  "product_parent_id": 258,
+  "product_code": "0633990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 262,
+  "product_parent_id": 245,
+  "product_code": "0639000",
+  "product_name": "(d) any other parts of the plant"
+ },
+ {
+  "product_id": 263,
+  "product_parent_id": 242,
+  "product_code": "0640000",
+  "product_name": "Cocoa beans"
+ },
+ {
+  "product_id": 264,
+  "product_parent_id": 242,
+  "product_code": "0650000",
+  "product_name": "Carobs/Saint John's breads"
+ },
+ {
+  "product_id": 265,
+  "product_parent_id": null,
+  "product_code": "0700000",
+  "product_name": "HOPS"
+ },
+ {
+  "product_id": 266,
+  "product_parent_id": null,
+  "product_code": "0800000",
+  "product_name": "SPICES"
+ },
+ {
+  "product_id": 267,
+  "product_parent_id": 266,
+  "product_code": "0810000",
+  "product_name": "Seed spices"
+ },
+ {
+  "product_id": 268,
+  "product_parent_id": 267,
+  "product_code": "0810010",
+  "product_name": "Anise/aniseed"
+ },
+ {
+  "product_id": 269,
+  "product_parent_id": 267,
+  "product_code": "0810020",
+  "product_name": "Black caraway/black cumin"
+ },
+ {
+  "product_id": 270,
+  "product_parent_id": 267,
+  "product_code": "0810030",
+  "product_name": "Celery"
+ },
+ {
+  "product_id": 271,
+  "product_parent_id": 267,
+  "product_code": "0810040",
+  "product_name": "Coriander"
+ },
+ {
+  "product_id": 272,
+  "product_parent_id": 267,
+  "product_code": "0810050",
+  "product_name": "Cumin"
+ },
+ {
+  "product_id": 273,
+  "product_parent_id": 267,
+  "product_code": "0810060",
+  "product_name": "Dill"
+ },
+ {
+  "product_id": 274,
+  "product_parent_id": 267,
+  "product_code": "0810070",
+  "product_name": "Fennel"
+ },
+ {
+  "product_id": 275,
+  "product_parent_id": 267,
+  "product_code": "0810080",
+  "product_name": "Fenugreek"
+ },
+ {
+  "product_id": 276,
+  "product_parent_id": 267,
+  "product_code": "0810090",
+  "product_name": "Nutmeg"
+ },
+ {
+  "product_id": 277,
+  "product_parent_id": 267,
+  "product_code": "0810990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 278,
+  "product_parent_id": 266,
+  "product_code": "0820000",
+  "product_name": "Fruit spices"
+ },
+ {
+  "product_id": 279,
+  "product_parent_id": 278,
+  "product_code": "0820010",
+  "product_name": "Allspice/pimento"
+ },
+ {
+  "product_id": 280,
+  "product_parent_id": 278,
+  "product_code": "0820020",
+  "product_name": "Sichuan pepper"
+ },
+ {
+  "product_id": 281,
+  "product_parent_id": 278,
+  "product_code": "0820030",
+  "product_name": "Caraway"
+ },
+ {
+  "product_id": 282,
+  "product_parent_id": 278,
+  "product_code": "0820040",
+  "product_name": "Cardamom"
+ },
+ {
+  "product_id": 283,
+  "product_parent_id": 278,
+  "product_code": "0820050",
+  "product_name": "Juniper berry"
+ },
+ {
+  "product_id": 284,
+  "product_parent_id": 278,
+  "product_code": "0820060",
+  "product_name": "Peppercorn (black, green and white)"
+ },
+ {
+  "product_id": 285,
+  "product_parent_id": 278,
+  "product_code": "0820070",
+  "product_name": "Vanilla"
+ },
+ {
+  "product_id": 286,
+  "product_parent_id": 278,
+  "product_code": "0820080",
+  "product_name": "Tamarind"
+ },
+ {
+  "product_id": 287,
+  "product_parent_id": 278,
+  "product_code": "0820990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 288,
+  "product_parent_id": 266,
+  "product_code": "0830000",
+  "product_name": "Bark spices"
+ },
+ {
+  "product_id": 289,
+  "product_parent_id": 288,
+  "product_code": "0830010",
+  "product_name": "Cinnamon"
+ },
+ {
+  "product_id": 290,
+  "product_parent_id": 288,
+  "product_code": "0830990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 291,
+  "product_parent_id": 266,
+  "product_code": "0840000",
+  "product_name": "Root and rhizome spices"
+ },
+ {
+  "product_id": 292,
+  "product_parent_id": 291,
+  "product_code": "0840010",
+  "product_name": "Liquorice"
+ },
+ {
+  "product_id": 293,
+  "product_parent_id": 291,
+  "product_code": "0840020",
+  "product_name": "Ginger (10)"
+ },
+ {
+  "product_id": 294,
+  "product_parent_id": 291,
+  "product_code": "0840030",
+  "product_name": "Turmeric/curcuma"
+ },
+ {
+  "product_id": 295,
+  "product_parent_id": 291,
+  "product_code": "0840040",
+  "product_name": "Horseradish (11)"
+ },
+ {
+  "product_id": 296,
+  "product_parent_id": 291,
+  "product_code": "0840990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 297,
+  "product_parent_id": 266,
+  "product_code": "0850000",
+  "product_name": "Bud spices"
+ },
+ {
+  "product_id": 298,
+  "product_parent_id": 297,
+  "product_code": "0850010",
+  "product_name": "Cloves"
+ },
+ {
+  "product_id": 299,
+  "product_parent_id": 297,
+  "product_code": "0850020",
+  "product_name": "Capers"
+ },
+ {
+  "product_id": 300,
+  "product_parent_id": 297,
+  "product_code": "0850990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 301,
+  "product_parent_id": 266,
+  "product_code": "0860000",
+  "product_name": "Flower pistil spices"
+ },
+ {
+  "product_id": 302,
+  "product_parent_id": 301,
+  "product_code": "0860010",
+  "product_name": "Saffron"
+ },
+ {
+  "product_id": 303,
+  "product_parent_id": 301,
+  "product_code": "0860990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 304,
+  "product_parent_id": 266,
+  "product_code": "0870000",
+  "product_name": "Aril spices"
+ },
+ {
+  "product_id": 305,
+  "product_parent_id": 304,
+  "product_code": "0870010",
+  "product_name": "Mace"
+ },
+ {
+  "product_id": 306,
+  "product_parent_id": 304,
+  "product_code": "0870990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 307,
+  "product_parent_id": null,
+  "product_code": "0900000",
+  "product_name": "SUGAR PLANTS"
+ },
+ {
+  "product_id": 308,
+  "product_parent_id": 307,
+  "product_code": "0900010",
+  "product_name": "Sugar beet roots"
+ },
+ {
+  "product_id": 309,
+  "product_parent_id": 307,
+  "product_code": "0900020",
+  "product_name": "Sugar canes"
+ },
+ {
+  "product_id": 310,
+  "product_parent_id": 307,
+  "product_code": "0900030",
+  "product_name": "Chicory roots"
+ },
+ {
+  "product_id": 311,
+  "product_parent_id": 307,
+  "product_code": "0900990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 312,
+  "product_parent_id": null,
+  "product_code": "1000000",
+  "product_name": "PRODUCTS OF ANIMAL ORIGIN -TERRESTRIAL ANIMALS"
+ },
+ {
+  "product_id": 313,
+  "product_parent_id": 312,
+  "product_code": "1010000",
+  "product_name": "Commodities from"
+ },
+ {
+  "product_id": 314,
+  "product_parent_id": 313,
+  "product_code": "1011000",
+  "product_name": "(a) swine"
+ },
+ {
+  "product_id": 315,
+  "product_parent_id": 314,
+  "product_code": "1011010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 316,
+  "product_parent_id": 314,
+  "product_code": "1011020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 317,
+  "product_parent_id": 314,
+  "product_code": "1011030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 318,
+  "product_parent_id": 314,
+  "product_code": "1011040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 319,
+  "product_parent_id": 314,
+  "product_code": "1011050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 320,
+  "product_parent_id": 314,
+  "product_code": "1011990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 321,
+  "product_parent_id": 313,
+  "product_code": "1012000",
+  "product_name": "(b) bovine"
+ },
+ {
+  "product_id": 322,
+  "product_parent_id": 321,
+  "product_code": "1012010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 323,
+  "product_parent_id": 321,
+  "product_code": "1012020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 324,
+  "product_parent_id": 321,
+  "product_code": "1012030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 325,
+  "product_parent_id": 321,
+  "product_code": "1012040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 326,
+  "product_parent_id": 321,
+  "product_code": "1012050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 327,
+  "product_parent_id": 321,
+  "product_code": "1012990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 328,
+  "product_parent_id": 313,
+  "product_code": "1013000",
+  "product_name": "(c) sheep"
+ },
+ {
+  "product_id": 329,
+  "product_parent_id": 328,
+  "product_code": "1013010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 330,
+  "product_parent_id": 328,
+  "product_code": "1013020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 331,
+  "product_parent_id": 328,
+  "product_code": "1013030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 332,
+  "product_parent_id": 328,
+  "product_code": "1013040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 333,
+  "product_parent_id": 328,
+  "product_code": "1013050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 334,
+  "product_parent_id": 328,
+  "product_code": "1013990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 335,
+  "product_parent_id": 313,
+  "product_code": "1014000",
+  "product_name": "d) goat"
+ },
+ {
+  "product_id": 336,
+  "product_parent_id": 335,
+  "product_code": "1014010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 337,
+  "product_parent_id": 335,
+  "product_code": "1014020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 338,
+  "product_parent_id": 335,
+  "product_code": "1014030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 339,
+  "product_parent_id": 335,
+  "product_code": "1014040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 340,
+  "product_parent_id": 335,
+  "product_code": "1014050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 341,
+  "product_parent_id": 335,
+  "product_code": "1014990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 342,
+  "product_parent_id": 313,
+  "product_code": "1015000",
+  "product_name": "(e) equine"
+ },
+ {
+  "product_id": 343,
+  "product_parent_id": 342,
+  "product_code": "1015010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 344,
+  "product_parent_id": 342,
+  "product_code": "1015020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 345,
+  "product_parent_id": 342,
+  "product_code": "1015030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 346,
+  "product_parent_id": 342,
+  "product_code": "1015040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 347,
+  "product_parent_id": 342,
+  "product_code": "1015050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 348,
+  "product_parent_id": 342,
+  "product_code": "1015990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 349,
+  "product_parent_id": 313,
+  "product_code": "1016000",
+  "product_name": "(f) poultry"
+ },
+ {
+  "product_id": 350,
+  "product_parent_id": 349,
+  "product_code": "1016010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 351,
+  "product_parent_id": 349,
+  "product_code": "1016020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 352,
+  "product_parent_id": 349,
+  "product_code": "1016030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 353,
+  "product_parent_id": 349,
+  "product_code": "1016040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 354,
+  "product_parent_id": 349,
+  "product_code": "1016050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 355,
+  "product_parent_id": 349,
+  "product_code": "1016990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 356,
+  "product_parent_id": 313,
+  "product_code": "1017000",
+  "product_name": "(g) other farmed terrestrial animals"
+ },
+ {
+  "product_id": 357,
+  "product_parent_id": 356,
+  "product_code": "1017010",
+  "product_name": "Muscle"
+ },
+ {
+  "product_id": 358,
+  "product_parent_id": 356,
+  "product_code": "1017020",
+  "product_name": "Fat"
+ },
+ {
+  "product_id": 359,
+  "product_parent_id": 356,
+  "product_code": "1017030",
+  "product_name": "Liver"
+ },
+ {
+  "product_id": 360,
+  "product_parent_id": 356,
+  "product_code": "1017040",
+  "product_name": "Kidney"
+ },
+ {
+  "product_id": 361,
+  "product_parent_id": 356,
+  "product_code": "1017050",
+  "product_name": "Edible offals (other than liver and kidney)"
+ },
+ {
+  "product_id": 362,
+  "product_parent_id": 356,
+  "product_code": "1017990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 363,
+  "product_parent_id": 312,
+  "product_code": "1020000",
+  "product_name": "Milk"
+ },
+ {
+  "product_id": 364,
+  "product_parent_id": 363,
+  "product_code": "1020010",
+  "product_name": "Cattle"
+ },
+ {
+  "product_id": 365,
+  "product_parent_id": 363,
+  "product_code": "1020020",
+  "product_name": "Sheep"
+ },
+ {
+  "product_id": 366,
+  "product_parent_id": 363,
+  "product_code": "1020030",
+  "product_name": "Goat"
+ },
+ {
+  "product_id": 367,
+  "product_parent_id": 363,
+  "product_code": "1020040",
+  "product_name": "Horse"
+ },
+ {
+  "product_id": 368,
+  "product_parent_id": 363,
+  "product_code": "1020990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 369,
+  "product_parent_id": 312,
+  "product_code": "1030000",
+  "product_name": "Birds eggs"
+ },
+ {
+  "product_id": 370,
+  "product_parent_id": 369,
+  "product_code": "1030010",
+  "product_name": "Chicken"
+ },
+ {
+  "product_id": 371,
+  "product_parent_id": 369,
+  "product_code": "1030020",
+  "product_name": "Duck"
+ },
+ {
+  "product_id": 372,
+  "product_parent_id": 369,
+  "product_code": "1030030",
+  "product_name": "Geese"
+ },
+ {
+  "product_id": 373,
+  "product_parent_id": 369,
+  "product_code": "1030040",
+  "product_name": "Quail"
+ },
+ {
+  "product_id": 374,
+  "product_parent_id": 369,
+  "product_code": "1030990",
+  "product_name": "Others (2)"
+ },
+ {
+  "product_id": 375,
+  "product_parent_id": 312,
+  "product_code": "1040000",
+  "product_name": "Honey and other apiculture products (7)"
+ },
+ {
+  "product_id": 376,
+  "product_parent_id": 312,
+  "product_code": "1050000",
+  "product_name": "Amphibians and Reptiles"
+ },
+ {
+  "product_id": 377,
+  "product_parent_id": 312,
+  "product_code": "1060000",
+  "product_name": "Terrestrial invertebrate animals"
+ },
+ {
+  "product_id": 378,
+  "product_parent_id": 312,
+  "product_code": "1070000",
+  "product_name": "Wild terrestrial vertebrate animals"
+ },
+ {
+  "product_id": 379,
+  "product_parent_id": null,
+  "product_code": "1100000",
+  "product_name": "PRODUCTS OF ANIMAL ORIGIN - FISH, FISHPRODUCTS AND ANY OTHER MARINE AND FRESHWATER FOOD PRODUCTS (8)"
+ },
+ {
+  "product_id": 380,
+  "product_parent_id": null,
+  "product_code": "1200000",
+  "product_name": "PRODUCTS OR PART OF PRODUCTS EXCLUSIVELY USED FOR ANIMAL FEED PRODUCTION (8)"
+ },
+ {
+  "product_id": 381,
+  "product_parent_id": null,
+  "product_code": "1300000",
+  "product_name": "PROCESSED FOOD PRODUCTS (9)"
+ }
+]

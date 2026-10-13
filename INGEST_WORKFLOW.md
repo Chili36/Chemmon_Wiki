@@ -119,7 +119,10 @@ When rd-bridge merges a new version:
 
 1. **Pin the snapshot.** Run `python tools/ingest_rd_bridge.py` (latest `main`;
    `--ref <sha>` for a specific commit, `--dry-run` to preview). It validates
-   the data, writes nothing if it is malformed, and replaces the snapshot.
+   the data, writes nothing if it is malformed, replaces the snapshot and
+   regenerates `pesticide-residue-definitions-by-food.md`. The scheduled
+   workflow `.github/workflows/rd-bridge-refresh.yml` does this daily and
+   opens a pull request when rd-bridge has changed; it never merges.
 2. **Pass A uses the report.** The tool lists added, removed and changed
    residue definitions (names, scopes, definitions, PARAM codes, notes) and
    the wiki pages citing the dataset, marking those that cite a changed record.
@@ -132,6 +135,13 @@ When rd-bridge merges a new version:
 4. **Pass C, commit and log as usual.** Run the health check and tests, update
    the source review record, and add a `log.md` entry naming the old and new
    commits.
+
+Generated pages: `pesticide-residue-definitions-by-food.md` is rendered by
+`tools/rd_bridge_page.py` from the rd-bridge snapshot and the Annex I names in
+`chemmon_docs/datasets/eu-annex-i/`. Never edit it; change the generator. The
+health check fails when the page differs from what the generator renders. If
+a new snapshot uses an Annex I code without a name, refresh the names with
+`python tools/ingest_annex_i.py` (EU Pesticides Database API).
 
 Dataset rules:
 
