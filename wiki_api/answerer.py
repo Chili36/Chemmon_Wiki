@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from dataclasses import dataclass
 from typing import Any, Iterator, Literal, TypedDict
@@ -28,18 +29,23 @@ Rules:
 - Do not make up rules or guidance that is not in the provided pages.
 - Be concise and direct.
 
-Return JSON only with this structure:
-{
-  "answer": "Your grounded answer here.",
-  "citations": ["page-name.md", "other-page.md"]
-}
+Write the answer as plain text (Markdown lists and code formatting are fine).
+After each claim, cite its page filename in parentheses, for example
+(page-name.md). Do not wrap the answer in JSON or repeat it.
 
-If you cannot answer from the provided pages, return:
-{
-  "answer": "The wiki does not cover this topic.",
-  "citations": []
-}
+If you cannot answer from the provided pages, say "The wiki does not cover this topic." and cite nothing.
 """
+
+# Page filenames cited inline, e.g. "(pesticide-reporting.md; other-page.md)".
+INLINE_CITATION_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.md\b")
+
+
+def inline_citations(answer: str) -> list[str]:
+    """Page filenames mentioned in the answer, in first-mention order.
+
+    The API keeps only those that were supplied as evidence.
+    """
+    return list(dict.fromkeys(INLINE_CITATION_RE.findall(answer)))
 
 
 @dataclass(frozen=True)
@@ -102,10 +108,15 @@ class WikiAnswerer:
     def _parse_answer(self, text: str) -> tuple[str, list[str]]:
         if not text.strip():
             raise RuntimeError("The answer model returned no answer. Please try a narrower question.")
+        # Answers are plain text with inline citations. A JSON object with an
+        # "answer" field (older prompt, other models, or a trailing copy) wins.
         data = extract_json_payload(text)
-        if data and "answer" in data:
-            return data["answer"], data.get("citations", [])
-        return text.strip(), []
+        if data and isinstance(data.get("answer"), str):
+            answer = data["answer"]
+            listed = [c for c in data.get("citations") or [] if isinstance(c, str)]
+            return answer, list(dict.fromkeys(listed + inline_citations(answer)))
+        answer = text.strip()
+        return answer, inline_citations(answer)
 
     def _build_result(self, answer: str, citations: list[str], usages: list[dict], timings: list[dict], wall_start: float) -> AnswerResult:
         return AnswerResult(

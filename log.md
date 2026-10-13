@@ -940,3 +940,19 @@ Sonnet 5.5 branch default) it finished at 2,918 tokens and listed the
 pesticides correctly, apart from naming ethephon (a cereals exception) among
 animal rows without a code. A general programme question selected the same
 four pages before and after; the list page was not selected for it.
+
+## 2026-10-13 — Fix empty citations from Sonnet 5.5 answers
+
+Live `/wiki/ask` answers often had an empty `citations` list. Root cause:
+the answerer asked for JSON only, but Sonnet 5.5 usually answered in prose with
+inline `(page.md)` citations, and only sometimes appended a JSON copy. Without
+the copy (5 of 8 runs of one question) citations were lost; with it, the
+answer was generated twice, and streaming showed both.
+
+The prompt now asks for plain text with inline page citations, and
+`citations` is derived from those mentions. The API still keeps only pages
+supplied as evidence. JSON replies still parse.
+
+Verification: 8 of 8 runs of the failing question returned citations with no
+JSON copy; six questions checked in ask and stream modes, with streamed text
+equal to the final answer. 149 tests pass.

@@ -99,7 +99,9 @@ Main endpoints:
   `use_graph_expansion: true`; it uses remaining page slots only. Returned pages
   identify `evidence_kind` as `full` or `summary`. Only full pages are citable.
 - Source filenames, page ranges and claim-adjacent source locators are retained
-  in model evidence. Citation membership is checked; factual support still needs
+  in model evidence. Answers are plain text with inline `(page.md)` citations;
+  `citations` lists the cited pages that were supplied as evidence. Citation
+  membership is checked; factual support still needs
   semantic review and answer evaluation.
 - An empty selection returns an insufficient-evidence response without calling
   the answer model. A malformed selector response returns an error.

@@ -148,3 +148,49 @@ def test_answerer_stream_falls_back_on_error():
     finals = [e for e in events if e["type"] == "final"]
     assert len(finals) == 1
     assert finals[0]["result"].answer == "Fallback answer."
+
+
+# Sonnet 5.5 usually answers in prose with inline "(page.md)" citations and
+# ignores a JSON-only instruction; citations must not depend on the envelope.
+PROSE_ANSWER = (
+    "Per the pinned snapshot, no. Glyphosate is not on the list "
+    "(pesticide-residue-definitions-by-food.md). The legislation decides "
+    "(pesticide-residue-definition-by-matrix.md; pesticide-residue-definitions-by-food.md)."
+)
+
+
+def test_prose_answer_takes_citations_from_inline_page_names():
+    client = _fake_client(_chat_response(content=PROSE_ANSWER))
+    result = WikiAnswerer(client=client, model_id="fake-model").run(question="q", pages=[])
+    assert result.answer == PROSE_ANSWER
+    assert result.citations == ["pesticide-residue-definitions-by-food.md", "pesticide-residue-definition-by-matrix.md"]
+
+
+def test_prose_followed_by_json_copy_returns_one_answer():
+    payload = {"answer": "Short JSON answer (a.md).", "citations": ["b.md"]}
+    client = _fake_client(_chat_response(content=PROSE_ANSWER + "\n\n" + json.dumps(payload)))
+    result = WikiAnswerer(client=client, model_id="fake-model").run(question="q", pages=[])
+    assert result.answer == "Short JSON answer (a.md)."
+    assert result.citations == ["b.md", "a.md"]
+
+
+def test_prompt_asks_for_inline_citations_not_json():
+    from wiki_api.answerer import ANSWERER_SYSTEM_PROMPT
+    assert "Return JSON" not in ANSWERER_SYSTEM_PROMPT
+    assert "(page-name.md)" in ANSWERER_SYSTEM_PROMPT
+
+
+def test_streamed_prose_answer_has_inline_citations():
+    chunk = MagicMock()
+    chunk.choices = [MagicMock()]
+    chunk.choices[0].delta.content = PROSE_ANSWER
+    chunk.choices[0].finish_reason = "stop"
+    chunk.usage = None
+    end = MagicMock()
+    end.choices = []
+    end.usage = MagicMock(prompt_tokens=10, completion_tokens=5)
+    client = MagicMock()
+    client.chat.completions.create.return_value = iter([chunk, end])
+    events = list(WikiAnswerer(client=client, model_id="fake-model").stream(question="q", pages=[]))
+    final = events[-1]["result"]
+    assert final.citations == ["pesticide-residue-definitions-by-food.md", "pesticide-residue-definition-by-matrix.md"]
