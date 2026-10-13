@@ -30,6 +30,7 @@ from wiki_api.datasets import (  # noqa: E402
     residue_index, sha256_bytes,
 )
 from wiki_api.wiki_store import split_frontmatter  # noqa: E402
+from tools.rd_bridge_page import ANNEX_DIR, PAGE_NAME, NamesMissing, write as write_page  # noqa: E402
 
 DEFAULT_SOURCE = "https://github.com/Chili36/rd-bridge"
 # Snapshot file name -> path in the rd-bridge repository.
@@ -133,6 +134,8 @@ def render_report(previous: dict[str, Any] | None, fetched: dict[str, Any], summ
     if not pages:
         lines.append("No page cites the residue map.")
     for page, ids in sorted(pages.items()):
+        if page == PAGE_NAME:
+            continue  # generated from the snapshot; rewritten by the ingest
         hit = sorted(ids & changed)
         why = (f"cites changed residue_id {', '.join(map(str, hit))}" if hit
                else "cites the dataset; confirm and update the Source commit")
@@ -177,8 +180,16 @@ def ingest(root: Path, source: str, ref: str, dry_run: bool = False) -> tuple[st
             "summary": summary,
         }
         (target / MANIFEST_NAME).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    page_note = ""
+    if write and (root / "wiki" / "chemmon-guidance").is_dir() and (root / ANNEX_DIR).is_dir():
+        try:
+            if write_page(root):
+                page_note = f"\nRegenerated {PAGE_NAME} from the new snapshot.\n"
+        except NamesMissing as exc:
+            page_note = f"\nNOT regenerated {PAGE_NAME}: {exc}. The health check fails until it is.\n"
     diff = compare(old, new) if previous else None
     report = render_report(previous, fetched, summary, diff, old, new, citing_pages(root), write)
+    report += page_note
     return report, write
 
 

@@ -1,0 +1,91 @@
+# Pin the latest merged rd-bridge snapshot, regenerate the dataset page and
+# propose it via PR. rd-bridge refreshes EU data weekly through its own
+# reviewed PRs, so merges land on no fixed day; checking daily keeps the lag
+# short. The PR never auto-merges: citing pages and the source review need
+# a human or assistant pass (INGEST_WORKFLOW.md, dataset sources).
+name: Refresh rd-bridge dataset
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: rd-bridge branch, tag or commit
+        default: main
+  schedule:
+    - cron: '0 7 * * *'  # daily 07:00 UTC
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: rd-bridge-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Pin rd-bridge snapshot and regenerate the page
+        env:
+          RD_REF: ${{ inputs.ref || 'main' }}
+        run: python tools/ingest_rd_bridge.py --ref "$RD_REF" --report "$RUNNER_TEMP/ingest.md"
+      - name: Check the proposed wiki
+        id: checks
+        shell: bash
+        run: |
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "rd-bridge snapshot is unchanged."
+            exit 0
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          # Failures are reported in the PR rather than hiding a new snapshot.
+          health=0; python tools/health_check.py > "$RUNNER_TEMP/health.txt" 2>&1 || health=$?
+          tests=0; python -m pytest -q > "$RUNNER_TEMP/tests.txt" 2>&1 || tests=$?
+          echo "health=$health" >> "$GITHUB_OUTPUT"
+          echo "tests=$tests" >> "$GITHUB_OUTPUT"
+      - name: Open pull request
+        if: steps.checks.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEALTH: ${{ steps.checks.outputs.health }}
+          TESTS: ${{ steps.checks.outputs.tests }}
+        shell: bash
+        run: |
+          commit=$(python -c "import json;print(json.load(open('chemmon_docs/datasets/rd-bridge/manifest.json'))['commit'][:7])")
+          branch="data/rd-bridge-$commit"
+          if git ls-remote --exit-code origin "refs/heads/$branch" > /dev/null; then
+            echo "A branch for rd-bridge $commit already exists; not opening a duplicate."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add chemmon_docs/datasets wiki/chemmon-guidance
+          git commit -m "Pin rd-bridge $commit and regenerate residue-definitions page"
+          git push origin "$branch"
+          {
+            echo "Automated rd-bridge ingest. Review before merging:"
+            echo
+            echo "- [ ] Pages listed below re-checked and their Source commit updated (Pass B)"
+            echo "- [ ] \`docs/source-review.json\` updated and \`log.md\` entry added"
+            echo
+            echo "**Health check exit:** $HEALTH  **Tests exit:** $TESTS"
+            echo "(Expected to fail until the review above is done: the source-review fingerprint changes with every snapshot.)"
+            echo
+            cat "$RUNNER_TEMP/ingest.md"
+            echo
+            echo "<details><summary>Health check</summary>"
+            echo; echo '~~~'; tail -40 "$RUNNER_TEMP/health.txt"; echo '~~~'; echo "</details>"
+            echo "<details><summary>Tests</summary>"
+            echo; echo '~~~'; tail -40 "$RUNNER_TEMP/tests.txt"; echo '~~~'; echo "</details>"
+          } > "$RUNNER_TEMP/body.md"
+          gh pr create --base main --head "$branch" --title "Refresh rd-bridge dataset ($commit)" --body-file "$RUNNER_TEMP/body.md"

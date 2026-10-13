@@ -16,6 +16,9 @@ chemmon_docs/datasets/rd-bridge/
   Pinned rd-bridge snapshot: pesticide residue definitions by commodity
   mapped to PARAM codes, with a checksum manifest
 
+chemmon_docs/datasets/eu-annex-i/
+  Annex I product codes and names from the EU Pesticides Database
+
 wiki/chemmon-guidance/
   Topic-oriented markdown knowledge pages derived from the guidance PDFs
   and EFSA official clarifications
@@ -139,7 +142,8 @@ is justified by offline checks; both remain evaluation decisions.
 
 Run `python tools/health_check.py` and `pytest -q` after changes. When rd-bridge
 publishes a new version, run `python tools/ingest_rd_bridge.py` and follow the
-dataset steps in [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md). GitHub Actions
+dataset steps in [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md); a daily workflow
+proposes the same refresh as a pull request. GitHub Actions
 runs both checks on pull requests and pushes to main or `codex/**` branches.
 The health check validates topic metadata, dates, links including `related`,
 local sources, index/API registration and duplicate CHEMMON IDs. The
