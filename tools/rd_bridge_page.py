@@ -20,7 +20,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from wiki_api.datasets import DATASETS_DIR, RD_BRIDGE_MAP, load_rd_bridge, read_manifest  # noqa: E402
+from wiki_api.datasets import (  # noqa: E402
+    DATASETS_DIR, PARAM_CODE_RE, RD_BRIDGE_MAP, load_rd_bridge, read_manifest,
+)
 
 PAGE_NAME = "pesticide-residue-definitions-by-food.md"
 ANNEX_DIR = DATASETS_DIR / "eu-annex-i"
@@ -82,8 +84,9 @@ def _scope(exception: dict[str, Any], labels: dict[str, str]) -> str:
     def named(codes: list[str]) -> str:
         missing = [c for c in codes if c not in labels]
         if missing:
-            raise NamesMissing(f"no Annex I name for {', '.join(missing)}; run tools/ingest_annex_i.py")
-        return ", ".join(f"`{c}`" for c in codes)
+            raise NamesMissing(f"no Annex I name for {_cell(', '.join(map(str, missing)))}; "
+                               "run tools/ingest_annex_i.py")
+        return ", ".join(f"`{_digits(c)}`" for c in codes)
     text = named(exception["commodity_codes"])
     if exception.get("except_codes"):
         text += "; **except** " + named(exception["except_codes"])
@@ -95,13 +98,29 @@ def _scope(exception: dict[str, Any], labels: dict[str, str]) -> str:
 def _code(scope: dict[str, Any]) -> str:
     method = scope.get("method")
     codes = scope.get("param_codes") or []
-    if method in TRUSTED_METHODS and codes:
+    if method in TRUSTED_METHODS and codes and all(PARAM_CODE_RE.fullmatch(str(c)) for c in codes):
         return ", ".join(f"`{c}`" for c in codes)
-    return f"no trustworthy PARAM code ({UNTRUSTED_LABEL.get(method, method or 'unknown')})"
+    return f"no trustworthy PARAM code ({_cell(UNTRUSTED_LABEL.get(method, method or 'unknown'))})"
 
 
-def _cell(text: str) -> str:
-    return re.sub(r"\s+", " ", text).replace("|", "/").strip()
+def _cell(text: Any) -> str:
+    """Make upstream text inert in markdown and in model evidence.
+
+    Dataset text must not open HTML comments (a forged `Source:` locator),
+    supply backticked codes that the claim check would trust, add wiki links,
+    or break the table.
+    """
+    text = re.sub(r"\s+", " ", str(text)).replace("|", "/")
+    text = text.replace("`", "'").replace("<", "&lt;").replace(">", "&gt;")
+    return text.replace("[[", "[ [").replace("]]", "] ]").strip()
+
+
+def _digits(value: Any) -> str:
+    """A commodity code from upstream data, accepted only as plain digits."""
+    value = str(value)
+    if not re.fullmatch(r"\d{1,7}", value):
+        raise ValueError(f"unexpected commodity code in dataset: {_cell(value)[:40]}")
+    return value
 
 
 def render(root: Path) -> str:
@@ -127,13 +146,13 @@ def render(root: Path) -> str:
             rows.append(f"| {name} | {_scope(exception, labels)} | {_cell(exception['definition'])} "
                         f"| {_code(exception)} |")
             for repair in exception.get("repairs") or []:
-                repairs.append(f"- {name}: the EU footnote reads code `{repair['from']}`; rd-bridge reads "
-                               f"`{repair['to']}` ({repair['reason']}).")
+                repairs.append(f"- {name}: the EU footnote reads code `{_digits(repair['from'])}`; rd-bridge "
+                               f"reads `{_digits(repair['to'])}` ({_cell(repair['reason'])}).")
         for scope in [record["default"], *record["exceptions"]]:
             for issue in scope.get("issues") or []:
                 repairs.append(f"- {name}: {_cell(str(issue))}")
     ids = ", ".join(str(r["residue_id"]) for r in varying)
-    legend = "\n".join(f"| `{c}` | {labels[c]} |" for c in sorted(used))
+    legend = "\n".join(f"| `{_digits(c)}` | {_cell(labels[c])} |" for c in sorted(used))
 
     page = f'''---
 title: "Pesticides Whose Residue Definition Changes by Food"
@@ -194,7 +213,7 @@ Names from the EU Pesticides Database; sub-group names are qualified by their pa
 
 ## Sources and attribution
 
-- rd-bridge contributors, *rd-bridge* reference dataset, commit `{commit}`, {manifest["repository"]}. Derived and non-official; the project's data contributions are offered under CC BY 4.0 (see its DATA_SOURCES.md).
+- rd-bridge contributors, *rd-bridge* reference dataset, commit `{_cell(commit)}`, {_cell(manifest["repository"])}. Derived and non-official; the project's data contributions are offered under CC BY 4.0 (see its DATA_SOURCES.md).
 - European Commission, DG SANTE, *EU Pesticides Database*: residue definitions and Annex I product names (names retrieved {annex["retrieved_at"]}). The database is informational and has no legal value; only the legislation has legal force.
 - European Food Safety Authority, *PARAM catalogue*{f", version {param_version.group(1)}" if param_version else ""}.
 - No endorsement by the European Commission, EFSA or any Member State is implied.

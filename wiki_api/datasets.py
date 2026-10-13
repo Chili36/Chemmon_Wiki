@@ -114,9 +114,16 @@ def residue_index(records: Any) -> dict[int, dict[str, Any]]:
             isinstance(e, dict) and isinstance(e.get("commodity_codes"), list) for e in exceptions
         ):
             raise ValueError(f"residue_id {record['residue_id']}: malformed exceptions")
+        for exception in exceptions:
+            codes = exception["commodity_codes"] + (exception.get("except_codes") or [])
+            codes += [r.get(k) for r in exception.get("repairs") or [] for k in ("from", "to")]
+            if not all(isinstance(c, str) and re.fullmatch(r"\d{1,7}", c) for c in codes):
+                raise ValueError(f"residue_id {record['residue_id']}: commodity codes must be digits")
         for scope in [record["default"], *exceptions]:
-            if not isinstance(scope.get("param_codes", []), list):
-                raise ValueError(f"residue_id {record['residue_id']}: param_codes must be a list")
+            if not isinstance(scope.get("param_codes", []), list) or not all(
+                isinstance(c, str) for c in scope.get("param_codes") or []
+            ):
+                raise ValueError(f"residue_id {record['residue_id']}: param_codes must be a list of strings")
         index[record["residue_id"]] = record
     return index
 

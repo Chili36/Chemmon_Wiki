@@ -30,7 +30,7 @@ from wiki_api.datasets import (  # noqa: E402
     residue_index, sha256_bytes,
 )
 from wiki_api.wiki_store import split_frontmatter  # noqa: E402
-from tools.rd_bridge_page import ANNEX_DIR, PAGE_NAME, NamesMissing, write as write_page  # noqa: E402
+from tools.rd_bridge_page import ANNEX_DIR, PAGE_NAME, NamesMissing, _cell, write as write_page  # noqa: E402
 
 DEFAULT_SOURCE = "https://github.com/Chili36/rd-bridge"
 # Snapshot file name -> path in the rd-bridge repository.
@@ -127,7 +127,7 @@ def render_report(previous: dict[str, Any] | None, fetched: dict[str, Any], summ
             lines.append("None in the fields the wiki uses (names, scopes, definitions, PARAM codes, notes).")
         for kind, source in (("added", new), ("removed", old), ("changed", new)):
             for n in diff[kind]:
-                lines.append(f"- {kind}: residue_id {n} {source[n]['name']}")
+                lines.append(f"- {kind}: residue_id {n} {_cell(source[n]['name'])}")
         lines.append("")
     changed = set(diff["removed"] + diff["changed"]) if diff else set()
     lines.append("## Wiki pages to review")
