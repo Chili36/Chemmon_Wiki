@@ -13,6 +13,7 @@ from .providers import (
     client_for_model,
     extract_json_payload,
     normalize_usage as _normalize_usage,
+    resolve_provider,
 )
 
 
@@ -28,13 +29,37 @@ Rules:
 - If the wiki pages do not contain enough information to answer the question, say so clearly.
 - Do not make up rules or guidance that is not in the provided pages.
 - Be concise and direct.
-
-Write the answer as plain text (Markdown lists and code formatting are fine).
-After each claim, cite its page filename in parentheses, for example
-(page-name.md). Do not wrap the answer in JSON or repeat it.
-
-If you cannot answer from the provided pages, say "The wiki does not cover this topic." and cite nothing.
+- After each claim, cite its page filename in parentheses, for example (page-name.md).
+- If you cannot answer from the provided pages, say "The wiki does not cover this topic." and cite nothing.
 """
+
+PLAIN_TEXT_FORMAT = """
+Write the answer as plain text (Markdown lists and code formatting are fine). Do not repeat it."""
+
+STRUCTURED_FORMAT = """
+Put the full answer, with its inline citations, in "answer". List every page you cited in "citations"."""
+
+# Providers verified to enforce json_schema output through the OpenAI-compatible
+# endpoint (Anthropic, 2026-10-13, streaming and not).
+# Others get the plain-text contract; citations then come from inline mentions.
+STRUCTURED_OUTPUT_PROVIDERS = {"anthropic"}
+
+ANSWER_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "wiki_answer",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["answer", "citations"],
+            "properties": {
+                "answer": {"type": "string"},
+                "citations": {"type": "array", "items": {"type": "string"}},
+            },
+        },
+    },
+}
 
 # Page filenames cited inline, e.g. "(pesticide-reporting.md; other-page.md)".
 INLINE_CITATION_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.md\b")
@@ -79,23 +104,33 @@ class WikiAnswerer:
         model_id: str | None = None,
         model_str: str | None = None,
         max_tokens: int | None = None,
+        structured_output: bool | None = None,
     ):
         if client and model_id:
             self.client = client
             self.model_id = model_id
+            provider = None
         else:
             resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-5-5")
+            provider, _ = resolve_provider(resolved_str)
             self.client, self.model_id = client_for_model(resolved_str)
+        self.structured_output = (
+            structured_output if structured_output is not None else provider in STRUCTURED_OUTPUT_PROVIDERS
+        )
         self._sonnet55 = self.model_id.split("/")[-1] == "claude-sonnet-5-5"
         # Sonnet 5.5 shares this allowance between adaptive thinking and text.
         self.max_tokens = max_tokens if max_tokens is not None else (8192 if self._sonnet55 else 2000)
+
+    def _format_kwargs(self) -> dict[str, Any]:
+        return {"response_format": ANSWER_RESPONSE_FORMAT} if self.structured_output else {}
 
     def _retry_budget(self, budget: int) -> int:
         return max(budget, min(budget * 2, 16384)) if self._sonnet55 else budget
 
     def _build_messages(self, question: str, pages: list[dict[str, Any]]) -> list[dict[str, str]]:
         return [
-            {"role": "system", "content": ANSWERER_SYSTEM_PROMPT},
+            {"role": "system", "content": ANSWERER_SYSTEM_PROMPT
+             + (STRUCTURED_FORMAT if self.structured_output else PLAIN_TEXT_FORMAT)},
             {
                 "role": "user",
                 "content": json.dumps(
@@ -140,6 +175,7 @@ class WikiAnswerer:
                 max_tokens=budget,
                 messages=self._build_messages(question, pages),
                 stream=False,
+                **self._format_kwargs(),
             )
             finish_reason = response.choices[0].finish_reason if response.choices else None
             usages.append(_normalize_usage(response.usage, finish_reason))
@@ -176,6 +212,7 @@ class WikiAnswerer:
                     messages=self._build_messages(question, pages),
                     stream=True,
                     stream_options={"include_usage": True},
+                    **self._format_kwargs(),
                 )
                 for chunk in response_stream:
                     if chunk.choices:

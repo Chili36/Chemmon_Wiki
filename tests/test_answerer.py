@@ -174,10 +174,35 @@ def test_prose_followed_by_json_copy_returns_one_answer():
     assert result.citations == ["b.md", "a.md"]
 
 
-def test_prompt_asks_for_inline_citations_not_json():
-    from wiki_api.answerer import ANSWERER_SYSTEM_PROMPT
-    assert "Return JSON" not in ANSWERER_SYSTEM_PROMPT
-    assert "(page-name.md)" in ANSWERER_SYSTEM_PROMPT
+def test_unverified_provider_gets_plain_text_contract_without_response_format():
+    client = _fake_client(_chat_response(content=PROSE_ANSWER))
+    WikiAnswerer(client=client, model_id="fake-model").run(question="q", pages=[])
+    kwargs = client.chat.completions.create.call_args.kwargs
+    assert "response_format" not in kwargs
+    system = kwargs["messages"][0]["content"]
+    assert "(page-name.md)" in system and "JSON" not in system
+
+
+def test_structured_provider_sends_strict_schema_and_parses_it():
+    payload = {"answer": "GBR28 requires resQualValue (business-rules-gbr-results.md).", "citations": ["x.md"]}
+    client = _fake_client(_chat_response(content=json.dumps(payload)))
+    result = WikiAnswerer(client=client, model_id="claude-sonnet-5-5", structured_output=True).run(question="q", pages=[])
+    kwargs = client.chat.completions.create.call_args.kwargs
+    schema = kwargs["response_format"]["json_schema"]
+    assert kwargs["response_format"]["type"] == "json_schema" and schema["strict"] is True
+    assert schema["schema"]["required"] == ["answer", "citations"]
+    assert "(page-name.md)" in kwargs["messages"][0]["content"]
+    assert result.answer == payload["answer"]
+    assert result.citations == ["x.md", "business-rules-gbr-results.md"]
+
+
+def test_structured_output_is_enabled_only_for_verified_providers(monkeypatch):
+    import wiki_api.answerer as A
+    monkeypatch.setattr(A, "client_for_model", lambda s: (MagicMock(), s.split("/")[-1]))
+    assert A.WikiAnswerer(model_str="anthropic/claude-sonnet-5-5").structured_output is True
+    assert A.WikiAnswerer(model_str="openai/gpt-5.4-mini").structured_output is False
+    assert A.WikiAnswerer(model_str="google/gemini-3-pro").structured_output is False
+    assert A.WikiAnswerer(model_str="lmstudio/local-model").structured_output is False
 
 
 def test_streamed_prose_answer_has_inline_citations():

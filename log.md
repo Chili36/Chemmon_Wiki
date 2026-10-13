@@ -956,3 +956,18 @@ supplied as evidence. JSON replies still parse.
 Verification: 8 of 8 runs of the failing question returned citations with no
 JSON copy; six questions checked in ask and stream modes, with streamed text
 equal to the final answer. 149 tests pass.
+
+## 2026-10-13 — Structured answer output for Anthropic
+
+The answerer now sends a strict `json_schema` response format (`answer`,
+`citations`) for the Anthropic provider, after verifying that the
+OpenAI-compatible endpoint enforces it with Sonnet 5.5 both with and without
+streaming. The answer keeps inline `(page.md)` citations; `citations` is the
+union of the listed and inline pages, filtered by the API to supplied evidence.
+Other providers keep the plain-text contract. OpenAI was not enabled: its
+answerer already fails on `main` because GPT-5 models reject `max_tokens`
+(issue filed).
+
+Verification: 6 of 6 raw outputs were pure JSON; six questions in ask and
+stream modes had citations, and the streamed text equalled the final answer.
+151 tests pass.
