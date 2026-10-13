@@ -200,7 +200,7 @@ def test_structured_output_is_enabled_only_for_verified_providers(monkeypatch):
     import wiki_api.answerer as A
     monkeypatch.setattr(A, "client_for_model", lambda s: (MagicMock(), s.split("/")[-1]))
     assert A.WikiAnswerer(model_str="anthropic/claude-sonnet-5-5").structured_output is True
-    assert A.WikiAnswerer(model_str="openai/gpt-5.4-mini").structured_output is False
+    assert A.WikiAnswerer(model_str="openai/gpt-5.4-mini").structured_output is True
     assert A.WikiAnswerer(model_str="google/gemini-3-pro").structured_output is False
     assert A.WikiAnswerer(model_str="lmstudio/local-model").structured_output is False
 
@@ -219,3 +219,21 @@ def test_streamed_prose_answer_has_inline_citations():
     events = list(WikiAnswerer(client=client, model_id="fake-model").stream(question="q", pages=[]))
     final = events[-1]["result"]
     assert final.citations == ["pesticide-residue-definitions-by-food.md", "pesticide-residue-definition-by-matrix.md"]
+
+
+def test_openai_answerer_sends_max_completion_tokens(monkeypatch):
+    import wiki_api.answerer as A
+    client = _fake_client(_chat_response(content=json.dumps({"answer": "x (a.md)", "citations": ["a.md"]})))
+    monkeypatch.setattr(A, "client_for_model", lambda s: (client, s.split("/")[-1]))
+    A.WikiAnswerer(model_str="openai/gpt-5.4-mini").run(question="q", pages=[])
+    kwargs = client.chat.completions.create.call_args.kwargs
+    assert "max_tokens" not in kwargs and kwargs["max_completion_tokens"] > 0
+
+
+def test_other_providers_keep_max_tokens(monkeypatch):
+    import wiki_api.answerer as A
+    client = _fake_client(_chat_response(content="x (a.md)"))
+    monkeypatch.setattr(A, "client_for_model", lambda s: (client, s.split("/")[-1]))
+    A.WikiAnswerer(model_str="anthropic/claude-sonnet-5-5").run(question="q", pages=[])
+    kwargs = client.chat.completions.create.call_args.kwargs
+    assert kwargs["max_tokens"] == 8192 and "max_completion_tokens" not in kwargs

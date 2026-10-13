@@ -40,9 +40,9 @@ STRUCTURED_FORMAT = """
 Put the full answer, with its inline citations, in "answer". List every page you cited in "citations"."""
 
 # Providers verified to enforce json_schema output through the OpenAI-compatible
-# endpoint (Anthropic, 2026-10-13, streaming and not).
+# endpoint (Anthropic 2026-10-13, OpenAI 2026-10-14; streaming and not).
 # Others get the plain-text contract; citations then come from inline mentions.
-STRUCTURED_OUTPUT_PROVIDERS = {"anthropic"}
+STRUCTURED_OUTPUT_PROVIDERS = {"anthropic", "openai"}
 
 ANSWER_RESPONSE_FORMAT = {
     "type": "json_schema",
@@ -114,12 +114,17 @@ class WikiAnswerer:
             resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-5-5")
             provider, _ = resolve_provider(resolved_str)
             self.client, self.model_id = client_for_model(resolved_str)
+        self.provider = provider
         self.structured_output = (
             structured_output if structured_output is not None else provider in STRUCTURED_OUTPUT_PROVIDERS
         )
         self._sonnet55 = self.model_id.split("/")[-1] == "claude-sonnet-5-5"
         # Sonnet 5.5 shares this allowance between adaptive thinking and text.
         self.max_tokens = max_tokens if max_tokens is not None else (8192 if self._sonnet55 else 2000)
+
+    def _limit_kwargs(self, budget: int) -> dict[str, int]:
+        # OpenAI's GPT-5 models reject max_tokens; reasoning counts toward this limit.
+        return {"max_completion_tokens": budget} if self.provider == "openai" else {"max_tokens": budget}
 
     def _format_kwargs(self) -> dict[str, Any]:
         return {"response_format": ANSWER_RESPONSE_FORMAT} if self.structured_output else {}
@@ -172,7 +177,7 @@ class WikiAnswerer:
             call_started = time.perf_counter()
             response = self.client.chat.completions.create(
                 model=self.model_id,
-                max_tokens=budget,
+                **self._limit_kwargs(budget),
                 messages=self._build_messages(question, pages),
                 stream=False,
                 **self._format_kwargs(),
@@ -208,7 +213,7 @@ class WikiAnswerer:
             try:
                 response_stream = self.client.chat.completions.create(
                     model=self.model_id,
-                    max_tokens=budget,
+                    **self._limit_kwargs(budget),
                     messages=self._build_messages(question, pages),
                     stream=True,
                     stream_options={"include_usage": True},
