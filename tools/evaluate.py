@@ -177,7 +177,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--cases', type=Path, default=ROOT/'evals/cases.json')
     parser.add_argument('--mode', choices=['select', 'answer'], default='select')
-    parser.add_argument('--models', nargs='+', default=['openai/gpt-5.4-mini'])
+    parser.add_argument('--models', nargs='+', default=['anthropic/claude-haiku-5-5'])
     parser.add_argument('--split', choices=['development', 'held-out'], default='development')
     parser.add_argument('--catalog-mode', choices=['hints', 'summary'], default='hints')
     parser.add_argument('--live', action='store_true', help='explicitly enable paid model calls')

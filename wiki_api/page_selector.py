@@ -10,6 +10,7 @@ from .providers import (
     aggregate_timing as _aggregate_timing,
     aggregate_usage as _aggregate_usage,
     client_for_model,
+    resolve_provider,
     extract_json_payload,
     normalize_usage as _normalize_usage,
 )
@@ -31,6 +32,25 @@ Rules:
 - Return JSON only: {"page_names": ["page-name.md"]}. No tools are available.
 - If no topic pages can help, return {"page_names": []}.
 """
+
+# Providers verified (2026-10-13) to accept and enforce a strict json_schema
+# response format. Anthropic rejects the older {"type": "json_object"}; other
+# providers get no response_format and rely on the prompt and tolerant parsing.
+STRUCTURED_OUTPUT_PROVIDERS = {"anthropic", "openai"}
+
+SELECTION_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "page_selection",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["page_names"],
+            "properties": {"page_names": {"type": "array", "items": {"type": "string"}}},
+        },
+    },
+}
 
 
 @dataclass(frozen=True)
@@ -98,6 +118,7 @@ class WikiPageSelector:
         model_str: str | None = None,
         max_pages: int = 6,
         use_hints: bool = True,
+        structured_output: bool | None = None,
     ):
         self.store = store
         self.max_pages = max_pages
@@ -105,9 +126,17 @@ class WikiPageSelector:
         if client and model_id:
             self.client = client
             self.model_id = model_id
+            provider = None
         else:
-            resolved_str = model_str or os.getenv("WIKI_SELECTOR_MODEL", "openai/gpt-5.4-mini")
+            resolved_str = model_str or os.getenv("WIKI_SELECTOR_MODEL", "anthropic/claude-haiku-5-5")
+            provider, _ = resolve_provider(resolved_str)
             self.client, self.model_id = client_for_model(resolved_str)
+        self.structured_output = (
+            structured_output if structured_output is not None else provider in STRUCTURED_OUTPUT_PROVIDERS
+        )
+
+    def _format_kwargs(self) -> dict[str, Any]:
+        return {"response_format": SELECTION_RESPONSE_FORMAT} if self.structured_output else {}
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
@@ -129,7 +158,7 @@ class WikiPageSelector:
                     ),
                 },
             ],
-            response_format={"type": "json_object"},
+            **self._format_kwargs(),
         )
 
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)

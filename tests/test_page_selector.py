@@ -104,3 +104,28 @@ def test_selector_rejects_invalid_selections(content):
     selector = WikiPageSelector(store=_store(), client=_fake_client(_chat_response(content=content)), model_id="fake-model")
     with pytest.raises(ValueError):
         selector.run({"question": "test"})
+
+
+def test_verified_providers_get_strict_selection_schema(monkeypatch):
+    import wiki_api.page_selector as S
+    monkeypatch.setattr(S, "client_for_model", lambda s: (MagicMock(), s.split("/")[-1]))
+    store = MagicMock()
+    for model, expected in (("anthropic/claude-haiku-5-5", True), ("openai/gpt-5.4-mini", True),
+                            ("google/gemini-3-pro", False), ("lmstudio/local", False)):
+        selector = S.WikiPageSelector(store=store, model_str=model)
+        assert selector.structured_output is expected
+        kwargs = selector._format_kwargs()
+        if expected:
+            fmt = kwargs["response_format"]
+            assert fmt["type"] == "json_schema" and fmt["json_schema"]["strict"] is True
+            assert fmt["json_schema"]["schema"]["required"] == ["page_names"]
+        else:
+            assert kwargs == {}
+
+
+def test_selector_request_uses_schema_not_json_object():
+    client = _fake_client(_chat_response(content='{"page_names": []}'))
+    selector = WikiPageSelector(store=_store(), client=client, model_id="m", structured_output=True)
+    selector.run({"question": "q"})
+    fmt = client.chat.completions.create.call_args.kwargs["response_format"]
+    assert fmt["type"] == "json_schema"

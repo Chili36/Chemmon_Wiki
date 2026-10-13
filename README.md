@@ -60,7 +60,7 @@ Set at least:
 
 ```bash
 ANTHROPIC_API_KEY=...
-WIKI_SELECTOR_MODEL=claude-sonnet-4-6
+WIKI_SELECTOR_MODEL=claude-haiku-5-5
 WIKI_ANSWERER_MODEL=claude-sonnet-5-5
 ```
 
