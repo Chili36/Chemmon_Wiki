@@ -986,3 +986,16 @@ Selection eval (live, `tools/evaluate.py --mode select`): Haiku 5.5 completed
 wrong-domain selections; mean selection time about 2.4 s against about 1.0 s
 for gpt-5.4-mini, whose recall varied between runs (0.89 to 1.0). The 16
 cases are draft labels, so this is a sanity check, not a benchmark.
+
+## 2026-10-14 — OpenAI answer model works again (#26)
+
+The answerer sent `max_tokens`, which OpenAI's GPT-5 models reject. It now
+sends `max_completion_tokens` for the OpenAI provider and `max_tokens`
+elsewhere. With requests working, json_schema structured output was verified
+for OpenAI and enabled.
+
+Verification with `answerer_model: openai/gpt-5.4-mini` on four questions in
+ask and stream modes: every request succeeded with citations, and streamed text
+equalled the final answer. Answer quality was weaker than Sonnet 5.5: the
+glyphosate answer opened with "Yes" while saying it is not listed, and the
+animal-products list was incomplete. The default answerer stays Sonnet 5.5.
