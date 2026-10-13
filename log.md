@@ -1,9 +1,40 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Log
+
+## [2026-10-05] correction and runtime | First FoodEx2 parity milestone
+
+- Patched `vmpr-reporting.md` against the supplied ChemMon 2026 guidance,
+  pp. 33–36. Restored the explicit F01/F02 exceptions on p. 33 and replaced
+  the incomplete, mislabelled sheep/goat code list with the scoped F23.A07VF
+  child-descriptor requirement on p. 36 and a link to the canonical matrix page.
+  The PDF repeats A18EX for two goat labels; the wiki now flags the ambiguity
+  and requires catalogue verification instead of asserting an unchecked fix.
+  No source document was changed and no new domain page was created.
+- Corrected maintenance claims in `SCHEMA.md` and `business-rules.md`: duplicate
+  detection does not establish completeness against an expected rule inventory.
+- Removed index-as-evidence, made final page budgets strict and request-local,
+  and made related summaries opt-in, explicitly labelled and non-citable.
+  Model context retains source/page locators. Invalid selection output errors
+  explicitly; empty selection avoids an answer-model call.
+- Added metadata-driven viewer navigation, orientation pages, full-text search,
+  domain filtering, inline wiki links and backlinks. Added local checks for
+  index/API consistency, source files, metadata dates and related links, plus CI.
+- Added the phased implementation plan under `docs/plans/` and documented the
+  changed API defaults. Verification: 69 tests passed; health check has zero
+  errors and the known CHEMMON03 warning; all 77 catalogue pages load in the
+  local preview. Browser checks covered navigation, search, domain filtering,
+  inline wiki links and backlinks. Verification uses local test doubles, not
+  paid model calls. The existing deployment was not restarted or replaced.
+
+Scope and remaining work: this is a targeted correction and runtime pass, not
+a whole-source ingest or completeness audit. Source coverage/fingerprints,
+an independently verified rule inventory, reviewed held-out answer evaluations,
+model comparisons and context-pack integration remain in later milestones.
+Other source/page-locator claims have not been comprehensively re-audited.
 
 ## [2026-04-24] maintenance | Split ChemMon background into narrow pages
 
@@ -751,3 +782,101 @@ Aligned the repo with community best practices that have crystallized around Kar
 - Expanded contaminant-reporting.md with 9 new substance sections: dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, and nitrates.
 - Expanded food-additives-reporting.md with result reporting rules, 4 new worked examples, restriction/exception coding, and conclusion reporting.
 - Updated index.md with revised page descriptions and the new baby food page.
+
+## 2026-10-05 — Source review, evaluation tools and evidence export
+
+Implemented the FoodEx2 parity plan on `codex/chemmon-foodex2-parity`.
+Source-led review corrected GBR27–29, GBR2/101 scope, CHEMON attribution and
+merged IDs, missing CHEMON64, CHEMON37 severity, and LL preconditions/exceptions.
+The old claim of a duplicate CHEMMON03 in the PDF was wrong: it was a wiki error.
+The source inventory now compares five namespaces independently of wiki IDs;
+67 missing active non-biological GBR definitions remain explicit review backlog.
+A fresh local catalogue query corroborates the earlier sheep/goat F23 correction.
+
+Added scoped review manifests with source/corpus hashes, preparation/inventory
+commands, health/CI drift checks, maintenance and review navigation, 20 selection
+hints, and 16 draft evaluation cases with reserved held-out cases. Evaluation
+compares selectors or answers on frozen evidence and separates citation membership
+from human correctness/support grades. Saved dry runs made zero provider calls;
+human-reviewed labels and a live quality baseline remain pending.
+
+Added inspectable selection, review-status and bounded context-pack endpoints,
+provenance, non-citable policy and selection metadata, request-local model
+overrides, and unknown-cost handling. Offline tests cover the new boundaries.
+No source PDFs, credentials, model defaults or deployed services were changed.
+
+## 2026-10-05 — Complete applicable GBR coverage and qualify FoodEx2 examples
+
+Reviewed Table 9 pp. 98–112, including continuations, severity, comments and
+exceptions. Added 67 missing active non-biological rules across identifier/text/
+unit consistency, numeric-result constraints and date references. All 83
+applicable GBR IDs now have exactly one canonical definition; the two inactive
+and seven biological-only rows remain documented separately. GBR22/42 retain
+Warning severity. Expanded GBR3/4 descriptor lists and related identifiers,
+registered the new pages in the selector catalogue and viewer, and added a
+regression comparison against the independent source-ID inventory.
+
+Compared the A02RH examples in all three 2026 guides and queried the local MTX
+17.2 catalogue read-only. Recorded catalogue metadata, database hash, queries
+and returned term attributes. The wiki now gives a version-qualified example
+without duplicate F33 and adds sliced-state F03 only when known. The historical
+catalogue edition intended by ChemMon p. 39 remains unknown and is stated as
+a limitation. Corrected the omelette explicit-F33 label, syrup-type A1B1Y typo,
+leftover unsupported CHEMMON01 reference, overview VMPR facet exceptions and
+outdated continuous-rule-numbering claims.
+
+Closed SRC-007 and scoped SRC-009; recorded the additional corrections as
+SRC-011. SRC-008 (remaining CHEMON semantics) and SRC-010 (remaining PRE/USE
+field semantics) stay open. Refreshed the reviewed corpus fingerprints only
+after the content comparison. Verification: 114 tests pass; health has zero
+errors and two review warnings; all 84 pages are readable from the preview.
+Prior dry-run evaluation reports remain historical; no provider calls were made.
+
+## 2026-10-05 — Complete broader CHEMON and PRE/USE source comparison
+
+At the user's request, proceeded with broader source review while recording
+independent human review as unavailable and deferred. Read complete ChemMon
+Table 10 pp.113–143 and the PRE/USE introductions, field sections, examples and
+Tables1–3. Compared 100 active/four inactive CHEMON rows, 17 PRE and 29 USE rules,
+and all 49 parallel-model fields. Reconciled relevant ChemMon field prose and
+related rule summaries. Source PDFs remain unchanged.
+
+Corrected matrix-versus-parameter scope, Error/Warning labels, sampling-year
+inequality, decision-threshold exceptions, evaluation codes, programme/domain
+conditions, field spelling, additive parameter scope and MPL interpretation.
+Added source pages and scope to canonical CHEMON rows and severity/page columns
+to PRE/USE tables. Documented overall assessment and the pesticide counting
+exception. Preserved all identified source ambiguities instead of inventing
+executable predicates or live-catalogue aliases.
+
+Closed SRC-008/010; opened SRC-012/013/014 for ambiguous Boolean grouping,
+USE19 zero-level wording and CONCLUS hierarchy spelling. Saved independent
+source severity evidence and the complete field checklist in the broader-review
+report. Added regression checks for rule/field coverage, severity and page
+locators. Adjusted table wrapping so short labels and field names stay readable.
+
+Verification: 116 tests pass; health has zero errors and three documented source
+warnings; review/inventory fingerprints are current with no missing, duplicate,
+unexpected or inactive canonical rule IDs. Browser checks confirm rendered USE
+rule columns and source notes. No live model evaluation or human-approved
+benchmark is claimed; evaluation cases remain draft.
+
+## 2026-10-05 — Reassess source wording with a separate model reading
+
+The user requested a smarter-model reading of the three source issues. A
+separate GPT-6 Astra review at ultra reasoning read the original passages and
+surrounding context without first seeing the wiki conclusions. Parent and
+independent readings agree: the context supports explicit CHEMON grouping;
+USE19 is best read as requiring at least one positive typical/maximum level;
+and CONCLUS fa_ff/faff is a naming discrepancy for the same concept family.
+
+Resolved SRC-012/013/014 as wiki content findings, retaining source wording,
+reasoning, confidence and the distinction from live-validator behaviour. Added
+parenthesized triggers and the USE19 edge-case interpretation to the references.
+The original broader-review evidence remains unchanged; a separate reassessment
+report supersedes its finding dispositions. Human review remains unavailable.
+This is a source interpretation review, not a benchmark of the wiki's models.
+
+Verification: 116 tests pass, including review-status coverage corrected to
+allow a legitimately empty backlog. Health and source fingerprints are current
+with zero errors/warnings and all 14 findings resolved within their stated scope.

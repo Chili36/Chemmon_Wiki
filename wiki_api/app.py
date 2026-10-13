@@ -6,16 +6,19 @@ import os
 import re
 from pathlib import Path
 import time
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
+from openai import APIError
 
-from .answerer import WikiAnswerer
+from .answerer import AnswerResult, WikiAnswerer
 from .page_selector import WikiPageSelector
 from .wiki_store import WikiStore
+from .evidence import selected_names, full_evidence, bounded_pack
+from .source_review import source_review_status, rule_inventory_status
 
 
 _WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
@@ -45,9 +48,18 @@ def get_answerer_runner() -> WikiAnswerer:
     return answerer_runner
 
 
-class AskRequest(BaseModel):
-    question: str = Field(description="The user's question about ChemMon reporting.")
+class SelectionRequest(BaseModel):
+    question: str = Field(min_length=1, pattern=r"\S", max_length=20000, description="Question about ChemMon reporting.")
     max_pages: int = Field(default=6, ge=1, le=10)
+    selector_model: str | None = Field(default=None, min_length=1, max_length=200, pattern=r"^\S+$")
+
+
+class ContextPackRequest(SelectionRequest):
+    max_chars: int = Field(default=60000, ge=2000, le=120000)
+
+
+class AskRequest(SelectionRequest):
+    answerer_model: str | None = Field(default=None, min_length=1, max_length=200, pattern=r"^\S+$")
     stream: bool = Field(
         default=False,
         description=(
@@ -57,12 +69,10 @@ class AskRequest(BaseModel):
         ),
     )
     use_graph_expansion: bool = Field(
-        default=True,
+        default=False,
         description=(
-            "If true (default), the answerer also receives short summary "
-            "blocks for pages listed in each selected page's `related:` "
-            "frontmatter. This recovers cases where the selector picks a "
-            "page adjacent to the one containing the answer."
+            "Opt in to related-page summaries within max_pages. Summaries are "
+            "navigation hints, not citable evidence. Full selected pages take priority."
         ),
     )
 
@@ -74,6 +84,8 @@ class PageSummary(BaseModel):
     sources: list[str] = Field(default_factory=list)
     related: list[str] = Field(default_factory=list)
     content: str | None = None
+    source_pages: list[str] = Field(default_factory=list)
+    evidence_kind: Literal["full", "summary"] = "full"
 
 
 class AskResponse(BaseModel):
@@ -86,7 +98,7 @@ class AskResponse(BaseModel):
 
 app = FastAPI(
     title="ChemMon Wiki API",
-    version="0.1.0",
+    version="0.3.0",
     description="Wiki-owned Q&A API for EFSA Chemical Monitoring reporting guidance.",
 )
 
@@ -102,7 +114,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
 # Per-million-token pricing for cost attribution in the trace.
-# Only covers models we actually use; unknown models fall back to zero cost.
+# Configured estimates only; unknown model pricing is explicitly unavailable.
 _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     # (input_price_per_mtok, output_price_per_mtok)
     "claude-haiku-4-5-20251001": (1.0, 5.0),
@@ -114,43 +126,83 @@ _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
 }
 
 
-def _compute_call_cost(token_summary: dict[str, Any]) -> float:
+def _compute_call_cost(token_summary: dict[str, Any]) -> float | None:
     """Compute USD cost for a single LLM call's token summary.
 
-    Returns 0.0 if the model is not in the pricing table (unknown models
-    contribute nothing to the aggregated cost rather than crashing).
+    Returns None for unknown pricing; a skipped call costs zero.
+    Prices are configured estimates, not live quotations.
     """
+    if token_summary.get("calls") == 0:
+        return 0.0
     model = token_summary.get("model", "")
     prices = _MODEL_PRICING_USD_PER_MTOK.get(model)
     if prices is None:
-        return 0.0
+        return None
     input_price, output_price = prices
     input_tokens = int(token_summary.get("input_tokens", 0) or 0)
     output_tokens = int(token_summary.get("output_tokens", 0) or 0)
     return (input_tokens * input_price + output_tokens * output_price) / 1_000_000
 
 
-# -------------------------------------------------------------------------
-# Graph expansion: summary-only injection of related neighbors
-#
-# The LLM page selector picks a minimal set of pages from the catalog.
-# In practice, the selector sometimes picks a page *adjacent* to the one
-# containing the answer — e.g., for an SSD2 question it picks the SSD2
-# data-model page, while the specific rule the user asked about lives in
-# chemmon-overview. Full-page graph expansion (injecting every linked
-# neighbor's content) would recover these misses at the cost of ~3x more
-# tokens per query, which defeats the wiki's efficiency argument vs RAG.
-#
-# Instead, we inject *summary-only* blocks for each selected page's
-# curated `related:` frontmatter neighbors. Each block is ~50-150 tokens
-# (title + the one-line summary from index.md) rather than the ~1500
-# tokens of a full page. The answerer sees "there's also a page X with
-# summary Y" — enough to surface the adjacent fact when the summary
-# contains it, without ballooning the context window.
-#
-# This is "Option C" from the research-note / retrieval-architecture
-# discussion: related-neighbor summaries, depth=1, curated edges only.
-# -------------------------------------------------------------------------
+def _total_cost(*summaries: dict[str, Any]) -> float | None:
+    costs = [_compute_call_cost(summary) for summary in summaries]
+    return None if any(c is None for c in costs) else round(sum(costs), 6)
+
+
+def _select(request: SelectionRequest, limit: int | None = None):
+    try:
+        selector = WikiPageSelector(store=store, model_str=request.selector_model) if request.selector_model else get_selector_runner()
+        result = selector.run({"question": request.question, "max_pages": limit if limit is not None else request.max_pages})
+        return selector, result
+    except APIError as exc:
+        raise HTTPException(status_code=503, detail="Model provider request failed; check provider availability and server configuration.") from exc
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+def _selection_trace(selector, result) -> dict:
+    return {"model": selector.model_id, "tool_trace": result.tool_trace,
+            "token_summary": result.token_summary, "timing_summary": result.timing_summary,
+            "estimated_cost_usd": _compute_call_cost(result.token_summary)}
+
+
+@app.post("/wiki/select")
+def select_pages(request: SelectionRequest) -> dict[str, Any]:
+    selector, result = _select(request)
+    names = selected_names(store, result.pages_used, request.max_pages)
+    return {"pages_used": names, "pages": [dict(
+                {k: v for k, v in full_evidence(store, n).items() if k not in {"content", "citable", "evidence_kind"}},
+                evidence_kind="selection", citable=False) for n in names],
+            "trace": _selection_trace(selector, result)}
+
+
+@app.get("/wiki/review-status")
+def review_status() -> dict[str, Any]:
+    return {"source_review": source_review_status(store.root), "rule_inventory": rule_inventory_status(store.root)}
+
+
+@app.post("/wiki/context-pack")
+def context_pack(request: ContextPackRequest) -> dict[str, Any]:
+    started = time.perf_counter()
+    names, trace = [], {"model": None, "token_summary": {"calls": 0}, "reason": "policy consumes the sole page slot"}
+    if request.max_pages > 1:
+        selector, result = _select(request, request.max_pages - 1)
+        names = selected_names(store, result.pages_used, request.max_pages - 1)
+        trace = _selection_trace(selector, result)
+    try:
+        pack = bounded_pack(store, names, request.max_pages, request.max_chars)
+    except (ValueError, OSError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    # Only the selector runs: callers receive evidence, never an intermediate answer.
+    pack.update({"schema_version": 1, "question": request.question,
+                 "review": source_review_status(store.root),
+                 "trace": {"selector": trace, "answerer_calls": 0,
+                           "request_wall_time_ms": int((time.perf_counter() - started) * 1000)}})
+    return pack
+
+
+# Related summaries are optional navigation hints. Full pages always take
+# priority in the final page budget, and only those pages can support citations.
 
 
 def _expand_related_summaries(
@@ -168,7 +220,7 @@ def _expand_related_summaries(
     neighbor count cap or the token budget is reached.
     """
     already_selected = set(selected_page_names)
-    allowed = store.allowed_page_names()
+    allowed = set(store.list_pages())
 
     candidates: list[str] = []
     seen_candidates: set[str] = set()
@@ -202,16 +254,16 @@ def _expand_related_summaries(
             continue
         summary_text = neighbor.summary or "(no summary available — see full page for details)"
         content = (
-            "[RELATED CONTEXT — brief summary of a neighbor page. "
-            "Use as peripheral context; the full page is not loaded.]\n"
+            "[NAVIGATION ONLY — the full page is not loaded. "
+            "Do not use this summary to support claims or citations.]\n"
             f"Title: {neighbor.title}\n"
             f"{summary_text}"
         )
         # Rough token estimate: ~4 chars per token
         block_tokens = max(1, len(content) // 4)
-        if total_tokens + block_tokens > max_total_tokens and blocks:
+        if total_tokens + block_tokens > max_total_tokens:
             break
-        blocks.append({"page_name": neighbor.name, "content": content, "expansion": True})
+        blocks.append({"page_name": neighbor.name, "content": content, "expansion": True, "evidence_kind": "summary"})
         total_tokens += block_tokens
 
     return blocks
@@ -363,10 +415,40 @@ def list_pages() -> dict[str, Any]:
             "summary": page.summary,
             "sources": page.sources,
             "related": page.related,
+            "type": page.page_type,
+            "domain": page.domain,
+            "last_updated": page.last_updated,
+            "source_pages": page.source_pages,
         }
-        for page in store.catalog()
+        for page in store.catalog(include_orientation=True)
     ]
     return {"pages": pages, "count": len(pages)}
+
+
+@app.get("/wiki/search")
+def search_pages(q: str = Query(min_length=1), domain: str | None = None, limit: int = Query(default=20, ge=1, le=100)) -> dict[str, Any]:
+    terms = re.findall(r"[\w-]+", q.casefold())
+    matches = []
+    for page in store.catalog():
+        if domain and page.domain != domain:
+            continue
+        text = f"{page.name} {page.title} {page.summary} {page.body}".casefold()
+        if not terms or not all(term in text for term in terms):
+            continue
+        heading = f"{page.name} {page.title}".casefold()
+        score = sum(5 * (term in heading) + 2 * (term in page.summary.casefold()) + (term in text) for term in terms)
+        matches.append({"page_name": page.name, "title": page.title, "summary": page.summary, "domain": page.domain, "score": score})
+    matches.sort(key=lambda p: (-p["score"], p["page_name"]))
+    return {"pages": matches[:limit], "count": len(matches)}
+
+
+@app.get("/wiki/pages/{page_name}/backlinks")
+def get_backlinks(page_name: str) -> dict[str, Any]:
+    try:
+        names = store.backlinks(page_name)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return {"page_name": store.normalize_page_name(page_name), "backlinks": names}
 
 
 @app.get("/wiki/pages/{page_name}")
@@ -381,6 +463,10 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
         "summary": page.summary,
         "sources": page.sources,
         "related": page.related,
+        "type": page.page_type,
+        "domain": page.domain,
+        "last_updated": page.last_updated,
+        "source_pages": page.source_pages,
         "content": page.content if include_content else None,
     }
 
@@ -406,42 +492,30 @@ def ask_question(request: AskRequest) -> AskResponse:
     # should approximately sum to request_wall_time_ms (modulo FastAPI and
     # network-to-client overhead, which is reported as 'overhead').
     selector_start = time.perf_counter()
-    selector = get_selector_runner()
-    if request.max_pages != selector.max_pages:
-        selector.max_pages = request.max_pages
-
-    try:
-        selection_result = selector.run({"question": request.question})
-    except (RuntimeError, ValueError) as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    selector, selection_result = _select(request)
     selector_end = time.perf_counter()
 
     page_read_start = time.perf_counter()
-    pages_raw = [store.read_page(page_name) for page_name in selection_result.pages_used]
-    page_contents = [
-        {"page_name": page.name, "content": store.clean_content_for_model(page)}
-        for page in pages_raw
-    ]
+    selected_page_names = selected_names(store, selection_result.pages_used, request.max_pages)
+    pages_raw = [store.read_page(name) for name in selected_page_names]
+    page_contents = [full_evidence(store, name) for name in selected_page_names]
     page_read_end = time.perf_counter()
 
-    # Graph expansion: add summary-only blocks for curated neighbors of the
-    # selected pages. This recovers cases where the selector picks a page
-    # adjacent to the one containing the answer. Controlled by request flag;
-    # default on. See _expand_related_summaries for the rationale.
+    # Optional navigation hints use only remaining slots; never replace evidence.
     graph_expansion_start = time.perf_counter()
     expansion_blocks: list[dict[str, Any]] = []
-    if request.use_graph_expansion:
+    if request.use_graph_expansion and len(selected_page_names) < request.max_pages:
         expansion_blocks = _expand_related_summaries(
-            selection_result.pages_used,
+            selected_page_names,
             store,
-            max_neighbors=8,
+            max_neighbors=request.max_pages - len(selected_page_names),
             max_total_tokens=2000,
         )
     graph_expansion_end = time.perf_counter()
 
     answerer_input_pages = page_contents + expansion_blocks
     expanded_page_names = [block["page_name"] for block in expansion_blocks]
-    pages_used = list(dict.fromkeys([*selection_result.pages_used, *expanded_page_names]))
+    pages_used = [*selected_page_names, *expanded_page_names]
 
     expansion_content_by_page = {block["page_name"]: block["content"] for block in expansion_blocks}
     expanded_pages_raw = []
@@ -461,6 +535,7 @@ def ask_question(request: AskRequest) -> AskResponse:
                 sources=page.sources,
                 related=page.related,
                 content=store.clean_content_for_model(page),
+                source_pages=list(page.source_pages),
             )
         )
     for page in expanded_pages_raw:
@@ -471,18 +546,22 @@ def ask_question(request: AskRequest) -> AskResponse:
                 summary=page.summary,
                 sources=page.sources,
                 related=page.related,
-                # Expansion pages were injected as summary-only blocks; return the
-                # same short content so citations can be resolved consistently.
                 content=expansion_content_by_page.get(page.name),
+                evidence_kind="summary",
             )
         )
 
-    allowed_citations = set(pages_used)
+    allowed_citations = set(selected_page_names)
     selector_total_ms = int((selector_end - selector_start) * 1000)
     page_read_ms = int((page_read_end - page_read_start) * 1000)
     graph_expansion_ms = int((graph_expansion_end - graph_expansion_start) * 1000)
 
-    answerer = get_answerer_runner()
+    try:
+        answerer = (WikiAnswerer(model_str=request.answerer_model) if request.answerer_model else get_answerer_runner()) if pages_raw else None
+    except APIError as exc:
+        raise HTTPException(status_code=503, detail="Model provider request failed; check provider availability and server configuration.") from exc
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
     def _normalize_citations(raw_citations: list[Any]) -> list[str]:
         citations: list[str] = []
@@ -525,7 +604,7 @@ def ask_question(request: AskRequest) -> AskResponse:
                     "timing_summary": selection_result.timing_summary,
                 },
                 "answerer": {
-                    "model": answerer.model_id,
+                    "model": answerer.model_id if answerer else None,
                     "token_summary": answer_result.token_summary,
                     "timing_summary": answer_result.timing_summary,
                 },
@@ -539,11 +618,8 @@ def ask_question(request: AskRequest) -> AskResponse:
                         int(selection_result.token_summary["total_tracked_tokens"])
                         + int(answer_result.token_summary["total_tracked_tokens"])
                     ),
-                    "total_cost_usd": round(
-                        _compute_call_cost(selection_result.token_summary)
-                        + _compute_call_cost(answer_result.token_summary),
-                        6,
-                    ),
+                    "total_cost_usd": _total_cost(selection_result.token_summary, answer_result.token_summary),
+                    "cost_basis": "configured estimate; null when pricing is unknown",
                 },
                 "phase_timings_ms": {
                     "selector_total": selector_total_ms,
@@ -569,11 +645,26 @@ def ask_question(request: AskRequest) -> AskResponse:
         )
         return response
 
+    if answerer is None:
+        result = AnswerResult(
+            answer="No relevant wiki evidence was retrieved. Try specifying the reporting domain or SSD2 field.",
+            citations=[],
+            token_summary={"model": "none", "calls": 0, "input_tokens": 0, "output_tokens": 0, "total_tracked_tokens": 0},
+            timing_summary={"calls": 0, "llm_time_ms": 0},
+        )
+        response = _build_response(answer_result=result, answerer_total_ms=0)
+        if request.stream:
+            return StreamingResponse(iter([
+                _sse({"type": "meta", "pages_used": [], "pages": []}, event="meta"),
+                _sse({"type": "done", "response": json.loads(response.model_dump_json())}, event="done"),
+            ]), media_type="text/event-stream")
+        return response
+
     if request.stream:
         def _event_stream() -> Any:
             # Small metadata burst so clients can show what context will be used.
             meta_pages = [
-                {"page_name": p.page_name, "title": p.title, "summary": p.summary}
+                {"page_name": p.page_name, "title": p.title, "summary": p.summary, "evidence_kind": p.evidence_kind}
                 for p in pages
             ]
             yield _sse({"type": "meta", "pages_used": pages_used, "pages": meta_pages}, event="meta")
@@ -644,6 +735,8 @@ def ask_question(request: AskRequest) -> AskResponse:
     answerer_start = time.perf_counter()
     try:
         answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
+    except APIError as exc:
+        raise HTTPException(status_code=503, detail="Model provider request failed; check provider availability and server configuration.") from exc
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)

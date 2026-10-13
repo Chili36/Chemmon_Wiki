@@ -4,11 +4,11 @@
 Validates:
   1. Frontmatter schema compliance for every page under wiki/chemmon-guidance/
   2. Every [[wiki-link]] resolves to an existing page
-  3. Rule-ID coverage — each CHEMMON\\d+(_[a-z])? ID should appear exactly
-     once across the business-rules-*.md slice files. Duplicates surface as
-     warnings (the source guidance has a known CHEMMON03 duplicate).
+  3. Rule-ID uniqueness — CHEMMON IDs are checked across the slice files.
+     This is not a semantic-completeness check. Duplicate definitions surface as warnings.
   4. No prose reference to the old `raw/chemmon-guidance/` path remains in
      any tracked file under the repo root or the wiki directory.
+  5. Index/service registration, source files, metadata dates and related links.
 
 Exit codes:
   0 — clean (no errors; warnings allowed)
@@ -23,7 +23,9 @@ Usage:
 from __future__ import annotations
 
 import re
+import json
 import sys
+from datetime import date
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -32,7 +34,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 try:
-    from wiki_api.wiki_store import split_frontmatter
+    from wiki_api.wiki_store import INDEX_ENTRY_RE, ROOT_PAGE_PATHS, WikiStore, split_frontmatter
+    from wiki_api.source_review import source_review_status, rule_inventory_status
 except ImportError as exc:
     print(f"ERROR: could not import wiki_api.wiki_store: {exc}")
     sys.exit(2)
@@ -42,6 +45,7 @@ METADATA_FILES = [
     REPO_ROOT / "README.md",
     REPO_ROOT / "PROJECT_CONTEXT.md",
     REPO_ROOT / "SCHEMA.md",
+    REPO_ROOT / "INGEST_WORKFLOW.md",
     REPO_ROOT / "index.md",
     REPO_ROOT / "log.md",
 ]
@@ -72,6 +76,8 @@ RULE_ID_TABLE_ROW_RE = re.compile(
 class HealthReport:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+    source_review: dict = field(default_factory=dict)
+    rule_inventory: dict = field(default_factory=dict)
 
     def error(self, msg: str) -> None:
         self.errors.append(msg)
@@ -86,12 +92,12 @@ class HealthReport:
             return False
         return True
 
-    def print_summary(self) -> None:
+    def print_summary(self, strict: bool = False) -> None:
         for w in self.warnings:
             print(f"WARN:  {w}")
         for e in self.errors:
             print(f"ERROR: {e}")
-        status = "PASS" if not self.errors else "FAIL"
+        status = "PASS" if self.is_clean(strict) else "FAIL"
         print(
             f"\nHEALTH CHECK: {status} "
             f"({len(self.errors)} error(s), {len(self.warnings)} warning(s))"
@@ -114,15 +120,31 @@ def check_frontmatter(report: HealthReport, path: Path, data: dict[str, Any]) ->
         )
         return
     page_type = data.get("type")
-    if page_type not in ALLOWED_TYPES:
+    if not isinstance(page_type, str) or page_type not in ALLOWED_TYPES:
         report.error(
             f"{rel}: invalid type '{page_type}'; must be one of {sorted(ALLOWED_TYPES)}"
         )
     domain = data.get("domain")
-    if domain not in ALLOWED_DOMAINS:
+    if not isinstance(domain, str) or domain not in ALLOWED_DOMAINS:
         report.error(
             f"{rel}: invalid domain '{domain}'; must be one of {sorted(ALLOWED_DOMAINS)}"
         )
+    if not isinstance(data.get("title"), str) or not data["title"].strip():
+        report.error(f"{rel}: title must be a nonempty string")
+    try:
+        value = str(data.get("last_updated"))
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+            raise ValueError("not an ISO date")
+        date.fromisoformat(value)
+    except ValueError:
+        report.error(f"{rel}: last_updated must be an ISO date (YYYY-MM-DD)")
+    for key in ("sources", "related", "source_pages"):
+        value = data.get(key, [])
+        if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+            report.error(f"{rel}: {key} must be a list of strings")
+    hint = data.get("select_when")
+    if hint is not None and (not isinstance(hint, str) or not hint.strip() or len(hint) > 400):
+        report.error(f"{rel}: select_when must be a nonempty string of at most 400 characters")
 
 
 def check_wiki_links(
@@ -184,18 +206,42 @@ def check_no_old_path_references(
             )
 
 
-def run_health_check() -> HealthReport:
+def run_health_check(root: Path = REPO_ROOT) -> HealthReport:
     report = HealthReport()
+    wiki_dir = root / "wiki" / "chemmon-guidance"
+    store = WikiStore(root)
 
-    if not WIKI_DIR.is_dir():
-        report.error(f"wiki directory not found at {_rel(WIKI_DIR)}")
+    if not wiki_dir.is_dir():
+        report.error(f"wiki directory not found at {wiki_dir}")
         return report
 
-    wiki_files = sorted(WIKI_DIR.glob("*.md"))
-    valid_targets = {p.stem for p in wiki_files}
-    for metadata_path in METADATA_FILES:
-        if metadata_path.exists():
-            valid_targets.add(metadata_path.stem)
+    wiki_files = sorted(wiki_dir.glob("*.md"))
+    valid_targets = {Path(name).stem for name in store.allowed_page_names()}
+
+    index_path = root / "index.md"
+    if not index_path.is_file():
+        report.error("index.md: missing catalogue")
+        return report
+    entries = {}
+    for line in index_path.read_text(encoding="utf-8").splitlines():
+        match = INDEX_ENTRY_RE.match(line)
+        if not match:
+            continue
+        target, summary = match.groups()
+        name = Path(target).name
+        if not target.endswith(".md"):
+            continue
+        entries[name] = summary
+        if not (root / target).is_file():
+            report.error(f"index.md: missing local target {target}")
+        if name not in store.allowed_page_names():
+            report.error(f"index.md: page is not served by the API: {name}")
+    for path in wiki_files:
+        if not entries.get(path.name, "").strip():
+            report.error(f"index.md: missing topic summary for {path.name}")
+    for name, path in ROOT_PAGE_PATHS.items():
+        if not (root / path).is_file():
+            report.error(f"missing orientation document: {name}")
 
     rule_occurrences: dict[str, list[str]] = {}
     file_contents: dict[Path, str] = {}
@@ -213,22 +259,52 @@ def run_health_check() -> HealthReport:
             report.error(f"{_rel(path)}: frontmatter parse error: {exc}")
             continue
         check_frontmatter(report, path, data)
-        check_wiki_links(report, path, body, valid_targets)
+        related = data.get("related", [])
+        related_text = "\n".join(item for item in related if isinstance(item, str)) if isinstance(related, list) else ""
+        check_wiki_links(report, path, body + "\n" + related_text, valid_targets)
+        sources = data.get("sources", [])
+        if isinstance(sources, list):
+            if not sources and data.get("type") != "hub":
+                report.warn(f"{path.name}: no source references")
+            for source in sources:
+                if not isinstance(source, str):
+                    continue
+                if not ((root / "chemmon_docs" / source).is_file() or (root / source).is_file()):
+                    report.error(f"{path.name}: unresolved source {source}")
 
         if path.name.startswith("business-rules-"):
             for rule_id in collect_rule_ids(body):
                 rule_occurrences.setdefault(rule_id, []).append(path.name)
 
     check_rule_id_uniqueness(report, rule_occurrences)
-    check_no_old_path_references(report, file_contents)
+    if root == REPO_ROOT:
+        check_no_old_path_references(report, file_contents)
 
+    report.source_review = source_review_status(root)
+    report.rule_inventory = rule_inventory_status(root)
+    for label, status in (("source review", report.source_review), ("rule inventory", report.rule_inventory)):
+        if status['status'] == 'invalid':
+            report.error(f"{label}: invalid record: {status['error']}")
+        elif status['status'] != 'current':
+            report.warn(f"{label}: {status['status']}; reviewed coverage is not established for this corpus")
+    for finding in report.source_review.get('open_findings', []):
+        report.warn(f"source finding {finding['id']}: {finding['observation']}")
+    for field_name in ('missing_active_ids', 'unexpected_wiki_ids', 'duplicate_wiki_ids', 'inactive_wiki_ids'):
+        values = report.rule_inventory.get(field_name, [])
+        if values:
+            report.warn(f"rule inventory {field_name}: {len(values)}; see tools/source_review.py for IDs and locators")
     return report
 
 
 def main(argv: list[str]) -> int:
     strict = "--strict" in argv
     report = run_health_check()
-    report.print_summary()
+    if "--json" in argv:
+        print(json.dumps({"errors": report.errors, "warnings": report.warnings,
+            "source_review": report.source_review, "rule_inventory": report.rule_inventory,
+            "structural_pass": report.is_clean(strict=strict)}, indent=2, ensure_ascii=False))
+    else:
+        report.print_summary(strict=strict)
     return 0 if report.is_clean(strict=strict) else 1
 
 

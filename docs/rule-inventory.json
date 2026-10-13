@@ -1,0 +1,2301 @@
+{
+  "version": 1,
+  "edition": "2026 supplied PDFs",
+  "method": "pdftotext -layout, first-column IDs in Tables 9/10 and FA/FF Table 3; wrapped suffixes joined; CHEMON mapped to wiki CHEMMON",
+  "limitations": [
+    "ID/status inventory only. Descriptions and applicability still need semantic review.",
+    "Inactive and explicitly biological-only GBR rows retained but excluded from missing-active warnings.",
+    "DOMAIN VALIDATION and FOODEX2 namespaces are outside this five-family inventory."
+  ],
+  "source_counts": {
+    "GBR": 92,
+    "CHEMMON": 104,
+    "LL": 11,
+    "PRE": 17,
+    "USE": 29
+  },
+  "sources": {
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf": "5988380167d3c0029ddab95719cc71b90a296b2675ce6613053d6615be5a13cf",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf": "6d4ef5db15ea29c14266203e8deeaba4bf64a9d5ccea8b6307c74dd8e5185cac",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf": "473edb8d03366a828c7d0bb0c9709dcf64c8f3b03fceb56b94842f78dcf549bb"
+  },
+  "rules": [
+    {
+      "source_id": "GBR1",
+      "wiki_id": "GBR1",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 98,
+      "status": "inactive",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR2",
+      "wiki_id": "GBR2",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 98,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR3",
+      "wiki_id": "GBR3",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 98,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR4",
+      "wiki_id": "GBR4",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 99,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR5",
+      "wiki_id": "GBR5",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 99,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR6",
+      "wiki_id": "GBR6",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 99,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR7",
+      "wiki_id": "GBR7",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 100,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR8",
+      "wiki_id": "GBR8",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 100,
+      "status": "inactive",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR10",
+      "wiki_id": "GBR10",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 100,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR11",
+      "wiki_id": "GBR11",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 100,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR12",
+      "wiki_id": "GBR12",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 100,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR13",
+      "wiki_id": "GBR13",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR14",
+      "wiki_id": "GBR14",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR15",
+      "wiki_id": "GBR15",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR16",
+      "wiki_id": "GBR16",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR18",
+      "wiki_id": "GBR18",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR19",
+      "wiki_id": "GBR19",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR20",
+      "wiki_id": "GBR20",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 101,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR21",
+      "wiki_id": "GBR21",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR22",
+      "wiki_id": "GBR22",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR23",
+      "wiki_id": "GBR23",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR24",
+      "wiki_id": "GBR24",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR25",
+      "wiki_id": "GBR25",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR26",
+      "wiki_id": "GBR26",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR27",
+      "wiki_id": "GBR27",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 102,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR28",
+      "wiki_id": "GBR28",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 103,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR29",
+      "wiki_id": "GBR29",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 103,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR30",
+      "wiki_id": "GBR30",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 103,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR32",
+      "wiki_id": "GBR32",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 103,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR33",
+      "wiki_id": "GBR33",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 103,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR34",
+      "wiki_id": "GBR34",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 104,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR35",
+      "wiki_id": "GBR35",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 104,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR36",
+      "wiki_id": "GBR36",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 104,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR37",
+      "wiki_id": "GBR37",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 104,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR38",
+      "wiki_id": "GBR38",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 104,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR39",
+      "wiki_id": "GBR39",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 104,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR40",
+      "wiki_id": "GBR40",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR41",
+      "wiki_id": "GBR41",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR42",
+      "wiki_id": "GBR42",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR43",
+      "wiki_id": "GBR43",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR44",
+      "wiki_id": "GBR44",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR45",
+      "wiki_id": "GBR45",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR46",
+      "wiki_id": "GBR46",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR47",
+      "wiki_id": "GBR47",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 105,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR48",
+      "wiki_id": "GBR48",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR49",
+      "wiki_id": "GBR49",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR50",
+      "wiki_id": "GBR50",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR51",
+      "wiki_id": "GBR51",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR53",
+      "wiki_id": "GBR53",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR54",
+      "wiki_id": "GBR54",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR55",
+      "wiki_id": "GBR55",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR56",
+      "wiki_id": "GBR56",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 106,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR57",
+      "wiki_id": "GBR57",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 107,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR58",
+      "wiki_id": "GBR58",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 107,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR60",
+      "wiki_id": "GBR60",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 107,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR61",
+      "wiki_id": "GBR61",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 107,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR62",
+      "wiki_id": "GBR62",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 107,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR63",
+      "wiki_id": "GBR63",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 107,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR64",
+      "wiki_id": "GBR64",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR65",
+      "wiki_id": "GBR65",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR67",
+      "wiki_id": "GBR67",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR69",
+      "wiki_id": "GBR69",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR70",
+      "wiki_id": "GBR70",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR71",
+      "wiki_id": "GBR71",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR72",
+      "wiki_id": "GBR72",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR73",
+      "wiki_id": "GBR73",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 108,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR74",
+      "wiki_id": "GBR74",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR75",
+      "wiki_id": "GBR75",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR77",
+      "wiki_id": "GBR77",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR78",
+      "wiki_id": "GBR78",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR79",
+      "wiki_id": "GBR79",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR80",
+      "wiki_id": "GBR80",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR81",
+      "wiki_id": "GBR81",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR82",
+      "wiki_id": "GBR82",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR83",
+      "wiki_id": "GBR83",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR85",
+      "wiki_id": "GBR85",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR86",
+      "wiki_id": "GBR86",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 109,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR87",
+      "wiki_id": "GBR87",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR88",
+      "wiki_id": "GBR88",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR89",
+      "wiki_id": "GBR89",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR90",
+      "wiki_id": "GBR90",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR91",
+      "wiki_id": "GBR91",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR92",
+      "wiki_id": "GBR92",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR93",
+      "wiki_id": "GBR93",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR94",
+      "wiki_id": "GBR94",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 110,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR95",
+      "wiki_id": "GBR95",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 111,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR97",
+      "wiki_id": "GBR97",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 111,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR99",
+      "wiki_id": "GBR99",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 111,
+      "status": "active",
+      "applicability": "biological-only"
+    },
+    {
+      "source_id": "GBR100",
+      "wiki_id": "GBR100",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 111,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR101",
+      "wiki_id": "GBR101",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 112,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR102",
+      "wiki_id": "GBR102",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 112,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "GBR103",
+      "wiki_id": "GBR103",
+      "family": "GBR",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 112,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON03",
+      "wiki_id": "CHEMMON03",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 113,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON04",
+      "wiki_id": "CHEMMON04",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 113,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON05",
+      "wiki_id": "CHEMMON05",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 113,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON06",
+      "wiki_id": "CHEMMON06",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 113,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON07",
+      "wiki_id": "CHEMMON07",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 113,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON08",
+      "wiki_id": "CHEMMON08",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 114,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON09",
+      "wiki_id": "CHEMMON09",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 114,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON10",
+      "wiki_id": "CHEMMON10",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 114,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON11",
+      "wiki_id": "CHEMMON11",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 114,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON12",
+      "wiki_id": "CHEMMON12",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 115,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON14",
+      "wiki_id": "CHEMMON14",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 115,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON15",
+      "wiki_id": "CHEMMON15",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 115,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON17",
+      "wiki_id": "CHEMMON17",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 116,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON18",
+      "wiki_id": "CHEMMON18",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 116,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON19",
+      "wiki_id": "CHEMMON19",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 116,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON20",
+      "wiki_id": "CHEMMON20",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 117,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON21",
+      "wiki_id": "CHEMMON21",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 117,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON22",
+      "wiki_id": "CHEMMON22",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 118,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON23",
+      "wiki_id": "CHEMMON23",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 118,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON24",
+      "wiki_id": "CHEMMON24",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 118,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON26",
+      "wiki_id": "CHEMMON26",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 118,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON27",
+      "wiki_id": "CHEMMON27",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 118,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON28",
+      "wiki_id": "CHEMMON28",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 119,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON30",
+      "wiki_id": "CHEMMON30",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 119,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON31",
+      "wiki_id": "CHEMMON31",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 119,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON32",
+      "wiki_id": "CHEMMON32",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 119,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON33",
+      "wiki_id": "CHEMMON33",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 120,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON34",
+      "wiki_id": "CHEMMON34",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 120,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON35",
+      "wiki_id": "CHEMMON35",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 120,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON36",
+      "wiki_id": "CHEMMON36",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 121,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON37",
+      "wiki_id": "CHEMMON37",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 121,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON39",
+      "wiki_id": "CHEMMON39",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 121,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON40",
+      "wiki_id": "CHEMMON40",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 122,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON41",
+      "wiki_id": "CHEMMON41",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 122,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON42",
+      "wiki_id": "CHEMMON42",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 122,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON43",
+      "wiki_id": "CHEMMON43",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 123,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON43_b",
+      "wiki_id": "CHEMMON43_b",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 123,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON44",
+      "wiki_id": "CHEMMON44",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 123,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON45",
+      "wiki_id": "CHEMMON45",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 123,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON46",
+      "wiki_id": "CHEMMON46",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 124,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON47",
+      "wiki_id": "CHEMMON47",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 124,
+      "status": "inactive",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON48",
+      "wiki_id": "CHEMMON48",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 124,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON49",
+      "wiki_id": "CHEMMON49",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 125,
+      "status": "inactive",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON50",
+      "wiki_id": "CHEMMON50",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 125,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON51",
+      "wiki_id": "CHEMMON51",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 125,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON52",
+      "wiki_id": "CHEMMON52",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 126,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON53",
+      "wiki_id": "CHEMMON53",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 126,
+      "status": "inactive",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON54",
+      "wiki_id": "CHEMMON54",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 126,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON55",
+      "wiki_id": "CHEMMON55",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 127,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON56",
+      "wiki_id": "CHEMMON56",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 127,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON57",
+      "wiki_id": "CHEMMON57",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 127,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON58",
+      "wiki_id": "CHEMMON58",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 127,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON59",
+      "wiki_id": "CHEMMON59",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 128,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON60",
+      "wiki_id": "CHEMMON60",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 128,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON61",
+      "wiki_id": "CHEMMON61",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 128,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON62",
+      "wiki_id": "CHEMMON62",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 128,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON63",
+      "wiki_id": "CHEMMON63",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 129,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON64",
+      "wiki_id": "CHEMMON64",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 129,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON65",
+      "wiki_id": "CHEMMON65",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 129,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON66_a",
+      "wiki_id": "CHEMMON66_a",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 129,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON66_b",
+      "wiki_id": "CHEMMON66_b",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 130,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON67",
+      "wiki_id": "CHEMMON67",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 130,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON68",
+      "wiki_id": "CHEMMON68",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 130,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON69",
+      "wiki_id": "CHEMMON69",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 130,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON70",
+      "wiki_id": "CHEMMON70",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 131,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON71",
+      "wiki_id": "CHEMMON71",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 131,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON72",
+      "wiki_id": "CHEMMON72",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 131,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON73",
+      "wiki_id": "CHEMMON73",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 131,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON76",
+      "wiki_id": "CHEMMON76",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 131,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON77",
+      "wiki_id": "CHEMMON77",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 131,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON78",
+      "wiki_id": "CHEMMON78",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 132,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON79",
+      "wiki_id": "CHEMMON79",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 132,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON80",
+      "wiki_id": "CHEMMON80",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 132,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON81",
+      "wiki_id": "CHEMMON81",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 132,
+      "status": "inactive",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON82",
+      "wiki_id": "CHEMMON82",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 132,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON83",
+      "wiki_id": "CHEMMON83",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 132,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON84_a",
+      "wiki_id": "CHEMMON84_a",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 133,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON84_b",
+      "wiki_id": "CHEMMON84_b",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 133,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON85",
+      "wiki_id": "CHEMMON85",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 133,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON86",
+      "wiki_id": "CHEMMON86",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 133,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON87",
+      "wiki_id": "CHEMMON87",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 134,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON88",
+      "wiki_id": "CHEMMON88",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 134,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON89",
+      "wiki_id": "CHEMMON89",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 135,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON90_a",
+      "wiki_id": "CHEMMON90_a",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 135,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON90_b",
+      "wiki_id": "CHEMMON90_b",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 135,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON91",
+      "wiki_id": "CHEMMON91",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 135,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON92",
+      "wiki_id": "CHEMMON92",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 136,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON93",
+      "wiki_id": "CHEMMON93",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 136,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON94",
+      "wiki_id": "CHEMMON94",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 136,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON95",
+      "wiki_id": "CHEMMON95",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 137,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON96",
+      "wiki_id": "CHEMMON96",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 137,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON97",
+      "wiki_id": "CHEMMON97",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 137,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON98",
+      "wiki_id": "CHEMMON98",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 137,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON99",
+      "wiki_id": "CHEMMON99",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 138,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON100",
+      "wiki_id": "CHEMMON100",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 138,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON101",
+      "wiki_id": "CHEMMON101",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 138,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON102",
+      "wiki_id": "CHEMMON102",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 139,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON103",
+      "wiki_id": "CHEMMON103",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 139,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON104",
+      "wiki_id": "CHEMMON104",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 139,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON105",
+      "wiki_id": "CHEMMON105",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 139,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON106",
+      "wiki_id": "CHEMMON106",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 140,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON107",
+      "wiki_id": "CHEMMON107",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 140,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON108",
+      "wiki_id": "CHEMMON108",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 140,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "CHEMON109",
+      "wiki_id": "CHEMMON109",
+      "family": "CHEMMON",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 141,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_01_VMPR",
+      "wiki_id": "LL_01_VMPR",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 141,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_01_PPP",
+      "wiki_id": "LL_01_PPP",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 141,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_02_VMPR",
+      "wiki_id": "LL_02_VMPR",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 141,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_02_PPP",
+      "wiki_id": "LL_02_PPP",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 141,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_01_FA_FF",
+      "wiki_id": "LL_01_FA_FF",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 142,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_02_FA_FF",
+      "wiki_id": "LL_02_FA_FF",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 142,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_03_FA_FF",
+      "wiki_id": "LL_03_FA_FF",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 143,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_03",
+      "wiki_id": "LL_03",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 143,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_03_b",
+      "wiki_id": "LL_03_b",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 143,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_04",
+      "wiki_id": "LL_04",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 143,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "LL_04_b",
+      "wiki_id": "LL_04_b",
+      "family": "LL",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pdf_page": 143,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE01",
+      "wiki_id": "PRE01",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 19,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE02",
+      "wiki_id": "PRE02",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 19,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE03",
+      "wiki_id": "PRE03",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 19,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE04",
+      "wiki_id": "PRE04",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 19,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE05",
+      "wiki_id": "PRE05",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 19,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE06",
+      "wiki_id": "PRE06",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 19,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE07",
+      "wiki_id": "PRE07",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 20,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE08",
+      "wiki_id": "PRE08",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 20,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE09",
+      "wiki_id": "PRE09",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 20,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE10",
+      "wiki_id": "PRE10",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE11",
+      "wiki_id": "PRE11",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE12",
+      "wiki_id": "PRE12",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE13",
+      "wiki_id": "PRE13",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE14",
+      "wiki_id": "PRE14",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE15",
+      "wiki_id": "PRE15",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE16",
+      "wiki_id": "PRE16",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "PRE17",
+      "wiki_id": "PRE17",
+      "family": "PRE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "pdf_page": 21,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE01",
+      "wiki_id": "USE01",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 24,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE02",
+      "wiki_id": "USE02",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 24,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE03",
+      "wiki_id": "USE03",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 24,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE04",
+      "wiki_id": "USE04",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 24,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE05",
+      "wiki_id": "USE05",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 24,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE06",
+      "wiki_id": "USE06",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE07",
+      "wiki_id": "USE07",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE08",
+      "wiki_id": "USE08",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE09",
+      "wiki_id": "USE09",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE10",
+      "wiki_id": "USE10",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE11",
+      "wiki_id": "USE11",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE12",
+      "wiki_id": "USE12",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE13",
+      "wiki_id": "USE13",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE14",
+      "wiki_id": "USE14",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 25,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE15",
+      "wiki_id": "USE15",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 26,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE16",
+      "wiki_id": "USE16",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 26,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE17",
+      "wiki_id": "USE17",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 26,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE18",
+      "wiki_id": "USE18",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE19",
+      "wiki_id": "USE19",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE20",
+      "wiki_id": "USE20",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE21",
+      "wiki_id": "USE21",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE22",
+      "wiki_id": "USE22",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE23",
+      "wiki_id": "USE23",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE24",
+      "wiki_id": "USE24",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE25",
+      "wiki_id": "USE25",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE26",
+      "wiki_id": "USE26",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 27,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE27",
+      "wiki_id": "USE27",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 28,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE_LLDB01",
+      "wiki_id": "USE_LLDB01",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 28,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    },
+    {
+      "source_id": "USE_LLDB02",
+      "wiki_id": "USE_LLDB02",
+      "family": "USE",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "pdf_page": 28,
+      "status": "active",
+      "applicability": "check-rule-scope"
+    }
+  ]
+}

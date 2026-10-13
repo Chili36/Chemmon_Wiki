@@ -21,14 +21,15 @@ SELECTION_SYSTEM_PROMPT = """You are the ChemMon wiki page selector.
 Your only job is to choose which wiki pages should be returned as context for the user's question about chemical monitoring reporting.
 
 Rules:
-- The full catalog from `index.md` is already provided in the user message.
+- The topic catalog is provided in the user message. It is discovery metadata, not evidence.
 - Use that catalog first to decide which pages matter.
 - Do not request `index.md` again.
 - Do not answer the question.
 - Request the minimal set of non-index pages needed for this question.
-- When possible, request all needed pages in a single `read_wiki_pages` call.
-- You may request at most 5 non-index pages.
-- If no additional pages are needed, return JSON only: {"page_names": []}
+- Select only filenames in the catalog, respecting domain scope and explicit exceptions.
+- Select at most max_pages pages (the request supplies this limit).
+- Return JSON only: {"page_names": ["page-name.md"]}. No tools are available.
+- If no topic pages can help, return {"page_names": []}.
 """
 
 
@@ -53,21 +54,21 @@ def _read_pages_payload(
     pages: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
     errors: list[dict[str, Any]] = []
-    max_followup_pages = max(max_pages - 1, 0)
+    allowed = set(store.list_pages())
     seen_in_request: set[str] = set()
 
     for raw_name in requested_page_names:
-        page_name = str(raw_name)
+        page_name = store.normalize_page_name(str(raw_name))
         if page_name in seen_in_request:
             skipped.append({"page_name": page_name, "reason": "duplicate_in_request"})
             continue
         seen_in_request.add(page_name)
 
-        if page_name == "index.md":
-            skipped.append({"page_name": page_name, "reason": "index_already_provided"})
+        if page_name not in allowed:
+            skipped.append({"page_name": page_name, "reason": "not_a_topic_page"})
             continue
 
-        if len(pages_read) >= max_followup_pages:
+        if len(pages_read) >= max_pages:
             skipped.append({"page_name": page_name, "reason": "page_limit_exceeded", "limit": max_pages})
             continue
 
@@ -96,9 +97,11 @@ class WikiPageSelector:
         model_id: str | None = None,
         model_str: str | None = None,
         max_pages: int = 6,
+        use_hints: bool = True,
     ):
         self.store = store
         self.max_pages = max_pages
+        self.use_hints = use_hints
         if client and model_id:
             self.client = client
             self.model_id = model_id
@@ -108,7 +111,10 @@ class WikiPageSelector:
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
-        index_content = self.store.read_page("index.md").content
+        max_pages = int(payload.get("max_pages", self.max_pages))
+        if not 1 <= max_pages <= 10:
+            raise ValueError("max_pages must be between 1 and 10")
+        catalog = self.store.selector_catalog(use_hints=self.use_hints)
         llm_started = time.perf_counter()
 
         response = self.client.chat.completions.create(
@@ -118,7 +124,7 @@ class WikiPageSelector:
                 {
                     "role": "user",
                     "content": json.dumps(
-                        {"question": payload["question"], "wiki_index": index_content},
+                        {"question": payload["question"], "max_pages": max_pages, "catalog": catalog},
                         ensure_ascii=False,
                     ),
                 },
@@ -133,26 +139,27 @@ class WikiPageSelector:
 
         output_text = response.choices[0].message.content or "" if response.choices else ""
         data = extract_json_payload(output_text)
-        if data and isinstance(data, dict):
-            raw = data.get("page_names", [])
-            if not isinstance(raw, list):
-                raw = [raw]
-            selected_page_names = [str(name) for name in raw]
-        else:
-            selected_page_names = []
+        if not isinstance(data, dict) or not isinstance(data.get("page_names"), list):
+            raise ValueError("Page selector must return a JSON object with a page_names array")
+        selected_page_names = data["page_names"]
+        if not all(isinstance(name, str) for name in selected_page_names):
+            raise ValueError("Page selector returned invalid page names")
 
         pages_read: list[str] = []
         tool_trace: list[dict[str, Any]] = []
         _read_pages_payload(
             store=self.store,
             requested_page_names=selected_page_names,
-            max_pages=self.max_pages,
+            max_pages=max_pages,
             pages_read=pages_read,
             tool_trace=tool_trace,
         )
 
+        if selected_page_names and not pages_read:
+            raise ValueError("Page selector did not return any valid topic pages")
+
         return PageSelectionResult(
-            pages_used=list(dict.fromkeys(["index.md", *pages_read])),
+            pages_used=pages_read,
             tool_trace=tool_trace,
             token_summary=_aggregate_usage([usage], self.model_id),
             timing_summary={

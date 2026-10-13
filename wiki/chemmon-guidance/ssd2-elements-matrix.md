@@ -2,7 +2,7 @@
 title: "SSD2 Elements: Matrix"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -49,7 +49,7 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 
 ## Relevant Business Rules
 
-- `FOODEX2_SAMMAT`, `FOODEX2_ANMAT` — `sampMatCode` / `anMatCode` must be valid FoodEx2 codes. See [[business-rules-cross-cutting]].
+- `FOODEX2_SAMPMAT`, `FOODEX2_ANMAT` — `sampMatCode` / `anMatCode` must be valid FoodEx2 codes. See [[business-rules-cross-cutting]].
 - `CHEMMON27` — for VMPR and pesticides, `sampMatCode` should usually equal `anMatCode`. See [[business-rules-cross-cutting]].
 - `CHEMMON76` — VMPR event-level species consistency. See [[business-rules-vmpr]].
 - `CHEMMON95`, `CHEMMON99`, `GBR13` — origin-country restrictions. See [[business-rules-pesticide]], [[business-rules-cross-cutting]], and [[business-rules-gbr]].

@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-05",
+  "source": "local Foodex2 Code Validator/data/mtx.db",
+  "database_sha256": "5a40b1b6b289ff16f4bce2b2a68e8efbadcd1e78cb262cf2ebc1e2972c87e10a",
+  "query": "select t.term_code,t.extended_name,t.deprecated,h.hierarchy_code,h.parent_code,h.reportable from terms t join term_hierarchies h using(term_code) where h.parent_code='A07VF' and h.hierarchy_code='targcon' order by t.term_code",
+  "rows": [
+    {
+      "term_code": "A18ET",
+      "extended_name": "Lambs reared for reproduction or meat production feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18EV",
+      "extended_name": "Dairy/reproductive sheep feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18EX",
+      "extended_name": "Kids reared for reproduction or meat production feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18EY",
+      "extended_name": "Dairy/reproductive goat feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    }
+  ],
+  "limitations": "Local catalogue snapshot only; not a live EFSA catalogue check. Used to reconcile the sheep/goat F23 example with the supplied 2026 PDF."
+}

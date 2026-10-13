@@ -1,8 +1,9 @@
 ---
 title: "ChemMon Single SSD2 Collection and Domain Routing"
+select_when: "Routing one SSD2 submission across chemical domains using legal reference and parameter; distinguish reporting flags from separate FA/FF data collections."
 type: "overview"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:

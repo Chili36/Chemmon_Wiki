@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Sampling: Date of Sampling"
+select_when: "SSD2 sampling year, month and day, reporting-year relationship and date exceptions. PRE sampling dates and USE marketing dates have separate models."
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -50,4 +51,4 @@ The complete date on which the sample was taken is mandatory. This information i
 ### Related business rules
 
 - `CHEMMON43` — for pesticides/VMPR, `sampY` must be less than or equal to submission year minus one.
-- `CHEMMON43_b` — for additives/flavourings, `sampY` must be less than submission year minus one.
+- `CHEMMON43_b` — for additives/flavourings, `sampY` should be **less than or equal to** submission year minus one; Warning in 2026 (Table 10, p. 123).

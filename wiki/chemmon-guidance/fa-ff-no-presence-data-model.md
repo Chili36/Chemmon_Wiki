@@ -1,8 +1,9 @@
 ---
 title: "FA/FF No-presence Data Model"
+select_when: "No-presence FA/FF records: sampId/sampMatCode, presenceAdded, sampling date, PRE rules and PRE15 warning. Use for this collection, not SSD2 results or use levels."
 type: "reference"
 domain: "additives"
-last_updated: "2026-04-22"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
 source_pages:
@@ -25,7 +26,7 @@ related:
 The **no-presence DM** is a sample-level data model for reporting that a specific food additive or food flavouring (FA/FF) has **not** been used in a given sample. It is SSD2-*derived* — element names and catalogues align with SSD2 — but is **a separate data model** because standalone negative data cannot be represented in SSD2 itself. (No-presence 2026 pp. 4-5)
 
 - Use this DM **only** for negative reports ("FA/FF not on label / not added"). Positive presence must go through SSD2 analytical reporting together with a measured level. (PRE06, PRE10)
-- No-presence reporting is **optional**. Commission Recommendation (EU) 2023/965 requires MS to collect at least analytical data (SSD2) or use levels ([[fa-ff-use-levels-data-model]]); no-presence may be added to identify foodstuffs where a FA/FF is specifically not used. (No-presence 2026 p4)
+- No-presence reporting is **optional**. The guidance, citing Commission Recommendation (EU) 2023/965, says MS **should** collect at least analytical data (SSD2) or use levels ([[fa-ff-use-levels-data-model]]); no-presence may be added to identify foodstuffs where a FA/FF is specifically not used. (No-presence 2026 p4)
 - Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893698), exported to XML. Validation and acceptance follow the same flow as [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (No-presence 2026 p13, Figure 1)
 
 ## Fast routing
@@ -56,7 +57,10 @@ The highest-signal constraints for retrieval are:
 
 <!-- Source: No-presence 2026 Section 2 (pp. 6-12); Table 1 (pp. 15-16) -->
 
-Sixteen elements, all submitted at sample level. A single `sampId` may carry multiple records (different substances), but the sample-identifying fields below must stay constant per `sampId` (PRE11).
+Table 1 contains **18 named elements**, described in 16 field sections because
+the three date components share §2.6. They are submitted at sample level. A
+single `sampId` may carry multiple records (different substances), but the
+sample-identifying fields below must stay constant per `sampId` (PRE11).
 
 ### Programme identification
 
@@ -100,25 +104,54 @@ Sixteen elements, all submitted at sample level. A single `sampId` may carry mul
 
 All 17 rules in this DM are prefixed `PRE`. All are currently **Active**. Sixteen are **Error** severity (submission-blocking); PRE15 is the only **Warning**.
 
-| Rule | Severity | What it enforces |
-|---|---|---|
-| PRE01 | Error | `sampY` = data collection year − 1 |
-| PRE02 | Error | F23 (target consumer) mandatory if F33 is category 13 (foods for specific groups) |
-| PRE03 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or use `ADD00881A`) |
-| PRE04 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or use `ADD00881A`) |
-| PRE05 | Error | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) |
-| PRE06 | Error | Only `C20A` (no-presence) can be reported; positive presence belongs in another DM |
-| PRE07 | Error | `functionOf` mandatory when `progLegalRef=N112A` |
-| PRE08 | Error | F33 mandatory on `sampMatCode` if not implicitly assigned |
-| PRE09 | Error | F03 mandatory for the specific legislative categories listed above |
-| PRE10 | Error | `presenceAdded` values must be meaningful — `C19A` and `C20A` cannot coexist on one record |
-| PRE11 | Error | `(repCountry, sampCountry, sampY, sampM, sampD, sampMatCode, sampMatInfo.brandName, sampMatInfo.manuf)` must be constant per `sampId` |
-| PRE12 | Error | `(paramCode, sampId)` must be unique |
-| PRE13 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` |
-| PRE14 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` |
-| PRE15 | Warning | If `sampMatCode` has an implicit F33, do not add an explicit F33 |
-| PRE16 | Error | `repYear`, if reported, = data collection year |
-| PRE17 | Error | `(sampD, sampM, sampY)` must be a valid date |
+| Rule | Severity | What it enforces | Source page |
+|---|---|---|---|
+| PRE01 | Error | `sampY` = data collection year − 1 | 19 |
+| PRE02 | Error | F23 (target consumer) mandatory if F33 is category 13 (foods for specific groups) | 19 |
+| PRE03 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or use `ADD00881A`) | 19 |
+| PRE04 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or use `ADD00881A`) | 19 |
+| PRE05 | Error | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) | 19 |
+| PRE06 | Error | Only `C20A` (no-presence) can be reported; positive presence belongs in another DM | 19–20 |
+| PRE07 | Error | `functionOf` mandatory when `progLegalRef=N112A` | 20 |
+| PRE08 | Error | F33 mandatory on `sampMatCode` if not implicitly assigned | 20 |
+| PRE09 | Error | F03 mandatory for the specific legislative categories listed above | 20–21 |
+| PRE10 | Error | `presenceAdded` values must be meaningful — `C19A` and `C20A` cannot coexist on one record | 21 |
+| PRE11 | Error | `(repCountry, sampCountry, sampY, sampM, sampD, sampMatCode, sampMatInfo.brandName, sampMatInfo.manuf)` must be constant per `sampId` | 21 |
+| PRE12 | Error | `(paramCode, sampId)` must be unique | 21 |
+| PRE13 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` | 21 |
+| PRE14 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` | 21 |
+| PRE15 | Warning | If `sampMatCode` has an implicit F33, do not add an explicit F33 | 21 |
+| PRE16 | Error | `repYear`, if reported, = data collection year | 21 |
+| PRE17 | Error | `(sampD, sampM, sampY)` must be a valid date | 21 |
+
+## Source wording and field details
+
+The complete field sections (§§2.1–2.16), Table 1 and all 17 PRE rows were
+compared on 5 October 2026. Catalogue restrictions and mandatory fields still
+apply even when they have no separate PRE rule ID.
+
+- **F23:** §2.7 p. 8 recommends it for infant products, while PRE02 p. 19
+  makes it mandatory for legislative category 13. The rule reference above
+  preserves PRE02's broader condition. Do not narrow it to infants only.
+- **PRE17:** both source columns describe the invalid-date failure state.
+  The expected passing condition is a valid sampling date, consistent with
+  mandatory year/month/day in §2.6.
+- `presenceAdded` and `functionOf` are repeatable types in Table 1. Repeatability
+  does not permit C19A/C05A here: PRE06 still restricts presence to C20A.
+- The source uses occasional shorthand `progLegRef` and `matCode.F33` in its
+  rule prose; the declared fields in this model remain `progLegalRef` and
+  `sampMatCode`. Do not introduce new submission fields from those spellings.
+- Table 1 sizes include `progLegalRef` 5, `restrictionException` 9 and
+  `paramCode` 400 characters, alongside the text/identifier sizes above.
+
+## Version-sensitive cheese example
+
+The source's p. 9 example uses `A02RH` (Soft-ripened cheese), with F33.A0C5F
+implicit. The checked local MTX 17.2 snapshot agrees. ChemMon's analytical
+example p. 39 instead prints an explicit F33: do not copy that duplicate into
+this path. PRE15 assigns Warning severity. See [[foodex2-in-chemmon]] for the
+version-specific reconciliation and evidence; this does not establish the
+catalogue release originally intended by the ChemMon example.
 
 ## Pilot substance rotation
 

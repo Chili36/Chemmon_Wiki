@@ -1,13 +1,15 @@
 ---
 title: "SSD2 Result: Units and Reporting Limits (resUnit, resLOD, resLOQ, resInfo.notSummed)"
+select_when: "SSD2 measurement units, LOD/LOQ, numeric limits, BIN unit conditions, notSummed and VMPR sensitivity exceptions; distinguish result units from qualitative-value requirements."
 type: "reference"
 domain: "all"
-last_updated: "2026-04-15"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 65-67 (Section 2, elements M.03-M.05)"
   - "pp. 72-73 (Section 2, element M.20)"
+  - "pp. 102-103 (Table 9, GBR27-29)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-result-method-accreditation]]"
@@ -21,7 +23,7 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- `resUnit` is mandatory when reporting any numeric result/limit fields (GBR27/28/29).
+- `resUnit` is mandatory when reporting any numeric result/limit fields (GBR29); it is also required whenever `resType` is not BIN (GBR27).
 - `resLOD` must be reported when `resType = LOD` (GBR36) and must be ≤ `resLOQ` (GBR37).
 - `resLOQ` is expected for most chemical-monitoring results and is required unless the guidance explicitly allows exceptions (unvalidated methods; `resInfo.notSummed = Y`; some VMPR cases where `resLOD`/`CCalpha`/`CCbeta` are used instead; `resType = BIN`).
 - VMPR: at least one of `resLOD`, `resLOQ`, `CCalpha`, or `CCbeta` must be reported for each result (see also [[ssd2-result-method-accreditation]]).
@@ -61,9 +63,9 @@ EFSA converts results to a single unit type for consistent presentation in table
 
 ### Related business rules
 
-- **GBR27** — `resUnit` mandatory when `resType` = BIN.
-- **GBR28** — `resUnit` mandatory when any LOD or LOQ value is reported.
-- **GBR29** — `resUnit` mandatory when any `resVal` is reported.
+- **GBR27** — `resUnit` mandatory when `resType` is different from BIN (Table 9, p. 102).
+- **GBR28** — `resQualValue` mandatory when `resType` = BIN (Table 9, p. 103).
+- **GBR29** — `resUnit` mandatory when any numeric result, limit, working-range or uncertainty field listed in Table 9 is reported, including LOD/LOQ (p. 103).
 
 See [[business-rules-gbr]].
 
@@ -125,7 +127,7 @@ In cases where neither the LOD nor LOQ is provided, results cannot be used in ex
 
 ### VMPR rule
 
-For veterinary monitoring, **one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` must be reported for each result**. (ChemMon 2026 p67)
+The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` for each result. The full validation rule CHEMMON45 (pp. 123-124) explicitly excludes unvalidated methods and `resInfo.notSummed=Y`; preserve those exceptions when describing the rule.
 
 ### Example
 
@@ -136,7 +138,7 @@ For veterinary monitoring, **one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` m
 ### Related business rules
 
 - **CHEMMON44** — `resLOQ` must be reported unless method is unvalidated, `notSummed = Y`, domain is VMPR, or `resType` = BIN.
-- **CHEMMON45** — At least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` must be reported.
+- **CHEMMON45** — If the method is not unvalidated and `resInfo.notSummed` is not Y, report at least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` (Table 10, pp. 123-124).
 - **CHEMMON78** — If `resType` = BIN, `resLOQ` must be empty.
 - **CHEMMON82** — `resLOQ` cannot be a placeholder value (99999, 999, 9999, 999999, 9999999).
 

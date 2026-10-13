@@ -2,7 +2,7 @@
 title: "SSD2 Evaluation: Legal Limit Value and Limit Type"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -53,7 +53,7 @@ For non-regulated processed products, the limit to report is the one applicable 
 
 For pesticides, the typical type is `W002A` (MRL). If `W990A` (national or local limit) is used, the result is disregarded from EU report analysis. (ChemMon 2026 p74)
 
-For VMPR, the guidance lists these main values:
+For VMPR, p. 74 lists six main values (W002A/W005A/W006A/W012A/W001A/W007A). The list below also includes W008A/W990A from the cross-domain CHEMMON35 recommendation on p. 120:
 
 - `W002A` — MRL
 - `W005A` — minimum required performance limit
@@ -61,12 +61,12 @@ For VMPR, the guidance lists these main values:
 - `W012A` — presence
 - `W001A` — maximum limit
 - `W007A` — action level
-- `W008A` — health-based guidance value
-- `W990A` — other
+- `W008A` — target level (CHEMMON35, Table 10 p. 120; additional to the VMPR prose list)
+- `W990A` — national or local limit (CHEMMON35; additional to the VMPR prose list)
 
 ## Related business rules
 
-- `CHEMMON35` — allowed `evalLimitType` values. See [[business-rules-cross-cutting]].
-- `CHEMMON46` — if `evalCode = J003A` and the limit is numeric rather than presence-based, `resType` must be `VAL`. See [[business-rules-cross-cutting]].
+- `CHEMMON35` — recommended `evalLimitType` codes; Warning severity, not a blanket Error constraint. See [[business-rules-cross-cutting]].
+- `CHEMMON46` — if `evalCode` is J003A **or J031A**, and `evalLimitType` is not W012A (Presence), `resType` must be VAL. See [[business-rules-cross-cutting]].
 - `CHEMMON48` — if `paramType` is not `P002A` and `resVal >= evalLowLimit`, `evalCode` should not be `J029A`. See [[business-rules-cross-cutting]].
 - `CHEMMON59` — pesticides only allow `W002A`, `W990A`, or blank. See [[business-rules-pesticide]].

@@ -2,7 +2,7 @@
 title: "FoodEx2 Facets: Packaging, Part Consumed, and Target Consumer"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -78,7 +78,7 @@ related:
 - `CHEMMON14`: for bisphenol compounds, `F19` packaging material is mandatory. See [[business-rules-contaminant]].
 - `CHEMMON15`: for PAHs, `F19` packaging material should be reported. See [[business-rules-contaminant]].
 - `CHEMMON73`: for VMPR feed/water matrices, `F23` should be reported. See [[business-rules-vmpr]].
-- `CHEMMON83`: if `sampMatCode = F10.A18PX`, `F19` and `F18` should not be reported. See [[business-rules-contaminant]].
+- `CHEMMON83`: if `sampMatCode` **contains facet** F10.A18PX, do not report F19 (packaging material) or F18 (packaging format); Warning. See [[business-rules-cross-cutting]].
 - `CHEMMON89`: for FA/FF category 13, `F23` target consumer is recommended. See [[business-rules-additives]].
 - `CHEMMON90_a`: for pesticide copper, `F20` and/or `F28` are needed. See [[business-rules-pesticide]].
 

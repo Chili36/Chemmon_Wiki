@@ -4,6 +4,8 @@ type: "reference"
 domain: "all"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 related:
   - "[[chemmon-overview]]"
   - "[[foodex2-facets]]"
@@ -17,7 +19,7 @@ related:
   - "[[pesticide-reporting]]"
   - "[[baby-food-reporting]]"
   - "[[business-rules]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # FoodEx2 in ChemMon
@@ -54,8 +56,8 @@ The table below summarises which facets are required, recommended, or not applic
 
 | Facet | VMPR | Pesticides | Contaminants | Additives | Flavourings |
 | --- | --- | --- | --- | --- | --- |
-| F01 Source | Always | Always | Always | Always | Always |
-| F02 Part-nature | Always | Always | Always | Recommended | Recommended |
+| F01 Source | Required with feed/water/processed-composite exceptions; see below | Always | Always | Always | Always |
+| F02 Part-nature | Required with feed/water/processed-composite exceptions; see below | Always | Always | Recommended | Recommended |
 | F03 Physical state | -- | Recommended | Recommended | Recommended | Recommended |
 | F21 Production method | Recommended | Required (see [[pesticide-reporting]]) | Required | -- | -- |
 | F23 Target consumer | Mandatory for feed | -- | Recommended | Required for infant | Required for infant |
@@ -63,6 +65,11 @@ The table below summarises which facets are required, recommended, or not applic
 | F33 Legislative classes | Required for processed (see [[vmpr-reporting]]) | -- | Required for acrylamide (see [[contaminant-reporting]]) | Mandatory (see [[food-additives-reporting]]) | Mandatory (see [[food-additives-reporting]]) |
 
 (ChemMon 2026 p36-39)
+
+For the VMPR F01/F02 exceptions, use [[ssd2-matrix-vmpr-coding]] and
+[[vmpr-reporting]]. ChemMon p. 33 explicitly excludes the special feed, water
+and processed-composite cases from the blanket F01/F02 requirement; an implicit
+facet can satisfy a requirement without being repeated explicitly.
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p37-40 -->
 ## Worked Examples
@@ -95,6 +102,29 @@ The table below summarises which facets are required, recommended, or not applic
 - Code: `A03ZN#F18.A07NL$F19.A07PN`
 - F18 and F19 capture the packaging format and material relevant for contaminant migration. (ChemMon 2026 p39)
 
-### Cheese with legislative class
-- Code: `A02RH#F03.A06JA$F33.A0C5F`
-- F03 specifies the physical state; F33 captures the legislative classification. (ChemMon 2026 p39)
+### Soft-ripened cheese: source discrepancy and catalogue version
+
+The supplied PDFs disagree: ChemMon 2026 p. 39 shows
+`A02RH#F03.A06JA$F33.A0C5F`, with F33 explicit; no-presence p. 9 and use-levels
+p. 9 show `A02RH`, with F33 already implicit. Do not treat the first example as
+a version-independent instruction to add F33.
+
+A read-only check on 5 October 2026 of the **local MTX catalogue 17.2**
+(valid from 14 July 2026) confirms:
+
+- `A02RH` is Soft-ripened cheese and carries implicit `F33.A0C5F`
+  (FA-01.7.2 Ripened cheese).
+- Use `A02RH#F03.A06JA` **when the actual product is sliced**: A06JA means
+  Slices, steaks or other flat cuts. Do not infer a physical state from the
+  fact that a product is cheese.
+- In that snapshot, omit an explicit F33.A0C5F because it duplicates the
+  implicit class. CHEMMON109 and PRE15 assign Warning severity to duplicate
+  F33; USE23 assigns Error severity. The collection-specific conditions remain
+  in [[food-additives-reporting]].
+
+The query, returned term attributes, catalogue metadata and database hash are
+recorded in `reports/source-review/2026-10-05-cheese-catalogue-check.json`;
+see [[SOURCE_REVIEW]]. This is a checked local snapshot, not a latest-catalogue
+claim. Its date is later than the PDFs, so it does not establish which historical
+catalogue release the ChemMon example intended. Check the catalogue used by the
+receiving collection before reusing an example from another edition.

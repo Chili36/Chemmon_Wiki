@@ -1,5 +1,6 @@
 ---
 title: "SSD2 Data Model"
+select_when: "SSD2 structure and field families; use for orientation or general data-model questions, then select field-specific pages for exact constraints."
 type: "reference"
 domain: "all"
 sources:
@@ -11,7 +12,7 @@ related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # SSD2 Data Model
@@ -86,7 +87,7 @@ SSD2 data undergoes three levels of validation:
 2. **Inter-dependent validation**: checks consistency between related elements (e.g., if `resType` indicates a quantified result then `resVal` must be present and greater than zero). (SSD2 p42-43)
 3. **Compound-element validation**: checks that FoodEx2 compound codes are structurally valid, that the base term belongs to the correct hierarchy, and that facets are permitted for that base term. (SSD2 p44-45)
 
-The ChemMon business rules (CHEMMON01 onward) implement and extend these validation levels for the specific requirements of chemical monitoring. See [[business-rules]].
+The ChemMon business rules implement and extend these validation levels for the specific requirements of chemical monitoring. See [[business-rules]] for the rule families and source-derived inventory; rule numbering is not continuous.
 
 <!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p7 -->
 ## Relationship to GDE2

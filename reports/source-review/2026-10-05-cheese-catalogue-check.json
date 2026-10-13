@@ -1,0 +1,121 @@
+{
+  "checked_at": "2026-10-05",
+  "source": "local Foodex2 Code Validator/data/mtx.db",
+  "database_sha256": "5a40b1b6b289ff16f4bce2b2a68e8efbadcd1e78cb262cf2ebc1e2972c87e10a",
+  "queries": {
+    "catalogue": {
+      "sql": "select code,version,last_update,valid_from,status from catalogue",
+      "rows": [
+        {
+          "code": "MTX",
+          "version": "17.2",
+          "last_update": null,
+          "valid_from": "2026-07-14T00:00:00",
+          "status": "PUBLISHED MINOR"
+        }
+      ]
+    },
+    "terms": {
+      "sql": "select term_code,extended_name,deprecated,implicit_facets,all_facets from terms where term_code in ('A02RH','A0C5F','A06JA') order by term_code",
+      "rows": [
+        {
+          "term_code": "A02RH",
+          "extended_name": "Soft - ripened cheese",
+          "deprecated": 0,
+          "implicit_facets": "F10.A0CJQ$F27.A02LT$F28.A0C6E$F28.A0C6F$F33.A0C5F",
+          "all_facets": "A02RH#F02.A06BN$F10.A0CJQ$F27.A02LT$F28.A0C6F$F28.A0C6E$F33.A0C5F"
+        },
+        {
+          "term_code": "A06JA",
+          "extended_name": "Slices, steaks or other flat cuts",
+          "deprecated": 0,
+          "implicit_facets": null,
+          "all_facets": "A06JA"
+        },
+        {
+          "term_code": "A0C5F",
+          "extended_name": "FA-01.7.2 Ripened cheese",
+          "deprecated": 0,
+          "implicit_facets": null,
+          "all_facets": "A0C5F"
+        }
+      ]
+    },
+    "hierarchies": {
+      "sql": "select term_code,hierarchy_code,parent_code,reportable from term_hierarchies where term_code in ('A02RH','A0C5F','A06JA') order by term_code,hierarchy_code",
+      "rows": [
+        {
+          "term_code": "A02RH",
+          "hierarchy_code": "biomo",
+          "parent_code": "A02RG",
+          "reportable": 1
+        },
+        {
+          "term_code": "A02RH",
+          "hierarchy_code": "expo",
+          "parent_code": "A02RG",
+          "reportable": 1
+        },
+        {
+          "term_code": "A02RH",
+          "hierarchy_code": "ingred",
+          "parent_code": "A02RG",
+          "reportable": 1
+        },
+        {
+          "term_code": "A02RH",
+          "hierarchy_code": "master",
+          "parent_code": "A02RG",
+          "reportable": 1
+        },
+        {
+          "term_code": "A02RH",
+          "hierarchy_code": "report",
+          "parent_code": "A02RG",
+          "reportable": 1
+        },
+        {
+          "term_code": "A02RH",
+          "hierarchy_code": "vetdrug",
+          "parent_code": "A02RG",
+          "reportable": 1
+        },
+        {
+          "term_code": "A06JA",
+          "hierarchy_code": "master",
+          "parent_code": "A0CEA",
+          "reportable": 1
+        },
+        {
+          "term_code": "A06JA",
+          "hierarchy_code": "state",
+          "parent_code": "A0CEA",
+          "reportable": 1
+        },
+        {
+          "term_code": "A0C5F",
+          "hierarchy_code": "legis",
+          "parent_code": "A0C5H",
+          "reportable": 1
+        },
+        {
+          "term_code": "A0C5F",
+          "hierarchy_code": "master",
+          "parent_code": "A0C5H",
+          "reportable": 1
+        }
+      ]
+    }
+  },
+  "source_comparison": {
+    "ChemMon 2026 p.39": "A02RH#F03.A06JA$F33.A0C5F; F33 shown as explicit",
+    "No-presence 2026 p.9": "A02RH; F33.A0C5F shown as implicit",
+    "Use-levels 2026 p.9": "A02RH; F33.A0C5F shown as implicit"
+  },
+  "conclusion": "In local MTX 17.2, A02RH carries implicit F33.A0C5F. Do not duplicate F33; add F03.A06JA only when slices/flat cuts describes the actual product.",
+  "limitations": [
+    "Local snapshot only, not a live EFSA catalogue query.",
+    "The catalogue valid-from date is after the supplied PDFs; this does not establish the historical catalogue release intended by the ChemMon p.39 example.",
+    "This checks term labels, implicit facets and reportability, not every validation condition for a complete record."
+  ]
+}

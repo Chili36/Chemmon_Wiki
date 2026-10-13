@@ -14,7 +14,7 @@ related:
   - "[[contaminant-reporting]]"
   - "[[vmpr-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Pesticide Residues Reporting
@@ -94,8 +94,6 @@ EFSA encourages data providers to collect and submit available information for p
 
 | Rule | Severity | Description |
 | --- | --- | --- |
-| CHEMMON02 | Error | Country of sampling must equal reporting organisation country |
-| CHEMMON03 | Error | `sampCountry`/`origCountry` consistency |
 | CHEMMON90_a | Warning | Copper-specific F20 facet codes required |
 | CHEMMON90_b | Error | Result value uncertainty mandatory for copper |
 | CHEMMON94 | Error | Third-country import sampling point restriction (amended 2026) |

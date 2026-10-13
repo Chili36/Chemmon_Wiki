@@ -1,0 +1,533 @@
+{
+  "version": 1,
+  "created_at": "2026-10-05T05:44:02.476839+00:00",
+  "mode": "answer",
+  "execution": "dry-run",
+  "split": "held-out",
+  "label_status": "draft",
+  "settings": {
+    "models": [
+      "openai/gpt-5.4-mini",
+      "anthropic/claude-sonnet-4-6"
+    ],
+    "catalog_mode": "hints",
+    "answer_max_tokens": 2000,
+    "graph_expansion": false,
+    "temperature": "provider default",
+    "pricing": {}
+  },
+  "corpus_snapshot": {
+    "chemmon_docs/EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf": "6208be1617c039ed652a2f96c1d4562993f4088d5dd945c145bff939be14202b",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf": "5988380167d3c0029ddab95719cc71b90a296b2675ce6613053d6615be5a13cf",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf": "6d4ef5db15ea29c14266203e8deeaba4bf64a9d5ccea8b6307c74dd8e5185cac",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf": "473edb8d03366a828c7d0bb0c9709dcf64c8f3b03fceb56b94842f78dcf549bb",
+    "wiki/chemmon-guidance/baby-food-reporting.md": "42eeb612984541f71f26ce136fe0f998f60780e5fffc24ae6d9862042f1200e2",
+    "wiki/chemmon-guidance/business-rules-2026-changes.md": "a8fd0954ca6d75430a27ce4c3305212ecd64ef79425726a7d798257f194edcf3",
+    "wiki/chemmon-guidance/business-rules-additives.md": "f2383ef7c470fdeb1cc0d968326d870fbd0b531142197807b7770d932386eaae",
+    "wiki/chemmon-guidance/business-rules-baby-food.md": "907259a09967c28a97df8f04493e70bcc796a9d7308d9dc932eb95467ac7e28a",
+    "wiki/chemmon-guidance/business-rules-contaminant.md": "5da395e78bcac6d96af2c4f57615cdb6c34b4585b5066c604bf6b11a1ba3a067",
+    "wiki/chemmon-guidance/business-rules-cross-cutting.md": "d46353cf485ccbac0396348255d25a30e3ec31133e4a6cbf45a0306928a3bd01",
+    "wiki/chemmon-guidance/business-rules-gbr.md": "9d35417daf8c0ce5b0cb70213166e8a270fc818c44d72cd20c8042226a297823",
+    "wiki/chemmon-guidance/business-rules-legal-limits.md": "a4b3d44d958a8e3151005de841b5baf9bde3730de0d4dcc156519f07a9dff83e",
+    "wiki/chemmon-guidance/business-rules-pesticide.md": "e3df8be12f42c54f4c3710ad1b1fc04562d1a84ec087fe3262fa457943304f02",
+    "wiki/chemmon-guidance/business-rules-vmpr.md": "4e193f0df5932796b418839cbbca170ec845faeb7a6e2816196924d703477377",
+    "wiki/chemmon-guidance/business-rules.md": "6fb1462097a0e2d8a48a7a2926e6a72fca752f1f7b81af330a6ee8443a1cdced",
+    "wiki/chemmon-guidance/chemmon-background.md": "f84d2a1e083480aaec5bb4a346253a388bbd7b532c0cf0650c48367dd6b04470",
+    "wiki/chemmon-guidance/chemmon-change-management.md": "3f6aabe6cf6a4c8ab1361ff71b2f0a93dab7c69e384b0c7448895e932c9ed5ce",
+    "wiki/chemmon-guidance/chemmon-data-governance-and-transparency.md": "4b832e02253a7a56c7910743d98d29ed08a5eed4cefea0b9b34937341caccb7c",
+    "wiki/chemmon-guidance/chemmon-matrix-classification-algorithms.md": "c3d6eef201b0cbacd9c2f3873e7c817a7c6fcd618f64faa13f5ad6815e744a8d",
+    "wiki/chemmon-guidance/chemmon-overview.md": "fa5fd512825d3d78865d2d9d4f066911c74d8e367a270a27fd49a98f6af284f6",
+    "wiki/chemmon-guidance/chemmon-reports.md": "956b480a321539882b8d6dfe5681d1f28feca1c814b820fa7882a2655261fc2b",
+    "wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md": "46f87e07e4082bcf23355df12b799c6129d847d41e231fe8db9ecc36ca09f0d3",
+    "wiki/chemmon-guidance/chemmon-single-ssd2-collection.md": "7392250684efbf21a78f0b40573318b7a8e1b4f3f8ce42cc56ab3640a286b7c6",
+    "wiki/chemmon-guidance/contaminant-reporting.md": "caa7d1dc5f06ecc574fc6568f8b7b65bafa5950b5554376ea3910c14c7e98b37",
+    "wiki/chemmon-guidance/controlled-terminology-catalogues.md": "5f14645b32ec2639b4075703de979d0510a72dab4b526bf60cc1884f1de4888c",
+    "wiki/chemmon-guidance/data-validation-and-acceptance.md": "ab512ae89aecbec8d031f390148696695a26f9576feed9ac74bc16c5be82ea7b",
+    "wiki/chemmon-guidance/fa-ff-no-presence-data-model.md": "2cdf027a5f4fd46673eb92daa188b9c29e900975d3be90a5eafe43f441804d5e",
+    "wiki/chemmon-guidance/fa-ff-use-levels-data-model.md": "a087fef687ec6ac62565be364a6e078896b165e1a8473f52d3b3848b2d6850da",
+    "wiki/chemmon-guidance/food-additives-reporting.md": "fb72d09f56203d847b0c7109ff88f5a46b0e585c1dd92ab41528353b333ddf17",
+    "wiki/chemmon-guidance/foodex2-facets-legislative-descriptive.md": "1e82bf2eecff825894c9f1c05fff8c02c851014e3e93f2d2225da307b9e6f30c",
+    "wiki/chemmon-guidance/foodex2-facets-packaging-consumer.md": "8d469c0ba481a759eebcbbf02f2697dbb34775a698fe408133bea34eca1e2440",
+    "wiki/chemmon-guidance/foodex2-facets-source-origin.md": "e052e0bf9b7cc2c7c070adb20d197e7a735deda037cb749482bb93c62940b353",
+    "wiki/chemmon-guidance/foodex2-facets-state-process.md": "7652b428144a2564e5c548c2c248c6e9b089b197d1e14425de2855db2dc1be1a",
+    "wiki/chemmon-guidance/foodex2-facets.md": "4e503ce7ad06438d0b9c8f80ecc4496ee08a2dc33f5b5fd0050a8793e56b5130",
+    "wiki/chemmon-guidance/foodex2-in-chemmon.md": "34c530beed73fc003612b65d7b0400023fd9d774ead1ab4b99930d258ea3f971",
+    "wiki/chemmon-guidance/legal-limits-database.md": "0fd28409a2ca5c3fb18a2f3d0b14e6a61c9630243e11be13ba8515adf9cee85d",
+    "wiki/chemmon-guidance/pesticide-reporting.md": "fc6bd9f018ef95bd4b7234dc1c8c107fc172ab584a1d16059dc332b34bfa55aa",
+    "wiki/chemmon-guidance/reporting-flags.md": "d431193a085fe1d10d2ae0f5f40b509fbfd6644e7e5eb487b4b1ecd7ba2b2df1",
+    "wiki/chemmon-guidance/ssd2-analysis-context.md": "222cf1bc8e738d20e16dfeab9f363aad0f99adde373b950655b1af126160c5f8",
+    "wiki/chemmon-guidance/ssd2-analysis-laboratory.md": "cbda950b95018d77d829ad8314f893b717974955d7799a00aeff8f9309a65360",
+    "wiki/chemmon-guidance/ssd2-analysis-methods.md": "6d946b9124349d3ae7e3867162ed4f842c7cdb7339913773eb24c6db4d4507ca",
+    "wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md": "e0d69318aefd1b277e380b5db8e08c123c5532bed7360278e4cf9f40d00d31e6",
+    "wiki/chemmon-guidance/ssd2-data-model.md": "317d0a0a09d4e6dc3b584679a901b735275f844786b8f5e5c813db59eb5ec468",
+    "wiki/chemmon-guidance/ssd2-elements-analysis.md": "cb267f75c8851bc09a441bf4b4d37bdf873d68f42e036a22f3f4297c9608f6b4",
+    "wiki/chemmon-guidance/ssd2-elements-evaluation.md": "2c7f980b699ce85972900fc200201c0f644536882698c58cfadec9f6c31b7df0",
+    "wiki/chemmon-guidance/ssd2-elements-matrix.md": "46445821f64c9ffb9bece5adc393c5e21170c8fb7cb5e1708a08c56a242ef269",
+    "wiki/chemmon-guidance/ssd2-elements-programme.md": "b286bd53d78470e6ef9d6aa4a949e62e01ebe4b23eaa839dfaa7e20a00ea4f8f",
+    "wiki/chemmon-guidance/ssd2-elements-result.md": "0ce962dca163a41b86e1c4e68e48c84ae9bb2f46544a35ef5f16c4e438f48971",
+    "wiki/chemmon-guidance/ssd2-elements-sampling.md": "2ca250540fef3bad69c97804cb50732e96442fa17d2cba7d4e1e8e3c9018689c",
+    "wiki/chemmon-guidance/ssd2-evaluation-actions.md": "9d0e7bc121aad919a35a365bd7bf48cac4160e18b862bb0863ab788bdde1d567",
+    "wiki/chemmon-guidance/ssd2-evaluation-code.md": "f402e8e560f753fcb6f9f460d3d70a578f530d34b5740b3c90a2a67e1c458831",
+    "wiki/chemmon-guidance/ssd2-evaluation-conclusions.md": "271de53dc7f2029b67dd4df8a5df8ce4782b07813cc72562485927491bc88eaf",
+    "wiki/chemmon-guidance/ssd2-evaluation-limits.md": "1316ca1989d20e729ad241f0172adb442008cee77f6d4acc136768573096c4ec",
+    "wiki/chemmon-guidance/ssd2-matrix-analysed-sample.md": "6a5b37f7443cb9388880ddb22b80a8e5befb06ba1678314e5e7d5245da75a515",
+    "wiki/chemmon-guidance/ssd2-matrix-origin.md": "dd78c981c428e9e22d8679133cc2970852bf1c69c3ebcc3d899caed2b9abe70a",
+    "wiki/chemmon-guidance/ssd2-matrix-sampled-matrix.md": "d52741e876a1a8e5e6e1de1a8f0b33319012b84a0620843b4dbcd7a2b3bf8a2a",
+    "wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md": "3cd0111f2efe748a115ff90690cbedbfd5cd4008846aa7262bc37de854da5695",
+    "wiki/chemmon-guidance/ssd2-programme-identification.md": "59143b07021b66b36ebb1e245d98075d24107f7fbba4183e8418606989c3b857",
+    "wiki/chemmon-guidance/ssd2-programme-legal-reference.md": "d00fb38702782944f61e99a459a3ee11aebb473eb28319d1a8e6ca622c2892f9",
+    "wiki/chemmon-guidance/ssd2-programme-strategy-and-type.md": "91841ba5e4d1cd71d04e22c75c34ac62d3c02ee7a01798fc7429482bb9fe1ffd",
+    "wiki/chemmon-guidance/ssd2-programme-valid-combinations.md": "8c22a50ef5aa157b6fd2efad6587a316ab7a0fd235a806e666437e88aae42cf0",
+    "wiki/chemmon-guidance/ssd2-result-expression-basis.md": "011f9cb2f6301d08a437f8f5afe314f6357ecf7c85f1dd37a42a0a4756ddc470",
+    "wiki/chemmon-guidance/ssd2-result-identification.md": "d0c0e0d58000182f00d20b006e8ed5ad4856a1d0a0f344647a8f5ceaa9031f67",
+    "wiki/chemmon-guidance/ssd2-result-method-accreditation.md": "e6a3ff1faacbc403314867e1382e3fcd953f7c1d84eac4476adfa0eb1acde7b3",
+    "wiki/chemmon-guidance/ssd2-result-recovery-correction.md": "9e8c51ca5f8f5e6dd64ffee818be894894db3560e213df364c7918a67fbf2c90",
+    "wiki/chemmon-guidance/ssd2-result-uncertainty.md": "2ba19e9fe115e5e3b314d3fb07575905ee21fd3bfcddfb12d4a729843bfa883b",
+    "wiki/chemmon-guidance/ssd2-result-units-and-limits.md": "279cbb039647f286520a8200e3933c22c3e98c4f0d0919bbb258e62fd80855bd",
+    "wiki/chemmon-guidance/ssd2-result-value-and-type.md": "2b7d1a654144e51fb573e13d6011748578de49b0fcb803d07bd1267fdee36d62",
+    "wiki/chemmon-guidance/ssd2-sample-identifiers.md": "74adb191935c900a8410dd8c032bab70ed40d90e2b3b41b14c3dcc6415e9410c",
+    "wiki/chemmon-guidance/ssd2-sampling-country.md": "7c621858964aa24dcbcf938ed1dfca6a9b9ff64d1b18ce4f54641d79c7a8d812",
+    "wiki/chemmon-guidance/ssd2-sampling-date.md": "2ecc3eb8de23227be688bdb461223f38f23d4f44d3ee856f2c6172a31a9208dc",
+    "wiki/chemmon-guidance/ssd2-sampling-event-and-unit.md": "bd01d848e2ffc6b79422a7ccbcb8df61995ecaa5cbc4137bdea0619f1b3ddb42",
+    "wiki/chemmon-guidance/ssd2-sampling-method-and-point.md": "0037ee26a8fd2bc639d5928c04a18e0e70daffe155f7c2425ab43cd509cb1465",
+    "wiki/chemmon-guidance/vmpr-reporting.md": "1e7012e3e6f52640f95e60a8b8aa8771e3f5e88b17a11e3fb59d28da6568d4e7",
+    "index.md": "0d4dbc5852c07e81d0d6223c68c6e861e6872711f581595fd4b63740d078c09d"
+  },
+  "prompt_sha256": "cfc55ac98037d23eb74b6b7fe00b5100297890bc08a3886d34941eae903fa182",
+  "catalog_sha256": "f2c1c368ff7119c0cbee3c1d465a42d033ec49ea5a6250fdb1cbc1c2b0d59748",
+  "dataset_sha256": "7b3cd66183aea28f8f2d412e28ad777a6edbf77c4cfeb25a73d46959e27a80df",
+  "limitations": [
+    "Draft labels are exploratory, not a human-reviewed quality baseline.",
+    "Citation membership is not claim support. Correctness and support require human grades.",
+    "Provider-default sampling is recorded; repeated runs may differ.",
+    "Model comparison must hold corpus, questions, prompts and budgets fixed."
+  ],
+  "results": [
+    {
+      "case_id": "uniqueness-key",
+      "model": "openai/gpt-5.4-mini",
+      "question": "Does GBR101 reject any repeated paramCode and sampAnId, or can portions and Not in list change the outcome?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Include paramCode.base, sampId, sampAnId and anPortSeq in the uniqueness key.",
+        "Preserve exception RF-XXXX-XXX-XXX."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "business-rules-gbr.md",
+          "title": "General Business Rules (GBR)",
+          "summary": "Selected General Business Rules applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.",
+          "domain": "all",
+          "content": "# General Business Rules (GBR)\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, pp. 98-112, Table 9\n\n## Overview\n\nGeneral Business Rules (GBR) apply across all EFSA SSD2 data collections, not only ChemMon. They validate sampling event consistency, geographic fields, and result value/unit reporting at the data-model level. This page documents a selected subset. The source table contains 92 GBR IDs, including inactive and biological-only entries; omitted active rules are tracked in the source review. It is not a complete validation specification.\n\nSee [[business-rules]] for the hub and [[business-rules-cross-cutting]] for CHEMMON-level rules that apply to every reporting domain.\n\n## Sampling Event & Sample Consistency\n\n| Rule ID | Severity | Description |\n| --- | --- | --- |\n| GBR2 | Error | Sampling-event, local-organisation and sampling-programme descriptors listed in Table 9 must be consistent for the same `sampId` / `sampEventId`. `progId` and `progLegalRef` are excluded from this consistency list (p. 98). |\n| GBR3 | Error | Sample taken / matrix sampled consistency -- `sampMatCode` and related fields must be consistent for the same `sampId`. |\n| GBR4 | Error | Sample analysed / matrix analysed consistency -- `anMatCode` and related fields must be consistent for the same `sampAnId`. |\n\n## Geographic Validation\n\n| Rule ID | Severity | Description |\n| --- | --- | --- |\n| GBR12 | Error | `sampArea` must be geographically within `sampCountry`. A NUTS code or region must belong to the declared sampling country. |\n| GBR13 | Error | `origArea` must be geographically within `origCountry`. The origin area must belong to the declared country of origin. |\n\n## Result Value & Unit Rules\n\n| Rule ID | Severity | Description |\n| --- | --- | --- |\n| GBR27 | Error | `resUnit` must be reported when `resType` is different from BIN (p. 102). |\n| GBR28 | Error | `resQualValue` must be reported when `resType` = BIN (p. 103). |\n| GBR29 | Error | `resUnit` must be reported if any of `resLOD`, `resLOQ`, `resLLWR`, `resULWR`, `CCalpha`, `CCbeta`, `resVal`, `resValUncert`, `resValUncertSD`, `evalLowLimit` or `evalHighLimit` is reported (p. 103). |\n| GBR36 | Error | If `resType` = LOD, then `resLOD` must be reported. |\n| GBR37 | Error | `resLOD` must be less than or equal to `resLOQ`. |\n| GBR39 | Error | If `resType` = LOQ and `notSummed` is not 'Y', then `resLOQ` must be reported. |\n| GBR46 | Error | If `resType` = VAL, then `resVal` must be reported. |\n| GBR47 | Error | If `resType` = LOD, then `resVal` must be empty. |\n| GBR48 | Error | `resVal` must be greater than 0 when reported. |\n| GBR101 | Error | Unless `paramCode.base` is RF-XXXX-XXX-XXX (Not in list), the combination of `paramCode.base`, `sampId`, `sampAnId` and `anPortSeq` must be unique (p. 112). |\n| GBR102 | Error | `resVal` must be greater than or equal to `resLOD`. A detected value cannot be below the limit of detection. |",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "pp. 98-112, Table 9"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "9d35417daf8c0ce5b0cb70213166e8a270fc818c44d72cd20c8042226a297823",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "f5d85a65f5959e444614a331ce38f6af692d0102bc402d21fdcd3ca6ededc368"
+    },
+    {
+      "case_id": "vmpr-feed-group",
+      "model": "openai/gpt-5.4-mini",
+      "question": "Which F23 target-consumer code does the 2026 VMPR guidance use for sheep/goat feed?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Report grouped code A07VF.",
+        "If listing children, use A18ET, A18EV, A18EX and A18EY; do not repeat the PDF typo.",
+        "Distinguish catalogue correction from original PDF wording."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "ssd2-matrix-vmpr-coding.md",
+          "title": "SSD2 Matrix: VMPR-Specific Matrix Coding",
+          "summary": "VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.",
+          "domain": "vmpr",
+          "content": "# SSD2 Matrix: VMPR-Specific Matrix Coding\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 33-36\n\n## Rule Summary (Rule-First)\n\n- In VMPR, `F01` source and `F02` part-nature must generally be present on the final matrix code, except in the feed/water and processed-composite cases described below. For the facet definitions, see [[foodex2-facets-source-origin]].\n- For derivative or processed terms that do not carry an implicit `F01`, add `F01` explicitly.\n- Wild game requires explicit `F21.A07RY`; see [[foodex2-facets-state-process]].\n- Feed and water samples hinge on `F23` target-consumer coding; conflicting `F23` species collapse the record into VMPR category \"Other\". See [[foodex2-facets-packaging-consumer]].\n- Non-food animal matrices use base term `A0C60` plus explicit `F01` and `F02`.\n\n## Derivative and processed VMPR terms\n\nSource: ChemMon 2026 p33\n\nFor VMPR monitoring, `F01` and `F02` are expected to be present in the final FoodEx2 matrix description. In many reporting-hierarchy terms they are already implicit, but raw-primary-commodity derivatives and processed products often do not carry an implicit `F01`. In those cases the data provider must add `F01` explicitly. Typical examples include dried egg or milk powder. (ChemMon 2026 p33)\n\n## Wild animal VMPR samples\n\nSource: ChemMon 2026 p33\n\nWild animal samples must carry `F21.A07RY` (\"Wild, gathered or hunted\") explicitly. This is the operational marker for wild-game coding in the VMPR domain. Wild game is still classified and included in the VMPR National Report, but under Regulations (EU) 2022/1644 and 2022/1646 it is no longer considered a VMPR product category for the EU Annual Report except in the third-country-import plan. (ChemMon 2026 p33)\n\n## Feed and water samples\n\nSource: ChemMon 2026 pp. 33-35\n\n### Core rule: `F23` target consumer drives VMPR feed classification\n\nFeed samples must be coded from the feed section of the MTX reporting hierarchy. The decisive rule is that the final `sampMatCode` must contain an implicit or explicit `F23` target-consumer facet identifying the intended animal species. (ChemMon 2026 p33)\n\n- If only the generic implicit `F23 = A07TV` (\"Animal feed\") remains, the record is classified as VMPR category \"Other\".\n- If a specific explicit `F23` is added, the record is classified into the matching VMPR product category.\n- If multiple conflicting explicit `F23` species are reported, the record is also classified as \"Other\". (ChemMon 2026 p33-34)\n\n### Feed-category organisation\n\nFor the first 13 feed categories in the hierarchy, the implicit target consumer is generic `A07TV`, so a species-specific explicit `F23` is needed if the record is intended for species-level VMPR categorisation. The last category, \"Compound feed (feed)\" and its species-specific children, may already carry an implicit specific `F23`, in which case no explicit `F23` is needed unless the implicit target is still generic. (ChemMon 2026 p35)\n\n### Sheep and goat feed special case\n\nIf the selected feed term carries the implicit grouped facet `A07VF` (\"Sheep and goat feed\"), it must be refined with one of the child sheep/goat feed codes so EFSA can classify the record to the right VMPR category. (ChemMon 2026 p36)\n\n### Water for farmed animals\n\nWater given to farmed animals is not coded as drinking water. Select from the non-food/environment terms and add an explicit `F23` target-consumer facet because these base terms do not provide it implicitly. (ChemMon 2026 p36)\n\n## Non-food animal matrices\n\nSource: ChemMon 2026 p36\n\nFor non-food matrices such as urine, retina, or hair, use base term `A0C60` (\"Non-food animal-related matrices\") and add explicit `F01` and `F02` facets to identify the source animal and the sampled material. (ChemMon 2026 p36)\n\n## Insects, reptiles, and edible casings\n\nSource: ChemMon 2026 p36\n\nRegulation (EU) 2022/1646 introduced new VMPR product categories including insects, reptiles, and edible casings.\n\n- Only the authorised novel-food insects listed in the guidance should be sampled and reported for food production.\n- Edible casings use base term `A0F1J`, and the source commodity must be added manually with `F27`. (ChemMon 2026 p36)\n\n## Related business rules\n\n- `CHEMMON76` — same `sampEventId` in VMPR must preserve the same species/breed facet chain. See [[business-rules-vmpr]].\n- `CHEMMON91` — only one VMPR legislative-class `F33` under the VR classes. See [[business-rules-vmpr]].\n- `CHEMMON92` — `paramCode` base term must belong to the `vetDrugRes` hierarchy. See [[business-rules-vmpr]].\n- `FOODEX2_SAMMAT` — sampled matrix must still be a valid FoodEx2 code. See [[business-rules-cross-cutting]].",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "pp. 33-36 (Section 2, VMPR-specific matrix coding)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "3cd0111f2efe748a115ff90690cbedbfd5cd4008846aa7262bc37de854da5695",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "35502fe4f01a2a2dae80f16ac22da83bcd6ec2623674d00e582a62345a7f4208"
+    },
+    {
+      "case_id": "baby-vmpr",
+      "model": "openai/gpt-5.4-mini",
+      "question": "Can a sample coded under baby-food A03PZ be reported with VMPR progLegalRef N371A?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "CHEMON63 excludes N371A for samples under A03PZ.",
+        "Do not infer that all other collections exclude baby food."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "business-rules-baby-food.md",
+          "title": "Baby Food Business Rules",
+          "summary": "Baby food exclusion rules (CHEMMON55, CHEMMON63) — matrix coding consistency for baby food programmes and VMPR legal framework exclusion.",
+          "domain": "baby-food",
+          "content": "# Baby Food Business Rules\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143\n\n## Overview\n\nBaby food reporting has two exclusion rules that govern how baby food samples are coded and which legal frameworks apply. CHEMMON55 enforces matrix coding consistency for baby food programme references; CHEMMON63 excludes baby food from the VMPR legal framework entirely.\n\nFor baby food classification, accepted domains, and worked coding examples, see [[baby-food-reporting]]. For the broader VMPR rules these interact with, see [[business-rules-vmpr]].\n\n## Baby Food & Sample Exclusion Rules\n\n| Rule ID | Severity | Description | Domain |\n| --- | --- | --- | --- |\n| CHEMMON55 | Error | For N028A/N318A (baby food programme references), `sampMatCode` parent term must be A03PV (Food products for young population). Baby food programme data must reference baby food matrices. See [[baby-food-reporting]]. | All |\n| CHEMMON63 | Error | If `sampMatCode` falls under A03PZ (baby food), `progLegalRef` cannot be N371A. Baby food is excluded from the VMPR legal framework. See [[baby-food-reporting]] and [[vmpr-reporting]]. | VMPR |",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "Tables 9-10, pp. 98-143"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "907259a09967c28a97df8f04493e70bcc796a9d7308d9dc932eb95467ac7e28a",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "cb0f8306dc686bce357c36434db7e703a1e93cce618e97e52318abbea20924a7"
+    },
+    {
+      "case_id": "pre-report-year",
+      "model": "openai/gpt-5.4-mini",
+      "question": "In the 2026 no-presence collection, what repYear and sampY should I report, and is repYear mandatory?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "repYear optional; if present 2026.",
+        "sampY is mandatory and expected 2025 for this collection.",
+        "Do not substitute USE marketing-year rules."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "fa-ff-no-presence-data-model.md",
+          "title": "FA/FF No-presence Data Model",
+          "summary": "Separate DM for reporting that a FA/FF is not on the label / not added — 16 data elements, 17 `PRE…` business rules, pilot substance rotation. Sample-level, SSD2-derived but not SSD2.",
+          "domain": "additives",
+          "content": "# FA/FF No-presence Data Model\n\nSource: EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf, Section 2\n\n## What this DM is for\n\nThe **no-presence DM** is a sample-level data model for reporting that a specific food additive or food flavouring (FA/FF) has **not** been used in a given sample. It is SSD2-*derived* — element names and catalogues align with SSD2 — but is **a separate data model** because standalone negative data cannot be represented in SSD2 itself. (No-presence 2026 pp. 4-5)\n\n- Use this DM **only** for negative reports (\"FA/FF not on label / not added\"). Positive presence must go through SSD2 analytical reporting together with a measured level. (PRE06, PRE10)\n- No-presence reporting is **optional**. Commission Recommendation (EU) 2023/965 requires MS to collect at least analytical data (SSD2) or use levels ([[fa-ff-use-levels-data-model]]); no-presence may be added to identify foodstuffs where a FA/FF is specifically not used. (No-presence 2026 p4)\n- Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893698), exported to XML. Validation and acceptance follow the same flow as [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (No-presence 2026 p13, Figure 1)\n\n## Fast routing\n\n- Use this DM when the statement is: \"for this sampled food, this FA/FF is **not** on the label / not added\", and there is **no** analytical result to report.\n- Do **not** use this DM for positive presence. A positive finding belongs either in the SSD2 analytical path ([[food-additives-reporting]]) or, if the report is category-level rather than sample-level, in the use-levels DM ([[fa-ff-use-levels-data-model]]).\n- If the question is about sample-level identifiers, sampling date, or `sampMatCode`, this page is the right FA/FF parallel path. If it is about `prodId`, marketing date, or min/typical/max levels, it is the use-levels page instead.\n\n## Why a separate DM\n\nSource: No-presence 2026 pp. 4-5\n\n- SSD2 is structured around measured analytical values. A record that says \"this FA/FF is not used here\" without an accompanying analytical measurement cannot be represented.\n- The no-presence DM fills that gap. Element naming (`progLegalRef`, `sampMatCode`, `paramCode`, `resId`, …) and controlled-terminology catalogues match SSD2 so downstream joins and dietary-exposure calculations remain coherent across both models.\n- The DM is piloted annually: the element set in this page reflects the **2026** version, which incorporates changes from 2025 pilot feedback.\n\n## Fast constraints\n\nThe highest-signal constraints for retrieval are:\n\n- `presenceAdded` is fixed to **`C20A` only** in this DM. `C19A` and `C05A` are out of scope here and must move to another reporting path. (`PRE06`, `PRE10`)\n- `sampId` identifies the sampled food across multiple FA/FF records; `(paramCode, sampId)` must stay unique. (`PRE11`, `PRE12`)\n- `F33` is always required on `sampMatCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`PRE02`, `PRE08`, `PRE09`)\n- `functionOf` is required only for the additive domain (`progLegalRef=N112A`). (`PRE07`)\n- `paramCode` and `restrictionException` are domain-routed: additive records must use `addAnalysis` + `FARestExc`; flavouring records must use `flavAnalysis` + `FFRestExc`. (`PRE03`, `PRE04`, `PRE13`, `PRE14`)\n\n## Data elements\n\nSource: No-presence 2026 Section 2 (pp. 6-12); Table 1 (pp. 15-16)\n\nSixteen elements, all submitted at sample level. A single `sampId` may carry multiple records (different substances), but the sample-identifying fields below must stay constant per `sampId` (PRE11).\n\n### Programme identification\n\n- `progLegalRef` (mandatory, `LEGREF.faff`) — legal framework. Only two codes allowed: `N112A` for food additives (Reg. 1333/2008), `N113A` for food flavourings (Reg. 1334/2008). (No-presence 2026 p6)\n- `sampId` (mandatory, ≤100 chars, no special characters) — sample identifier. The same `sampId` must appear on every record that describes the same physical sample (e.g. one record per substance). (PRE11) (No-presence 2026 p6)\n\n### Provenance and timing\n\n- `repCountry` (optional, `COUNTRY`) — reporting country; populated by EFSA from the reporting organisation if omitted. (No-presence 2026 p6)\n- `sampCountry` (mandatory, `COUNTRY`) — ISO 3166-1 alpha-2 country where the sample was taken. (No-presence 2026 p6)\n- `repYear` (optional) — if reported, must equal the current data collection year (PRE16). (No-presence 2026 p7)\n- `sampY`, `sampM`, `sampD` (all mandatory) — sampling year/month/day. `sampY` must equal the data collection year minus one (PRE01). The combined date must be valid (PRE17). If sampling spans a period, report the start date. (No-presence 2026 p7)\n\n### Matrix description\n\n- `sampMatCode` (mandatory, `MTX`/FoodEx2) — FoodEx2 base term plus required facets; see [[foodex2-in-chemmon]] for base-term selection and the full facet list.\n  - **F33 (legislative class)** must always be present, implicitly or explicitly (PRE08). PRE15 warns if both implicit and explicit F33 are given — drop the explicit one. The category \"All categories of foods\" must not be reported. (No-presence 2026 p7)\n  - **F03 (physical state)** must be explicitly added if not implicitly assigned, for legislative categories: 01.5 dehydrated milk, 01.6 cream and cream powder, 01.8 dairy analogues (incl. beverage whiteners), 01.9 edible caseinates, 01.10 milk-based drinks for young children, 06.3 breakfast cereals, 12.5 soups and broths, 12.6 sauces, 13 foods for specific groups, 14.1.2 fruit/vegetable juices, 14.1.3 fruit/vegetable nectars, 14.1.4 flavoured drinks, 14.1.5 coffee/tea/herbal infusions, 17 food supplements (excluding supplements for infants and young children). (PRE09) (No-presence 2026 pp. 7-8)\n  - **F23 (target consumer)** must be added when the reported legislative category is **13** (foods intended for particular nutritional uses under Directive 2009/39/EC). (PRE02) (No-presence 2026 p8; Table 3 p19)\n- `sampMatText` (optional, ≤400 chars) — free-text matrix description; defaults to the text associated with `sampMatCode` if empty. (No-presence 2026 p9)\n- `sampMatInfo.brandName`, `sampMatInfo.manuf` (both optional, ≤250 chars) — brand and manufacturer of the sample. (No-presence 2026 p10)\n\n### Restriction / exception\n\n- `restrictionException` (mandatory, `ADDFOOD`) — restriction or exception from Reg. 1333/2008 (additives) or 1334/2008 (flavourings). Select from `FARestExc` if `progLegalRef=N112A`, or `FFRestExc` if `progLegalRef=N113A`, per PRE03/PRE04. Use the **most detailed** code that applies. If none applies, report `ADD00881A` (\"No restriction/exception to report\"). Worked examples: `ADD00197A` only mozzarella (lactic acid no-presence in 01.7.1), `ADD00386A` only milk chocolate (citric acid in 05.1), `ADD00622A` only tuna (ascorbic acid in 09.2). (No-presence 2026 pp. 9-10)\n\n### Parameter\n\n- `paramCode` (mandatory, `PARAM`) — substance code. Must belong to `addAnalysis` when `progLegalRef=N112A` (PRE13), or `flavAnalysis` when `progLegalRef=N113A` (PRE14); PRE05 is the overall scope rule. To report multiple substances for the same physical sample, add new records with the same `sampId` but different `resId`. (No-presence 2026 p10)\n- `paramText` (optional, ≤400 chars) — substance name; populated by EFSA from `paramCode` if empty. (No-presence 2026 p10)\n\n### Result\n\n- `resId` (mandatory, ≤100 chars) — unique across all data collections from the same DP. The combination `(paramCode, sampId)` must also be unique (PRE12). (No-presence 2026 p11)\n- `presenceAdded` (mandatory, `CONCLUS.faff`) — **only `C20A` (\"No, not present on label/not added\") is accepted in this DM.** Positive presence codes (`C19A` present/added, `C05A` natural occurrence) are not valid here (PRE06, PRE10) — report positive presence via the SSD2 analytical DM with an accompanying measured value. (No-presence 2026 p11)\n- `functionOf` (dependent mandatory, `FUNC`) — **required when `progLegalRef=N112A` (additive domain)** (PRE07). Identifies the functional class of the additive (emulsifier, preservative, antioxidant, etc.) per Reg. 1333/2008 Annex I — the full list of 28 functional classes plus 5 Annex III carrier/enzyme/flavouring classes is in the FUNC catalogue and reproduced verbatim in the source PDF Table 2. Not required for the flavouring domain. (No-presence 2026 p12; Table 2 at pp. 17-18)\n\n## Business rules\n\nSource: No-presence 2026 pp. 19-21, Table 3\n\nAll 17 rules in this DM are prefixed `PRE`. All are currently **Active**. Sixteen are **Error** severity (submission-blocking); PRE15 is the only **Warning**.\n\n| Rule | Severity | What it enforces |\n|---|---|---|\n| PRE01 | Error | `sampY` = data collection year − 1 |\n| PRE02 | Error | F23 (target consumer) mandatory if F33 is category 13 (foods for specific groups) |\n| PRE03 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or use `ADD00881A`) |\n| PRE04 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or use `ADD00881A`) |\n| PRE05 | Error | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) |\n| PRE06 | Error | Only `C20A` (no-presence) can be reported; positive presence belongs in another DM |\n| PRE07 | Error | `functionOf` mandatory when `progLegalRef=N112A` |\n| PRE08 | Error | F33 mandatory on `sampMatCode` if not implicitly assigned |\n| PRE09 | Error | F03 mandatory for the specific legislative categories listed above |\n| PRE10 | Error | `presenceAdded` values must be meaningful — `C19A` and `C20A` cannot coexist on one record |\n| PRE11 | Error | `(repCountry, sampCountry, sampY, sampM, sampD, sampMatCode, sampMatInfo.brandName, sampMatInfo.manuf)` must be constant per `sampId` |\n| PRE12 | Error | `(paramCode, sampId)` must be unique |\n| PRE13 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` |\n| PRE14 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` |\n| PRE15 | Warning | If `sampMatCode` has an implicit F33, do not add an explicit F33 |\n| PRE16 | Error | `repYear`, if reported, = data collection year |\n| PRE17 | Error | `(sampD, sampM, sampY)` must be a valid date |\n\n## Pilot substance rotation\n\nSource: No-presence 2026 p5, footnote 4\n\nThe no-presence DM is piloted on a rotating substance list:\n\n- **2025 pilot**: green S (E 142), tartrazine (E 102), ponceau 4R / cochineal red A (E 124), caffeine (16.016), pulegone (Annex III).\n- **2026 pilot**: BHT (E 321), sorbic acid – sorbates (E 200–203), coumarin (Annex III), hydrocyanic acid (Annex III), theobromine (16.032).\n\nThe list rotates annually. Verify the current year's pilot scope against the latest EFSA reporting guidance before scoping a submission.\n\n## Relationship to other FA/FF reporting paths\n\n- **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — mandatory positive presence with measured levels goes here, not the no-presence DM.\n- **[[fa-ff-use-levels-data-model]]** — category-level industry-reported use levels; parallel to, not a replacement for, sample-level no-presence data.\n- Business-rule IDs in this DM (`PRE…`) are a separate namespace from the SSD2 CHEMMON rules catalogued under [[business-rules]]; they do not overlap.",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+          ],
+          "source_pages": [
+            "pp. 4-23 (Sections 1-3, Tables 1-3)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "2cdf027a5f4fd46673eb92daa188b9c29e900975d3be90a5eafe43f441804d5e",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "90a2de990335c2f86c2a593869ff1b127ac823d4273a7cb6485adf16643a8ac7"
+    },
+    {
+      "case_id": "use-date",
+      "model": "openai/gpt-5.4-mini",
+      "question": "Why do use-level data need marketYear, marketMonth and marketDay rather than just a reporting year?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "All three marketing-date fields are mandatory.",
+        "Explain legal-limit checks use the marketing date; repYear is the collection year."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "fa-ff-use-levels-data-model.md",
+          "title": "FA/FF Use-levels Data Model",
+          "summary": "Separate DM for industry-reported FA/FF use levels at product-category level — 29 data elements, `USE…` and `USE_LLDB…` business rules, expression basis (whole/dry/fat), LLDB check at marketing date. Not implemented in SSD2.",
+          "domain": "additives",
+          "content": "# FA/FF Use-levels Data Model\n\nSource: EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf, Section 2\n\n## What this DM is for\n\nThe **use-levels DM** collects FA/FF use levels (minimum / typical / maximum concentrations) reported by industry or by MS aggregating industry data, at **food-category** level rather than sample level. Commission Recommendation (EU) 2023/965 accepts either analytical data (SSD2) or use levels as the primary FA/FF intake data source; this DM carries the latter. (Use-levels 2026 pp. 4-5)\n\n- Use levels may be reported as actual/exact (in which case `minLevel`, `typicalLevel`, and `maxLevel` all equal the same value) or as a range. If the substance is not used in the category, all three levels must be 0 (USE09). (Use-levels 2026 pp. 14-15)\n- Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893177), exported to XML. Validation and acceptance mirror [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (Use-levels 2026 p17, Figure 1)\n\n## Fast routing\n\n- Use this DM when the statement is: \"for this product category / food on this market date, the substance is used at these min/typical/max levels\".\n- Do **not** use this DM for a measured sample result. That belongs in the SSD2 analytical path ([[food-additives-reporting]]).\n- Do **not** use this DM for a pure negative sample-level statement without levels. That belongs in [[fa-ff-no-presence-data-model]].\n- If the question is about `prodId`, `marketCountry`, marketing date, `minLevel` / `typicalLevel` / `maxLevel`, or LLDB checks at marketing date, this is the right FA/FF parallel page.\n\n## Why a separate DM\n\nSource: Use-levels 2026 p5\n\n- The use-levels DM is **not implemented in SSD2.** SSD2 is designed for sample-level analytical data; the use-levels DM collects category-level aggregates and introduces elements (e.g. `marketCountry`, `minLevel`/`typicalLevel`/`maxLevel`, `conversionOrDilutionFactor`, `maxPermittedLevel`) that have no SSD2 equivalent.\n- Terminology and controlled vocabularies are aligned with SSD2 where applicable (`LEGREF`, `PARAM`, `MTX`, `CONCLUS`, `ADDFOOD`, `EXPRRES`, `FUNC`, `UNIT`), so downstream joins with analytical data remain coherent.\n- The DM is piloted annually and the 2026 version reflects changes incorporated from 2025 pilot feedback.\n\n## Fast constraints\n\nThe highest-signal constraints for retrieval are:\n\n- This is a **product-category** model keyed by `prodId`, not a sample-level model keyed by `sampId`.\n- `presenceAdded` accepts `C19A`, `C20A`, and `C05A`, including meaningful combinations such as `C19A$C05A` and `C20A$C05A`. `C19A` and `C20A` cannot coexist. (`USE09`, `USE18`, `USE19`)\n- `F33` is always required on `matCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`USE03`, `USE16`, `USE17`, `USE23`, `USE24`)\n- `functionOf` is required only for additive-domain records (`progLegalRef=N112A`). (`USE10`)\n- `weight`, `fatPerc`, `moistPerc`, `unit`, `conversionOrDilutionFactor`, and the three level fields are the part of this DM that has no SSD2 equivalent. (`USE11`-`USE15`, `USE25`)\n- LLDB checks here are driven by the **marketing date**, not sampling date. (`USE_LLDB01`, `USE_LLDB02`)\n\n## Data elements\n\nSource: Use-levels 2026 Section 2 (pp. 6-16); Table 1 (pp. 19-21)\n\nTwenty-nine elements, reported per product category × substance. The combination `(paramCode, prodId)` must be unique (USE20); sample-identifying fields must stay constant per `prodId` (USE01).\n\n### Programme identification\n\n- `progLegalRef` (mandatory, `LEGREF.faff`) — `N112A` (additives, Reg. 1333/2008) or `N113A` (flavourings, Reg. 1334/2008). (Use-levels 2026 p6)\n- `prodId` (mandatory, ≤100 chars, no special characters) — unique identifier for the product category/food being reported. Multiple substances for the same category share a `prodId` across records. (USE20) (Use-levels 2026 p6)\n\n### Provenance, market country, market date\n\n- `repCountry` (optional, `COUNTRY`) — populated by EFSA from the reporting organisation if omitted. (Use-levels 2026 p6)\n- `marketCountry` (mandatory, `COUNTRY`, **repeatable with `$` separator**) — list of countries where the product category is marketed. Example: `ES$IT` for Spain and Italy. Useful when industry directly reports products sold across multiple countries. (Use-levels 2026 pp. 6-7)\n- `marketYear`, `marketMonth`, `marketDay` (all mandatory) — complete marketing date. Required to check the product against the Legal Limit Database at the applicable time (see [[legal-limits-database]]). Combined date must be valid (USE26). (Use-levels 2026 p7)\n- `repYear` (**mandatory** here, unlike the no-presence DM) — must equal the current data collection year (USE02). (Use-levels 2026 p7)\n\n### Matrix description\n\n- `matCode` (mandatory, `MTX`/FoodEx2) — FoodEx2 base term plus required facets; see [[foodex2-in-chemmon]] for base-term rules.\n  - **F33 (legislative class)** must always be present, implicitly or explicitly (USE16). **USE23 is an Error (not a Warning):** if F33 is implicit in the base term, do not add an explicit F33. (Use-levels 2026 pp. 7-8)\n  - **F03 (physical state)** must be explicitly added if not implicit, for the same list of legislative categories as the no-presence DM (01.5, 01.6, 01.8, 01.9, 01.10, 06.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5, 17 excl. infants/young children). (USE17)\n  - **F23 (target consumer)** required when F33 = 13 (foods for particular nutritional uses, Reg. 2009/39/EC). (USE03)\n  - **Generic codes forbidden (USE24):** `A047N` (\"Food colours\"), `A047Q` (\"Artificial food colour\"), `A047R` (\"Food additives other than flavours, colours and artificial sweeteners\"), `A047A` (\"Food flavourings\"), `A047P` (\"Natural food colour\"), `A0F3T` (\"Preparations for food flavouring\") are too broad and cannot be used as `matCode` — pick a more specific product category. (Use-levels 2026 p27)\n- `matText` (optional, ≤400 chars) — free-text description; defaults to the text associated with `matCode` if empty. (Use-levels 2026 p10)\n- `brandName`, `manufacturer` (both optional, ≤250 chars) — brand and manufacturer of the product. (Use-levels 2026 p11)\n\n### Industry / product attributes\n\n- `foodIndustry` (mandatory, `YESNO`) — `Y` if the producer is a food industry manufacturer, `N` if the producer is a FA/FF producer. (USE06) (Use-levels 2026 p11)\n- `widelyConsumed` (optional, `YESNO`) — `Y` if widely consumed, `N` if niche (e.g. gluten-free, infant/follow-on formula, sportsperson foods, regional products). (USE08) (Use-levels 2026 p12)\n\n### Restriction / exception\n\n- `restrictionException` (mandatory, `ADDFOOD`) — same rule as the no-presence DM: `FARestExc` when `progLegalRef=N112A` (USE04), `FFRestExc` when `progLegalRef=N113A` (USE05). Use the most detailed code; use `ADD00881A` if none applies. Worked examples: `ADD00197A` only mozzarella (lactic acid in 01.7.1), `ADD00386A` only milk chocolate (citric acid in 05.1), `ADD00622A` only tuna (ascorbic acid in 09.2). (Use-levels 2026 pp. 10-11)\n\n### Parameter\n\n- `paramCode` (mandatory, `PARAM`) — `addAnalysis` hierarchy when `progLegalRef=N112A` (USE21), `flavAnalysis` when `progLegalRef=N113A` (USE22); USE07 is the overall scope rule. Multiple substances for the same product category share `prodId` with different `recId`. (Use-levels 2026 p11)\n- `paramText` (optional, ≤400 chars) — substance name; populated by EFSA from `paramCode` if empty. (Use-levels 2026 p12)\n\n### Record identification\n\n- `recId` (mandatory, ≤100 chars) — unique across all data collections from the same DP. The combination `(paramCode, prodId)` must also be unique (USE20). (Use-levels 2026 p12)\n\n### Presence indication\n\n- `presenceAdded` (mandatory, `CONCLUS.faff`, repeatable with `$`) — unlike the no-presence DM, **this DM accepts C19A, C20A, and C05A**, including combinations:\n  - `C19A` — \"Yes, present on label/added\".\n  - `C20A` — \"No, not present on label/not added\". Requires all levels to be 0 (USE09).\n  - `C05A` — \"Natural occurrence\", used when the substance is naturally in the matrix.\n  - Combinations such as `C19A$C05A` (added and also naturally present) or `C20A$C05A` (not added but naturally present) are allowed.\n  - `C19A` and `C20A` cannot coexist on the same record (USE18 — same mutual-exclusion rule as PRE10 in the no-presence DM). (Use-levels 2026 pp. 12-13)\n\n### Functional class\n\n- `functionOf` (dependent mandatory, `FUNC`) — **required when `progLegalRef=N112A` (additive domain)** (USE10). Same catalogue and semantics as the no-presence DM's `functionOf`. The full list of 28 functional classes plus 5 Annex III classes is in `FUNC` and reproduced verbatim in the source PDF Table 2 (pp. 22-23). Not required for the flavouring domain. (Use-levels 2026 p14)\n\n### Expression basis (weight)\n\n- `weight` (mandatory, `EXPRRES.WDFat`) — whether use levels are expressed on **whole**, **dry matter**, or **fat weight** basis. (Use-levels 2026 p14)\n- `fatPerc` (dependent mandatory, `xs:double`) — percentage of fat in the product; required when `weight = fat` (USE11). (Use-levels 2026 p14)\n- `moistPerc` (dependent mandatory, `xs:double`) — percentage of moisture in the product; required when `weight = dry matter` (USE12). (Use-levels 2026 p15)\n- `unit` (mandatory, `UNIT.chemUnit`) — unit for `minLevel`, `typicalLevel`, and `maxLevel`. All three values must be expressed in the same unit. (Use-levels 2026 p15)\n\n### Level values\n\n- `additionalInfo` (optional, ≤250 chars) — free-text notes on the reported product. (Use-levels 2026 p15)\n- `minLevel` (optional, `xs:double`) — minimum use level. Must be `0` when `presenceAdded=C20A` (USE09). (Use-levels 2026 p15)\n- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)\n- `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). Must also be `≤` the MPL reported by the DP (USE27). (Use-levels 2026 pp. 15-16)\n- `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)\n\n### Maximum Permitted Level check\n\n- `maxPermittedLevelDefined` (mandatory, `YESNO`) — `Y` if the regulation (or Quantum satis) defines an MPL for this substance-category-restriction combination; `N` otherwise. (USE14) (Use-levels 2026 p16)\n- `maxPermittedLevel` (dependent mandatory, `xs:integer`, ≤10 digits) — numeric MPL value; required when `maxPermittedLevelDefined=Y` (USE15). Combined with the amount naturally present in the matrix where applicable. (Use-levels 2026 p16)\n\n## Business rules\n\nSource: Use-levels 2026 pp. 24-28, Table 3\n\nTwenty-seven operational rules (`USE01`–`USE27`) plus two LLDB-backed rules (`USE_LLDB01`, `USE_LLDB02`). All are **Active** and **Error** severity.\n\n| Rule | What it enforces |\n|---|---|\n| USE01 | `(matCode, repCountry, marketCountry, brandName, manufacturer, foodIndustry, widelyConsumed, marketYear, marketMonth, marketDay)` must be constant per `prodId` |\n| USE02 | `repYear` = data collection year |\n| USE03 | F23 mandatory if F33 = 13 (foods for specific groups) |\n| USE04 | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or `ADD00881A`) |\n| USE05 | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or `ADD00881A`) |\n| USE06 | `foodIndustry` ∈ allowed `YESNO` codes |\n| USE07 | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) |\n| USE08 | `widelyConsumed` ∈ allowed `YESNO` codes |\n| USE09 | If `presenceAdded=C20A`, `minLevel = typicalLevel = maxLevel = 0` |\n| USE10 | `functionOf` mandatory when `progLegalRef=N112A` |\n| USE11 | `fatPerc` mandatory when `weight = fat` |\n| USE12 | `moistPerc` mandatory when `weight = dry matter` |\n| USE13 | `conversionOrDilutionFactor` mandatory when `matCode.F33 = 17` (food supplements) |\n| USE14 | `maxPermittedLevelDefined` ∈ allowed `YESNO` codes |\n| USE15 | `maxPermittedLevel` mandatory when `maxPermittedLevelDefined=Y` |\n| USE16 | F33 mandatory on `matCode` if not implicitly assigned |\n| USE17 | F03 mandatory for the specific legislative categories (same list as PRE09) |\n| USE18 | `C19A` and `C20A` cannot coexist on one record |\n| USE19 | If `presenceAdded=C19A`, `typicalLevel` and `maxLevel` cannot be 0 |\n| USE20 | `(paramCode, prodId)` must be unique |\n| USE21 | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` |\n| USE22 | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` |\n| USE23 | If F33 is implicit in `matCode`, an explicit F33 cannot be reported |\n| USE24 | `matCode` must not be one of the forbidden generic codes (`A047N`, `A047Q`, `A047R`, `A047A`, `A047P`, `A0F3T`) |\n| USE25 | `maxLevel ≥ typicalLevel ≥ minLevel` |\n| USE26 | `(marketDay, marketMonth, marketYear)` must be a valid date |\n| USE27 | `maxLevel ≤ MPL` reported by the DP (consistency between reported `maxLevel` and reported `maxPermittedLevel`) |\n| USE_LLDB01 | `paramCode` must be authorised in this legislative category with this restriction/exception per Reg. 1333/2008 / 1334/2008 (cross-check against [[legal-limits-database]]) |\n| USE_LLDB02 | `maxLevel ≤ MPL` from the Legal Limit Database at the marketing date (cross-check against [[legal-limits-database]]) |\n\n## LLDB cross-check at marketing date\n\nSource: Use-levels 2026 Section 4, p18\n\nEFSA maintains a Legal Limit Database (LLDB) holding MPLs from Regulation (EC) No 1333/2008 (additives) and Regulation (EC) No 1334/2008 (flavourings). For this DM the LLDB is consulted at the **marketing date** of the product (the `marketYear/Month/Day`), not the sampling date used for SSD2 analytical data. USE_LLDB01 confirms authorisation; USE_LLDB02 confirms `maxLevel` does not exceed the MPL valid on that date. See [[legal-limits-database]] for scope, authority, and the sampling-date counterpart.\n\n## Pilot substance rotation\n\nSource: Use-levels 2026 p5, footnote 4\n\nLike the no-presence DM, the use-levels DM is piloted on a rotating substance list:\n\n- **2025 pilot**: green S (E 142), tartrazine (E 102), ponceau 4R / cochineal red A (E 124), caffeine (16.016), pulegone (Annex III).\n- **2026 pilot**: BHT (E 321), sorbic acid – sorbates (E 200–203), coumarin (Annex III), hydrocyanic acid (Annex III), theobromine (16.032).\n\nVerify the current year's pilot scope against the latest EFSA reporting guidance before scoping a submission.\n\n## Relationship to other FA/FF reporting paths\n\n- **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — sample-level measured concentrations. Analytical data and use levels answer different exposure-assessment questions; both may be collected for the same substance.\n- **[[fa-ff-no-presence-data-model]]** — sample-level negative reports. Uses `sampId`/`sampY`/`sampCountry` rather than `prodId`/`marketYear`/`marketCountry`.\n- Rule IDs in this DM (`USE…`, `USE_LLDB…`) are a separate namespace from SSD2 CHEMMON rules catalogued under [[business-rules]]; they do not overlap.",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
+          ],
+          "source_pages": [
+            "pp. 4-30 (Sections 1-4, Tables 1-3)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "a087fef687ec6ac62565be364a6e078896b165e1a8473f52d3b3848b2d6850da",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "ecc87d7d1e33a4683da841c72314295b4eb2ea13f250684270361e2012a13267"
+    },
+    {
+      "case_id": "future-edition",
+      "model": "openai/gpt-5.4-mini",
+      "question": "What changed in EFSA chemical-monitoring reporting for the 2028 collection?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "State that the supplied 2026 sources do not establish 2028 rules.",
+        "Do not present anticipated future transitions as verified 2028 guidance."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "chemmon-change-management.md",
+          "title": "ChemMon Change Management",
+          "summary": "Revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.",
+          "domain": "all",
+          "content": "# ChemMon Change Management\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 10-16\n\n## Rule Summary\n\n- Ordinary annual changes proposed in October-November of year X usually apply to results reported in year X+2.\n- The X+2 delay exists because sampling officers need requirements before samples are collected.\n- Urgent legal changes can apply sooner when required by new or amended legislation.\n- The 2026 change table classifies changes by legal requirement, quality requirement, or sampling requirement.\n\n## Revision Cadence\n\nFor national annual monitoring, changes proposed to elements, catalogues, or business rules in October-November of year X can generally only be applied to results reported in year X+2. (ChemMon 2026 p10)\n\nThis delay exists because changes need to be known before sampling officers collect samples in year X+1. A new facet or element requirement cannot fairly be applied to samples that were already taken before the rule existed. (ChemMon 2026 p10)\n\nThe exception is a change required by new or amended legislation that could not be anticipated by EFSA. Those changes are applied as soon as legally required. (ChemMon 2026 p10)\n\nNetwork members are expected to contribute to the revision process continuously, with emphasis on suggestions submitted during the last quarter of each year, especially September-November. (ChemMon 2026 p10)\n\n## Main Change Categories for 2026\n\nThe 2026 guidance lists major changes in Table 1. They fall into three broad categories:\n\n- **Legal requirement**: new or amended regulations, such as new `progLegalRef` N422A for Commission Implementing Regulation (EU) 2019/1873 on intensified official controls at border control posts.\n- **Quality requirement**: tightened or clarified business rules to improve data quality.\n- **Sampling requirement**: additions to permitted combinations of programme type, legal reference, and sampling strategy, such as ST20A with K009A/K018A for pesticides.\n\n(ChemMon 2026 pp. 11-16)\n\n## Navigation\n\n- Use [[business-rules-2026-changes]] for the rule-by-rule 2026 delta.\n- Use [[controlled-terminology-catalogues]] for catalogue versioning and hierarchy updates.\n- Use [[reporting-flags]] when a change affects domain inclusion or report routing.",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "pp. 10-16 (revision cadence and Table 1 main changes for 2026)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "3f6aabe6cf6a4c8ab1361ff71b2f0a93dab7c69e384b0c7448895e932c9ed5ce",
+          "last_updated": "2026-04-24"
+        }
+      ],
+      "evidence_sha256": "72846b0d5dbabc17ed59133478804ded26b6e1022c9277c6159949441e740055"
+    },
+    {
+      "case_id": "uniqueness-key",
+      "model": "anthropic/claude-sonnet-4-6",
+      "question": "Does GBR101 reject any repeated paramCode and sampAnId, or can portions and Not in list change the outcome?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Include paramCode.base, sampId, sampAnId and anPortSeq in the uniqueness key.",
+        "Preserve exception RF-XXXX-XXX-XXX."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "business-rules-gbr.md",
+          "title": "General Business Rules (GBR)",
+          "summary": "Selected General Business Rules applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.",
+          "domain": "all",
+          "content": "# General Business Rules (GBR)\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, pp. 98-112, Table 9\n\n## Overview\n\nGeneral Business Rules (GBR) apply across all EFSA SSD2 data collections, not only ChemMon. They validate sampling event consistency, geographic fields, and result value/unit reporting at the data-model level. This page documents a selected subset. The source table contains 92 GBR IDs, including inactive and biological-only entries; omitted active rules are tracked in the source review. It is not a complete validation specification.\n\nSee [[business-rules]] for the hub and [[business-rules-cross-cutting]] for CHEMMON-level rules that apply to every reporting domain.\n\n## Sampling Event & Sample Consistency\n\n| Rule ID | Severity | Description |\n| --- | --- | --- |\n| GBR2 | Error | Sampling-event, local-organisation and sampling-programme descriptors listed in Table 9 must be consistent for the same `sampId` / `sampEventId`. `progId` and `progLegalRef` are excluded from this consistency list (p. 98). |\n| GBR3 | Error | Sample taken / matrix sampled consistency -- `sampMatCode` and related fields must be consistent for the same `sampId`. |\n| GBR4 | Error | Sample analysed / matrix analysed consistency -- `anMatCode` and related fields must be consistent for the same `sampAnId`. |\n\n## Geographic Validation\n\n| Rule ID | Severity | Description |\n| --- | --- | --- |\n| GBR12 | Error | `sampArea` must be geographically within `sampCountry`. A NUTS code or region must belong to the declared sampling country. |\n| GBR13 | Error | `origArea` must be geographically within `origCountry`. The origin area must belong to the declared country of origin. |\n\n## Result Value & Unit Rules\n\n| Rule ID | Severity | Description |\n| --- | --- | --- |\n| GBR27 | Error | `resUnit` must be reported when `resType` is different from BIN (p. 102). |\n| GBR28 | Error | `resQualValue` must be reported when `resType` = BIN (p. 103). |\n| GBR29 | Error | `resUnit` must be reported if any of `resLOD`, `resLOQ`, `resLLWR`, `resULWR`, `CCalpha`, `CCbeta`, `resVal`, `resValUncert`, `resValUncertSD`, `evalLowLimit` or `evalHighLimit` is reported (p. 103). |\n| GBR36 | Error | If `resType` = LOD, then `resLOD` must be reported. |\n| GBR37 | Error | `resLOD` must be less than or equal to `resLOQ`. |\n| GBR39 | Error | If `resType` = LOQ and `notSummed` is not 'Y', then `resLOQ` must be reported. |\n| GBR46 | Error | If `resType` = VAL, then `resVal` must be reported. |\n| GBR47 | Error | If `resType` = LOD, then `resVal` must be empty. |\n| GBR48 | Error | `resVal` must be greater than 0 when reported. |\n| GBR101 | Error | Unless `paramCode.base` is RF-XXXX-XXX-XXX (Not in list), the combination of `paramCode.base`, `sampId`, `sampAnId` and `anPortSeq` must be unique (p. 112). |\n| GBR102 | Error | `resVal` must be greater than or equal to `resLOD`. A detected value cannot be below the limit of detection. |",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "pp. 98-112, Table 9"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "9d35417daf8c0ce5b0cb70213166e8a270fc818c44d72cd20c8042226a297823",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "f5d85a65f5959e444614a331ce38f6af692d0102bc402d21fdcd3ca6ededc368"
+    },
+    {
+      "case_id": "vmpr-feed-group",
+      "model": "anthropic/claude-sonnet-4-6",
+      "question": "Which F23 target-consumer code does the 2026 VMPR guidance use for sheep/goat feed?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Report grouped code A07VF.",
+        "If listing children, use A18ET, A18EV, A18EX and A18EY; do not repeat the PDF typo.",
+        "Distinguish catalogue correction from original PDF wording."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "ssd2-matrix-vmpr-coding.md",
+          "title": "SSD2 Matrix: VMPR-Specific Matrix Coding",
+          "summary": "VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.",
+          "domain": "vmpr",
+          "content": "# SSD2 Matrix: VMPR-Specific Matrix Coding\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 33-36\n\n## Rule Summary (Rule-First)\n\n- In VMPR, `F01` source and `F02` part-nature must generally be present on the final matrix code, except in the feed/water and processed-composite cases described below. For the facet definitions, see [[foodex2-facets-source-origin]].\n- For derivative or processed terms that do not carry an implicit `F01`, add `F01` explicitly.\n- Wild game requires explicit `F21.A07RY`; see [[foodex2-facets-state-process]].\n- Feed and water samples hinge on `F23` target-consumer coding; conflicting `F23` species collapse the record into VMPR category \"Other\". See [[foodex2-facets-packaging-consumer]].\n- Non-food animal matrices use base term `A0C60` plus explicit `F01` and `F02`.\n\n## Derivative and processed VMPR terms\n\nSource: ChemMon 2026 p33\n\nFor VMPR monitoring, `F01` and `F02` are expected to be present in the final FoodEx2 matrix description. In many reporting-hierarchy terms they are already implicit, but raw-primary-commodity derivatives and processed products often do not carry an implicit `F01`. In those cases the data provider must add `F01` explicitly. Typical examples include dried egg or milk powder. (ChemMon 2026 p33)\n\n## Wild animal VMPR samples\n\nSource: ChemMon 2026 p33\n\nWild animal samples must carry `F21.A07RY` (\"Wild, gathered or hunted\") explicitly. This is the operational marker for wild-game coding in the VMPR domain. Wild game is still classified and included in the VMPR National Report, but under Regulations (EU) 2022/1644 and 2022/1646 it is no longer considered a VMPR product category for the EU Annual Report except in the third-country-import plan. (ChemMon 2026 p33)\n\n## Feed and water samples\n\nSource: ChemMon 2026 pp. 33-35\n\n### Core rule: `F23` target consumer drives VMPR feed classification\n\nFeed samples must be coded from the feed section of the MTX reporting hierarchy. The decisive rule is that the final `sampMatCode` must contain an implicit or explicit `F23` target-consumer facet identifying the intended animal species. (ChemMon 2026 p33)\n\n- If only the generic implicit `F23 = A07TV` (\"Animal feed\") remains, the record is classified as VMPR category \"Other\".\n- If a specific explicit `F23` is added, the record is classified into the matching VMPR product category.\n- If multiple conflicting explicit `F23` species are reported, the record is also classified as \"Other\". (ChemMon 2026 p33-34)\n\n### Feed-category organisation\n\nFor the first 13 feed categories in the hierarchy, the implicit target consumer is generic `A07TV`, so a species-specific explicit `F23` is needed if the record is intended for species-level VMPR categorisation. The last category, \"Compound feed (feed)\" and its species-specific children, may already carry an implicit specific `F23`, in which case no explicit `F23` is needed unless the implicit target is still generic. (ChemMon 2026 p35)\n\n### Sheep and goat feed special case\n\nIf the selected feed term carries the implicit grouped facet `A07VF` (\"Sheep and goat feed\"), it must be refined with one of the child sheep/goat feed codes so EFSA can classify the record to the right VMPR category. (ChemMon 2026 p36)\n\n### Water for farmed animals\n\nWater given to farmed animals is not coded as drinking water. Select from the non-food/environment terms and add an explicit `F23` target-consumer facet because these base terms do not provide it implicitly. (ChemMon 2026 p36)\n\n## Non-food animal matrices\n\nSource: ChemMon 2026 p36\n\nFor non-food matrices such as urine, retina, or hair, use base term `A0C60` (\"Non-food animal-related matrices\") and add explicit `F01` and `F02` facets to identify the source animal and the sampled material. (ChemMon 2026 p36)\n\n## Insects, reptiles, and edible casings\n\nSource: ChemMon 2026 p36\n\nRegulation (EU) 2022/1646 introduced new VMPR product categories including insects, reptiles, and edible casings.\n\n- Only the authorised novel-food insects listed in the guidance should be sampled and reported for food production.\n- Edible casings use base term `A0F1J`, and the source commodity must be added manually with `F27`. (ChemMon 2026 p36)\n\n## Related business rules\n\n- `CHEMMON76` — same `sampEventId` in VMPR must preserve the same species/breed facet chain. See [[business-rules-vmpr]].\n- `CHEMMON91` — only one VMPR legislative-class `F33` under the VR classes. See [[business-rules-vmpr]].\n- `CHEMMON92` — `paramCode` base term must belong to the `vetDrugRes` hierarchy. See [[business-rules-vmpr]].\n- `FOODEX2_SAMMAT` — sampled matrix must still be a valid FoodEx2 code. See [[business-rules-cross-cutting]].",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "pp. 33-36 (Section 2, VMPR-specific matrix coding)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "3cd0111f2efe748a115ff90690cbedbfd5cd4008846aa7262bc37de854da5695",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "35502fe4f01a2a2dae80f16ac22da83bcd6ec2623674d00e582a62345a7f4208"
+    },
+    {
+      "case_id": "baby-vmpr",
+      "model": "anthropic/claude-sonnet-4-6",
+      "question": "Can a sample coded under baby-food A03PZ be reported with VMPR progLegalRef N371A?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "CHEMON63 excludes N371A for samples under A03PZ.",
+        "Do not infer that all other collections exclude baby food."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "business-rules-baby-food.md",
+          "title": "Baby Food Business Rules",
+          "summary": "Baby food exclusion rules (CHEMMON55, CHEMMON63) — matrix coding consistency for baby food programmes and VMPR legal framework exclusion.",
+          "domain": "baby-food",
+          "content": "# Baby Food Business Rules\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf, Tables 9-10, pp. 98-143\n\n## Overview\n\nBaby food reporting has two exclusion rules that govern how baby food samples are coded and which legal frameworks apply. CHEMMON55 enforces matrix coding consistency for baby food programme references; CHEMMON63 excludes baby food from the VMPR legal framework entirely.\n\nFor baby food classification, accepted domains, and worked coding examples, see [[baby-food-reporting]]. For the broader VMPR rules these interact with, see [[business-rules-vmpr]].\n\n## Baby Food & Sample Exclusion Rules\n\n| Rule ID | Severity | Description | Domain |\n| --- | --- | --- | --- |\n| CHEMMON55 | Error | For N028A/N318A (baby food programme references), `sampMatCode` parent term must be A03PV (Food products for young population). Baby food programme data must reference baby food matrices. See [[baby-food-reporting]]. | All |\n| CHEMMON63 | Error | If `sampMatCode` falls under A03PZ (baby food), `progLegalRef` cannot be N371A. Baby food is excluded from the VMPR legal framework. See [[baby-food-reporting]] and [[vmpr-reporting]]. | VMPR |",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "Tables 9-10, pp. 98-143"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "907259a09967c28a97df8f04493e70bcc796a9d7308d9dc932eb95467ac7e28a",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "cb0f8306dc686bce357c36434db7e703a1e93cce618e97e52318abbea20924a7"
+    },
+    {
+      "case_id": "pre-report-year",
+      "model": "anthropic/claude-sonnet-4-6",
+      "question": "In the 2026 no-presence collection, what repYear and sampY should I report, and is repYear mandatory?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "repYear optional; if present 2026.",
+        "sampY is mandatory and expected 2025 for this collection.",
+        "Do not substitute USE marketing-year rules."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "fa-ff-no-presence-data-model.md",
+          "title": "FA/FF No-presence Data Model",
+          "summary": "Separate DM for reporting that a FA/FF is not on the label / not added — 16 data elements, 17 `PRE…` business rules, pilot substance rotation. Sample-level, SSD2-derived but not SSD2.",
+          "domain": "additives",
+          "content": "# FA/FF No-presence Data Model\n\nSource: EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf, Section 2\n\n## What this DM is for\n\nThe **no-presence DM** is a sample-level data model for reporting that a specific food additive or food flavouring (FA/FF) has **not** been used in a given sample. It is SSD2-*derived* — element names and catalogues align with SSD2 — but is **a separate data model** because standalone negative data cannot be represented in SSD2 itself. (No-presence 2026 pp. 4-5)\n\n- Use this DM **only** for negative reports (\"FA/FF not on label / not added\"). Positive presence must go through SSD2 analytical reporting together with a measured level. (PRE06, PRE10)\n- No-presence reporting is **optional**. Commission Recommendation (EU) 2023/965 requires MS to collect at least analytical data (SSD2) or use levels ([[fa-ff-use-levels-data-model]]); no-presence may be added to identify foodstuffs where a FA/FF is specifically not used. (No-presence 2026 p4)\n- Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893698), exported to XML. Validation and acceptance follow the same flow as [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (No-presence 2026 p13, Figure 1)\n\n## Fast routing\n\n- Use this DM when the statement is: \"for this sampled food, this FA/FF is **not** on the label / not added\", and there is **no** analytical result to report.\n- Do **not** use this DM for positive presence. A positive finding belongs either in the SSD2 analytical path ([[food-additives-reporting]]) or, if the report is category-level rather than sample-level, in the use-levels DM ([[fa-ff-use-levels-data-model]]).\n- If the question is about sample-level identifiers, sampling date, or `sampMatCode`, this page is the right FA/FF parallel path. If it is about `prodId`, marketing date, or min/typical/max levels, it is the use-levels page instead.\n\n## Why a separate DM\n\nSource: No-presence 2026 pp. 4-5\n\n- SSD2 is structured around measured analytical values. A record that says \"this FA/FF is not used here\" without an accompanying analytical measurement cannot be represented.\n- The no-presence DM fills that gap. Element naming (`progLegalRef`, `sampMatCode`, `paramCode`, `resId`, …) and controlled-terminology catalogues match SSD2 so downstream joins and dietary-exposure calculations remain coherent across both models.\n- The DM is piloted annually: the element set in this page reflects the **2026** version, which incorporates changes from 2025 pilot feedback.\n\n## Fast constraints\n\nThe highest-signal constraints for retrieval are:\n\n- `presenceAdded` is fixed to **`C20A` only** in this DM. `C19A` and `C05A` are out of scope here and must move to another reporting path. (`PRE06`, `PRE10`)\n- `sampId` identifies the sampled food across multiple FA/FF records; `(paramCode, sampId)` must stay unique. (`PRE11`, `PRE12`)\n- `F33` is always required on `sampMatCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`PRE02`, `PRE08`, `PRE09`)\n- `functionOf` is required only for the additive domain (`progLegalRef=N112A`). (`PRE07`)\n- `paramCode` and `restrictionException` are domain-routed: additive records must use `addAnalysis` + `FARestExc`; flavouring records must use `flavAnalysis` + `FFRestExc`. (`PRE03`, `PRE04`, `PRE13`, `PRE14`)\n\n## Data elements\n\nSource: No-presence 2026 Section 2 (pp. 6-12); Table 1 (pp. 15-16)\n\nSixteen elements, all submitted at sample level. A single `sampId` may carry multiple records (different substances), but the sample-identifying fields below must stay constant per `sampId` (PRE11).\n\n### Programme identification\n\n- `progLegalRef` (mandatory, `LEGREF.faff`) — legal framework. Only two codes allowed: `N112A` for food additives (Reg. 1333/2008), `N113A` for food flavourings (Reg. 1334/2008). (No-presence 2026 p6)\n- `sampId` (mandatory, ≤100 chars, no special characters) — sample identifier. The same `sampId` must appear on every record that describes the same physical sample (e.g. one record per substance). (PRE11) (No-presence 2026 p6)\n\n### Provenance and timing\n\n- `repCountry` (optional, `COUNTRY`) — reporting country; populated by EFSA from the reporting organisation if omitted. (No-presence 2026 p6)\n- `sampCountry` (mandatory, `COUNTRY`) — ISO 3166-1 alpha-2 country where the sample was taken. (No-presence 2026 p6)\n- `repYear` (optional) — if reported, must equal the current data collection year (PRE16). (No-presence 2026 p7)\n- `sampY`, `sampM`, `sampD` (all mandatory) — sampling year/month/day. `sampY` must equal the data collection year minus one (PRE01). The combined date must be valid (PRE17). If sampling spans a period, report the start date. (No-presence 2026 p7)\n\n### Matrix description\n\n- `sampMatCode` (mandatory, `MTX`/FoodEx2) — FoodEx2 base term plus required facets; see [[foodex2-in-chemmon]] for base-term selection and the full facet list.\n  - **F33 (legislative class)** must always be present, implicitly or explicitly (PRE08). PRE15 warns if both implicit and explicit F33 are given — drop the explicit one. The category \"All categories of foods\" must not be reported. (No-presence 2026 p7)\n  - **F03 (physical state)** must be explicitly added if not implicitly assigned, for legislative categories: 01.5 dehydrated milk, 01.6 cream and cream powder, 01.8 dairy analogues (incl. beverage whiteners), 01.9 edible caseinates, 01.10 milk-based drinks for young children, 06.3 breakfast cereals, 12.5 soups and broths, 12.6 sauces, 13 foods for specific groups, 14.1.2 fruit/vegetable juices, 14.1.3 fruit/vegetable nectars, 14.1.4 flavoured drinks, 14.1.5 coffee/tea/herbal infusions, 17 food supplements (excluding supplements for infants and young children). (PRE09) (No-presence 2026 pp. 7-8)\n  - **F23 (target consumer)** must be added when the reported legislative category is **13** (foods intended for particular nutritional uses under Directive 2009/39/EC). (PRE02) (No-presence 2026 p8; Table 3 p19)\n- `sampMatText` (optional, ≤400 chars) — free-text matrix description; defaults to the text associated with `sampMatCode` if empty. (No-presence 2026 p9)\n- `sampMatInfo.brandName`, `sampMatInfo.manuf` (both optional, ≤250 chars) — brand and manufacturer of the sample. (No-presence 2026 p10)\n\n### Restriction / exception\n\n- `restrictionException` (mandatory, `ADDFOOD`) — restriction or exception from Reg. 1333/2008 (additives) or 1334/2008 (flavourings). Select from `FARestExc` if `progLegalRef=N112A`, or `FFRestExc` if `progLegalRef=N113A`, per PRE03/PRE04. Use the **most detailed** code that applies. If none applies, report `ADD00881A` (\"No restriction/exception to report\"). Worked examples: `ADD00197A` only mozzarella (lactic acid no-presence in 01.7.1), `ADD00386A` only milk chocolate (citric acid in 05.1), `ADD00622A` only tuna (ascorbic acid in 09.2). (No-presence 2026 pp. 9-10)\n\n### Parameter\n\n- `paramCode` (mandatory, `PARAM`) — substance code. Must belong to `addAnalysis` when `progLegalRef=N112A` (PRE13), or `flavAnalysis` when `progLegalRef=N113A` (PRE14); PRE05 is the overall scope rule. To report multiple substances for the same physical sample, add new records with the same `sampId` but different `resId`. (No-presence 2026 p10)\n- `paramText` (optional, ≤400 chars) — substance name; populated by EFSA from `paramCode` if empty. (No-presence 2026 p10)\n\n### Result\n\n- `resId` (mandatory, ≤100 chars) — unique across all data collections from the same DP. The combination `(paramCode, sampId)` must also be unique (PRE12). (No-presence 2026 p11)\n- `presenceAdded` (mandatory, `CONCLUS.faff`) — **only `C20A` (\"No, not present on label/not added\") is accepted in this DM.** Positive presence codes (`C19A` present/added, `C05A` natural occurrence) are not valid here (PRE06, PRE10) — report positive presence via the SSD2 analytical DM with an accompanying measured value. (No-presence 2026 p11)\n- `functionOf` (dependent mandatory, `FUNC`) — **required when `progLegalRef=N112A` (additive domain)** (PRE07). Identifies the functional class of the additive (emulsifier, preservative, antioxidant, etc.) per Reg. 1333/2008 Annex I — the full list of 28 functional classes plus 5 Annex III carrier/enzyme/flavouring classes is in the FUNC catalogue and reproduced verbatim in the source PDF Table 2. Not required for the flavouring domain. (No-presence 2026 p12; Table 2 at pp. 17-18)\n\n## Business rules\n\nSource: No-presence 2026 pp. 19-21, Table 3\n\nAll 17 rules in this DM are prefixed `PRE`. All are currently **Active**. Sixteen are **Error** severity (submission-blocking); PRE15 is the only **Warning**.\n\n| Rule | Severity | What it enforces |\n|---|---|---|\n| PRE01 | Error | `sampY` = data collection year − 1 |\n| PRE02 | Error | F23 (target consumer) mandatory if F33 is category 13 (foods for specific groups) |\n| PRE03 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or use `ADD00881A`) |\n| PRE04 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or use `ADD00881A`) |\n| PRE05 | Error | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) |\n| PRE06 | Error | Only `C20A` (no-presence) can be reported; positive presence belongs in another DM |\n| PRE07 | Error | `functionOf` mandatory when `progLegalRef=N112A` |\n| PRE08 | Error | F33 mandatory on `sampMatCode` if not implicitly assigned |\n| PRE09 | Error | F03 mandatory for the specific legislative categories listed above |\n| PRE10 | Error | `presenceAdded` values must be meaningful — `C19A` and `C20A` cannot coexist on one record |\n| PRE11 | Error | `(repCountry, sampCountry, sampY, sampM, sampD, sampMatCode, sampMatInfo.brandName, sampMatInfo.manuf)` must be constant per `sampId` |\n| PRE12 | Error | `(paramCode, sampId)` must be unique |\n| PRE13 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` |\n| PRE14 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` |\n| PRE15 | Warning | If `sampMatCode` has an implicit F33, do not add an explicit F33 |\n| PRE16 | Error | `repYear`, if reported, = data collection year |\n| PRE17 | Error | `(sampD, sampM, sampY)` must be a valid date |\n\n## Pilot substance rotation\n\nSource: No-presence 2026 p5, footnote 4\n\nThe no-presence DM is piloted on a rotating substance list:\n\n- **2025 pilot**: green S (E 142), tartrazine (E 102), ponceau 4R / cochineal red A (E 124), caffeine (16.016), pulegone (Annex III).\n- **2026 pilot**: BHT (E 321), sorbic acid – sorbates (E 200–203), coumarin (Annex III), hydrocyanic acid (Annex III), theobromine (16.032).\n\nThe list rotates annually. Verify the current year's pilot scope against the latest EFSA reporting guidance before scoping a submission.\n\n## Relationship to other FA/FF reporting paths\n\n- **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — mandatory positive presence with measured levels goes here, not the no-presence DM.\n- **[[fa-ff-use-levels-data-model]]** — category-level industry-reported use levels; parallel to, not a replacement for, sample-level no-presence data.\n- Business-rule IDs in this DM (`PRE…`) are a separate namespace from the SSD2 CHEMMON rules catalogued under [[business-rules]]; they do not overlap.",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+          ],
+          "source_pages": [
+            "pp. 4-23 (Sections 1-3, Tables 1-3)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "2cdf027a5f4fd46673eb92daa188b9c29e900975d3be90a5eafe43f441804d5e",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "90a2de990335c2f86c2a593869ff1b127ac823d4273a7cb6485adf16643a8ac7"
+    },
+    {
+      "case_id": "use-date",
+      "model": "anthropic/claude-sonnet-4-6",
+      "question": "Why do use-level data need marketYear, marketMonth and marketDay rather than just a reporting year?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "All three marketing-date fields are mandatory.",
+        "Explain legal-limit checks use the marketing date; repYear is the collection year."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "fa-ff-use-levels-data-model.md",
+          "title": "FA/FF Use-levels Data Model",
+          "summary": "Separate DM for industry-reported FA/FF use levels at product-category level — 29 data elements, `USE…` and `USE_LLDB…` business rules, expression basis (whole/dry/fat), LLDB check at marketing date. Not implemented in SSD2.",
+          "domain": "additives",
+          "content": "# FA/FF Use-levels Data Model\n\nSource: EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf, Section 2\n\n## What this DM is for\n\nThe **use-levels DM** collects FA/FF use levels (minimum / typical / maximum concentrations) reported by industry or by MS aggregating industry data, at **food-category** level rather than sample level. Commission Recommendation (EU) 2023/965 accepts either analytical data (SSD2) or use levels as the primary FA/FF intake data source; this DM carries the latter. (Use-levels 2026 pp. 4-5)\n\n- Use levels may be reported as actual/exact (in which case `minLevel`, `typicalLevel`, and `maxLevel` all equal the same value) or as a range. If the substance is not used in the category, all three levels must be 0 (USE09). (Use-levels 2026 pp. 14-15)\n- Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893177), exported to XML. Validation and acceptance mirror [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (Use-levels 2026 p17, Figure 1)\n\n## Fast routing\n\n- Use this DM when the statement is: \"for this product category / food on this market date, the substance is used at these min/typical/max levels\".\n- Do **not** use this DM for a measured sample result. That belongs in the SSD2 analytical path ([[food-additives-reporting]]).\n- Do **not** use this DM for a pure negative sample-level statement without levels. That belongs in [[fa-ff-no-presence-data-model]].\n- If the question is about `prodId`, `marketCountry`, marketing date, `minLevel` / `typicalLevel` / `maxLevel`, or LLDB checks at marketing date, this is the right FA/FF parallel page.\n\n## Why a separate DM\n\nSource: Use-levels 2026 p5\n\n- The use-levels DM is **not implemented in SSD2.** SSD2 is designed for sample-level analytical data; the use-levels DM collects category-level aggregates and introduces elements (e.g. `marketCountry`, `minLevel`/`typicalLevel`/`maxLevel`, `conversionOrDilutionFactor`, `maxPermittedLevel`) that have no SSD2 equivalent.\n- Terminology and controlled vocabularies are aligned with SSD2 where applicable (`LEGREF`, `PARAM`, `MTX`, `CONCLUS`, `ADDFOOD`, `EXPRRES`, `FUNC`, `UNIT`), so downstream joins with analytical data remain coherent.\n- The DM is piloted annually and the 2026 version reflects changes incorporated from 2025 pilot feedback.\n\n## Fast constraints\n\nThe highest-signal constraints for retrieval are:\n\n- This is a **product-category** model keyed by `prodId`, not a sample-level model keyed by `sampId`.\n- `presenceAdded` accepts `C19A`, `C20A`, and `C05A`, including meaningful combinations such as `C19A$C05A` and `C20A$C05A`. `C19A` and `C20A` cannot coexist. (`USE09`, `USE18`, `USE19`)\n- `F33` is always required on `matCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`USE03`, `USE16`, `USE17`, `USE23`, `USE24`)\n- `functionOf` is required only for additive-domain records (`progLegalRef=N112A`). (`USE10`)\n- `weight`, `fatPerc`, `moistPerc`, `unit`, `conversionOrDilutionFactor`, and the three level fields are the part of this DM that has no SSD2 equivalent. (`USE11`-`USE15`, `USE25`)\n- LLDB checks here are driven by the **marketing date**, not sampling date. (`USE_LLDB01`, `USE_LLDB02`)\n\n## Data elements\n\nSource: Use-levels 2026 Section 2 (pp. 6-16); Table 1 (pp. 19-21)\n\nTwenty-nine elements, reported per product category × substance. The combination `(paramCode, prodId)` must be unique (USE20); sample-identifying fields must stay constant per `prodId` (USE01).\n\n### Programme identification\n\n- `progLegalRef` (mandatory, `LEGREF.faff`) — `N112A` (additives, Reg. 1333/2008) or `N113A` (flavourings, Reg. 1334/2008). (Use-levels 2026 p6)\n- `prodId` (mandatory, ≤100 chars, no special characters) — unique identifier for the product category/food being reported. Multiple substances for the same category share a `prodId` across records. (USE20) (Use-levels 2026 p6)\n\n### Provenance, market country, market date\n\n- `repCountry` (optional, `COUNTRY`) — populated by EFSA from the reporting organisation if omitted. (Use-levels 2026 p6)\n- `marketCountry` (mandatory, `COUNTRY`, **repeatable with `$` separator**) — list of countries where the product category is marketed. Example: `ES$IT` for Spain and Italy. Useful when industry directly reports products sold across multiple countries. (Use-levels 2026 pp. 6-7)\n- `marketYear`, `marketMonth`, `marketDay` (all mandatory) — complete marketing date. Required to check the product against the Legal Limit Database at the applicable time (see [[legal-limits-database]]). Combined date must be valid (USE26). (Use-levels 2026 p7)\n- `repYear` (**mandatory** here, unlike the no-presence DM) — must equal the current data collection year (USE02). (Use-levels 2026 p7)\n\n### Matrix description\n\n- `matCode` (mandatory, `MTX`/FoodEx2) — FoodEx2 base term plus required facets; see [[foodex2-in-chemmon]] for base-term rules.\n  - **F33 (legislative class)** must always be present, implicitly or explicitly (USE16). **USE23 is an Error (not a Warning):** if F33 is implicit in the base term, do not add an explicit F33. (Use-levels 2026 pp. 7-8)\n  - **F03 (physical state)** must be explicitly added if not implicit, for the same list of legislative categories as the no-presence DM (01.5, 01.6, 01.8, 01.9, 01.10, 06.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5, 17 excl. infants/young children). (USE17)\n  - **F23 (target consumer)** required when F33 = 13 (foods for particular nutritional uses, Reg. 2009/39/EC). (USE03)\n  - **Generic codes forbidden (USE24):** `A047N` (\"Food colours\"), `A047Q` (\"Artificial food colour\"), `A047R` (\"Food additives other than flavours, colours and artificial sweeteners\"), `A047A` (\"Food flavourings\"), `A047P` (\"Natural food colour\"), `A0F3T` (\"Preparations for food flavouring\") are too broad and cannot be used as `matCode` — pick a more specific product category. (Use-levels 2026 p27)\n- `matText` (optional, ≤400 chars) — free-text description; defaults to the text associated with `matCode` if empty. (Use-levels 2026 p10)\n- `brandName`, `manufacturer` (both optional, ≤250 chars) — brand and manufacturer of the product. (Use-levels 2026 p11)\n\n### Industry / product attributes\n\n- `foodIndustry` (mandatory, `YESNO`) — `Y` if the producer is a food industry manufacturer, `N` if the producer is a FA/FF producer. (USE06) (Use-levels 2026 p11)\n- `widelyConsumed` (optional, `YESNO`) — `Y` if widely consumed, `N` if niche (e.g. gluten-free, infant/follow-on formula, sportsperson foods, regional products). (USE08) (Use-levels 2026 p12)\n\n### Restriction / exception\n\n- `restrictionException` (mandatory, `ADDFOOD`) — same rule as the no-presence DM: `FARestExc` when `progLegalRef=N112A` (USE04), `FFRestExc` when `progLegalRef=N113A` (USE05). Use the most detailed code; use `ADD00881A` if none applies. Worked examples: `ADD00197A` only mozzarella (lactic acid in 01.7.1), `ADD00386A` only milk chocolate (citric acid in 05.1), `ADD00622A` only tuna (ascorbic acid in 09.2). (Use-levels 2026 pp. 10-11)\n\n### Parameter\n\n- `paramCode` (mandatory, `PARAM`) — `addAnalysis` hierarchy when `progLegalRef=N112A` (USE21), `flavAnalysis` when `progLegalRef=N113A` (USE22); USE07 is the overall scope rule. Multiple substances for the same product category share `prodId` with different `recId`. (Use-levels 2026 p11)\n- `paramText` (optional, ≤400 chars) — substance name; populated by EFSA from `paramCode` if empty. (Use-levels 2026 p12)\n\n### Record identification\n\n- `recId` (mandatory, ≤100 chars) — unique across all data collections from the same DP. The combination `(paramCode, prodId)` must also be unique (USE20). (Use-levels 2026 p12)\n\n### Presence indication\n\n- `presenceAdded` (mandatory, `CONCLUS.faff`, repeatable with `$`) — unlike the no-presence DM, **this DM accepts C19A, C20A, and C05A**, including combinations:\n  - `C19A` — \"Yes, present on label/added\".\n  - `C20A` — \"No, not present on label/not added\". Requires all levels to be 0 (USE09).\n  - `C05A` — \"Natural occurrence\", used when the substance is naturally in the matrix.\n  - Combinations such as `C19A$C05A` (added and also naturally present) or `C20A$C05A` (not added but naturally present) are allowed.\n  - `C19A` and `C20A` cannot coexist on the same record (USE18 — same mutual-exclusion rule as PRE10 in the no-presence DM). (Use-levels 2026 pp. 12-13)\n\n### Functional class\n\n- `functionOf` (dependent mandatory, `FUNC`) — **required when `progLegalRef=N112A` (additive domain)** (USE10). Same catalogue and semantics as the no-presence DM's `functionOf`. The full list of 28 functional classes plus 5 Annex III classes is in `FUNC` and reproduced verbatim in the source PDF Table 2 (pp. 22-23). Not required for the flavouring domain. (Use-levels 2026 p14)\n\n### Expression basis (weight)\n\n- `weight` (mandatory, `EXPRRES.WDFat`) — whether use levels are expressed on **whole**, **dry matter**, or **fat weight** basis. (Use-levels 2026 p14)\n- `fatPerc` (dependent mandatory, `xs:double`) — percentage of fat in the product; required when `weight = fat` (USE11). (Use-levels 2026 p14)\n- `moistPerc` (dependent mandatory, `xs:double`) — percentage of moisture in the product; required when `weight = dry matter` (USE12). (Use-levels 2026 p15)\n- `unit` (mandatory, `UNIT.chemUnit`) — unit for `minLevel`, `typicalLevel`, and `maxLevel`. All three values must be expressed in the same unit. (Use-levels 2026 p15)\n\n### Level values\n\n- `additionalInfo` (optional, ≤250 chars) — free-text notes on the reported product. (Use-levels 2026 p15)\n- `minLevel` (optional, `xs:double`) — minimum use level. Must be `0` when `presenceAdded=C20A` (USE09). (Use-levels 2026 p15)\n- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)\n- `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09); must be `> 0` when `presenceAdded=C19A` (USE19). Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). Must also be `≤` the MPL reported by the DP (USE27). (Use-levels 2026 pp. 15-16)\n- `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)\n\n### Maximum Permitted Level check\n\n- `maxPermittedLevelDefined` (mandatory, `YESNO`) — `Y` if the regulation (or Quantum satis) defines an MPL for this substance-category-restriction combination; `N` otherwise. (USE14) (Use-levels 2026 p16)\n- `maxPermittedLevel` (dependent mandatory, `xs:integer`, ≤10 digits) — numeric MPL value; required when `maxPermittedLevelDefined=Y` (USE15). Combined with the amount naturally present in the matrix where applicable. (Use-levels 2026 p16)\n\n## Business rules\n\nSource: Use-levels 2026 pp. 24-28, Table 3\n\nTwenty-seven operational rules (`USE01`–`USE27`) plus two LLDB-backed rules (`USE_LLDB01`, `USE_LLDB02`). All are **Active** and **Error** severity.\n\n| Rule | What it enforces |\n|---|---|\n| USE01 | `(matCode, repCountry, marketCountry, brandName, manufacturer, foodIndustry, widelyConsumed, marketYear, marketMonth, marketDay)` must be constant per `prodId` |\n| USE02 | `repYear` = data collection year |\n| USE03 | F23 mandatory if F33 = 13 (foods for specific groups) |\n| USE04 | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or `ADD00881A`) |\n| USE05 | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or `ADD00881A`) |\n| USE06 | `foodIndustry` ∈ allowed `YESNO` codes |\n| USE07 | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) |\n| USE08 | `widelyConsumed` ∈ allowed `YESNO` codes |\n| USE09 | If `presenceAdded=C20A`, `minLevel = typicalLevel = maxLevel = 0` |\n| USE10 | `functionOf` mandatory when `progLegalRef=N112A` |\n| USE11 | `fatPerc` mandatory when `weight = fat` |\n| USE12 | `moistPerc` mandatory when `weight = dry matter` |\n| USE13 | `conversionOrDilutionFactor` mandatory when `matCode.F33 = 17` (food supplements) |\n| USE14 | `maxPermittedLevelDefined` ∈ allowed `YESNO` codes |\n| USE15 | `maxPermittedLevel` mandatory when `maxPermittedLevelDefined=Y` |\n| USE16 | F33 mandatory on `matCode` if not implicitly assigned |\n| USE17 | F03 mandatory for the specific legislative categories (same list as PRE09) |\n| USE18 | `C19A` and `C20A` cannot coexist on one record |\n| USE19 | If `presenceAdded=C19A`, `typicalLevel` and `maxLevel` cannot be 0 |\n| USE20 | `(paramCode, prodId)` must be unique |\n| USE21 | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` |\n| USE22 | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` |\n| USE23 | If F33 is implicit in `matCode`, an explicit F33 cannot be reported |\n| USE24 | `matCode` must not be one of the forbidden generic codes (`A047N`, `A047Q`, `A047R`, `A047A`, `A047P`, `A0F3T`) |\n| USE25 | `maxLevel ≥ typicalLevel ≥ minLevel` |\n| USE26 | `(marketDay, marketMonth, marketYear)` must be a valid date |\n| USE27 | `maxLevel ≤ MPL` reported by the DP (consistency between reported `maxLevel` and reported `maxPermittedLevel`) |\n| USE_LLDB01 | `paramCode` must be authorised in this legislative category with this restriction/exception per Reg. 1333/2008 / 1334/2008 (cross-check against [[legal-limits-database]]) |\n| USE_LLDB02 | `maxLevel ≤ MPL` from the Legal Limit Database at the marketing date (cross-check against [[legal-limits-database]]) |\n\n## LLDB cross-check at marketing date\n\nSource: Use-levels 2026 Section 4, p18\n\nEFSA maintains a Legal Limit Database (LLDB) holding MPLs from Regulation (EC) No 1333/2008 (additives) and Regulation (EC) No 1334/2008 (flavourings). For this DM the LLDB is consulted at the **marketing date** of the product (the `marketYear/Month/Day`), not the sampling date used for SSD2 analytical data. USE_LLDB01 confirms authorisation; USE_LLDB02 confirms `maxLevel` does not exceed the MPL valid on that date. See [[legal-limits-database]] for scope, authority, and the sampling-date counterpart.\n\n## Pilot substance rotation\n\nSource: Use-levels 2026 p5, footnote 4\n\nLike the no-presence DM, the use-levels DM is piloted on a rotating substance list:\n\n- **2025 pilot**: green S (E 142), tartrazine (E 102), ponceau 4R / cochineal red A (E 124), caffeine (16.016), pulegone (Annex III).\n- **2026 pilot**: BHT (E 321), sorbic acid – sorbates (E 200–203), coumarin (Annex III), hydrocyanic acid (Annex III), theobromine (16.032).\n\nVerify the current year's pilot scope against the latest EFSA reporting guidance before scoping a submission.\n\n## Relationship to other FA/FF reporting paths\n\n- **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — sample-level measured concentrations. Analytical data and use levels answer different exposure-assessment questions; both may be collected for the same substance.\n- **[[fa-ff-no-presence-data-model]]** — sample-level negative reports. Uses `sampId`/`sampY`/`sampCountry` rather than `prodId`/`marketYear`/`marketCountry`.\n- Rule IDs in this DM (`USE…`, `USE_LLDB…`) are a separate namespace from SSD2 CHEMMON rules catalogued under [[business-rules]]; they do not overlap.",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
+          ],
+          "source_pages": [
+            "pp. 4-30 (Sections 1-4, Tables 1-3)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "a087fef687ec6ac62565be364a6e078896b165e1a8473f52d3b3848b2d6850da",
+          "last_updated": "2026-10-05"
+        }
+      ],
+      "evidence_sha256": "ecc87d7d1e33a4683da841c72314295b4eb2ea13f250684270361e2012a13267"
+    },
+    {
+      "case_id": "future-edition",
+      "model": "anthropic/claude-sonnet-4-6",
+      "question": "What changed in EFSA chemical-monitoring reporting for the 2028 collection?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "State that the supplied 2026 sources do not establish 2028 rules.",
+        "Do not present anticipated future transitions as verified 2028 guidance."
+      ],
+      "status": "planned",
+      "metrics": {},
+      "evidence": [
+        {
+          "page_name": "chemmon-change-management.md",
+          "title": "ChemMon Change Management",
+          "summary": "Revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.",
+          "domain": "all",
+          "content": "# ChemMon Change Management\n\nSource: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 10-16\n\n## Rule Summary\n\n- Ordinary annual changes proposed in October-November of year X usually apply to results reported in year X+2.\n- The X+2 delay exists because sampling officers need requirements before samples are collected.\n- Urgent legal changes can apply sooner when required by new or amended legislation.\n- The 2026 change table classifies changes by legal requirement, quality requirement, or sampling requirement.\n\n## Revision Cadence\n\nFor national annual monitoring, changes proposed to elements, catalogues, or business rules in October-November of year X can generally only be applied to results reported in year X+2. (ChemMon 2026 p10)\n\nThis delay exists because changes need to be known before sampling officers collect samples in year X+1. A new facet or element requirement cannot fairly be applied to samples that were already taken before the rule existed. (ChemMon 2026 p10)\n\nThe exception is a change required by new or amended legislation that could not be anticipated by EFSA. Those changes are applied as soon as legally required. (ChemMon 2026 p10)\n\nNetwork members are expected to contribute to the revision process continuously, with emphasis on suggestions submitted during the last quarter of each year, especially September-November. (ChemMon 2026 p10)\n\n## Main Change Categories for 2026\n\nThe 2026 guidance lists major changes in Table 1. They fall into three broad categories:\n\n- **Legal requirement**: new or amended regulations, such as new `progLegalRef` N422A for Commission Implementing Regulation (EU) 2019/1873 on intensified official controls at border control posts.\n- **Quality requirement**: tightened or clarified business rules to improve data quality.\n- **Sampling requirement**: additions to permitted combinations of programme type, legal reference, and sampling strategy, such as ST20A with K009A/K018A for pesticides.\n\n(ChemMon 2026 pp. 11-16)\n\n## Navigation\n\n- Use [[business-rules-2026-changes]] for the rule-by-rule 2026 delta.\n- Use [[controlled-terminology-catalogues]] for catalogue versioning and hierarchy updates.\n- Use [[reporting-flags]] when a change affects domain inclusion or report routing.",
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ],
+          "source_pages": [
+            "pp. 10-16 (revision cadence and Table 1 main changes for 2026)"
+          ],
+          "evidence_kind": "full",
+          "citable": true,
+          "sha256": "3f6aabe6cf6a4c8ab1361ff71b2f0a93dab7c69e384b0c7448895e932c9ed5ce",
+          "last_updated": "2026-04-24"
+        }
+      ],
+      "evidence_sha256": "72846b0d5dbabc17ed59133478804ded26b6e1022c9277c6159949441e740055"
+    }
+  ],
+  "summary": {
+    "openai/gpt-5.4-mini": {
+      "cases": 6,
+      "completed": 0,
+      "errors": 0,
+      "mean_required_page_recall": null,
+      "wrong_domain_or_path_cases": null,
+      "answer_accuracy": null,
+      "citation_support_rate": null,
+      "graded_answers": 0,
+      "mean_wall_time_ms": null,
+      "estimated_total_cost_usd": null
+    },
+    "anthropic/claude-sonnet-4-6": {
+      "cases": 6,
+      "completed": 0,
+      "errors": 0,
+      "mean_required_page_recall": null,
+      "wrong_domain_or_path_cases": null,
+      "answer_accuracy": null,
+      "citation_support_rate": null,
+      "graded_answers": 0,
+      "mean_wall_time_ms": null,
+      "estimated_total_cost_usd": null
+    }
+  }
+}

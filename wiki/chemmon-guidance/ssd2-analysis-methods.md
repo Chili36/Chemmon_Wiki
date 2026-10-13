@@ -2,7 +2,7 @@
 title: "SSD2 Analysis: Analytical Method Identification and Type"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -71,6 +71,6 @@ For contaminants, food additives, and food flavourings, generic fallback method 
 
 - `CHEMMON23` — `anMethType` must be `AT06A` or `AT08A`. See [[business-rules-cross-cutting]].
 - `CHEMMON30` — if `evalCode = J003A`, `anMethType` must be `AT08A`. See [[business-rules-cross-cutting]].
-- `CHEMMON33` — if `resType = BIN`, `anMethType` should be `AT06A`. See [[business-rules-cross-cutting]].
+- `CHEMMON33` — if `resType=BIN`, `anMethType` must be AT06A; published severity is **Error**, despite “should” in the description (Table 10, p. 120). See [[business-rules-cross-cutting]].
 - `CHEMMON34` — if `anMethType = AT08A`, `resType` should not be `BIN`. See [[business-rules-cross-cutting]].
-- `CHEMMON79_a/b/c` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes such as `F001A`, `F500A`, or `F598A`. See [[business-rules-cross-cutting]].
+- `CHEMMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes such as `F001A`, `F500A`, or `F598A`. See [[business-rules-cross-cutting]].

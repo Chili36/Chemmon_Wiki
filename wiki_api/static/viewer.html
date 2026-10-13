@@ -197,9 +197,20 @@
     font-size: 14px;
   }
 
-  @media (max-width: 768px) {
-    aside { width: 220px; min-width: 220px; }
-    main { padding: 20px 24px; }
+  .controls { padding: 12px 16px; display: grid; gap: 8px; }
+  .controls label { font-size: 12px; color: var(--text-muted); }
+  .controls input, .controls select { width: 100%; padding: 8px; border: 1px solid var(--sidebar-border); border-radius: 4px; font: inherit; font-size: 13px; background: #fff; }
+  #search-status { font-size: 12px; color: var(--text-muted); }
+  #backlinks { margin-top: 32px; border-top: 1px solid var(--sidebar-border); padding-top: 16px; }
+  #backlinks h2 { font-size: 16px; margin-bottom: 8px; }
+  #backlinks a { display: block; margin: 8px 0; color: var(--accent); }
+  .content { overflow-wrap: anywhere; }
+  .content table { display: block; overflow-x: auto; overflow-wrap: normal; }
+  main { min-width: 0; }
+  @media (max-width: 640px) {
+    body { display: block; height: auto; overflow: auto; }
+    aside { width: 100%; min-width: 0; max-height: 42vh; border-bottom: 1px solid var(--sidebar-border); }
+    main { padding: 24px 20px; overflow: visible; }
   }
 </style>
 </head>
@@ -210,7 +221,14 @@
     <h1>ChemMon Wiki</h1>
     <p>Knowledge base viewer</p>
   </div>
-  <nav id="nav"></nav>
+  <div class="controls">
+    <label for="find-input">Search guidance</label>
+    <input id="find-input" type="search" placeholder="Field, rule or topic…">
+    <label for="domain-filter">Domain</label>
+    <select id="domain-filter"><option value="">All domains</option></select>
+    <p id="search-status" role="status" aria-live="polite"></p>
+  </div>
+  <nav id="nav" aria-label="Wiki pages"></nav>
 </aside>
 
 <main>
@@ -218,41 +236,92 @@
   <div id="content" class="content">
     <div class="loading">Loading wiki&hellip;</div>
   </div>
+  <section id="backlinks" aria-label="Pages linking here" hidden></section>
 </main>
 
 <script>
-const sections = {
-  "Orientation": ["index.md", "README.md", "PROJECT_CONTEXT.md", "log.md"],
-  "Guidance": [],
-  "Validation": [],
-  "Reference": []
+const sectionForType = {
+  orientation: "Orientation", overview: "Overview", hub: "Topic guides",
+  "domain-guide": "Domain guides", "rule-reference": "Business rules", reference: "Reference"
 };
+const domainLabels = {all: "Shared guidance", "cross-cutting": "Cross-cutting", vmpr: "VMPR", pesticide: "Pesticides", contaminant: "Contaminants", additives: "Additives and flavourings", "baby-food": "Baby food"};
+let catalog = [];
+let searchRevision = 0;
+let pageRevision = 0;
+let activePage = "";
 
 let pageCache = {};
 let pageTitles = {};
 
 function sanitize(html) {
-  return DOMPurify.sanitize(html, { ADD_ATTR: ['onclick'] });
+  return DOMPurify.sanitize(html);
 }
 
 async function init() {
   try {
     const res = await fetch("/wiki/pages");
+    if (!res.ok) throw new Error(res.statusText);
     const data = await res.json();
-    for (const p of data.pages) {
+    catalog = data.pages;
+    for (const p of catalog) {
       pageTitles[p.page_name] = p.title;
     }
     pageTitles["index.md"] = "Wiki Index";
     pageTitles["log.md"] = "Wiki Log";
+    const select = document.getElementById("domain-filter");
+    for (const domain of [...new Set(catalog.filter(p => p.type !== "orientation").map(p => p.domain))].sort()) {
+      const option = document.createElement("option");
+      option.value = domain;
+      option.textContent = domainLabels[domain] || domain;
+      select.appendChild(option);
+    }
   } catch(e) {
-    console.warn("Could not fetch page list", e);
+    document.getElementById("search-status").textContent = "Could not load navigation. Reload to try again.";
   }
-  buildNav();
+  buildNav(catalog);
+  let searchTimer;
+  document.getElementById("find-input").addEventListener("input", () => {
+    ++searchRevision;
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(refreshNav, 200);
+  });
+  document.getElementById("domain-filter").addEventListener("change", refreshNav);
   const hash = location.hash.replace("#", "");
   loadPage(hash || "index.md");
 }
 
-function buildNav() {
+async function refreshNav() {
+  const revision = ++searchRevision;
+  const query = document.getElementById("find-input").value.trim();
+  const domain = document.getElementById("domain-filter").value;
+  const status = document.getElementById("search-status");
+  if (!query) {
+    const pages = catalog.filter(p => !domain || (p.type !== "orientation" && p.domain === domain));
+    buildNav(pages);
+    status.textContent = domain ? pages.length + " pages" : "";
+    return;
+  }
+  status.textContent = "Searching…";
+  try {
+    const params = new URLSearchParams({ q: query, limit: "100" });
+    if (domain) params.set("domain", domain);
+    const response = await fetch("/wiki/search?" + params);
+    if (!response.ok) throw new Error(response.statusText);
+    const result = await response.json();
+    if (revision !== searchRevision) return;
+    buildNav(result.pages, true);
+    status.textContent = result.count ? result.count + " matching pages" : "No matching pages. Try a shorter term or another domain.";
+  } catch (error) {
+    if (revision === searchRevision) status.textContent = "Search unavailable. Try again.";
+  }
+}
+
+function buildNav(items, searchResults = false) {
+  const sections = {};
+  for (const page of items) {
+    const section = searchResults ? "Search results" : sectionForType[page.type] || "Reference";
+    (sections[section] ||= []).push(page.page_name);
+  }
   const nav = document.getElementById("nav");
   while (nav.firstChild) nav.removeChild(nav.firstChild);
   for (const [section, pages] of Object.entries(sections)) {
@@ -265,6 +334,7 @@ function buildNav() {
       a.href = "#" + page;
       a.textContent = pageTitles[page] || page.replace(".md", "").replace(/-/g, " ");
       a.dataset.page = page;
+      a.classList.toggle("active", page === activePage);
       a.addEventListener("click", function(e) {
         e.preventDefault();
         loadPage(this.dataset.page);
@@ -275,7 +345,10 @@ function buildNav() {
 }
 
 async function loadPage(pageName) {
-  location.hash = pageName;
+  activePage = pageName;
+  const revision = ++pageRevision;
+  if (location.hash !== "#" + pageName) history.pushState(null, "", "#" + pageName);
+  document.getElementById("backlinks").hidden = true;
   document.querySelectorAll("nav a").forEach(function(a) {
     a.classList.toggle("active", a.dataset.page === pageName);
   });
@@ -285,6 +358,7 @@ async function loadPage(pageName) {
 
   if (pageCache[pageName]) {
     renderPage(pageCache[pageName]);
+    loadBacklinks(pageName, revision);
     return;
   }
 
@@ -300,10 +374,33 @@ async function loadPage(pageName) {
     if (!res.ok) throw new Error(res.statusText);
     const data = await res.json();
     pageCache[pageName] = data;
+    if (revision !== pageRevision) return;
     renderPage(data);
+    loadBacklinks(pageName, revision);
   } catch(e) {
-    contentEl.textContent = "Failed to load " + pageName + ": " + e.message;
+    if (revision === pageRevision) contentEl.textContent = "Failed to load " + pageName + ": " + e.message;
   }
+}
+
+async function loadBacklinks(pageName, revision) {
+  const section = document.getElementById("backlinks");
+  section.replaceChildren();
+  try {
+    const response = await fetch("/wiki/pages/" + encodeURIComponent(pageName) + "/backlinks");
+    if (!response.ok) return;
+    const data = await response.json();
+    if (revision !== pageRevision || !data.backlinks.length) return;
+    const heading = document.createElement("h2");
+    heading.textContent = "Pages linking here";
+    section.appendChild(heading);
+    for (const name of data.backlinks) {
+      const link = document.createElement("a");
+      link.href = "#" + name;
+      link.textContent = pageTitles[name] || name;
+      section.appendChild(link);
+    }
+    section.hidden = false;
+  } catch (_) { /* The page remains readable when backlinks are unavailable. */ }
 }
 
 function renderPage(data) {
@@ -316,9 +413,6 @@ function renderPage(data) {
     const end = md.indexOf("---", 3);
     if (end > 0) md = md.substring(end + 3).trim();
   }
-  // strip HTML comments
-  md = md.replace(/<!--[\s\S]*?-->/g, "");
-
   // NOTE: Content is sanitized via DOMPurify before DOM insertion
   const rendered = sanitize(marked.parse(md));
   contentEl.textContent = "";
@@ -326,33 +420,56 @@ function renderPage(data) {
   wrapper.innerHTML = rendered;
   contentEl.appendChild(wrapper);
 
-  // make wiki links clickable
+  // Convert wiki syntax in prose, leaving code examples and existing links alone.
+  const walker = document.createTreeWalker(wrapper, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) {
+    if (!walker.currentNode.parentElement.closest("code, pre, a")) nodes.push(walker.currentNode);
+  }
+  for (const node of nodes) {
+    const pattern = /\[\[([a-zA-Z0-9_-]+)(?:\|([^\]]+))?\]\]/g;
+    const matches = [...node.textContent.matchAll(pattern)];
+    if (!matches.length) continue;
+    const fragment = document.createDocumentFragment();
+    let offset = 0;
+    for (const match of matches) {
+      fragment.appendChild(document.createTextNode(node.textContent.slice(offset, match.index)));
+      const link = document.createElement("a");
+      link.href = "#" + match[1] + ".md";
+      link.textContent = match[2] || pageTitles[match[1] + ".md"] || match[1];
+      fragment.appendChild(link);
+      offset = match.index + match[0].length;
+    }
+    fragment.appendChild(document.createTextNode(node.textContent.slice(offset)));
+    node.replaceWith(fragment);
+  }
   contentEl.querySelectorAll("a").forEach(function(a) {
     const href = a.getAttribute("href") || "";
-    if (href.startsWith("raw/chemmon-guidance/") || href.endsWith(".md")) {
-      const target = href.split("/").pop();
-      a.href = "#" + target;
-      a.addEventListener("click", function(e) {
-        e.preventDefault();
-        loadPage(target);
-      });
-    }
+    if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("//")) return;
+    const path = href.split("#")[0];
+    const target = path.split("/").pop();
+    if (target && pageTitles[target]) a.href = "#" + target;
   });
 
   // build meta bar
   const hasSources = data.sources && data.sources.length > 0;
   const hasRelated = data.related && data.related.length > 0;
 
-  if (hasSources || hasRelated) {
+  if (hasSources || hasRelated || data.last_updated) {
     while (metaEl.firstChild) metaEl.removeChild(metaEl.firstChild);
 
+    if (data.last_updated) {
+      const updated = document.createElement("div");
+      updated.textContent = "Updated: " + data.last_updated;
+      metaEl.appendChild(updated);
+    }
     if (hasSources) {
       const srcDiv = document.createElement("div");
       const srcLabel = document.createElement("span");
       srcLabel.className = "label";
       srcLabel.textContent = "Sources: ";
       srcDiv.appendChild(srcLabel);
-      srcDiv.appendChild(document.createTextNode(data.sources.join("; ")));
+      srcDiv.appendChild(document.createTextNode(data.sources.join("; ") + (data.source_pages && data.source_pages.length ? " — " + data.source_pages.join("; ") : "")));
       metaEl.appendChild(srcDiv);
     }
 
@@ -366,12 +483,15 @@ function renderPage(data) {
       const linksDiv = document.createElement("div");
       linksDiv.className = "related-links";
       data.related.forEach(function(r) {
-        const name = r.replace(/\[\[|\]\]/g, "") + ".md";
+        const match = r.match(/\[\[([^|\]]+)(?:\|[^\]]+)?\]\]/);
+        if (!match) return;
+        const name = match[1] + ".md";
         const title = pageTitles[name] || name.replace(".md", "").replace(/-/g, " ");
-        const span = document.createElement("span");
+        const span = document.createElement("a");
+        span.href = "#" + name;
         span.className = "related-link";
         span.textContent = title;
-        span.addEventListener("click", function() { loadPage(name); });
+
         linksDiv.appendChild(span);
       });
       relDiv.appendChild(linksDiv);

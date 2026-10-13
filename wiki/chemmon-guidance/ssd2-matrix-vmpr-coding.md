@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Matrix: VMPR-Specific Matrix Coding"
+select_when: "VMPR matrix coding: F01/F02 exceptions for feed/water and processed/composite food, feed F23, sheep/goat coding, F33 groups and worked matrix examples."
 type: "reference"
 domain: "vmpr"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -86,5 +87,5 @@ Regulation (EU) 2022/1646 introduced new VMPR product categories including insec
 
 - `CHEMMON76` — same `sampEventId` in VMPR must preserve the same species/breed facet chain. See [[business-rules-vmpr]].
 - `CHEMMON91` — only one VMPR legislative-class `F33` under the VR classes. See [[business-rules-vmpr]].
-- `CHEMMON92` — `paramCode` base term must belong to the `vetDrugRes` hierarchy. See [[business-rules-vmpr]].
-- `FOODEX2_SAMMAT` — sampled matrix must still be a valid FoodEx2 code. See [[business-rules-cross-cutting]].
+- `CHEMMON92` — the base terms of `sampMatCode` and `anMatCode` must belong to the VetDrugRes matrix hierarchy. It does not validate `paramCode`. See [[business-rules-vmpr]].
+- `FOODEX2_SAMPMAT` — sampled matrix must still be a valid FoodEx2 code. See [[business-rules-cross-cutting]].

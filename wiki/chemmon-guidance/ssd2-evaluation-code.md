@@ -2,11 +2,12 @@
 title: "SSD2 Evaluation: Result Evaluation Code"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 74-75 (Section 2, element N.04)"
+  - "pp. 77-78 (element N.06.3)"
 related:
   - "[[ssd2-elements-evaluation]]"
   - "[[ssd2-elements-result]]"
@@ -57,9 +58,31 @@ For individual components of a multicomponent residue definition or contaminant 
 
 For VMPR, `J041A` together with `evalLimitType = W012A` ("Presence") can be used and is counted as non-compliant, although the guidance notes that `J003A` could also be used. (ChemMon 2026 p74)
 
+## Overall result assessment
+
+`evalInfo.resAsses` (N.06.3) is optional and accepts only J037A (Compliant) or
+J038A (Non-compliant). Preserve this field spelling. It records the authority's
+overall assessment, which can differ from the numerical `evalCode` judgement.
+The source's examples are:
+
+| evalCode | evalInfo.resAsses | General counting outcome |
+| --- | --- | --- |
+| J003A | omitted | Non-compliant |
+| J003A | J037A | Compliant |
+| J002A | J038A | Non-compliant |
+
+The **pesticide EU Annual Report is an exception**: its compliance counts use
+`evalCode` only. Additional `resAsses` information does not change those counts.
+Where assessment and evaluation differ, the field guidance calls for a reason
+in `evalInfo.conclusion`; CHEMMON66_a/b are the narrower Warning conditions.
+See [[ssd2-evaluation-conclusions]] and [[business-rules-cross-cutting]] for the
+parenthesized contextual reading of the source conditions. The source also says `sampEventAsses`,
+`sampTkAsses` and `sampAnAsses` are not used for these non-compliance counts.
+(ChemMon 2026 pp. 77–78)
+
 ## Related business rules
 
 - `CHEMMON30` — if `evalCode = J003A`, `anMethType` must be confirmation. See [[business-rules-cross-cutting]].
-- `CHEMMON36` — when the limit type is MRL, only a narrow code set is allowed. See [[business-rules-cross-cutting]].
+- `CHEMMON36` — Warning: when the limit type is MRL, J002A/J003A/J031A/J029A are recommended. See [[business-rules-cross-cutting]].
 - `CHEMMON60` — pesticide results are restricted to `J002A`, `J003A`, `J029A`, or `J031A`. See [[business-rules-pesticide]].
-- `CHEMMON100` — VMPR has its own restricted allowed set. See [[business-rules-vmpr]].
+- `CHEMMON100` — VMPR permits J002A/J003A/J029A/J031A/J041A/J040A; this is a Warning in 2026. See [[business-rules-vmpr]].

@@ -2,7 +2,7 @@
 title: "Controlled Terminology Catalogues"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
@@ -63,12 +63,12 @@ The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] make so
 
 | Catalogue | Where it shows up | Hierarchy / usage |
 | --- | --- | --- |
-| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | Hierarchy: **`faff`**. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings also use the same `faff` conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
+| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | PRE/USE hierarchy spelling: **`faff`**; ChemMon p. 76 prints **`fa_ff`**. The matching codes/labels establish the same concept family; this is a documentation naming discrepancy, not proof that software accepts both hierarchy identifiers. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings use the same named conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
 | `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. Required when `progLegalRef=N112A` in the parallel DMs. |
 | `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. |
 | `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Two-value catalogue: `Y` / `N`. |
 
-All catalogue-value validations in the FA/FF parallel DMs are enforced via `PRE…` (no-presence) and `USE…` / `USE_LLDB…` (use-levels) business rules rather than the CHEMMON catalogue. See the DM pages for the rule tables.
+The FA/FF parallel DMs have their own field types, catalogue restrictions and `PRE…` / `USE…` / `USE_LLDB…` rules. Some field constraints have no separate rule ID; the rule-ID list does not replace Table 1 or the field sections. See the DM pages for the rule tables.
 
 ## Choosing `progLegalRef` (LEGREF) for correct reuse
 

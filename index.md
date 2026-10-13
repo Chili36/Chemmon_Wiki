@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Index
@@ -12,13 +12,15 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 - [README.md](README.md): Repo overview, current status, directory layout, and working conventions.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.
 - [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, wiki-link convention, and source-comment convention. Required reading before editing any wiki page.
+- [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Source-ingest procedure, rule-first writing, gap checks and evaluation separation.
+- [Improvement plan](docs/plans/2026-10-05-foodex2-parity.md): Phased work and acceptance criteria for reliability, source audits, evaluation and downstream integration.
 - [log.md](log.md): Chronological record of ingests and maintenance work.
 
 ## Guiding Principles
 
 - Chemical monitoring reporting follows EFSA's annual call for data and the associated guidance documents. Code and report samples according to the current year's guidance, not prior years.
 - When the guidance is ambiguous, prefer the interpretation that maintains data quality and regulatory compliance over the one that is easier to implement.
-- Business rules (CHEMMON01-CHEMMON109+) are the authoritative validation layer. If a business rule and a prose section of the guidance conflict, the business rule takes precedence.
+- Business rules are the authoritative validation layer. If a business rule and a prose section of the guidance conflict, the business rule takes precedence. Use the source-derived inventory for valid IDs; numbering is not continuous.
 - Reporting domains (chemical DCF, biological/zoonoses DCF) have specific routing rules. Not all parameters belong in the same domain.
 
 ## ChemMon Guidance
@@ -90,23 +92,26 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [pesticide-reporting.md](wiki/chemmon-guidance/pesticide-reporting.md): Pesticide residues domain rules including legal references, sampling strategies, and copper-specific F20 facet requirements.
 - [contaminant-reporting.md](wiki/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules and Table 8 metadata guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, furan/alkylfurans, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, nitrates, and metals (cadmium/lead/mercury).
 - [food-additives-reporting.md](wiki/chemmon-guidance/food-additives-reporting.md): Food additives and flavourings reporting rules — three parallel data-collection paths (SSD2 analytical, no-presence, use-levels), mandatory F33, expression types, result reporting, restrictions/exceptions, conclusion reporting, and 2026 legal limit rules.
-- [fa-ff-no-presence-data-model.md](wiki/chemmon-guidance/fa-ff-no-presence-data-model.md): Separate DM for reporting that a FA/FF is not on the label / not added — 16 data elements, 17 `PRE…` business rules, pilot substance rotation. Sample-level, SSD2-derived but not SSD2.
-- [fa-ff-use-levels-data-model.md](wiki/chemmon-guidance/fa-ff-use-levels-data-model.md): Separate DM for industry-reported FA/FF use levels at product-category level — 29 data elements, `USE…` and `USE_LLDB…` business rules, expression basis (whole/dry/fat), LLDB check at marketing date. Not implemented in SSD2.
+- [fa-ff-no-presence-data-model.md](wiki/chemmon-guidance/fa-ff-no-presence-data-model.md): Separate DM for FA/FF not on label/not added — 18 fields in 16 sections, 17 PRE rules, C20A-only scope and mandatory sampling date. Sample-level, SSD2-derived but separate.
+- [fa-ff-use-levels-data-model.md](wiki/chemmon-guidance/fa-ff-use-levels-data-model.md): Separate category-level FA/FF use-levels DM — 31 fields in 29 sections, USE/USE_LLDB rules, marketing date, optional minimum, dilution and defined-MPL versus Quantum satis. USE19 has an explicit, source-supported at-least-one-positive interpretation.
 - [baby-food-reporting.md](wiki/chemmon-guidance/baby-food-reporting.md): Baby food classification, VMPR exclusion rules (CHEMMON55/63), accepted domains, legal limits, and coding examples.
 
 ### Business Rules
 
-The full 131-rule catalog is sliced into nine files by applicability. Start at the hub if you're unsure which slice to open; otherwise jump directly to the relevant domain or tier.
+Rule references are grouped by topic and reporting domain. All 83 active GBR definitions not marked biological-only are covered across four pages. The source review also covers every CHEMON, PRE and USE rule and all 49 PRE/USE fields. Source wording and contextual interpretations remain explicit; this assistant comparison does not certify an executable validator.
 
-- [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — explains the three groups of business rules (GBR/CHEMMON/subset-specific) and links to the nine slice files by domain/tier.
-- [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): General Business Rules (16 rules) applying across all EFSA SSD2 data collections — sampling event consistency, geographic validation, result value/unit rules.
-- [business-rules-cross-cutting.md](wiki/chemmon-guidance/business-rules-cross-cutting.md): CHEMMON rules (46 rules) marked "All" or applying to multiple domains — analytical method, result value & type, sampling & programme, cross-domain matrix, evaluation & action, FoodEx2 validation.
-- [business-rules-vmpr.md](wiki/chemmon-guidance/business-rules-vmpr.md): VMPR-specific rules (11 CHEMMON rules) — accreditation, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
-- [business-rules-pesticide.md](wiki/chemmon-guidance/business-rules-pesticide.md): Pesticide-specific rules (14 CHEMMON rules) — country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
-- [business-rules-contaminant.md](wiki/chemmon-guidance/business-rules-contaminant.md): Contaminant-specific rules (19 CHEMMON rules) — dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression.
-- [business-rules-additives.md](wiki/chemmon-guidance/business-rules-additives.md): Food additives & flavourings rules (12 CHEMMON rules) — F33 legislative classes, expression type, physical state, 2026 substance-specific requirements.
+- [business-rules.md](wiki/chemmon-guidance/business-rules.md): **Hub** — explains GBR/CHEMMON/subset-specific rules and routes to topic and domain references, with separate PRE/USE collection paths.
+- [business-rules-gbr.md](wiki/chemmon-guidance/business-rules-gbr.md): General Business Rules index and 16 core rules — sample/event consistency, sampling/origin geography, result shape, units and uniqueness; inactive and biological-only scope notes.
+- [business-rules-gbr-consistency.md](wiki/chemmon-guidance/business-rules-gbr-consistency.md): 12 generic SSD2 rules for shared portion/organisation/laboratory/method identifiers, processing geography, Other matrix text, unclassifiable methods and sample-size units.
+- [business-rules-gbr-results.md](wiki/chemmon-guidance/business-rules-gbr-results.md): 20 generic SSD2 rules for percentages, fat/dry-weight conditions, evaluation-limit comparisons, positive thresholds/recovery/uncertainty and CCalpha/CCbeta; GBR22/42 are Warnings.
+- [business-rules-gbr-dates.md](wiki/chemmon-guidance/business-rules-gbr-dates.md): 35 generic SSD2 rules for valid calendar dates, future dates, reporting year, day/month ranges, required months and production/expiry/sampling/analysis/slaughter order.
+- [business-rules-cross-cutting.md](wiki/chemmon-guidance/business-rules-cross-cutting.md): CHEMMON rules marked "All" or applying to multiple domains — analytical method, result value & type, sampling & programme, cross-domain matrix, evaluation & action, FoodEx2 validation.
+- [business-rules-vmpr.md](wiki/chemmon-guidance/business-rules-vmpr.md): VMPR-specific rules — accreditation, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
+- [business-rules-pesticide.md](wiki/chemmon-guidance/business-rules-pesticide.md): Pesticide-specific rules — country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
+- [business-rules-contaminant.md](wiki/chemmon-guidance/business-rules-contaminant.md): Contaminant-specific rules — dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression.
+- [business-rules-additives.md](wiki/chemmon-guidance/business-rules-additives.md): Food additives & flavourings rules — F33 legislative classes, expression type, physical state, 2026 substance-specific requirements.
 - [business-rules-baby-food.md](wiki/chemmon-guidance/business-rules-baby-food.md): Baby food exclusion rules (CHEMMON55, CHEMMON63) — matrix coding consistency for baby food programmes and VMPR legal framework exclusion.
-- [business-rules-legal-limits.md](wiki/chemmon-guidance/business-rules-legal-limits.md): Legal Limit rules (11 rules) comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
+- [business-rules-legal-limits.md](wiki/chemmon-guidance/business-rules-legal-limits.md): Legal Limit rules comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
 - [business-rules-2026-changes.md](wiki/chemmon-guidance/business-rules-2026-changes.md): Reference log of amended, merged, new, and deactivated rules for the 2026 data collection.
 
 ## Source Layer

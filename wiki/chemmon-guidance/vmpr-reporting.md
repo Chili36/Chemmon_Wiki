@@ -15,7 +15,7 @@ related:
   - "[[ssd2-matrix-vmpr-coding]]"
   - "[[business-rules]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # VMPR Reporting
@@ -66,7 +66,9 @@ Each VMPR sample carries a sampling strategy code describing how it was selected
 
 VMPR has specific FoodEx2 requirements beyond the general rules in [[foodex2-in-chemmon]]. For the element-level matrix guidance behind these rules, see [[ssd2-matrix-vmpr-coding]]. For the Table 4 facet definitions, use [[foodex2-facets-source-origin]], [[foodex2-facets-state-process]], [[foodex2-facets-packaging-consumer]], and [[foodex2-facets-legislative-descriptive]]:
 
-- **F01 (Source) and F02 (Part-nature)** are always required -- these two facets must be present on every VMPR sample. (ChemMon 2026 p45)
+<!-- Source: ChemMon 2026 p33, VMPR samples coding -->
+
+- **F01 (Source) and F02 (Part-nature)** must generally be present, implicitly or explicitly, except for the special feed/water and processed-composite cases. Apply the scoped guidance in [[ssd2-matrix-vmpr-coding]] rather than requiring both facets on every VMPR sample. (ChemMon 2026 p33)
 - **Wild game**: F21.A07RY (production method = wild/hunted) is mandatory for wild game samples. (ChemMon 2026 p46)
 - **Feed samples**: F23 (target consumer) is required whenever the sample is animal feed rather than a food product. (ChemMon 2026 p46)
 - **Non-food matrices** (urine, retina, hair, blood serum, etc.): use base term `A0C60` with explicit F01 and F02 facets to identify the animal species and the specific matrix. (ChemMon 2026 p46-47)
@@ -80,9 +82,7 @@ Feed samples must use a `sampMatCode` from the **feed section** of the MTX catal
 - **F23 (target consumer)** must always be present (implicit or explicit) for feed samples.
 - If the F23 specific species is unknown or the feed is intended for multiple species, select from the **first 12 feed categories** containing the implicit F23 code A07TV="Feed sample" -- these are classified as VMPR **"Other"**.
 - If a specific explicit F23 species code is reported, the sample is classified in the corresponding VMPR Product Category (e.g., Pigs, Poultry).
-- **Sheep/goat feed**: always add one of four subspecies codes:
-  - A18EX, A1EFK (goats)
-  - A18EV (sheep)
+- **Sheep/goat feed**: when the selected feed term has the implicit grouped `F23.A07VF` ("Sheep and goat feed"), add an explicit child descriptor for the known target animal and production purpose. See the canonical requirement in [[ssd2-matrix-vmpr-coding]]. These are feed target-consumer descriptors, not subspecies. The source repeats `A18EX` for two different goat labels; verify the descriptor against the applicable MTX catalogue rather than copying that ambiguous list. (ChemMon 2026 p36)
 
 **Water for farmed animals**: select from the "Non-food matrices" hierarchy. The sample must contain F23 (target consumer).
 
@@ -154,9 +154,9 @@ VMPR analytical results are reported using one of these result type codes:
 
 The following business rules apply specifically to the VMPR domain:
 
-- **CHEMMON96**: Validates that VMPR samples carry the correct sampling strategy for the declared programme type (amended 2026). (ChemMon 2026 p49)
-- **CHEMMON100**: Restricts which evaluation codes are permitted for VMPR results (new 2026). (ChemMon 2026 p49)
-- **CHEMMON102**: Checks consistency across records sharing the same `sampleEventId` in VMPR submissions (new 2026). (ChemMon 2026 p50)
+- **CHEMMON96**: Validates that VMPR samples carry the correct sampling strategy for the declared programme type (amended 2026). (ChemMon 2026 Table 10 p. 137)
+- **CHEMMON100**: Restricts which evaluation codes are permitted for VMPR results (new 2026). (ChemMon 2026 Table 10 p. 138)
+- **CHEMMON102**: Checks consistency across records sharing the same `sampEventId` in VMPR submissions (new 2026). (ChemMon 2026 Table 10 p. 139)
 
 See [[business-rules]] for the full rule catalogue.
 

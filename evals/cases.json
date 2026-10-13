@@ -1,0 +1,397 @@
+{
+  "version": 1,
+  "created_at": "2026-10-05",
+  "author": "Codex",
+  "review_status": "draft",
+  "notes": "Assistant-authored candidate labels. Held-out cases are reserved from prompt tuning; no human-reviewed baseline is claimed. Review against full source sections before acceptance.",
+  "cases": [
+    {
+      "id": "units-bin",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "In SSD2, does GBR27 require resUnit when resType is BIN? What does GBR28 require?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "business-rules-gbr.md",
+          "ssd2-result-units-and-limits.md"
+        ]
+      ],
+      "evidence_pages": [
+        "business-rules-gbr.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "State that GBR27 applies when resType differs from BIN.",
+        "GBR28 requires resQualValue for BIN.",
+        "Mention GBR29 if numeric limits are present; do not say BIN never needs units."
+      ],
+      "source_review_notes": "ChemMon 2026 Table 9 pp. 102–103"
+    },
+    {
+      "id": "vmpr-exception",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "For VMPR reporting, do F01 and F02 always have to be supplied, including feed, water and processed food?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "ssd2-matrix-vmpr-coding.md",
+          "vmpr-reporting.md"
+        ]
+      ],
+      "evidence_pages": [
+        "ssd2-matrix-vmpr-coding.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "Do not make F01/F02 universal. Preserve feed/water and processed/composite exceptions.",
+        "Do not confuse F01/F02 exceptions with absence of all matrix requirements."
+      ],
+      "source_review_notes": "ChemMon 2026 pp. 33–38"
+    },
+    {
+      "id": "three-paths",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "I have additive information from labels, laboratory results and manufacturers. Can I submit all three with the same data model?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "food-additives-reporting.md"
+        ]
+      ],
+      "evidence_pages": [
+        "food-additives-reporting.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "Distinguish SSD2 analytical results, no-presence collection and use-levels collection.",
+        "Ask which type of record is being submitted if necessary; do not apply USE rules universally."
+      ],
+      "source_review_notes": "ChemMon 2026 and parallel guidance introductions; draft route classification needs human review"
+    },
+    {
+      "id": "pre-implicit",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "For 2026 no-presence data, an implicit F33 is already present. Is another explicit F33 an Error?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "fa-ff-no-presence-data-model.md"
+        ]
+      ],
+      "evidence_pages": [
+        "fa-ff-no-presence-data-model.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [
+        "fa-ff-use-levels-data-model.md"
+      ],
+      "expect_empty_selection": false,
+      "rubric": [
+        "Identify PRE15 as Warning; explicit F33 is not needed if implicit.",
+        "Do not call it USE23 or a submission-blocking Error."
+      ],
+      "source_review_notes": "No-presence 2026 §2.7 pp. 7–8, Table 3 p. 21"
+    },
+    {
+      "id": "use-implicit",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "For 2026 use-level data, may I add an explicit F33 that is already implicit in matCode?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "fa-ff-use-levels-data-model.md"
+        ]
+      ],
+      "evidence_pages": [
+        "fa-ff-use-levels-data-model.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [
+        "fa-ff-no-presence-data-model.md"
+      ],
+      "expect_empty_selection": false,
+      "rubric": [
+        "USE23 prohibits the duplicate and is an Error.",
+        "Keep matCode and use-level data distinct from sampMatCode/PRE15."
+      ],
+      "source_review_notes": "Use-levels 2026 §2.7 pp. 7–8, Table 3 p. 27"
+    },
+    {
+      "id": "ssd2-additive-implicit",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "For 2026 analytical SSD2 food-additive results, what happens if I repeat the implicit F33?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "business-rules-additives.md",
+          "food-additives-reporting.md"
+        ]
+      ],
+      "evidence_pages": [
+        "business-rules-additives.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [
+        "fa-ff-use-levels-data-model.md",
+        "fa-ff-no-presence-data-model.md"
+      ],
+      "expect_empty_selection": false,
+      "rubric": [
+        "CHEMON109 (wiki CHEMMON109) is a Warning in 2026.",
+        "Do not turn a possible 2027 change into the 2026 rule."
+      ],
+      "source_review_notes": "ChemMon 2026 Table 10 p. 141"
+    },
+    {
+      "id": "pesticide-ll",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "For a processed pesticide sample, do LL_01_PPP and LL_02_PPP apply in the same way as for an unprocessed sample?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "business-rules-legal-limits.md"
+        ]
+      ],
+      "evidence_pages": [
+        "business-rules-legal-limits.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "State that these rule definitions require an unprocessed sample.",
+        "Preserve VAL and W002A-or-empty conditions; do not claim processing makes every legal obligation disappear."
+      ],
+      "source_review_notes": "ChemMon 2026 Table 10 pp. 141–142"
+    },
+    {
+      "id": "contaminant-action",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "For a contaminant result with evalCode J003A in 2026, is omission of actTakenCode an Error under CHEMON37?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "business-rules-cross-cutting.md",
+          "ssd2-evaluation-actions.md"
+        ]
+      ],
+      "evidence_pages": [
+        "business-rules-cross-cutting.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "CHEMON37 is a Warning, and actTakenCode should be reported.",
+        "Do not transfer CHEMON85 VMPR/pesticide requirements to contaminants."
+      ],
+      "source_review_notes": "ChemMon 2026 Table 10 p. 121"
+    },
+    {
+      "id": "ambiguous-facet",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "Is F03 mandatory for my additive data?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "food-additives-reporting.md"
+        ]
+      ],
+      "evidence_pages": [
+        "food-additives-reporting.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "Request reporting path, category and whether F03 is implicit before a categorical answer.",
+        "Distinguish SSD2 recommendations from PRE/USE conditional requirements."
+      ],
+      "source_review_notes": "ChemMon 2026 pp. 38–39; No-presence/Use-levels §2.7 pp. 7–8"
+    },
+    {
+      "id": "no-evidence",
+      "split": "development",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "What is the weather in Stockholm tomorrow?",
+      "max_pages": 4,
+      "expected_page_groups": [],
+      "evidence_pages": [],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": true,
+      "rubric": [
+        "Say the supplied evidence cannot answer; do not invent a weather forecast or cite a reporting page."
+      ],
+      "source_review_notes": "Out of scope of all four supplied source documents"
+    },
+    {
+      "id": "uniqueness-key",
+      "split": "held-out",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "Does GBR101 reject any repeated paramCode and sampAnId, or can portions and Not in list change the outcome?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "business-rules-gbr.md"
+        ]
+      ],
+      "evidence_pages": [
+        "business-rules-gbr.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "Include paramCode.base, sampId, sampAnId and anPortSeq in the uniqueness key.",
+        "Preserve exception RF-XXXX-XXX-XXX."
+      ],
+      "source_review_notes": "ChemMon 2026 Table 9 p. 112"
+    },
+    {
+      "id": "vmpr-feed-group",
+      "split": "held-out",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "Which F23 target-consumer code does the 2026 VMPR guidance use for sheep/goat feed?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "ssd2-matrix-vmpr-coding.md"
+        ]
+      ],
+      "evidence_pages": [
+        "ssd2-matrix-vmpr-coding.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "Report grouped code A07VF.",
+        "If listing children, use A18ET, A18EV, A18EX and A18EY; do not repeat the PDF typo.",
+        "Distinguish catalogue correction from original PDF wording."
+      ],
+      "source_review_notes": "ChemMon 2026 p. 36; local catalogue query in reports/source-review"
+    },
+    {
+      "id": "baby-vmpr",
+      "split": "held-out",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "Can a sample coded under baby-food A03PZ be reported with VMPR progLegalRef N371A?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "business-rules-baby-food.md",
+          "baby-food-reporting.md"
+        ]
+      ],
+      "evidence_pages": [
+        "business-rules-baby-food.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "CHEMON63 excludes N371A for samples under A03PZ.",
+        "Do not infer that all other collections exclude baby food."
+      ],
+      "source_review_notes": "ChemMon 2026 Table 10 p. 129"
+    },
+    {
+      "id": "pre-report-year",
+      "split": "held-out",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "In the 2026 no-presence collection, what repYear and sampY should I report, and is repYear mandatory?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "fa-ff-no-presence-data-model.md"
+        ]
+      ],
+      "evidence_pages": [
+        "fa-ff-no-presence-data-model.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "repYear optional; if present 2026.",
+        "sampY is mandatory and expected 2025 for this collection.",
+        "Do not substitute USE marketing-year rules."
+      ],
+      "source_review_notes": "No-presence 2026 §§2.5–2.6 p. 7, PRE01/16"
+    },
+    {
+      "id": "use-date",
+      "split": "held-out",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "Why do use-level data need marketYear, marketMonth and marketDay rather than just a reporting year?",
+      "max_pages": 4,
+      "expected_page_groups": [
+        [
+          "fa-ff-use-levels-data-model.md"
+        ]
+      ],
+      "evidence_pages": [
+        "fa-ff-use-levels-data-model.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "All three marketing-date fields are mandatory.",
+        "Explain legal-limit checks use the marketing date; repYear is the collection year."
+      ],
+      "source_review_notes": "Use-levels 2026 §§2.5–2.6 p. 7"
+    },
+    {
+      "id": "future-edition",
+      "split": "held-out",
+      "review_status": "draft",
+      "reviewer": null,
+      "question": "What changed in EFSA chemical-monitoring reporting for the 2028 collection?",
+      "max_pages": 4,
+      "expected_page_groups": [],
+      "evidence_pages": [
+        "chemmon-change-management.md"
+      ],
+      "forbidden_domains": [],
+      "forbidden_pages": [],
+      "expect_empty_selection": false,
+      "rubric": [
+        "State that the supplied 2026 sources do not establish 2028 rules.",
+        "Do not present anticipated future transitions as verified 2028 guidance."
+      ],
+      "source_review_notes": "Corpus edition boundary; no 2028 source"
+    }
+  ]
+}

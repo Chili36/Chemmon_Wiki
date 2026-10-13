@@ -1,8 +1,9 @@
 ---
 title: "SSD2 Result: Reported Value and Result Type (resVal, resQualValue, resType)"
+select_when: "SSD2 resVal, resQualValue and resType (VAL, BIN, LOD, LOQ, AWR), uniqueness and processed-sample reporting. Use alongside units/limits when those fields are asked about."
 type: "reference"
 domain: "all"
-last_updated: "2026-04-15"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -49,7 +50,9 @@ For processed products in general, the results must be reported **for the sample
 
 ### MRL validation scope
 
-The MRL will only be validated considering the processed pesticide residue and VMPR samples, as MRL are set for fresh/unprocessed samples in both legal frameworks, i.e. the MRL will not be used to validate the plausibility of `resVal`, `resType` and `evalCode` reported if the sample is "processed". Further, MRL will not be validated for "Wild" game samples analysed for VMPR substances. (ChemMon 2026 p68)
+**Source wording conflict:** p. 68 initially says "processed" but then explicitly excludes processed samples. The unprocessed condition below follows the complete LL_01/02 definitions in Table 10, pp. 141-142; it is not a silent correction of the source.
+
+MRL validation applies to unprocessed pesticide residue and VMPR samples, as MRLs are set for fresh/unprocessed samples in both legal frameworks, i.e. the MRL will not be used to validate the plausibility of `resVal`, `resType` and `evalCode` reported if the sample is "processed". Further, MRL will not be validated for "Wild" game samples analysed for VMPR substances. (ChemMon 2026 p68)
 
 ### Example
 
@@ -61,7 +64,7 @@ The MRL will only be validated considering the processed pesticide residue and V
 
 - **GBR46** — If `resType` = VAL, then `resVal` must be reported.
 - **GBR48** — `resVal` must be greater than 0 when reported.
-- **GBR101** — Only one result per parameter per sample analysed portion is permitted.
+- **GBR101** — Unless `paramCode.base` is RF-XXXX-XXX-XXX (Not in list), `paramCode.base` + `sampId` + `sampAnId` + `anPortSeq` must be unique (Table 9, p. 112).
 
 ## resQualValue — Result qualitative value
 
@@ -85,7 +88,7 @@ As mentioned also in section M.04, for food additives and food flavourings, if `
 
 ### Related business rule
 
-**CHEMMON24** — `resQualValue` must equal NEG unless the parameter is MOAHs.
+**CHEMMON24** — `resQualValue` must equal NEG except for the specific parameter RF-00011484-PAR (MOAHs 3 to 7 ring), not all MOAHs (Table 10 p. 118).
 
 ## resType — Type of result
 

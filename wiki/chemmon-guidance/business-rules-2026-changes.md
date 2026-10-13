@@ -1,8 +1,9 @@
 ---
 title: "2026 Business Rule Changes"
+select_when: "Changes effective for the 2026 collection, merged or deactivated IDs and future transition notes. Use canonical rule pages for the operative conditions."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
@@ -38,8 +39,8 @@ Annual delta of business rule changes for the 2026 ChemMon data collection. This
 
 ## Merged rules
 
-- **CHEMMON39_a/b** -- Previously separate food additive and flavouring legislative class rules consolidated into a single pair. Defined in [[business-rules-additives]].
-- **CHEMMON79_a/b/c** -- Contaminant, additive, and flavouring analytical method validation rules consolidated. Method code cannot be Unknown/Unspecified/Classification not possible. Defined in [[business-rules-cross-cutting]].
+- **CHEMMON39** -- Previous CHEMON39_a and CHEMON39_b rules are merged into CHEMON39 in 2026. Defined in [[business-rules-additives]].
+- **CHEMMON79** -- Previous CHEMON79_a, CHEMON79_b and CHEMON79_c rules are merged into CHEMON79 in 2026. Method code cannot be Unknown/Unspecified/Classification not possible. Defined in [[business-rules-cross-cutting]].
 
 ## New rules
 
@@ -49,14 +50,14 @@ Annual delta of business rule changes for the 2026 ChemMon data collection. This
 - **CHEMMON97** -- Multi-domain sampling strategy validation for K005A across PPP/CONT/ADD/FLAV. Defined in [[business-rules-cross-cutting]].
 - **CHEMMON98** -- Programme type restriction for contaminants under N375A. Defined in [[business-rules-contaminant]].
 - **CHEMMON99** -- Import origin validation: `origCountry` cannot equal `sampCountry` for import programmes. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON100** -- VMPR evaluation code restricted to five permitted codes. Defined in [[business-rules-vmpr]].
+- **CHEMMON100** — VMPR evaluation restricted to six codes, including J041A (Detected). Warning in 2026. Defined in [[business-rules-vmpr]].
 - **CHEMMON101** -- N422A regulation requires K019A programme type and ST30A strategy. Defined in [[business-rules-pesticide]].
 - **CHEMMON102** -- VMPR geographic consistency check across `sampEventId` records. Defined in [[business-rules-vmpr]].
 - **CHEMMON103** -- Organic/conventional production mutual exclusivity. Defined in [[business-rules-cross-cutting]].
 - **CHEMMON104** -- N422A exclusive programme reference (no concatenation). Defined in [[business-rules-pesticide]].
-- **CHEMMON105** -- N317A exclusive programme reference (no concatenation). Defined in [[business-rules-contaminant]].
-- **CHEMMON106** -- Potassium sorbate `paramText` must specify free acid or salt form. Defined in [[business-rules-additives]].
-- **CHEMMON107** -- LOD highly recommended for sorbic acid, BHT, coumarin, HCN, theobromine. Defined in [[business-rules-additives]].
+- **CHEMMON105** — N317A exclusive programme reference (no concatenation); not limited to contaminants. Defined in [[business-rules-cross-cutting]].
+- **CHEMMON106** -- Potassium sorbate `paramText` should specify free acid or salt form (Warning). Defined in [[business-rules-additives]].
+- **CHEMMON107** — LOD highly recommended for the six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`. Defined in [[business-rules-additives]].
 - **CHEMMON108** -- Generic `sampMatCode` terms restricted for additives/flavourings. Defined in [[business-rules-additives]].
 - **CHEMMON109** -- Implicit F33 makes explicit F33 unnecessary for additives/flavourings. Defined in [[business-rules-additives]].
 - **LL_01_FA_FF** -- MPL comparison for food additives/flavourings. Defined in [[business-rules-legal-limits]].

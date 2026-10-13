@@ -2,7 +2,7 @@
 title: "Wiki Schema"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-10"
+last_updated: "2026-10-05"
 ---
 
 # Schema
@@ -64,6 +64,7 @@ Every wiki page declares a `domain` field. Allowed values:
 | Field | Type | Notes |
 |---|---|---|
 | `source_pages` | list of strings | Page ranges in the source PDF, e.g. `["pp. 21-45"]`. Use when specific pages matter for verification. |
+| `select_when` | string | Optional situation-based selection hint, at most 400 characters. Describe the decision the page helps resolve; otherwise the selector uses the index summary. |
 
 ## Conventions
 
@@ -90,16 +91,25 @@ Rule text and prose claims are attributed to source documents via HTML comments 
 **CHEMMON03**: ...
 ```
 
-The comment is invisible in rendered output but lets a human or LLM verify a claim against the canonical PDF.
+The comment is invisible in the human viewer. Model evidence preserves it as a
+visible `Source:` line so source locators remain adjacent to the relevant claims.
 
 ### Rule ID conventions
 
 - **GBR rules**: `GBR2`, `GBR12`, `GBR27` — General Business Rules from SSD2.
-- **CHEMMON rules**: `CHEMMON01` through `CHEMMON109+`, with letter suffixes like `CHEMMON79_a`, `CHEMMON79_b`, `CHEMMON79_c` for variant rules.
-- **Legal Limit rules**: `LL_01 VMPR`, `LL_02 PPP`, `LL_03 FA_FF`, etc.
-- **FoodEx2 validation**: `FOODEX2_SAMMAT`, `FOODEX2_ANMAT`.
+- **CHEMMON rules**: preserve source IDs and suffixes, such as `CHEMMON03`, `CHEMMON84_a` and `CHEMMON90_b`. The PDF spells the prefix `CHEMON`; the wiki uses `CHEMMON` as an explicit alias. Numbering has gaps and merged IDs; do not infer a continuous range.
+- **Legal Limit rules**: `LL_01_VMPR`, `LL_02_PPP`, `LL_03_FA_FF`, etc.; preserve the source-derived inventory's underscore form.
+- **FoodEx2 validation**: `FOODEX2_SAMPMAT`, `FOODEX2_ANMAT`.
 
-Every `CHEMMON\d+` rule ID must appear **exactly once** across the 8 `business-rules-*.md` slice files. The health check enforces this to prevent duplication or silent drops during maintenance.
+Canonical SSD2 rule definitions belong in the topic/domain
+`business-rules-*.md` files; the annual-change page describes deltas. PRE and
+USE definitions belong to their separate data-model pages. The health check
+compares all five families with the independently source-derived inventory,
+reporting missing, unexpected, duplicate and inactive definitions. The former
+CHEMMON03 duplicate was a wiki error, corrected on 5 October 2026.
+ID coverage is complete for applicable active rows, including all 83 generic
+rules, but this does **not** prove that every description matches its source.
+See [[SOURCE_REVIEW]] for completed source comparisons, unresolved PDF wording and review limits.
 
 ## Example: valid frontmatter block
 

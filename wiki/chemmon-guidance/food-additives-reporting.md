@@ -1,5 +1,6 @@
 ---
 title: "Food Additives and Flavourings Reporting"
+select_when: "Identify which FA/FF path applies: SSD2 analytical results, no-presence records, or aggregated use levels. Compare field names and requirement strength before choosing a detailed model page."
 type: "domain-guide"
 domain: "additives"
 sources:
@@ -22,7 +23,7 @@ related:
   - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-04-24"
+last_updated: "2026-10-05"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -31,7 +32,7 @@ last_updated: "2026-04-24"
 
 ## FA/FF data collection paths
 
-FA/FF intake monitoring uses **three parallel data-collection paths**, all submitted through the EFSA DCF but with distinct data models and business rules. Commission Recommendation (EU) 2023/965 requires MS to collect at least one of (a) analytical data or (b) use levels; (c) no-presence data is an optional companion. Pick the path by what you are reporting, not by the substance:
+FA/FF intake monitoring uses **three parallel data-collection paths**, all submitted through the EFSA DCF but with distinct data models and business rules. The supplied guidance, citing Commission Recommendation (EU) 2023/965, says MS should collect at least one of (a) analytical data or (b) use levels; (c) no-presence data is an optional companion. Pick the path by what you are reporting, not by the substance:
 
 | Path | Granularity | Data model | Rule prefix | Wiki page |
 |---|---|---|---|---|
@@ -44,7 +45,7 @@ Key framing rules across the three paths:
 - Positive presence with a measured concentration → SSD2 analytical (this page). The no-presence DM explicitly rejects `C19A` (PRE06).
 - Category-level use levels reported by industry → use-levels DM. SSD2 cannot represent category-level aggregates, so use-levels is a parallel schema, not an SSD2 extension.
 - Sample-level "FA/FF not used here" without an analytical measurement → no-presence DM. SSD2 cannot carry standalone negatives, so the no-presence DM was added to close that gap.
-- All three paths use the same FA/FF controlled-terminology hierarchies (`LEGREF.faff`, `PARAM.addAnalysis`/`flavAnalysis`, `ADDFOOD.FARestExc`/`FFRestExc`, `CONCLUS.faff`, `FUNC`) so downstream joins and dietary-exposure calculations stay coherent.
+- The three paths share FA/FF catalogue families (`LEGREF`, `PARAM`, `ADDFOOD`, `CONCLUS`, `FUNC`). Preserve each collection’s hierarchy restrictions. For CONCLUS, ChemMon p. 76 prints `fa_ff`, whereas PRE/USE print `faff`; the matching C19A/C20A/C05A codes and examples establish the same concept family. Retain the spelling difference as a source note; do not infer software aliases from it.
 
 The remainder of this page covers the **analytical (SSD2)** path. For the other two, follow the links above.
 
@@ -54,8 +55,8 @@ Some rule families are shared in concept but not in severity or exact field plac
 
 | Topic | SSD2 analytical | No-presence DM | Use-levels DM |
 | --- | --- | --- | --- |
-| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses `CONCLUS.faff` (see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
-| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39_a/b`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
+| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses the FA/FF CONCLUS codes (source spelling `fa_ff`; see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
+| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
 | Physical state (`F03`) | Recommended / warning path (`CHEMMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
 | Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
 | Limit comparison date | Analytical legal-limit checks use the sampling date | No separate LLDB layer in this DM | LLDB checks use the marketing date (`USE_LLDB01`, `USE_LLDB02`) |
@@ -111,8 +112,8 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Result Reporting
 
-- For food additives regulated as groups, `paramText` must state "Expressed as free acid" or "Expressed as salt". (CHEMMON106, e.g. for potassium sorbate; see [[ssd2-analysis-parameter-coding]])
-- If `resType=BIN` and `resQualValue=NEG`, it is highly recommended to report the LOD -- otherwise the data cannot be used for dietary exposure estimation. (CHEMMON107)
+- For potassium sorbate (RF-00000248-ADD), CHEMMON106 recommends that `paramText` state “Expressed as free acid” or “Expressed as salt” (Warning, Table 10 p. 140). This rule does not impose that text on every grouped additive; see [[ssd2-analysis-parameter-coding]].
+- The field prose p. 66 recommends LOD for FA/FF binary negative results generally. CHEMMON107 (Table 10 p. 140) specifically warns for six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`; see [[business-rules-additives]] for the complete list.
 - Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
@@ -120,11 +121,11 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 
 | Rule | Description | Status |
 | --- | --- | --- |
-| CHEMMON39_a/b | Legislative class validation | Merged 2026 |
+| CHEMMON39 | Legislative class validation | Merged 2026 |
 | CHEMMON84_a | Result type validation | Amended 2026 |
 | CHEMMON86 | Physical-state facet recommendation | Amended 2026 |
-| CHEMMON106 | Potassium sorbate `paramText` requirement | New 2026 |
-| CHEMMON107 | Sorbic acid derivative LOD reporting | New 2026 |
+| CHEMMON106 | Potassium sorbate `paramText` recommendation (Warning) | New 2026 |
+| CHEMMON107 | LOD recommendation for six named parameters with BIN/NEG | New 2026 |
 | CHEMMON108 | Food colour/additive classification codes | New 2026 |
 | CHEMMON109 | Implicit additive/flavouring legislative category | New 2026 |
 
@@ -142,11 +143,17 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 
 | Product | FoodEx2 Code | Notes |
 | --- | --- | --- |
-| Cheese with legislative class | `A02RH#F03.A06JA$F33.A0C5F` | FA-01.7.2 Ripened cheese |
+| Soft-ripened cheese, sliced | `A02RH#F03.A06JA` | Local MTX 17.2: F33.A0C5F (FA-01.7.2 Ripened cheese) is implicit; add F03 only for the known sliced state. See version note below. |
 | Wine, red | `A03MX` | Implicit F33=FA-14.2.2 Wine and products |
-| Omelette, plain | `A03YN#F33.A0C33` | Implicit F33=FA-10.2 Processed eggs |
+| Omelette, plain | `A03YN#F33.A0C33` | Explicit F33=FA-10.2 Processed eggs in the supplied ChemMon p. 40 example |
 | Infant formula milk/soya-based liquid | `A03QH` | Implicit F33=FA-13.1.1 Infant formulae |
-| Vitamin supplements syrup | `A03SL#F03.A1BY$F33.A0C15` | FA-17.2 supplements liquid form |
+| Vitamin supplements syrup | `A03SL#F03.A1B1Y$F33.A0C15` | FA-17.2 supplements liquid form; A1B1Y is the syrup-type code printed on ChemMon p. 40 |
+
+**Cheese version note:** ChemMon p. 39 prints an explicit F33 for A02RH, while
+both parallel FA/FF guides p. 9 list it as implicit. The cheese row above uses
+the locally checked MTX 17.2 snapshot; [[foodex2-in-chemmon]] records the
+discrepancy, query provenance and limits. Other rows reproduce the supplied
+2026 guidance examples and are not a validation against every catalogue release.
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Restriction/Exception

@@ -4,6 +4,7 @@ import asyncio
 import json
 
 import httpx
+import pytest
 
 import wiki_api.app as app_module
 from wiki_api.page_selector import PageSelectionResult
@@ -30,7 +31,7 @@ class FakeSelector:
     def run(self, payload: dict[str, object]) -> PageSelectionResult:
         self.calls.append(payload)
         return PageSelectionResult(
-            pages_used=["index.md"],
+            pages_used=["contaminant-reporting.md"],
             tool_trace=[],
             token_summary={
                 "model": "fake-claude",
@@ -69,7 +70,7 @@ class FakeAnswerer:
         self.calls.append({"question": question, "pages": pages})
         return AnswerResult(
             answer="F33 is mandatory for acrylamide per CHEMMON12.",
-            citations=["index.md"],
+            citations=["contaminant-reporting.md"],
             token_summary={
                 "model": "fake-claude",
                 "calls": 1,
@@ -150,8 +151,8 @@ def test_ask_returns_answer_with_citations() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["answer"] == "F33 is mandatory for acrylamide per CHEMMON12."
-    assert payload["citations"] == ["index.md"]
-    assert "index.md" in payload["pages_used"]
+    assert payload["citations"] == ["contaminant-reporting.md"]
+    assert "contaminant-reporting.md" in payload["pages_used"]
     assert payload["trace"]["selection_method"] == "service-owned llm page selector + answerer"
     assert payload["trace"]["selector"]["model"] == "fake-claude"
     assert payload["trace"]["answerer"]["model"] == "fake-claude"
@@ -186,14 +187,14 @@ def test_ask_streams_answer_when_requested() -> None:
 
         def stream(self, question: str, pages: list[dict[str, object]]):  # type: ignore[no-untyped-def]
             raw_json_1 = '{"answer":"F33 is mandatory for'
-            raw_json_2 = ' acrylamide per CHEMMON12.","citations":["index.md"]}'
+            raw_json_2 = ' acrylamide per CHEMMON12.","citations":["contaminant-reporting.md"]}'
             yield {"type": "delta", "text": raw_json_1}
             yield {"type": "delta", "text": raw_json_2}
             yield {
                 "type": "final",
                 "result": AnswerResult(
                     answer="F33 is mandatory for acrylamide per CHEMMON12.",
-                    citations=["index.md"],
+                    citations=["contaminant-reporting.md"],
                     token_summary={
                         "model": "fake-claude",
                         "calls": 1,
@@ -235,7 +236,7 @@ def test_ask_streams_answer_when_requested() -> None:
 
     events = _parse_sse_events(body)
     assert events[0]["type"] == "meta"
-    assert "index.md" in events[0]["pages_used"]
+    assert "contaminant-reporting.md" in events[0]["pages_used"]
 
     streamed_answer = "".join(e["text"] for e in events if e["type"] == "delta")
     assert streamed_answer == "F33 is mandatory for acrylamide per CHEMMON12."
@@ -243,10 +244,11 @@ def test_ask_streams_answer_when_requested() -> None:
     done = [e for e in events if e["type"] == "done"][0]
     response = done["response"]
     assert response["answer"] == "F33 is mandatory for acrylamide per CHEMMON12."
-    assert response["citations"] == ["index.md"]
+    assert response["citations"] == ["contaminant-reporting.md"]
 
 
-def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch) -> None:
+@pytest.mark.parametrize("max_pages,expected_neighbors", [(1, []), (2, ["b.md"])])
+def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch, max_pages, expected_neighbors) -> None:
     """Graph expansion adds neighbor summaries; response metadata must reflect them."""
 
     (tmp_path / "wiki" / "chemmon-guidance").mkdir(parents=True, exist_ok=True)
@@ -385,13 +387,17 @@ def test_ask_includes_graph_expansion_pages_in_metadata(tmp_path, monkeypatch) -
     app_module.selector_runner = SelectorWithRelated()
     app_module.answerer_runner = AnswererCitingExpansion()
 
-    response = request("POST", "/wiki/ask", json={"question": "test"})
+    response = request("POST", "/wiki/ask", json={"question": "test", "max_pages": max_pages, "use_graph_expansion": True})
     assert response.status_code == 200
     payload = response.json()
-    assert payload["citations"] == ["b.md"]
-    assert payload["trace"]["graph_expansion"]["neighbors_added"] == ["b.md"]
-    assert "b.md" in payload["pages_used"]
-    assert any(p["page_name"] == "b.md" for p in payload["pages"])
+    assert payload["citations"] == []  # Summaries cannot be cited as evidence.
+    assert payload["trace"]["graph_expansion"]["neighbors_added"] == expected_neighbors
+    assert payload["pages_used"] == ["a.md", *expected_neighbors]
+    assert len(payload["pages"]) <= max_pages
+    assert app_module.selector_runner.max_pages == 6
+    if expected_neighbors:
+        assert payload["pages"][1]["evidence_kind"] == "summary"
+        assert "Body B" not in payload["pages"][1]["content"]
 
 
 def test_ask_requires_question() -> None:
@@ -416,3 +422,191 @@ def test_openapi_exposes_ask_endpoint() -> None:
     assert "/wiki/ask" in payload["paths"]
     assert "AskRequest" in payload["components"]["schemas"]
     assert "AskResponse" in payload["components"]["schemas"]
+
+
+@pytest.mark.parametrize("name", ["README.md", "PROJECT_CONTEXT.md", "SCHEMA.md", "INGEST_WORKFLOW.md", "2026-10-05-foodex2-parity.md"])
+def test_orientation_navigation_targets_are_served(name):
+    response = request("GET", "/wiki/pages/" + name)
+    assert response.status_code == 200
+    assert response.json()["type"] == "orientation"
+    assert response.json()["content"]
+
+
+def test_catalog_contains_navigation_metadata():
+    pages = request("GET", "/wiki/pages").json()["pages"]
+    assert any(p["type"] == "orientation" for p in pages)
+    assert any(p["type"] == "domain-guide" and p["domain"] == "vmpr" for p in pages)
+    assert all("type" in p and "domain" in p for p in pages)
+
+
+def test_search_finds_body_terms_and_respects_domain():
+    results = request("GET", "/wiki/search", params={"q": "A07VF", "domain": "vmpr"}).json()
+    names = {p["page_name"] for p in results["pages"]}
+    assert "ssd2-matrix-vmpr-coding.md" in names
+    assert all(p["domain"] == "vmpr" for p in results["pages"])
+    assert request("GET", "/wiki/search", params={"q": "nonexistent987654"}).json()["count"] == 0
+
+
+def test_backlinks_route():
+    result = request("GET", "/wiki/pages/ssd2-matrix-vmpr-coding.md/backlinks")
+    assert result.status_code == 200
+    assert "vmpr-reporting.md" in result.json()["backlinks"]
+    assert request("GET", "/wiki/pages/missing.md/backlinks").status_code == 404
+
+
+def test_request_budget_is_local_and_expansion_is_opt_in():
+    result = request("POST", "/wiki/ask", json={"question": "test", "max_pages": 1}).json()
+    assert result["pages_used"] == ["contaminant-reporting.md"]
+    assert result["trace"]["graph_expansion"]["enabled"] is False
+    assert app_module.selector_runner.calls[0]["max_pages"] == 1
+    assert app_module.selector_runner.max_pages == 6
+    assert app_module.answerer_runner.calls[0]["pages"][0]["evidence_kind"] == "full"
+
+
+@pytest.mark.parametrize("stream", [False, True])
+def test_no_evidence_does_not_call_answerer(stream):
+    class EmptySelector(FakeSelector):
+        def run(self, payload):
+            result = super().run(payload)
+            return PageSelectionResult([], result.tool_trace, result.token_summary, result.timing_summary)
+    app_module.selector_runner = EmptySelector()
+    response = request("POST", "/wiki/ask", json={"question": "test", "stream": stream})
+    assert response.status_code == 200
+    result = _parse_sse_events(response.text)[-1]["response"] if stream else response.json()
+    assert result["pages_used"] == []
+    assert result["citations"] == []
+    assert "No relevant wiki evidence" in result["answer"]
+    assert result["trace"]["answerer"]["token_summary"]["calls"] == 0
+    assert app_module.answerer_runner.calls == []
+
+
+@pytest.mark.parametrize("question", ["", "   ", "\n"])
+def test_ask_rejects_blank_questions(question):
+    assert request("POST", "/wiki/ask", json={"question": question}).status_code == 422
+
+
+def test_select_is_inspectable_and_never_calls_answerer():
+    response = request('POST', '/wiki/select', json={'question': 'test', 'max_pages': 1})
+    assert response.status_code == 200
+    result = response.json()
+    assert result['pages_used'] == ['contaminant-reporting.md']
+    assert 'source_pages' in result['pages'][0]
+    assert len(result['pages'][0]['sha256']) == 64
+    assert 'content' not in result['pages'][0]
+    assert result['pages'][0]['citable'] is False
+    assert result['pages'][0]['evidence_kind'] == 'selection'
+    assert app_module.answerer_runner.calls == []
+
+
+@pytest.mark.parametrize('limit', [1, 2, 6])
+def test_context_pack_counts_policy_and_has_no_answer_call(limit):
+    response = request('POST', '/wiki/context-pack', json={'question': 'test', 'max_pages': limit})
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result['pages']) <= limit
+    assert result['pages'][0]['evidence_kind'] == 'policy'
+    assert result['pages'][0]['citable'] is False
+    assert result['trace']['answerer_calls'] == 0
+    assert 'answer' not in result
+    assert 'RUNTIME_POLICY.md' not in result['citable_pages']
+    assert app_module.answerer_runner.calls == []
+    if limit == 1:
+        assert app_module.selector_runner.calls == []
+        assert result['status'] == 'budget_exhausted'
+        assert result['citable_pages'] == []
+    else:
+        assert app_module.selector_runner.calls[0]['max_pages'] == limit - 1
+        assert result['citable_pages'] == ['contaminant-reporting.md']
+        assert result['pages'][1]['evidence_kind'] == 'full'
+        assert result['pages'][1]['sources']
+        assert 'source_pages' in result['pages'][1]
+        assert result['pages'][1]['sha256']
+
+
+def test_context_pack_omits_whole_pages_that_exceed_text_budget():
+    result = request('POST', '/wiki/context-pack', json={'question': 'test', 'max_chars': 2000}).json()
+    assert result['status'] == 'budget_exhausted'
+    assert result['budget']['used_chars'] <= 2000
+    assert result['citable_pages'] == []
+    assert result['omitted_pages'] == [{'page_name': 'contaminant-reporting.md', 'reason': 'character_budget'}]
+    assert result['pages'][0]['content'].endswith('authoritative evidence.\n')
+
+
+def test_request_model_overrides_do_not_change_defaults(monkeypatch):
+    selector_default, answerer_default = app_module.selector_runner, app_module.answerer_runner
+    created = []
+    def selector_factory(**kwargs):
+        obj = FakeSelector()
+        obj.model_id = kwargs['model_str']
+        created.append(obj)
+        return obj
+    def answerer_factory(**kwargs):
+        obj = FakeAnswerer()
+        obj.model_id = kwargs['model_str']
+        return obj
+    monkeypatch.setattr(app_module, 'WikiPageSelector', selector_factory)
+    monkeypatch.setattr(app_module, 'WikiAnswerer', answerer_factory)
+    result = request('POST', '/wiki/ask', json={'question': 'test', 'selector_model': 'test/selector', 'answerer_model': 'test/answer'}).json()
+    assert result['trace']['selector']['model'] == 'test/selector'
+    assert result['trace']['answerer']['model'] == 'test/answer'
+    assert app_module.selector_runner is selector_default
+    assert app_module.answerer_runner is answerer_default
+    assert selector_default.calls == answerer_default.calls == []
+    request('POST', '/wiki/select', json={'question': 'test'})
+    assert len(selector_default.calls) == 1
+
+
+def test_unknown_pricing_is_not_reported_as_free():
+    result = request('POST', '/wiki/ask', json={'question': 'test'}).json()
+    assert result['trace']['total']['total_cost_usd'] is None
+    assert app_module._compute_call_cost({'calls': 0}) == 0
+    assert app_module._compute_call_cost({'model': 'unknown', 'calls': 1}) is None
+
+
+@pytest.mark.parametrize('endpoint', ['select', 'context-pack', 'ask'])
+def test_invalid_selection_requests_are_rejected(endpoint):
+    for payload in [{'question': ' '}, {'question': 'q', 'max_pages': 0}, {'question': 'q', 'selector_model': 'a b'}]:
+        assert request('POST', '/wiki/' + endpoint, json=payload).status_code == 422
+
+
+def test_review_status_exposes_scope_and_remaining_work():
+    response = request('GET', '/wiki/review-status')
+    assert response.status_code == 200
+    status = response.json()
+    assert status['source_review']['status'] == 'current'
+    assert status['source_review']['scope']
+    assert status['source_review']['limitations']
+    # A completed review can legitimately have no open findings. The endpoint
+    # must expose the manifest's actual backlog, including the empty case.
+    record = json.loads((app_module.store.root/'docs/source-review.json').read_text())
+    assert status['source_review']['open_findings'] == [
+        finding for finding in record['findings'] if finding['status'] == 'open'
+    ]
+    assert status['source_review']['resolved_count'] == sum(
+        finding['status'] == 'resolved' for finding in record['findings']
+    )
+    assert status['rule_inventory']['source_counts']['GBR'] == 92
+
+
+def test_context_pack_preserves_exact_source_locators():
+    class RulesSelector(FakeSelector):
+        def run(self, payload):
+            r = super().run(payload)
+            return PageSelectionResult(['business-rules-gbr.md'], r.tool_trace, r.token_summary, r.timing_summary)
+    app_module.selector_runner = RulesSelector()
+    result = request('POST', '/wiki/context-pack', json={'question': 'GBR28', 'max_pages': 2}).json()
+    page = result['pages'][1]
+    assert page['source_pages'] == ['pp. 98-112, Table 9']
+    assert 'Source:' in page['content']
+    assert 'p. 103' in page['content']
+
+
+def test_provider_failure_returns_service_error_without_provider_details():
+    from openai import APIConnectionError
+    class UnavailableSelector(FakeSelector):
+        def run(self, payload):
+            raise APIConnectionError(request=httpx.Request('POST', 'https://provider.example'), message='private diagnostic')
+    app_module.selector_runner = UnavailableSelector()
+    response = request('POST', '/wiki/context-pack', json={'question': 'test'})
+    assert response.status_code == 503
+    assert 'private diagnostic' not in response.text
