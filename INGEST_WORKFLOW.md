@@ -2,7 +2,7 @@
 title: "Ingest Workflow"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-11"
+last_updated: "2026-10-13"
 ---
 
 # Ingest Workflow
@@ -101,6 +101,49 @@ After writing, re-walk the wiki as a whole and check:
   for the human to resolve; do not silently pick a winner)
 
 Fix everything catchable before committing.
+
+## Dataset sources
+
+Some knowledge comes from versioned datasets rather than PDFs. The first is
+[rd-bridge](https://github.com/Chili36/rd-bridge), which maps EU pesticide
+residue definitions and their commodity scopes to EFSA PARAM codes. It is a
+derived, non-official reference that rd-bridge refreshes from the EU
+Pesticides Database every week through reviewed pull requests.
+
+A dataset is raw material like a PDF. It lives in
+`chemmon_docs/datasets/<name>/`, copied verbatim from one upstream commit, with
+checksums in `manifest.json`. Never edit it by hand: the health check fails on
+any checksum mismatch or unlisted file.
+
+When rd-bridge merges a new version:
+
+1. **Pin the snapshot.** Run `python tools/ingest_rd_bridge.py` (latest `main`;
+   `--ref <sha>` for a specific commit, `--dry-run` to preview). It validates
+   the data, writes nothing if it is malformed, and replaces the snapshot.
+2. **Pass A uses the report.** The tool lists added, removed and changed
+   residue definitions (names, scopes, definitions, PARAM codes, notes) and
+   the wiki pages citing the dataset, marking those that cite a changed record.
+   Save it with `--report reports/dataset-ingest/<date>-rd-bridge.md` when the
+   change is substantive.
+3. **Pass B patches the citing pages.** Re-check each cited claim against the
+   new snapshot and update the commit in its `Source:` comment. The health
+   check fails while a cited code is no longer in the cited records, and warns
+   while a locator names an older commit.
+4. **Pass C, commit and log as usual.** Run the health check and tests, update
+   the source review record, and add a `log.md` entry naming the old and new
+   commits.
+
+Dataset rules:
+
+- Cite claims with the dataset locator in [[SCHEMA]] (file, commit, `residue_id`).
+- Show the snapshot date where it affects an answer. rd-bridge holds the
+  **latest** EU definitions, not those that applied to past sampling years.
+- Attribute rd-bridge, the EU Pesticides Database and EFSA PARAM; the snapshot
+  keeps rd-bridge's `DATA_SOURCES.md` with the licence terms.
+- Do not present rd-bridge as official. EFSA validation (LL_04) uses the Legal
+  Limits database; the legislation decides.
+- Never show a code rd-bridge marks as missing or uncertain as if it were a
+  confirmed link.
 
 ## Per-page rules
 

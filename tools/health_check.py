@@ -9,6 +9,8 @@ Validates:
   4. No prose reference to the old `raw/chemmon-guidance/` path remains in
      any tracked file under the repo root or the wiki directory.
   5. Index/service registration, source files, metadata dates and related links.
+  6. Dataset snapshots match their manifests, and codes cited from a dataset
+     appear in the cited records.
 
 Exit codes:
   0 — clean (no errors; warnings allowed)
@@ -36,6 +38,7 @@ sys.path.insert(0, str(REPO_ROOT))
 try:
     from wiki_api.wiki_store import INDEX_ENTRY_RE, ROOT_PAGE_PATHS, WikiStore, split_frontmatter
     from wiki_api.source_review import source_review_status, rule_inventory_status
+    from wiki_api.datasets import claim_problems, manifest_problems
 except ImportError as exc:
     print(f"ERROR: could not import wiki_api.wiki_store: {exc}")
     sys.exit(2)
@@ -271,12 +274,19 @@ def run_health_check(root: Path = REPO_ROOT) -> HealthReport:
                     continue
                 if not ((root / "chemmon_docs" / source).is_file() or (root / source).is_file()):
                     report.error(f"{path.name}: unresolved source {source}")
+            errors, warnings = claim_problems(root, path.name, [s for s in sources if isinstance(s, str)], body)
+            for message in errors:
+                report.error(message)
+            for message in warnings:
+                report.warn(message)
 
         if path.name.startswith("business-rules-"):
             for rule_id in collect_rule_ids(body):
                 rule_occurrences.setdefault(rule_id, []).append(path.name)
 
     check_rule_id_uniqueness(report, rule_occurrences)
+    for problem in manifest_problems(root):
+        report.error(problem)
     if root == REPO_ROOT:
         check_no_old_path_references(report, file_contents)
 

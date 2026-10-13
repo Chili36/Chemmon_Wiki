@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "dataset": "rd-bridge",
+  "description": "Derived, non-official bridge from EU Pesticides Database residue definitions to EFSA PARAM codes. Copied verbatim; replace only with tools/ingest_rd_bridge.py.",
+  "repository": "https://github.com/Chili36/rd-bridge",
+  "commit": "104448e98ccf47695b8360f46c9524a156195962",
+  "commit_date": "2026-10-13",
+  "dataset_changed_at": "2026-10-11",
+  "ingested_at": "2026-10-13",
+  "files": {
+    "residue_param_map.json": {
+      "from": "data/residue_param_map.json",
+      "sha256": "d72232137cb0a6849802bc3a17e39808166dad8e8717dbabe69515037f950730"
+    },
+    "DATA_SOURCES.md": {
+      "from": "DATA_SOURCES.md",
+      "sha256": "c40c3770a825005449a313d5bf8961b8f5249acdce33c219b72366f5264131df"
+    }
+  },
+  "summary": {
+    "records": 684,
+    "with_commodity_exceptions": 77,
+    "exceptions": 83
+  }
+}

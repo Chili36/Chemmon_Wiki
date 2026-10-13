@@ -2,7 +2,7 @@
 title: "Wiki Schema"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-10-13"
 ---
 
 # Schema
@@ -56,7 +56,7 @@ Every wiki page declares a `domain` field. Allowed values:
 
 | Field | Type | Notes |
 |---|---|---|
-| `sources` | list of strings | Source PDF filenames from `chemmon_docs/`. Omit only for pure hub pages that host no substantive content. |
+| `sources` | list of strings | Source PDF filenames from `chemmon_docs/`, or a pinned dataset file such as `datasets/rd-bridge/residue_param_map.json`. Omit only for pure hub pages that host no substantive content. |
 | `related` | list of wiki backlinks | Other pages the reader is likely to consult next. Uses `[[page-name]]` syntax without the `.md` extension. |
 
 ### Optional fields
@@ -93,6 +93,23 @@ Rule text and prose claims are attributed to source documents via HTML comments 
 
 The comment is invisible in the human viewer. Model evidence preserves it as a
 visible `Source:` line so source locators remain adjacent to the relevant claims.
+
+### Dataset source comments
+
+Claims taken from a pinned dataset snapshot (see [[INGEST_WORKFLOW]], dataset
+sources) use a locator naming the file, the snapshot commit and the records:
+
+```markdown
+<!-- Source: datasets/rd-bridge/residue_param_map.json @ 104448e, residue_id 10, 210 -->
+```
+
+The health check reads the text from such a comment to the next `Source:`
+comment. Every PARAM code and Annex I commodity code in it must occur in the
+cited records. In table rows, a code beside Annex I codes must be the
+whole-residue code of an exception with exactly those included and excluded
+codes, and a code in a row marked "Default" must be a default code. A
+locator whose commit differs from the current snapshot is a warning until the
+page is re-checked. These checks catch code drift, not wording errors.
 
 ### Rule ID conventions
 

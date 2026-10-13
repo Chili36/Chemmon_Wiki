@@ -3,7 +3,7 @@ title: "Legal Limit Business Rules"
 select_when: "LL rules: numeric result and unprocessed-sample prerequisites, MRL/MPL evaluation comparisons, legal parameter/matrix combinations and part-of-sum exception."
 type: "rule-reference"
 domain: "cross-cutting"
-last_updated: "2026-10-05"
+last_updated: "2026-10-13"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -15,6 +15,7 @@ related:
   - "[[business-rules-pesticide]]"
   - "[[business-rules-additives]]"
   - "[[business-rules-cross-cutting]]"
+  - "[[pesticide-residue-definition-by-matrix]]"
 ---
 
 # Legal Limit Business Rules
@@ -52,3 +53,5 @@ Apply each rule only within its stated domain and conditions; see [[business-rul
 | LL_03_b | Warning | `paramType` should equal the pre-assigned `paramType` (p. 143). | All |
 | LL_04 | Error | For pesticides, where `paramCode` is in the legal limits database, the sampled matrix and `paramCode.base` must match a plausible legal combination (`PlausibleCombinationPPP=1`), unless the result is a part of sum. The source groups LL_04/LL_04_b in one row. | PPP |
 | LL_04_b | Error | Same grouped source definition and part-of-sum exception as LL_04. Table 10 does not define a separate `anMatCode` condition for this ID. | PPP |
+
+LL_04 fails when a pesticide's residue definition differs by commodity and the reported `paramCode` belongs to another commodity's definition. See [[pesticide-residue-definition-by-matrix]] for choosing the code.

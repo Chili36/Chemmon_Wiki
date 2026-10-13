@@ -147,10 +147,29 @@ its then-open finding references. Its finding dispositions are superseded by
 `reports/source-review/2026-10-05-contextual-reassessment.json` and the current
 manifest; source-severity evidence and field inventory are unchanged.
 
+## Dataset source and matrix-dependent residue definitions — 13 October 2026
+
+Scope: the new page [[pesticide-residue-definition-by-matrix]] and its links
+from four existing pages (issue #19). ChemMon p. 60 (full residue definition
+and Legal Limits database), p. 143 (LL_03, LL_03_b, LL_04/LL_04_b conditions,
+part-of-sum exception and error message) and p. 148 (sampling-date
+applicability) were read against the page text. The worked codes and scopes
+for acetamiprid, 2-phenylphenol and thiabendazole (residue_id 10, 2058, 210)
+come from the pinned rd-bridge snapshot `104448e`; the health check verifies
+each code against the cited records. Annex I names for `1000000`, `1020000`
+and `1040000` were checked against the EU Pesticides Database
+`pesticide-residues-products` API on 13 October 2026.
+
+Limits: rd-bridge is derived and non-official, and holds the latest EU
+definitions only. The "code 100000" footnotes for 2-phenylphenol and
+thiabendazole are rd-bridge interpretations. The Legal Limits database
+itself, which LL_04 uses, was not available for comparison. Assistant review;
+no human review.
+
 ## Reproducibility
 
 `docs/source-review.json` records scope, findings, resolutions and hashes for all
-supplied PDFs, topic pages and the index. A changed, added or removed file makes
+supplied PDFs, pinned dataset files, topic pages and the index. A changed, added or removed file makes
 the audit stale. Open findings remain visible after drift, but need rechecking.
 `docs/rule-inventory.json` is independently derived from the PDF table columns:
 92 GBR, 104 CHEMON, 11 LL, 17 PRE and 29 USE IDs. Inactive rows are retained;

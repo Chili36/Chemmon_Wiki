@@ -14,7 +14,8 @@ related:
   - "[[contaminant-reporting]]"
   - "[[vmpr-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-10-05"
+  - "[[pesticide-residue-definition-by-matrix]]"
+last_updated: "2026-10-13"
 ---
 
 # Pesticide Residues Reporting
@@ -25,6 +26,7 @@ last_updated: "2026-10-05"
 - Pesticide residues is one of five [[chemmon-overview|ChemMon]] reporting domains, covering monitoring and enforcement under Regulation (EC) No 396/2005. (ChemMon 2026 p25)
 - Covers EU coordinated programmes, national monitoring programmes, and targeted enforcement sampling. (ChemMon 2026 p25-26)
 - Matrix coding follows [[foodex2-in-chemmon]] rules. Copper reporting overlaps with [[contaminant-reporting]]; different `F20` and `F28` codes apply depending on domain, so use [[foodex2-facets-packaging-consumer]] and [[foodex2-facets-state-process]] for the facet definitions.
+- Some pesticides have different residue definitions for different commodities, so the `paramCode` depends on the sampled matrix; LL_04 rejects mismatches. See [[pesticide-residue-definition-by-matrix]].
 
 ## Mandatory Legal References
 
