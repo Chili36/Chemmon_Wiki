@@ -30,9 +30,10 @@ GAPS_PAGE_NAME = "pesticide-residue-definitions-without-param-link.md"
 ANNEX_DIR = DATASETS_DIR / "eu-annex-i"
 ANNEX_SOURCE = "datasets/eu-annex-i/products.json"
 ATTRIBUTION_SOURCE = "datasets/rd-bridge/DATA_SOURCES.md"
-# rd-bridge match methods that give a trustworthy whole-definition PARAM link
-# (docs/MAPPING_METHOD.md); near/ambiguous/none are suggestions or gaps.
-TRUSTED_METHODS = {"exact", "spelling", "compound_set", "cas", "alias"}
+# rd-bridge match methods that give a whole-definition PARAM link (docs/MAPPING_METHOD.md).
+# "model" is a model's choice for a definition the rules could not link; it is shown like the
+# others by maintainer decision (#36). near/ambiguous/none are suggestions or gaps.
+TRUSTED_METHODS = {"exact", "spelling", "compound_set", "cas", "alias", "model"}
 UNTRUSTED_LABEL = {"near": "near match only", "ambiguous": "ambiguous match", "none": "no match"}
 
 
@@ -284,6 +285,13 @@ def render_gaps(root: Path) -> str:
                          f"- **What to do:** {_cell(gap.get('resolution', 'Follow EFSA guidance.'))}", ""]
             else:
                 status = UNTRUSTED_LABEL.get(scope.get("method"), _cell(scope.get("method") or "unknown"))
+                refusal = scope.get("model_guess") or {}
+                if refusal.get("reason"):
+                    # A refused code must not appear where a reader could take it as the answer.
+                    reason = PARAM_CODE_RE.sub("", str(refusal["reason"]))
+                    reason = re.sub(r"\(\s*[,;\s]*\)", "", reason)
+                    reason = re.sub(r"\s+([,.;)])", r"\1", re.sub(r",(\s*,)+", ",", reason))
+                    status += f": {_cell(reason)}"
                 rows.append(f"| {name} | {where} | {_cell(scope['definition'])} | {status} |")
         if cited:
             ids.append(str(record["residue_id"]))
@@ -320,7 +328,7 @@ select_when: "No PARAM code can be found for a pesticide residue definition, the
 
 ## How to use this list
 
-- **Two different situations.** A **confirmed catalogue gap** means the legal residue definition and the reportable PARAM terms do not match, and rd-bridge records the legal source and the related terms. **No confirmed PARAM link** means only that rd-bridge could not confirm a match in {catalogue}. This is **not evidence that PARAM has no code**: the cause is often different wording, a broader or narrower term, or a substance outside the pesticide hierarchy.
+- **Two different situations.** A **confirmed catalogue gap** means the legal residue definition and the reportable PARAM terms do not match, and rd-bridge records the legal source and the related terms. **No confirmed PARAM link** means neither rd-bridge's matching rules nor its model found a term for the same substance among the PARAM pesticide terms in {catalogue}; the model's reason is shown where it gave one. This is **not proof that PARAM has no code**: the substance may be named differently or sit outside the pesticide hierarchy.
 - **Do not substitute a similar code.** A term that only resembles the definition, such as a broader isomer sum or the individual substance, is not the whole-residue code. Look for the definition in the `ChemMonRep` reporting hierarchy and EFSA's Legal Limits database ([[legal-limits-database]]), and see [[ssd2-analysis-parameter-coding]] for `paramCode` rules. Where no matching code exists, ask EFSA instead of choosing a near match.
 - **Coverage.** This page lists {count(n_gaps, "confirmed catalogue gap")} and {count(len(rows), "scope")} without a confirmed link, out of {n_scopes} residue-definition scopes in rd-bridge snapshot `{short}` (residue map of {changed}). Scopes not listed have a confirmed whole-residue PARAM link; see [[pesticide-residue-definitions-by-food]] for definitions that change by food.
 - **Latest definitions only.** The snapshot holds the latest EU-published definitions. A definition that applies from a future date, or that applied to older samples, may differ; check the legal source and the sampling date.

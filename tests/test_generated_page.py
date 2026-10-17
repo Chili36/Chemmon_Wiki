@@ -189,11 +189,33 @@ def test_gaps_page_separates_confirmed_gaps_from_unconfirmed_links(root, upstrea
     # Unconfirmed: listed without any code, and not presented as missing from PARAM.
     assert "| M4 only (AE 0172747) | near match only |" in unlinked.replace("`1020000` † | ", "")
     assert "RF-2-PAR" not in page and "Benthiavalicarb" not in unlinked
-    assert "not evidence that PARAM has no code" in page
+    assert "not proof that PARAM has no code" in page
     assert "Glyphosate" not in page and "Acetamiprid" not in page
     data, body = split_frontmatter(page)
     assert claim_problems(root, GAPS_PAGE_NAME, data["sources"], body) == ([], [])
     assert write(root) == []
+
+
+def test_model_links_are_shown_and_model_refusals_explained(root, upstream):
+    records = json.loads(json.dumps(RECORDS))
+    for r in records:
+        for scope in [r["default"], *r["exceptions"]]:
+            scope.setdefault("method", "exact")
+    records[0]["exceptions"][0].update(method="model", evidence={"via": "model", "reason": "plural"})
+    records.append({"residue_id": 8, "version": 1, "name": "Bacillus X str. QST 713",
+                    "default": {"definition": "Bacillus X str. QST 713", "method": "none", "param_codes": [],
+                                "model_guess": {"code": None, "confidence": "high",
+                                                "reason": "only other strains of Bacillus X are listed "
+                                                          "(RF-0230-001-PPP, RF-1-PAR)"}},
+                    "exceptions": []})
+    commit_records(upstream, records, "model links")
+    ingest(root, str(upstream), "main")
+    by_food = (root / "wiki" / "chemmon-guidance" / PAGE_NAME).read_text()
+    assert "| Acetamiprid | `1000000`; **except** `1040000` | Sum of acetamiprid and IM-2-1 | `RF-00003326-PAR` |" in by_food
+    gaps = (root / "wiki" / "chemmon-guidance" / GAPS_PAGE_NAME).read_text()
+    assert "| Bacillus X str. QST 713 | Default | Bacillus X str. QST 713 | no match: only other strains of Bacillus X are listed |" in gaps
+    assert "RF-0230-001-PPP" not in gaps
+    assert "Acetamiprid" not in gaps
 
 
 def test_gap_codes_from_upstream_are_validated(root, upstream):

@@ -1082,3 +1082,17 @@ for benthiavalicarb in 1 of 2 runs.
 
 Left out: rd-bridge's unconfirmed matches (e.g. Diquat, Sulphur) are an
 upstream matching issue, not fixed here.
+
+## 2026-10-17 — rd-bridge model-guessed links shown like other links (#36)
+
+Maintainer decision: rd-bridge's strict matcher was too strict; a model should
+guess, and its links are shown like any other. rd-bridge#31 adds Sonnet 5.5
+guesses (`method: model`) with guards for stated CAS numbers and low
+confidence. Generator: `model` is a trusted method; the without-link page
+shows the model's refusal reason with PARAM codes stripped. Preview against
+the rd-bridge branch: 21 more definitions linked, checks clean. Re-pin after
+rd-bridge#29 and #31 merge.
+
+Found: ~600 pesticides with one definition and a confirmed link appear on no
+wiki page, so the wiki cannot give their code (e.g. diquat, glyphosate). Not
+fixed here; needs a decision on a full lookup.
