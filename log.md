@@ -1097,3 +1097,19 @@ rd-bridge#29 and #31 merge.
 Found: ~600 pesticides with one definition and a confirmed link appear on no
 wiki page, so the wiki cannot give their code (e.g. diquat, glyphosate). Not
 fixed here; needs a decision on a full lookup.
+
+## 2026-10-17 — Residue definition lookup for any named pesticide (#38)
+
+About 600 pesticides with one definition and a confirmed PARAM link appeared
+on no page, so the wiki could not give their code. `wiki_api/residue_lookup.py`
+now finds rd-bridge records whose name occurs in the question (whole words,
+normalised spelling, "expressed as" anchors and aka/formerly names; a name
+right after "in", "on" or "from" is read as the sampled food) and attaches up
+to six records to `/wiki/ask` and `/wiki/context-pack` evidence under the new
+generated page `pesticide-residue-definition-lookup.md`, which is citable. No
+model call; page selection unchanged. Rendering helpers moved from the
+generator into the module and are shared.
+
+Live checks (Haiku selector, Sonnet answerer): glyphosate in wheat →
+`RF-1020-001-PPP`; thiabendazole in cow milk → milk-specific code and parts;
+an acrylamide LOQ question attached nothing.

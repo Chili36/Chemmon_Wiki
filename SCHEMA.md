@@ -124,8 +124,10 @@ such a comment; cite the residue records for codes.
 ### Generated pages
 
 A page rendered from a dataset says so in an HTML comment under its title and
-is never edited by hand: `pesticide-residue-definitions-by-food.md` and
-`pesticide-residue-definitions-without-param-link.md`; see [[INGEST_WORKFLOW]].
+is never edited by hand: `pesticide-residue-definitions-by-food.md`,
+`pesticide-residue-definitions-without-param-link.md` and
+`pesticide-residue-definition-lookup.md` (whose records are attached per question by
+`wiki_api/residue_lookup.py`); see [[INGEST_WORKFLOW]].
 
 ### Rule ID conventions
 

@@ -21,8 +21,11 @@ def full_evidence(store: WikiStore, name: str) -> dict:
             'last_updated': page.last_updated}
 
 
-def bounded_pack(store: WikiStore, names: list[str], max_pages: int, max_chars: int) -> dict:
-    """Policy takes one page slot; whole evidence pages are never truncated."""
+def bounded_pack(store: WikiStore, names: list[str], max_pages: int, max_chars: int,
+                 extra: dict | None = None) -> dict:
+    """Policy takes one page slot; whole evidence pages are never truncated. `extra` (the residue
+    lookup for pesticides the question names) comes first after the policy and replaces the
+    static page of the same name."""
     policy = (store.root / 'RUNTIME_POLICY.md').read_text()
     if len(policy) > max_chars:
         raise ValueError('character budget cannot hold the runtime policy')
@@ -32,8 +35,11 @@ def bounded_pack(store: WikiStore, names: list[str], max_pages: int, max_chars: 
               'sha256': hashlib.sha256(policy.encode()).hexdigest()}]
     chars = len(policy)
     omitted = []
-    for name in selected_names(store, names, 10):
-        page = full_evidence(store, name)
+    candidates = [extra] if extra else []
+    candidates += [n for n in selected_names(store, names, 10) if not extra or n != extra['page_name']]
+    for item in candidates:
+        page = item if isinstance(item, dict) else full_evidence(store, item)
+        name = page['page_name']
         if len(pages) >= max_pages or chars + len(page['content']) > max_chars:
             omitted.append({'page_name': name, 'reason': 'page_budget' if len(pages) >= max_pages else 'character_budget'})
             continue

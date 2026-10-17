@@ -18,6 +18,7 @@ from .answerer import AnswerResult, WikiAnswerer
 from .page_selector import WikiPageSelector
 from .wiki_store import WikiStore
 from .evidence import selected_names, full_evidence, bounded_pack
+from .residue_lookup import LOOKUP_PAGE, lookup_evidence
 from .source_review import source_review_status, rule_inventory_status
 
 
@@ -192,7 +193,8 @@ def context_pack(request: ContextPackRequest) -> dict[str, Any]:
         names = selected_names(store, result.pages_used, request.max_pages - 1)
         trace = _selection_trace(selector, result)
     try:
-        pack = bounded_pack(store, names, request.max_pages, request.max_chars)
+        pack = bounded_pack(store, names, request.max_pages, request.max_chars,
+                            extra=lookup_evidence(store.root, request.question))
     except (ValueError, OSError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     # Only the selector runs: callers receive evidence, never an intermediate answer.
@@ -515,6 +517,14 @@ def ask_question(request: AskRequest) -> AskResponse:
         )
     graph_expansion_end = time.perf_counter()
 
+    # Records for pesticides the question names: deterministic, and the only place most
+    # single-definition pesticides are covered. Replaces the static lookup page if selected.
+    lookup = lookup_evidence(store.root, request.question)
+    if lookup:
+        page_contents = [p for p in page_contents if p["page_name"] != LOOKUP_PAGE] + [lookup]
+        pages_raw = [p for p in pages_raw if p.name != LOOKUP_PAGE]
+        selected_page_names = [n for n in selected_page_names if n != LOOKUP_PAGE] + [LOOKUP_PAGE]
+
     answerer_input_pages = page_contents + expansion_blocks
     expanded_page_names = [block["page_name"] for block in expansion_blocks]
     pages_used = [*selected_page_names, *expanded_page_names]
@@ -553,6 +563,10 @@ def ask_question(request: AskRequest) -> AskResponse:
             )
         )
 
+    if lookup:
+        pages.append(PageSummary(page_name=LOOKUP_PAGE, title=lookup["title"], summary=lookup["summary"],
+                                 sources=lookup["sources"], related=[], content=lookup["content"],
+                                 source_pages=[]))
     allowed_citations = set(selected_page_names)
     selector_total_ms = int((selector_end - selector_start) * 1000)
     page_read_ms = int((page_read_end - page_read_start) * 1000)

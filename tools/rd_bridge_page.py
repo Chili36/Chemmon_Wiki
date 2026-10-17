@@ -24,106 +24,16 @@ sys.path.insert(0, str(ROOT))
 from wiki_api.datasets import (  # noqa: E402
     DATASETS_DIR, PARAM_CODE_RE, RD_BRIDGE_MAP, load_rd_bridge, read_manifest,
 )
+from wiki_api.residue_lookup import (  # noqa: E402,F401  (re-exported for tools and tests)
+    ANNEX_DIR, TRUSTED_METHODS, UNTRUSTED_LABEL, NamesMissing, _cell, _code, _digits, _gap_term,
+    _relationship, _scope, _scope_label, annex_labels, short_name,
+)
+from wiki_api.residue_lookup import LOOKUP_PAGE, render_lookup_page  # noqa: E402
 
 PAGE_NAME = "pesticide-residue-definitions-by-food.md"
 GAPS_PAGE_NAME = "pesticide-residue-definitions-without-param-link.md"
-ANNEX_DIR = DATASETS_DIR / "eu-annex-i"
 ANNEX_SOURCE = "datasets/eu-annex-i/products.json"
 ATTRIBUTION_SOURCE = "datasets/rd-bridge/DATA_SOURCES.md"
-# rd-bridge match methods that give a whole-definition PARAM link (docs/MAPPING_METHOD.md).
-# "model" is a model's choice for a definition the rules could not link; it is shown like the
-# others by maintainer decision (#36). near/ambiguous/none are suggestions or gaps.
-TRUSTED_METHODS = {"exact", "spelling", "compound_set", "cas", "alias", "model"}
-UNTRUSTED_LABEL = {"near": "near match only", "ambiguous": "ambiguous match", "none": "no match"}
-
-
-class NamesMissing(ValueError):
-    pass
-
-
-def short_name(name: str) -> str:
-    name = re.sub(r"\s*\((?:R|F|A|L|\*)\)", "", name).strip()
-    short = re.split(r"\s*:|\s+\(|\((?=[a-z]{3,}\s)", name, maxsplit=1)[0].strip()
-    expressed = re.search(r"expressed as ([\w-]+)", name)
-    if short.lower().startswith("sum of") and expressed:
-        return f"{expressed.group(1).capitalize()} ({short[0].lower()}{short[1:]})"
-    return short
-
-
-def _clean(name: str) -> str:
-    name = re.sub(r"^\(?[a-z]\)\s*", "", name.strip())
-    name = re.sub(r"\s*\(\d+\)$", "", name)
-    name = re.sub(r"\s*-\s*", " - ", name) if name.isupper() else name
-    return name.capitalize() if name.isupper() else name
-
-
-def annex_labels(root: Path) -> dict[str, str]:
-    """Readable names for Annex I codes, qualified by their parent where the source name is relative."""
-    products = json.loads((root / ANNEX_DIR / "products.json").read_text(encoding="utf-8"))
-    by_id = {p["product_id"]: p for p in products}
-    children: dict[Any, list[dict]] = {}
-    for p in products:
-        children.setdefault(p["product_parent_id"], []).append(p)
-    labels = {}
-    for p in products:
-        name, parent = p["product_name"].strip(), by_id.get(p["product_parent_id"])
-        parent_name = parent["product_name"].strip() if parent else ""
-        lettered = re.match(r"^\(?[a-z]\)", name)
-        if name.endswith(" from"):
-            kids = sorted(children.get(p["product_id"], []), key=lambda c: c["product_code"])
-            label = f"{name} {', '.join(_clean(c['product_name']) for c in kids)}"
-        elif lettered and parent_name.endswith(" from"):
-            label = f"{parent_name} {_clean(name)}"
-        elif re.match(r"^\(?[a-z]\)", parent_name) and parent and \
-                by_id.get(parent["product_parent_id"], {}).get("product_name", "").strip().endswith(" from"):
-            label = f"{_clean(parent_name).capitalize()} {_clean(name)[0].lower()}{_clean(name)[1:]}"
-        else:
-            label = _clean(name)
-        labels[p["product_code"]] = label
-    return labels
-
-
-def _scope(exception: dict[str, Any], labels: dict[str, str]) -> str:
-    def named(codes: list[str]) -> str:
-        missing = [c for c in codes if c not in labels]
-        if missing:
-            raise NamesMissing(f"no Annex I name for {_cell(', '.join(map(str, missing)))}; "
-                               "run tools/ingest_annex_i.py")
-        return ", ".join(f"`{_digits(c)}`" for c in codes)
-    text = named(exception["commodity_codes"])
-    if exception.get("except_codes"):
-        text += "; **except** " + named(exception["except_codes"])
-    if exception.get("repairs"):
-        text += " †"
-    return text
-
-
-def _code(scope: dict[str, Any]) -> str:
-    method = scope.get("method")
-    codes = scope.get("param_codes") or []
-    if method in TRUSTED_METHODS and codes and all(PARAM_CODE_RE.fullmatch(str(c)) for c in codes):
-        return ", ".join(f"`{c}`" for c in codes)
-    return f"no trustworthy PARAM code ({_cell(UNTRUSTED_LABEL.get(method, method or 'unknown'))})"
-
-
-def _cell(text: Any) -> str:
-    """Make upstream text inert in markdown and in model evidence.
-
-    Dataset text must not open HTML comments (a forged `Source:` locator),
-    supply backticked codes that the claim check would trust, add wiki links,
-    or break the table.
-    """
-    text = re.sub(r"\s+", " ", str(text)).replace("|", "/")
-    text = text.replace("`", "'").replace("<", "&lt;").replace(">", "&gt;")
-    return text.replace("[[", "[ [").replace("]]", "] ]").strip()
-
-
-def _digits(value: Any) -> str:
-    """A commodity code from upstream data, accepted only as plain digits."""
-    value = str(value)
-    if not re.fullmatch(r"\d{1,7}", value):
-        raise ValueError(f"unexpected commodity code in dataset: {_cell(value)[:40]}")
-    return value
 
 
 def param_version(sources_md: str) -> str | None:
@@ -228,23 +138,6 @@ Names from the EU Pesticides Database; sub-group names are qualified by their pa
 - No endorsement by the European Commission, EFSA or any Member State is implied.
 '''
     return page
-
-
-def _scope_label(scope: dict[str, Any], labels: dict[str, str]) -> str:
-    return _scope(scope, labels) if "commodity_codes" in scope else "Default"
-
-
-def _relationship(text: Any) -> str:
-    return _cell(str(text).replace("_", " "))
-
-
-def _gap_term(term: Any) -> str:
-    if not isinstance(term, dict):
-        return f"- {_cell(term)}"
-    code = str(term.get("code", ""))
-    shown = f"`{code}`" if PARAM_CODE_RE.fullmatch(code) else _cell(code)
-    return (f"- {shown} {_cell(term.get('name', ''))}: {_relationship(term.get('relationship', 'related'))}, "
-            "**not an exact match**.")
 
 
 def render_gaps(root: Path) -> str:
@@ -365,7 +258,7 @@ select_when: "No PARAM code can be found for a pesticide residue definition, the
 '''
 
 
-GENERATED = {PAGE_NAME: render, GAPS_PAGE_NAME: render_gaps}
+GENERATED = {PAGE_NAME: render, GAPS_PAGE_NAME: render_gaps, LOOKUP_PAGE: render_lookup_page}
 
 
 def page_path(root: Path, name: str = PAGE_NAME) -> Path:
