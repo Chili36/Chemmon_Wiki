@@ -10,7 +10,7 @@ from tests.test_datasets import RECORDS, commit_records, git
 from tools import ingest_annex_i
 from tools.health_check import run_health_check
 from tools.ingest_rd_bridge import ingest
-from tools.rd_bridge_page import PAGE_NAME, NamesMissing, annex_labels, render, short_name, write
+from tools.rd_bridge_page import PAGE_NAME, NamesMissing, annex_labels, param_version, render, short_name, write
 from wiki_api.datasets import claim_problems
 from wiki_api.wiki_store import ROOT_PAGE_PATHS, split_frontmatter
 
@@ -95,6 +95,12 @@ def test_short_names():
     assert short_name("2-phenylphenol (sum of 2-phenylphenol and its conjugates)(R)(F)") == "2-phenylphenol"
     assert short_name("Sum of M4 and M6 (both free and conjugated), expressed as pinoxaden(R)(A)") \
         == "Pinoxaden (sum of M4 and M6)"
+
+
+def test_param_version_tolerates_markdown_emphasis():
+    assert param_version("EFSA, PARAM catalogue, version 17.6, imported") == "17.6"
+    assert param_version("**EFSA**, PARAM catalogue, version **17.8 (valid from 2026-09-11)**") == "17.8"
+    assert param_version("EFSA PARAM catalogue") is None
 
 
 def test_ingest_regenerates_complete_page_without_untrusted_codes(root, upstream):

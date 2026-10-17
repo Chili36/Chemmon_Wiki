@@ -123,6 +123,12 @@ def _digits(value: Any) -> str:
     return value
 
 
+def param_version(sources_md: str) -> str | None:
+    """The PARAM catalogue version named in rd-bridge's DATA_SOURCES.md, if any."""
+    match = re.search(r"PARAM catalogue, version \**([\d.]*\d)", sources_md)
+    return match.group(1) if match else None
+
+
 def render(root: Path) -> str:
     manifest, index = load_rd_bridge(root)
     annex = read_manifest(root / ANNEX_DIR)
@@ -130,7 +136,7 @@ def render(root: Path) -> str:
     varying = sorted((r for r in index.values() if r.get("exceptions")),
                      key=lambda r: (short_name(r["name"]).lower(), r["residue_id"]))
     sources_md = (root / DATASETS_DIR / "rd-bridge" / "DATA_SOURCES.md").read_text(encoding="utf-8")
-    param_version = re.search(r"PARAM catalogue, version ([\d.]+)", sources_md)
+    version = param_version(sources_md)
     commit, short = manifest["commit"], manifest["commit"][:7]
     changed = manifest["dataset_changed_at"]
     n_exc = sum(len(r["exceptions"]) for r in varying)
@@ -215,7 +221,7 @@ Names from the EU Pesticides Database; sub-group names are qualified by their pa
 
 - rd-bridge contributors, *rd-bridge* reference dataset, commit `{_cell(commit)}`, {_cell(manifest["repository"])}. Derived and non-official; the project's data contributions are offered under CC BY 4.0 (see its DATA_SOURCES.md).
 - European Commission, DG SANTE, *EU Pesticides Database*: residue definitions and Annex I product names (names retrieved {annex["retrieved_at"]}). The database is informational and has no legal value; only the legislation has legal force.
-- European Food Safety Authority, *PARAM catalogue*{f", version {param_version.group(1)}" if param_version else ""}.
+- European Food Safety Authority, *PARAM catalogue*{f", version {version}" if version else ""}.
 - No endorsement by the European Commission, EFSA or any Member State is implied.
 '''
     return page

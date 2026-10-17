@@ -63,15 +63,24 @@ jobs:
           commit=$(python -c "import json;print(json.load(open('chemmon_docs/datasets/rd-bridge/manifest.json'))['commit'][:7])")
           branch="data/rd-bridge-$commit"
           if git ls-remote --exit-code origin "refs/heads/$branch" > /dev/null; then
-            echo "A branch for rd-bridge $commit already exists; not opening a duplicate."
-            exit 0
+            if [ "$(gh pr list --head "$branch" --state all --json number --jq length)" != "0" ]; then
+              echo "A pull request for rd-bridge $commit already exists; not opening a duplicate."
+              exit 0
+            fi
+            # An earlier run pushed the branch but could not open the PR; retry, failing loudly.
+            echo "::warning::Branch $branch exists without a pull request; retrying PR creation."
+            push=false
+          else
+            push=true
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b "$branch"
-          git add chemmon_docs/datasets wiki/chemmon-guidance
-          git commit -m "Pin rd-bridge $commit and regenerate residue-definitions page"
-          git push origin "$branch"
+          if [ "$push" = true ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git checkout -b "$branch"
+            git add chemmon_docs/datasets wiki/chemmon-guidance
+            git commit -m "Pin rd-bridge $commit and regenerate residue-definitions page"
+            git push origin "$branch"
+          fi
           {
             echo "Automated rd-bridge ingest. Review before merging:"
             echo
