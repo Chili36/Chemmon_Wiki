@@ -999,3 +999,24 @@ ask and stream modes: every request succeeded with citations, and streamed text
 equalled the final answer. Answer quality was weaker than Sonnet 5.5: the
 glyphosate answer opened with "Yes" while saying it is not listed, and the
 animal-products list was incomplete. The default answerer stays Sonnet 5.5.
+
+## 2026-10-17 — rd-bridge re-pinned to b4e9020 (#30)
+
+Dataset ingest: rd-bridge `104448e` (map of 2026-10-11) -> `b4e9020` (map of
+2026-10-14), taken from the branch the scheduled refresh pushed on 2026-10-14.
+That run could not open its PR (GitHub Actions is not permitted to create pull
+requests in this repository), and later runs skipped silently because the
+branch existed. The workflow now retries PR creation when a branch has no PR,
+so the failure stays visible until the repository setting is changed.
+
+The ingest report shows no changes in the fields the wiki uses (names, scopes,
+definitions, PARAM codes, notes). New upstream fields arrive with the snapshot
+but are not yet used: `interpretation_evidence`, `model_guidance`,
+`catalogue_gap`, `expanded_from` (#31, #32). PARAM moves from 17.6 to 17.8.
+
+Patched `pesticide-residue-definition-by-matrix.md` (Source commit, snapshot
+date, PARAM version; residue_id 10, 210, 2058 re-checked). Regenerated
+`pesticide-residue-definitions-by-food.md`; the generator again shows the
+PARAM version, which it lost when rd-bridge began writing it in bold.
+
+Left out: nothing in the cited records changed, so no other page needed Pass B.

@@ -272,5 +272,5 @@ Names from the EU Pesticides Database; sub-group names are qualified by their pa
 
 - rd-bridge contributors, *rd-bridge* reference dataset, commit `b4e9020e856fbadc03fc15c084b4b39543eea9af`, https://github.com/Chili36/rd-bridge. Derived and non-official; the project's data contributions are offered under CC BY 4.0 (see its DATA_SOURCES.md).
 - European Commission, DG SANTE, *EU Pesticides Database*: residue definitions and Annex I product names (names retrieved 2026-10-13). The database is informational and has no legal value; only the legislation has legal force.
-- European Food Safety Authority, *PARAM catalogue*.
+- European Food Safety Authority, *PARAM catalogue*, version 17.8.
 - No endorsement by the European Commission, EFSA or any Member State is implied.
