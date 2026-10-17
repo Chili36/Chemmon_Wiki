@@ -231,6 +231,18 @@ def test_changed_guidance_rule_is_reported_with_citing_pages(upstream, wiki):
     assert any("older snapshot" in w for w in check_page(wiki, "wording.md")[1])
 
 
+def test_each_listed_dataset_file_needs_its_own_locator(upstream, wiki):
+    commit = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    page = write_page(wiki, commit)
+    page.write_text(page.read_text().replace(
+        'sources: ["datasets/rd-bridge/residue_param_map.json"]',
+        'sources: ["datasets/rd-bridge/residue_param_map.json", "datasets/rd-bridge/interpretation_guidance.json"]'))
+    warnings = check_page(wiki)[1]
+    assert any("interpretation_guidance.json but has no claim-adjacent Source comment" in w for w in warnings)
+    assert not any("residue_param_map.json but has no" in w for w in warnings)
+
+
 def test_changed_source_entry_marks_the_rules_that_cite_it(upstream, wiki):
     first = git(upstream, "rev-parse", "HEAD")
     ingest(wiki, str(upstream), "main")

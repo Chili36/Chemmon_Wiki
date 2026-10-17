@@ -258,8 +258,14 @@ def claim_problems(root: Path, page: str, sources: list[str], body: str) -> tupl
     """Check dataset-derived codes on one page. Returns (errors, warnings)."""
     citations = dataset_citations(body)
     errors, warnings = _guidance_problems(root, page, sources, body)
-    cites_dataset = any(s.startswith("datasets/") for s in sources)
-    if cites_dataset and not citations and not guidance_citations(body):
+    # Each locatable dataset file listed in frontmatter needs its own claim-adjacent locator;
+    # a locator for one file does not stand in for the other.
+    located = {path for path, *_ in citations} | {path for path, *_ in guidance_citations(body)}
+    for path in (RD_BRIDGE_MAP, RD_BRIDGE_GUIDANCE):
+        if path in sources and path not in located:
+            warnings.append(f"{page}: lists {path} but has no claim-adjacent Source comment for it")
+    others = [s for s in sources if s.startswith("datasets/") and s not in (RD_BRIDGE_MAP, RD_BRIDGE_GUIDANCE)]
+    if others and not located:
         warnings.append(f"{page}: cites a dataset but has no claim-adjacent dataset Source comment")
     if not citations:
         return errors, warnings
