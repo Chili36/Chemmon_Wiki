@@ -10,6 +10,14 @@ cite claims from it with a claim-adjacent comment such as::
 Every PARAM code and backticked Annex I commodity code after that comment, up to the next
 ``Source:`` comment, must appear in the cited records. This catches drift when
 a new snapshot changes a code; it does not check prose meaning.
+
+Readings of residue-definition wording cite rd-bridge's curated interpretation
+rules by ID instead::
+
+    <!-- Source: datasets/rd-bridge/interpretation_guidance.json @ b4e9020, rule OECD-EXPRESSION-BASIS -->
+
+The cited rules must exist in the snapshot, and no PARAM code may appear under
+such a comment: codes need a residue_id citation.
 """
 from __future__ import annotations
 
@@ -24,11 +32,16 @@ DATASETS_DIR = Path("chemmon_docs") / "datasets"
 MANIFEST_NAME = "manifest.json"
 RD_BRIDGE_DIR = DATASETS_DIR / "rd-bridge"
 RD_BRIDGE_MAP = "datasets/rd-bridge/residue_param_map.json"
+RD_BRIDGE_GUIDANCE = "datasets/rd-bridge/interpretation_guidance.json"
 
 SOURCE_COMMENT_RE = re.compile(r"<!--\s*Source:(.*?)-->", re.DOTALL)
 DATASET_LOCATOR_RE = re.compile(
     r"^\s*(datasets/[^\s@,]+)\s*@\s*([0-9a-f]{7,40})\s*,\s*residue_id\s+(\d+(?:\s*,\s*\d+)*)\s*$"
 )
+GUIDANCE_LOCATOR_RE = re.compile(
+    r"^\s*(datasets/[^\s@,]+)\s*@\s*([0-9a-f]{7,40})\s*,\s*rules?\s+([A-Z0-9-]+(?:\s*,\s*[A-Z0-9-]+)*)\s*$"
+)
+RULE_ID_RE = re.compile(r"[A-Z0-9]+(?:-[A-Z0-9]+)*")
 PARAM_CODE_RE = re.compile(r"\bRF-[0-9A-Z]+(?:-[0-9A-Z]+)+\b")
 # Annex I codes are written in backticks, so compound numbers such as "AE 0172747" are not read as codes.
 ANNEX_CODE_RE = re.compile(r"`([01]\d{6})`")
@@ -128,6 +141,34 @@ def residue_index(records: Any) -> dict[int, dict[str, Any]]:
     return index
 
 
+def guidance_index(data: Any) -> dict[str, dict[str, Any]]:
+    """Validate rd-bridge's interpretation guidance and index its rules by ID."""
+    if not isinstance(data, dict) or not isinstance(data.get("rules"), list) or not data["rules"]:
+        raise ValueError("interpretation guidance needs a non-empty rules list")
+    sources = data.get("sources")
+    if not isinstance(sources, dict):
+        raise ValueError("interpretation guidance needs a sources mapping")
+    index: dict[str, dict[str, Any]] = {}
+    for rule in data["rules"]:
+        rule_id = rule.get("id") if isinstance(rule, dict) else None
+        if not isinstance(rule_id, str) or not RULE_ID_RE.fullmatch(rule_id):
+            raise ValueError("every guidance rule needs an upper-case id")
+        if rule_id in index:
+            raise ValueError(f"duplicate guidance rule {rule_id}")
+        if not isinstance(rule.get("principle"), str) or not rule["principle"].strip():
+            raise ValueError(f"guidance rule {rule_id}: missing principle")
+        refs = rule.get("sources")
+        if not isinstance(refs, list) or not refs or any(r not in sources for r in refs):
+            raise ValueError(f"guidance rule {rule_id}: sources must name entries in the sources mapping")
+        index[rule_id] = rule
+    return index
+
+
+def load_guidance(root: Path) -> dict[str, dict[str, Any]]:
+    path = root / RD_BRIDGE_DIR / "interpretation_guidance.json"
+    return guidance_index(json.loads(path.read_text(encoding="utf-8")))
+
+
 def load_rd_bridge(root: Path) -> tuple[dict[str, Any], dict[int, dict[str, Any]]]:
     dataset_dir = root / RD_BRIDGE_DIR
     manifest = read_manifest(dataset_dir)
@@ -162,13 +203,55 @@ def dataset_citations(body: str) -> list[tuple[str, str, list[int], str]]:
     return citations
 
 
-def claim_problems(root: Path, page: str, sources: list[str], body: str) -> tuple[list[str], list[str]]:
-    """Check dataset-derived codes on one page. Returns (errors, warnings)."""
+def guidance_citations(body: str) -> list[tuple[str, str, list[str], str]]:
+    """Split a page at Source comments; return (path, commit, rule ids, text) per guidance citation."""
+    comments = list(SOURCE_COMMENT_RE.finditer(body))
+    citations = []
+    for i, match in enumerate(comments):
+        locator = GUIDANCE_LOCATOR_RE.match(match.group(1))
+        if not locator:
+            continue
+        end = comments[i + 1].start() if i + 1 < len(comments) else len(body)
+        rules = re.split(r"\s*,\s*", locator.group(3))
+        citations.append((locator.group(1), locator.group(2), rules, body[match.end():end]))
+    return citations
+
+
+def _guidance_problems(root: Path, page: str, sources: list[str], body: str) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
+    citations = guidance_citations(body)
+    if not citations:
+        return errors, warnings
+    try:
+        manifest = read_manifest(root / RD_BRIDGE_DIR)
+        index = load_guidance(root)
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        return [f"{page}: cannot check guidance claims: {exc}"], warnings
+    for path, commit, rules, text in citations:
+        where = f"{page}: Source {path} @ {commit}"
+        if path != RD_BRIDGE_GUIDANCE:
+            errors.append(f"{where}: unknown dataset file")
+            continue
+        if path not in sources:
+            errors.append(f"{page}: {path} is cited inline but missing from frontmatter sources")
+        if not manifest["commit"].startswith(commit):
+            warnings.append(f"{where}: reviewed against an older snapshot; current is "
+                            f"{manifest['commit'][:7]}. Re-check and update the commit")
+        for rule in rules:
+            if rule not in index:
+                errors.append(f"{where}: rule {rule} not in current snapshot")
+        for code in sorted(set(PARAM_CODE_RE.findall(text))):
+            errors.append(f"{where}: PARAM code {code} needs a residue_id citation")
+    return errors, warnings
+
+
+def claim_problems(root: Path, page: str, sources: list[str], body: str) -> tuple[list[str], list[str]]:
+    """Check dataset-derived codes on one page. Returns (errors, warnings)."""
     citations = dataset_citations(body)
+    errors, warnings = _guidance_problems(root, page, sources, body)
     cites_dataset = any(s.startswith("datasets/") for s in sources)
-    if cites_dataset and not citations:
+    if cites_dataset and not citations and not guidance_citations(body):
         warnings.append(f"{page}: cites a dataset but has no claim-adjacent dataset Source comment")
     if not citations:
         return errors, warnings

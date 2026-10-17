@@ -17,6 +17,7 @@ related:
   - "[[ssd2-matrix-sampled-matrix]]"
   - "[[chemmon-matrix-classification-algorithms]]"
   - "[[pesticide-residue-definitions-by-food]]"
+  - "[[pesticide-residue-definition-wording]]"
 select_when: "Choosing which pesticide paramCode or residue definition to report for a sampled food, or why the PARAM code for the same pesticide differs between foods such as plant products, animal products, milk or honey, including LL_04 errors about the residue definition for the sample analysed."
 ---
 
@@ -39,7 +40,7 @@ select_when: "Choosing which pesticide paramCode or residue definition to report
 1. **Place the sampled food in an Annex I commodity** of Regulation (EC) No 396/2005. Commodity-specific residue definitions are scoped by Annex I codes, often at group level (all products of animal origin, milk), sometimes with excluded sub-groups.
 2. **Check whether the pesticide has commodity-specific definitions.** In the EU Pesticides Database these definitions carry an `(R)` marker and a footnote naming the commodity codes. If there is none, one definition and one whole-residue `paramCode` apply in every food.
 3. **Pick the scope that contains the commodity.** Use a commodity-specific definition when the commodity falls inside its scope and outside its exclusions; otherwise use the default definition.
-4. **Report the whole-residue `paramCode`** of that definition with `P005A`/`P004A`, and any analysed components with `P002A`.
+4. **Report the whole-residue `paramCode`** of that definition with `P005A`/`P004A`, and any analysed components with `P002A`. Which substances count as components depends on the wording; see [[pesticide-residue-definition-wording]].
 5. **For samples from earlier years**, confirm the definition that applied on the sampling date. Residue definitions change over time; the Legal Limits database keeps limits with dates of applicability, and EFSA applies the limit valid at the sampling date. (ChemMon 2026 p148)
 
 ## Examples: one pesticide, different codes by food

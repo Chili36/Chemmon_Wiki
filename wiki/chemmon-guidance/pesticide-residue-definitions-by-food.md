@@ -2,7 +2,7 @@
 title: "Pesticides Whose Residue Definition Changes by Food"
 type: "reference"
 domain: "pesticide"
-last_updated: "2026-10-14"
+last_updated: "2026-10-17"
 sources:
   - "datasets/rd-bridge/residue_param_map.json"
   - "datasets/rd-bridge/DATA_SOURCES.md"

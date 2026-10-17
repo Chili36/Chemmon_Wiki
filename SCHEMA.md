@@ -111,6 +111,16 @@ codes, and a code in a row marked "Default" must be a default code. A
 locator whose commit differs from the current snapshot is a warning until the
 page is re-checked. These checks catch code drift, not wording errors.
 
+Readings of residue-definition wording cite rd-bridge's curated
+interpretation rules by ID:
+
+```markdown
+<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ b4e9020, rules OECD-EXPRESSION-BASIS, EU-TEXT-CONTROLS -->
+```
+
+Each cited rule must exist in the snapshot. No PARAM code may appear under
+such a comment; cite the residue records for codes.
+
 ### Generated pages
 
 A page rendered from a dataset says so in an HTML comment under its title and

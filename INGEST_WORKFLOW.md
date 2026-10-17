@@ -125,7 +125,8 @@ When rd-bridge merges a new version:
    opens a pull request when rd-bridge has changed; it never merges.
 2. **Pass A uses the report.** The tool lists added, removed and changed
    residue definitions (names, scopes, definitions, PARAM codes, notes) and
-   the wiki pages citing the dataset, marking those that cite a changed record.
+   the wiki pages citing the dataset, marking those that cite a changed record
+   or a changed interpretation rule.
    Save it with `--report reports/dataset-ingest/<date>-rd-bridge.md` when the
    change is substantive.
 3. **Pass B patches the citing pages.** Re-check each cited claim against the
@@ -146,6 +147,10 @@ a new snapshot uses an Annex I code without a name, refresh the names with
 Dataset rules:
 
 - Cite claims with the dataset locator in [[SCHEMA]] (file, commit, `residue_id`).
+  Readings of residue-definition wording cite `interpretation_guidance.json`
+  by rule ID. Those rules paraphrase OECD guidance and EU wording; say so, and
+  never cite rd-bridge's model readings (`model_guidance`, `model_parts.json`)
+  as evidence.
 - Show the snapshot date where it affects an answer. rd-bridge holds the
   **latest** EU definitions, not those that applied to past sampling years.
 - Attribute rd-bridge, the EU Pesticides Database and EFSA PARAM; the snapshot

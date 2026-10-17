@@ -26,8 +26,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from wiki_api.datasets import (  # noqa: E402
-    MANIFEST_NAME, RD_BRIDGE_DIR, RD_BRIDGE_MAP, dataset_citations, read_manifest,
-    residue_index, sha256_bytes,
+    MANIFEST_NAME, RD_BRIDGE_DIR, RD_BRIDGE_GUIDANCE, RD_BRIDGE_MAP, dataset_citations, guidance_citations,
+    guidance_index, read_manifest, residue_index, sha256_bytes,
 )
 from wiki_api.wiki_store import split_frontmatter  # noqa: E402
 from tools.rd_bridge_page import ANNEX_DIR, PAGE_NAME, NamesMissing, _cell, write as write_page  # noqa: E402
@@ -37,6 +37,7 @@ DEFAULT_SOURCE = "https://github.com/Chili36/rd-bridge"
 FILES = {
     "residue_param_map.json": "data/residue_param_map.json",
     "DATA_SOURCES.md": "DATA_SOURCES.md",
+    "interpretation_guidance.json": "data/interpretation_guidance.json",
 }
 
 
@@ -100,6 +101,25 @@ def compare(old: dict[int, dict[str, Any]], new: dict[int, dict[str, Any]]) -> d
     }
 
 
+def compare_rules(old: dict[str, dict[str, Any]], new: dict[str, dict[str, Any]]) -> dict[str, list[str]]:
+    return {
+        "added": sorted(new.keys() - old.keys()),
+        "removed": sorted(old.keys() - new.keys()),
+        "changed": sorted(k for k in old.keys() & new.keys() if old[k] != new[k]),
+    }
+
+
+def citing_guidance_pages(root: Path) -> dict[str, set[str]]:
+    """Wiki pages that cite the interpretation guidance, with the rule IDs they cite."""
+    pages: dict[str, set[str]] = {}
+    for path in sorted((root / "wiki" / "chemmon-guidance").glob("*.md")):
+        data, body = split_frontmatter(path.read_text(encoding="utf-8"))
+        rules = {r for p, _, cited, _ in guidance_citations(body) if p == RD_BRIDGE_GUIDANCE for r in cited}
+        if rules or RD_BRIDGE_GUIDANCE in (data.get("sources") or []):
+            pages[path.name] = rules
+    return pages
+
+
 def citing_pages(root: Path) -> dict[str, set[int]]:
     """Wiki pages that cite the residue map, with the residue_ids they cite."""
     pages: dict[str, set[int]] = {}
@@ -113,7 +133,9 @@ def citing_pages(root: Path) -> dict[str, set[int]]:
 
 def render_report(previous: dict[str, Any] | None, fetched: dict[str, Any], summary: dict[str, int],
                   diff: dict[str, list[int]] | None, old: dict[int, dict[str, Any]],
-                  new: dict[int, dict[str, Any]], pages: dict[str, set[int]], written: bool) -> str:
+                  new: dict[int, dict[str, Any]], pages: dict[str, set[int]], written: bool,
+                  rule_diff: dict[str, list[str]] | None = None,
+                  guidance_pages: dict[str, set[str]] | None = None) -> str:
     lines = [f"# rd-bridge ingest {date.today().isoformat()}", ""]
     before = f"{previous['commit'][:7]} ({previous['dataset_changed_at']})" if previous else "none"
     lines += [f"- Repository: {fetched['repository']}",
@@ -129,17 +151,28 @@ def render_report(previous: dict[str, Any] | None, fetched: dict[str, Any], summ
             for n in diff[kind]:
                 lines.append(f"- {kind}: residue_id {n} {_cell(source[n]['name'])}")
         lines.append("")
+    if rule_diff is not None:
+        lines.append("## Interpretation guidance changes")
+        if not any(rule_diff.values()):
+            lines.append("None.")
+        for kind in ("added", "removed", "changed"):
+            for rule in rule_diff[kind]:
+                lines.append(f"- {kind}: rule {rule}")
+        lines.append("")
     changed = set(diff["removed"] + diff["changed"]) if diff else set()
+    changed_rules = set(rule_diff["removed"] + rule_diff["changed"]) if rule_diff else set()
+    guidance_pages = guidance_pages or {}
     lines.append("## Wiki pages to review")
-    if not pages:
-        lines.append("No page cites the residue map.")
-    for page, ids in sorted(pages.items()):
+    if not pages and not guidance_pages:
+        lines.append("No page cites the dataset.")
+    for page in sorted(pages.keys() | guidance_pages.keys()):
         if page == PAGE_NAME:
             continue  # generated from the snapshot; rewritten by the ingest
-        hit = sorted(ids & changed)
-        why = (f"cites changed residue_id {', '.join(map(str, hit))}" if hit
-               else "cites the dataset; confirm and update the Source commit")
-        lines.append(f"- {page}: {why}")
+        hit = sorted(pages.get(page, set()) & changed)
+        rule_hit = sorted(guidance_pages.get(page, set()) & changed_rules)
+        why = [f"cites changed residue_id {', '.join(map(str, hit))}"] if hit else []
+        why += [f"cites changed rule {', '.join(rule_hit)}"] if rule_hit else []
+        lines.append(f"- {page}: {'; '.join(why) or 'cites the dataset; confirm and update the Source commit'}")
     lines += ["", "Next: patch pages rule-first (INGEST_WORKFLOW.md, dataset sources), run "
               "`python tools/health_check.py` and `pytest -q`, update the source review record and log.md."]
     return "\n".join(lines) + "\n"
@@ -150,11 +183,15 @@ def ingest(root: Path, source: str, ref: str, dry_run: bool = False) -> tuple[st
     with tempfile.TemporaryDirectory() as tmp:
         fetched = fetch(source, ref, Path(tmp))
     new = residue_index(json.loads(fetched["files"]["residue_param_map.json"]))
+    new_rules = guidance_index(json.loads(fetched["files"]["interpretation_guidance.json"]))
     summary = summarize(new)
-    previous, old = None, {}
+    previous, old, old_rules = None, {}, {}
     if (target / MANIFEST_NAME).is_file():
         previous = read_manifest(target)
         old = residue_index(json.loads((target / "residue_param_map.json").read_text(encoding="utf-8")))
+        if (target / "interpretation_guidance.json").is_file():
+            old_rules = guidance_index(json.loads(
+                (target / "interpretation_guidance.json").read_text(encoding="utf-8")))
     hashes = {name: sha256_bytes(data) for name, data in fetched["files"].items()}
     unchanged = (previous is not None and previous["commit"] == fetched["commit"]
                  and {n: e["sha256"] for n, e in previous["files"].items()} == hashes)
@@ -188,7 +225,9 @@ def ingest(root: Path, source: str, ref: str, dry_run: bool = False) -> tuple[st
         except NamesMissing as exc:
             page_note = f"\nNOT regenerated {PAGE_NAME}: {exc}. The health check fails until it is.\n"
     diff = compare(old, new) if previous else None
-    report = render_report(previous, fetched, summary, diff, old, new, citing_pages(root), write)
+    rule_diff = compare_rules(old_rules, new_rules) if previous else None
+    report = render_report(previous, fetched, summary, diff, old, new, citing_pages(root), write,
+                           rule_diff, citing_guidance_pages(root))
     report += page_note
     return report, write
 
