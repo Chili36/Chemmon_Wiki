@@ -199,6 +199,7 @@ def test_guidance_citation_is_checked_against_pinned_rules(upstream, wiki):
     ("unknown_rule", "rule OECD-MADE-UP not in current snapshot"),
     ("param_code", "PARAM code RF-00003326-PAR needs a residue_id citation"),
     ("not_in_sources", "missing from frontmatter sources"),
+    ("malformed", "malformed guidance locator"),
 ])
 def test_guidance_citation_rejects_unsupported_claims(upstream, wiki, fault, expected):
     commit = git(upstream, "rev-parse", "HEAD")
@@ -209,6 +210,9 @@ def test_guidance_citation_rejects_unsupported_claims(upstream, wiki, fault, exp
     if fault == "not_in_sources":
         page.write_text(page.read_text().replace('sources: ["datasets/rd-bridge/interpretation_guidance.json"]',
                                                  "sources: []"))
+    if fault == "malformed":  # a valid citation plus one the locator pattern rejects
+        page.write_text(page.read_text() + f"\n<!-- Source: datasets/rd-bridge/interpretation_guidance.json "
+                                           f"@ {commit[:7]}, rules OECD-MADE_UP -->\n\nMore wording.\n")
     assert any(expected in e for e in check_page(wiki, "wording.md")[0])
 
 
@@ -227,8 +231,14 @@ def test_changed_guidance_rule_is_reported_with_citing_pages(upstream, wiki):
     assert any("older snapshot" in w for w in check_page(wiki, "wording.md")[1])
 
 
-def test_malformed_guidance_writes_nothing(upstream, wiki):
-    commit_records(upstream, RECORDS, "broken guidance", guidance={"rules": [{"principle": "no id"}]})
+@pytest.mark.parametrize("rules", [
+    [{"principle": "no id"}],
+    [{"id": "OECD-X", "sources": ["OECD-2009"], "principle": "no locator"}],
+    [{"id": "OECD-X", "sources": ["OECD-2009"], "locator": " ", "principle": "blank locator"}],
+])
+def test_malformed_guidance_writes_nothing(upstream, wiki, rules):
+    guidance = {"sources": GUIDANCE["sources"], "rules": rules}
+    commit_records(upstream, RECORDS, "broken guidance", guidance=guidance)
     with pytest.raises(ValueError):
         ingest(wiki, str(upstream), "main")
     assert not (wiki / RD_BRIDGE_DIR).exists()

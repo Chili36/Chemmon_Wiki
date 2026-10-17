@@ -157,6 +157,8 @@ def guidance_index(data: Any) -> dict[str, dict[str, Any]]:
             raise ValueError(f"duplicate guidance rule {rule_id}")
         if not isinstance(rule.get("principle"), str) or not rule["principle"].strip():
             raise ValueError(f"guidance rule {rule_id}: missing principle")
+        if not isinstance(rule.get("locator"), str) or not rule["locator"].strip():
+            raise ValueError(f"guidance rule {rule_id}: missing locator")
         refs = rule.get("sources")
         if not isinstance(refs, list) or not refs or any(r not in sources for r in refs):
             raise ValueError(f"guidance rule {rule_id}: sources must name entries in the sources mapping")
@@ -221,6 +223,12 @@ def _guidance_problems(root: Path, page: str, sources: list[str], body: str) -> 
     errors: list[str] = []
     warnings: list[str] = []
     citations = guidance_citations(body)
+    # A comment naming the guidance file that the locator pattern rejects would otherwise be
+    # skipped silently, leaving its claims unchecked.
+    for match in SOURCE_COMMENT_RE.finditer(body):
+        locator = match.group(1)
+        if "interpretation_guidance.json" in locator and not GUIDANCE_LOCATOR_RE.match(locator):
+            errors.append(f"{page}: malformed guidance locator: {' '.join(locator.split())[:120]}")
     if not citations:
         return errors, warnings
     try:
