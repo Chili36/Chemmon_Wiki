@@ -24,6 +24,34 @@ RECORDS = [
      "default": {"definition": "Glyphosate", "param_codes": ["RF-0230-001-PPP"]}, "exceptions": []},
 ]
 
+GUIDANCE = {
+    "schema_version": 1,
+    "sources": {"OECD-2009": {"title": "OECD Guidance Document on the Definition of Residue",
+                              "url": "https://doi.org/10.1787/66ca5caa-en", "locator": "ENV/JM/MONO(2009)30",
+                              "type": "nonbinding_guidance"}},
+    "rules": [
+        {"id": "OECD-EXPRESSION-BASIS", "sources": ["OECD-2009"], "locator": "Scenario 1",
+         "principle": "'Expressed as X' identifies the substance used to express the result."},
+        {"id": "EU-TEXT-CONTROLS", "sources": ["OECD-2009"], "locator": "Annexes",
+         "principle": "The exact EU definition is authoritative."},
+    ],
+}
+
+GUIDANCE_PAGE = """---
+title: Wording
+type: domain-guide
+domain: pesticide
+last_updated: "2026-10-17"
+sources: ["datasets/rd-bridge/interpretation_guidance.json"]
+related: []
+---
+# Wording
+
+<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ {commit}, rule {rules} -->
+
+'Expressed as X' names the basis for the result.{extra}
+"""
+
 PAGE = """---
 title: Topic
 type: domain-guide
@@ -49,9 +77,10 @@ def git(repo: Path, *args: str) -> str:
     return subprocess.run(["git", "-C", str(repo), *args], check=True, capture_output=True, text=True).stdout.strip()
 
 
-def commit_records(repo: Path, records: list[dict], message: str) -> str:
+def commit_records(repo: Path, records: list[dict], message: str, guidance: dict | None = None) -> str:
     (repo / "data").mkdir(exist_ok=True)
     (repo / "data" / "residue_param_map.json").write_text(json.dumps(records))
+    (repo / "data" / "interpretation_guidance.json").write_text(json.dumps(guidance or GUIDANCE))
     (repo / "DATA_SOURCES.md").write_text("CC BY 4.0 attribution\n")
     git(repo, "add", ".")
     git(repo, "-c", "user.name=t", "-c", "user.email=t@example.org", "commit", "-qm", message)
@@ -81,10 +110,16 @@ def write_page(root: Path, commit: str, code: str = "RF-00003326-PAR") -> Path:
     return page
 
 
-def check_page(root: Path) -> tuple[list[str], list[str]]:
+def check_page(root: Path, name: str = "topic.md") -> tuple[list[str], list[str]]:
     from wiki_api.wiki_store import split_frontmatter
-    data, body = split_frontmatter((root / "wiki" / "chemmon-guidance" / "topic.md").read_text())
-    return claim_problems(root, "topic.md", data["sources"], body)
+    data, body = split_frontmatter((root / "wiki" / "chemmon-guidance" / name).read_text())
+    return claim_problems(root, name, data["sources"], body)
+
+
+def write_guidance_page(root: Path, commit: str, rules: str = "OECD-EXPRESSION-BASIS", extra: str = "") -> Path:
+    page = root / "wiki" / "chemmon-guidance" / "wording.md"
+    page.write_text(GUIDANCE_PAGE.format(commit=commit[:7], rules=rules, extra=extra))
+    return page
 
 
 def test_ingest_pins_commit_verbatim_and_is_idempotent(upstream, wiki):
@@ -95,6 +130,8 @@ def test_ingest_pins_commit_verbatim_and_is_idempotent(upstream, wiki):
     assert written and manifest["commit"] == first
     assert manifest["summary"] == {"records": 2, "with_commodity_exceptions": 1, "exceptions": 1}
     assert (target / "residue_param_map.json").read_bytes() == (upstream / "data/residue_param_map.json").read_bytes()
+    assert (target / "interpretation_guidance.json").read_bytes() == \
+        (upstream / "data/interpretation_guidance.json").read_bytes()
     assert manifest_problems(wiki) == []
     assert "Snapshot: none ->" in report
     assert ingest(wiki, str(upstream), "main")[1] is False
@@ -151,6 +188,107 @@ def test_claim_check_rejects_unsupported_codes(upstream, wiki, fault, expected):
         text = text.replace('sources: ["datasets/rd-bridge/residue_param_map.json"]', "sources: []")
     page.write_text(text)
     assert any(expected in e for e in check_page(wiki)[0])
+
+
+def test_guidance_citation_is_checked_against_pinned_rules(upstream, wiki):
+    commit = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    write_guidance_page(wiki, commit, rules="OECD-EXPRESSION-BASIS, EU-TEXT-CONTROLS")
+    assert check_page(wiki, "wording.md") == ([], [])
+
+
+@pytest.mark.parametrize("fault,expected", [
+    ("unknown_rule", "rule OECD-MADE-UP not in current snapshot"),
+    ("param_code", "PARAM code RF-00003326-PAR needs a residue_id citation"),
+    ("not_in_sources", "missing from frontmatter sources"),
+    ("malformed", "malformed guidance locator"),
+])
+def test_guidance_citation_rejects_unsupported_claims(upstream, wiki, fault, expected):
+    commit = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    rules = "OECD-EXPRESSION-BASIS, OECD-MADE-UP" if fault == "unknown_rule" else "OECD-EXPRESSION-BASIS"
+    extra = " The sum is `RF-00003326-PAR`." if fault == "param_code" else ""
+    page = write_guidance_page(wiki, commit, rules=rules, extra=extra)
+    if fault == "not_in_sources":
+        page.write_text(page.read_text().replace('sources: ["datasets/rd-bridge/interpretation_guidance.json"]',
+                                                 "sources: []"))
+    if fault == "malformed":  # a valid citation plus one the locator pattern rejects
+        page.write_text(page.read_text() + f"\n<!-- Source: datasets/rd-bridge/interpretation_guidance.json "
+                                           f"@ {commit[:7]}, rules OECD-MADE_UP -->\n\nMore wording.\n")
+    assert any(expected in e for e in check_page(wiki, "wording.md")[0])
+
+
+def test_changed_guidance_rule_is_reported_with_citing_pages(upstream, wiki):
+    first = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    write_guidance_page(wiki, first)
+    changed = json.loads(json.dumps(GUIDANCE))
+    changed["rules"][0]["principle"] = "Reworded."
+    commit_records(upstream, RECORDS, "reword guidance", guidance=changed)
+    report, written = ingest(wiki, str(upstream), "main")
+    assert written
+    assert "changed: rule OECD-EXPRESSION-BASIS" in report
+    assert "wording.md: cites changed rule OECD-EXPRESSION-BASIS" in report
+    assert "EU-TEXT-CONTROLS" not in report
+    assert any("older snapshot" in w for w in check_page(wiki, "wording.md")[1])
+
+
+def test_each_listed_dataset_file_needs_its_own_locator(upstream, wiki):
+    commit = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    page = write_page(wiki, commit)
+    page.write_text(page.read_text().replace(
+        'sources: ["datasets/rd-bridge/residue_param_map.json"]',
+        'sources: ["datasets/rd-bridge/residue_param_map.json", "datasets/rd-bridge/interpretation_guidance.json"]'))
+    warnings = check_page(wiki)[1]
+    assert any("interpretation_guidance.json but has no claim-adjacent Source comment" in w for w in warnings)
+    assert not any("residue_param_map.json but has no" in w for w in warnings)
+
+
+def test_changed_source_entry_marks_the_rules_that_cite_it(upstream, wiki):
+    first = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    write_guidance_page(wiki, first)
+    changed = json.loads(json.dumps(GUIDANCE))
+    changed["sources"]["OECD-2009"]["url"] = "https://doi.org/10.1787/new"
+    commit_records(upstream, RECORDS, "move OECD source", guidance=changed)
+    report, _ = ingest(wiki, str(upstream), "main")
+    assert "changed: rule OECD-EXPRESSION-BASIS" in report and "changed: rule EU-TEXT-CONTROLS" in report
+    assert "wording.md: cites changed rule OECD-EXPRESSION-BASIS" in report
+
+
+@pytest.mark.parametrize("entry", [None, {"title": "OECD"}, {"title": "OECD", "url": "u", "locator": " "}])
+def test_malformed_guidance_source_writes_nothing(upstream, wiki, entry):
+    guidance = json.loads(json.dumps(GUIDANCE))
+    guidance["sources"]["OECD-2009"] = entry
+    commit_records(upstream, RECORDS, "bad source", guidance=guidance)
+    with pytest.raises(ValueError, match="guidance source OECD-2009"):
+        ingest(wiki, str(upstream), "main")
+    assert not (wiki / RD_BRIDGE_DIR).exists()
+
+
+@pytest.mark.parametrize("version", [None, 2])
+def test_unsupported_guidance_schema_writes_nothing(upstream, wiki, version):
+    guidance = {k: v for k, v in GUIDANCE.items() if k != "schema_version"}
+    if version is not None:
+        guidance["schema_version"] = version
+    commit_records(upstream, RECORDS, "new guidance format", guidance=guidance)
+    with pytest.raises(ValueError, match="schema_version"):
+        ingest(wiki, str(upstream), "main")
+    assert not (wiki / RD_BRIDGE_DIR).exists()
+
+
+@pytest.mark.parametrize("rules", [
+    [{"principle": "no id"}],
+    [{"id": "OECD-X", "sources": ["OECD-2009"], "principle": "no locator"}],
+    [{"id": "OECD-X", "sources": ["OECD-2009"], "locator": " ", "principle": "blank locator"}],
+])
+def test_malformed_guidance_writes_nothing(upstream, wiki, rules):
+    guidance = {"schema_version": 1, "sources": GUIDANCE["sources"], "rules": rules}
+    commit_records(upstream, RECORDS, "broken guidance", guidance=guidance)
+    with pytest.raises(ValueError):
+        ingest(wiki, str(upstream), "main")
+    assert not (wiki / RD_BRIDGE_DIR).exists()
 
 
 def test_hand_edited_snapshot_fails_health_and_marks_review_stale(upstream, wiki):

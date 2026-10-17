@@ -1020,3 +1020,34 @@ date, PARAM version; residue_id 10, 210, 2058 re-checked). Regenerated
 PARAM version, which it lost when rd-bridge began writing it in bold.
 
 Left out: nothing in the cited records changed, so no other page needed Pass B.
+
+## 2026-10-17 — Reading residue-definition wording (#31)
+
+Source: rd-bridge `b4e9020` `data/interpretation_guidance.json`, now pinned in
+the dataset snapshot (11 curated rules paraphrasing OECD 2009 and EU wording,
+each with a source and locator), with ChemMon 2026 pp. 59-61.
+
+Pass A: paramType rules already live on `ssd2-analysis-parameter-coding`; the
+missing concept was how to read the wording of a definition (which substances
+it names). One page created, two patched.
+
+- Created `pesticide-residue-definition-wording.md`: "expressed as" is the
+  calculation basis, not an extra analyte; sums, common-moiety methods,
+  salts/esters/conjugates, isomers, commodity variants, "where only" clauses,
+  aliases; chloridazon worked example (residue_id 253, the one case rd-bridge
+  has checked against the legal act); mapping to P005A/P004A/P002A with
+  ChemMon's aldicarb example; status of the readings.
+- Patched `ssd2-analysis-parameter-coding.md` and
+  `pesticide-residue-definition-by-matrix.md` (links).
+- Tooling: the ingest pins `interpretation_guidance.json`, validates it and
+  reports changed rules with the pages citing them. A new locator form
+  (`..., rules ID, ID`) is checked by the health check: rules must exist, and
+  no PARAM code may sit under a rule citation.
+
+Live check: a chloridazon-in-milk question selected the new page and answered
+P005A for chloridazon-desphenyl alone, with the correct codes.
+
+Left out: rd-bridge's model readings (`model_guidance`, `model_parts.json`)
+are not cited; the OECD text itself was not available to verify the
+paraphrases; rd-bridge's audit of 33 unresolved interpretation differences is
+not wiki content.

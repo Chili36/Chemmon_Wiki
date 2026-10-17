@@ -6,7 +6,7 @@
   "commit": "b4e9020e856fbadc03fc15c084b4b39543eea9af",
   "commit_date": "2026-10-14",
   "dataset_changed_at": "2026-10-14",
-  "ingested_at": "2026-10-14",
+  "ingested_at": "2026-10-17",
   "files": {
     "residue_param_map.json": {
       "from": "data/residue_param_map.json",
@@ -15,6 +15,10 @@
     "DATA_SOURCES.md": {
       "from": "DATA_SOURCES.md",
       "sha256": "588bac6e6e7622877e8eeb4006288ae00d6ac73e684a5507bd657a6d5037dc88"
+    },
+    "interpretation_guidance.json": {
+      "from": "data/interpretation_guidance.json",
+      "sha256": "f9b731527d265595effdf6b8b2712903239cb1a5dfef9336b31dab123af69536"
     }
   },
   "summary": {
