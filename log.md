@@ -1087,8 +1087,9 @@ upstream matching issue, not fixed here.
 
 Maintainer decision: rd-bridge's strict matcher was too strict; a model should
 guess, and its links are shown like any other. rd-bridge#31 adds Sonnet 5.5
-guesses (`method: model`) with guards for stated CAS numbers and low
-confidence. Generator: `model` is a trusted method; the without-link page
+guesses (`method: model`). Guards for stated CAS numbers and low confidence,
+plus prompt lines aimed at specific outputs, were added after reading the
+first run and then reverted as overfitting to the same 137 definitions. Generator: `model` is a trusted method; the without-link page
 shows the model's refusal reason with PARAM codes stripped. Preview against
 the rd-bridge branch: 21 more definitions linked, checks clean. Re-pin after
 rd-bridge#29 and #31 merge.
