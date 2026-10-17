@@ -33,6 +33,7 @@ MANIFEST_NAME = "manifest.json"
 RD_BRIDGE_DIR = DATASETS_DIR / "rd-bridge"
 RD_BRIDGE_MAP = "datasets/rd-bridge/residue_param_map.json"
 RD_BRIDGE_GUIDANCE = "datasets/rd-bridge/interpretation_guidance.json"
+GUIDANCE_SCHEMA_VERSION = 1
 
 SOURCE_COMMENT_RE = re.compile(r"<!--\s*Source:(.*?)-->", re.DOTALL)
 DATASET_LOCATOR_RE = re.compile(
@@ -143,7 +144,9 @@ def residue_index(records: Any) -> dict[int, dict[str, Any]]:
 
 def guidance_index(data: Any) -> dict[str, dict[str, Any]]:
     """Validate rd-bridge's interpretation guidance and index its rules by ID."""
-    if not isinstance(data, dict) or not isinstance(data.get("rules"), list) or not data["rules"]:
+    if not isinstance(data, dict) or data.get("schema_version") != GUIDANCE_SCHEMA_VERSION:
+        raise ValueError(f"interpretation guidance must declare schema_version {GUIDANCE_SCHEMA_VERSION}")
+    if not isinstance(data.get("rules"), list) or not data["rules"]:
         raise ValueError("interpretation guidance needs a non-empty rules list")
     sources = data.get("sources")
     if not isinstance(sources, dict):

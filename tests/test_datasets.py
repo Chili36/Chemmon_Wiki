@@ -255,13 +255,24 @@ def test_changed_source_entry_marks_the_rules_that_cite_it(upstream, wiki):
     assert "wording.md: cites changed rule OECD-EXPRESSION-BASIS" in report
 
 
+@pytest.mark.parametrize("version", [None, 2])
+def test_unsupported_guidance_schema_writes_nothing(upstream, wiki, version):
+    guidance = {k: v for k, v in GUIDANCE.items() if k != "schema_version"}
+    if version is not None:
+        guidance["schema_version"] = version
+    commit_records(upstream, RECORDS, "new guidance format", guidance=guidance)
+    with pytest.raises(ValueError, match="schema_version"):
+        ingest(wiki, str(upstream), "main")
+    assert not (wiki / RD_BRIDGE_DIR).exists()
+
+
 @pytest.mark.parametrize("rules", [
     [{"principle": "no id"}],
     [{"id": "OECD-X", "sources": ["OECD-2009"], "principle": "no locator"}],
     [{"id": "OECD-X", "sources": ["OECD-2009"], "locator": " ", "principle": "blank locator"}],
 ])
 def test_malformed_guidance_writes_nothing(upstream, wiki, rules):
-    guidance = {"sources": GUIDANCE["sources"], "rules": rules}
+    guidance = {"schema_version": 1, "sources": GUIDANCE["sources"], "rules": rules}
     commit_records(upstream, RECORDS, "broken guidance", guidance=guidance)
     with pytest.raises(ValueError):
         ingest(wiki, str(upstream), "main")
