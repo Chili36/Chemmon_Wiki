@@ -231,6 +231,18 @@ def test_changed_guidance_rule_is_reported_with_citing_pages(upstream, wiki):
     assert any("older snapshot" in w for w in check_page(wiki, "wording.md")[1])
 
 
+def test_changed_source_entry_marks_the_rules_that_cite_it(upstream, wiki):
+    first = git(upstream, "rev-parse", "HEAD")
+    ingest(wiki, str(upstream), "main")
+    write_guidance_page(wiki, first)
+    changed = json.loads(json.dumps(GUIDANCE))
+    changed["sources"]["OECD-2009"]["url"] = "https://doi.org/10.1787/new"
+    commit_records(upstream, RECORDS, "move OECD source", guidance=changed)
+    report, _ = ingest(wiki, str(upstream), "main")
+    assert "changed: rule OECD-EXPRESSION-BASIS" in report and "changed: rule EU-TEXT-CONTROLS" in report
+    assert "wording.md: cites changed rule OECD-EXPRESSION-BASIS" in report
+
+
 @pytest.mark.parametrize("rules", [
     [{"principle": "no id"}],
     [{"id": "OECD-X", "sources": ["OECD-2009"], "principle": "no locator"}],

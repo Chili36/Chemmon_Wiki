@@ -101,6 +101,12 @@ def compare(old: dict[int, dict[str, Any]], new: dict[int, dict[str, Any]]) -> d
     }
 
 
+def rule_views(data: Any) -> dict[str, dict[str, Any]]:
+    """Validated rules, each with the source entries it references, so a changed source counts too."""
+    return {rule_id: {**rule, "source_entries": [data["sources"][s] for s in rule["sources"]]}
+            for rule_id, rule in guidance_index(data).items()}
+
+
 def compare_rules(old: dict[str, dict[str, Any]], new: dict[str, dict[str, Any]]) -> dict[str, list[str]]:
     return {
         "added": sorted(new.keys() - old.keys()),
@@ -183,14 +189,14 @@ def ingest(root: Path, source: str, ref: str, dry_run: bool = False) -> tuple[st
     with tempfile.TemporaryDirectory() as tmp:
         fetched = fetch(source, ref, Path(tmp))
     new = residue_index(json.loads(fetched["files"]["residue_param_map.json"]))
-    new_rules = guidance_index(json.loads(fetched["files"]["interpretation_guidance.json"]))
+    new_rules = rule_views(json.loads(fetched["files"]["interpretation_guidance.json"]))
     summary = summarize(new)
     previous, old, old_rules = None, {}, {}
     if (target / MANIFEST_NAME).is_file():
         previous = read_manifest(target)
         old = residue_index(json.loads((target / "residue_param_map.json").read_text(encoding="utf-8")))
         if (target / "interpretation_guidance.json").is_file():
-            old_rules = guidance_index(json.loads(
+            old_rules = rule_views(json.loads(
                 (target / "interpretation_guidance.json").read_text(encoding="utf-8")))
     hashes = {name: sha256_bytes(data) for name, data in fetched["files"].items()}
     unchanged = (previous is not None and previous["commit"] == fetched["commit"]
