@@ -26,7 +26,9 @@ RECORDS = [
 
 GUIDANCE = {
     "schema_version": 1,
-    "sources": {"OECD-2009": {"title": "OECD Guidance Document on the Definition of Residue", "type": "nonbinding_guidance"}},
+    "sources": {"OECD-2009": {"title": "OECD Guidance Document on the Definition of Residue",
+                              "url": "https://doi.org/10.1787/66ca5caa-en", "locator": "ENV/JM/MONO(2009)30",
+                              "type": "nonbinding_guidance"}},
     "rules": [
         {"id": "OECD-EXPRESSION-BASIS", "sources": ["OECD-2009"], "locator": "Scenario 1",
          "principle": "'Expressed as X' identifies the substance used to express the result."},
@@ -253,6 +255,16 @@ def test_changed_source_entry_marks_the_rules_that_cite_it(upstream, wiki):
     report, _ = ingest(wiki, str(upstream), "main")
     assert "changed: rule OECD-EXPRESSION-BASIS" in report and "changed: rule EU-TEXT-CONTROLS" in report
     assert "wording.md: cites changed rule OECD-EXPRESSION-BASIS" in report
+
+
+@pytest.mark.parametrize("entry", [None, {"title": "OECD"}, {"title": "OECD", "url": "u", "locator": " "}])
+def test_malformed_guidance_source_writes_nothing(upstream, wiki, entry):
+    guidance = json.loads(json.dumps(GUIDANCE))
+    guidance["sources"]["OECD-2009"] = entry
+    commit_records(upstream, RECORDS, "bad source", guidance=guidance)
+    with pytest.raises(ValueError, match="guidance source OECD-2009"):
+        ingest(wiki, str(upstream), "main")
+    assert not (wiki / RD_BRIDGE_DIR).exists()
 
 
 @pytest.mark.parametrize("version", [None, 2])

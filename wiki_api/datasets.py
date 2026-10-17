@@ -165,6 +165,11 @@ def guidance_index(data: Any) -> dict[str, dict[str, Any]]:
         refs = rule.get("sources")
         if not isinstance(refs, list) or not refs or any(r not in sources for r in refs):
             raise ValueError(f"guidance rule {rule_id}: sources must name entries in the sources mapping")
+        for ref in refs:
+            entry = sources[ref]
+            if not isinstance(entry, dict) or not all(
+                    isinstance(entry.get(k), str) and entry[k].strip() for k in ("title", "url", "locator")):
+                raise ValueError(f"guidance source {ref}: needs a title, url and locator")
         index[rule_id] = rule
     return index
 
