@@ -9,6 +9,7 @@ tools/rd_bridge_page.py.
 """
 from __future__ import annotations
 
+import functools
 import hashlib
 import json
 import re
@@ -26,6 +27,7 @@ LOOKUP_PAGE = "pesticide-residue-definition-lookup.md"
 MAX_RECORDS = 6
 EXAMPLE_ID = 10  # acetamiprid: a default and an animal-product definition
 HTML_COMMENT_RE = re.compile(r"<!--(.*?)-->", re.DOTALL)
+FOOD_PREFIX_RE = re.compile(r"(?:^|\s)(?:in|on|from) $")
 MARKERS_RE = re.compile(r"\s*\((?:R|F|A|L|\*|\+|\+\+)\)")
 
 # rd-bridge match methods that give a whole-definition PARAM link (docs/MAPPING_METHOD.md).
@@ -148,7 +150,8 @@ def _norm(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text).strip()
 
 
-def name_keys(name: str) -> set[str]:
+@functools.lru_cache(maxsize=4096)
+def name_keys(name: str) -> frozenset[str]:
     """Normalised names a question may use for a residue record."""
     name = MARKERS_RE.sub("", name).strip()
     keys = {re.split(r"\s*\(|:", name, maxsplit=1)[0]}
@@ -158,7 +161,7 @@ def name_keys(name: str) -> set[str]:
     expressed = re.search(r"expressed as ([\w,-]+(?: [\w-]+)?)\s*\)?\s*$", name)
     if expressed and name.lower().startswith("sum of"):
         keys.add(expressed.group(1))
-    return {k for k in (_norm(key) for key in keys) if len(k) >= 3}
+    return frozenset(k for k in (_norm(key) for key in keys) if len(k) >= 3)
 
 
 def find_records(question: str, index: dict[int, dict[str, Any]], limit: int = MAX_RECORDS) -> list[dict[str, Any]]:
@@ -168,9 +171,15 @@ def find_records(question: str, index: dict[int, dict[str, Any]], limit: int = M
 
     def named(key: str) -> bool:
         # A name right after "in", "on" or "from" is the sampled food ("residues in cow milk"),
-        # not the substance; several basic substances are named after foods.
-        return any(not re.search(r"\b(?:in|on|from)\s*$", text[:m.start() + 1])
-                   for m in re.finditer(re.escape(f" {key} "), text))
+        # not the substance; several basic substances are named after foods. Only the few
+        # characters before each occurrence are inspected, so long questions stay linear.
+        needle = f" {key} "
+        start = text.find(needle)
+        while start != -1:
+            if not FOOD_PREFIX_RE.search(text[max(0, start - 6):start + 1]):
+                return True
+            start = text.find(needle, start + 1)
+        return False
 
     for rid, record in index.items():
         longest = max((len(k) for k in name_keys(record["name"]) if named(k)), default=0)
@@ -272,14 +281,27 @@ select_when: "The residue definition, whole-residue paramCode or parts for a nam
 '''
 
 
+@functools.lru_cache(maxsize=4)
+def _snapshot(root: str, stamp: tuple) -> tuple[dict, dict, dict, str]:
+    path = Path(root)
+    manifest, index = load_rd_bridge(path)
+    page = (path / "wiki" / "chemmon-guidance" / LOOKUP_PAGE).read_text(encoding="utf-8")
+    return manifest, index, annex_labels(path), page
+
+
+def _stamp(root: Path) -> tuple:
+    """Modification times of the files the lookup reads; a new snapshot invalidates the cache."""
+    files = [root / RD_BRIDGE_MAP.replace("datasets/", "chemmon_docs/datasets/", 1),
+             root / ANNEX_DIR / "products.json", root / "wiki" / "chemmon-guidance" / LOOKUP_PAGE]
+    return tuple(f.stat().st_mtime_ns for f in files)
+
+
 def lookup_markdown(root: Path, question: str) -> str | None:
     """The lookup page body plus the records the question names, or None when it names none."""
-    manifest, index = load_rd_bridge(root)
+    manifest, index, labels, page = _snapshot(str(root.resolve()), _stamp(root))
     records = find_records(question, index)
     if not records:
         return None
-    labels = annex_labels(root)
-    page = (root / "wiki" / "chemmon-guidance" / LOOKUP_PAGE).read_text(encoding="utf-8")
     body = page.split("\n---\n", 1)[1] if page.startswith("---") else page
     body = body.split("## Example record", 1)[0].rstrip()
     blocks = "\n".join(_record_block(r, labels, manifest["commit"][:7]) for r in records)

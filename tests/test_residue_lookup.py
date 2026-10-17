@@ -42,6 +42,15 @@ def test_expressed_as_anchor_and_alias_names_are_keys():
     assert "putrescine" in name_keys("1,4-Diaminobutane  (aka Putrescine)")
 
 
+def test_long_repetitive_question_stays_fast():
+    import time
+    _, index = load_rd_bridge(ROOT)
+    question = ("in urea in ddt in tepp in eptc " * 700)[:20000]  # the request size limit
+    started = time.perf_counter()
+    assert find_records(question, index) == []
+    assert time.perf_counter() - started < 0.1
+
+
 def test_number_of_records_is_bounded():
     _, index = load_rd_bridge(ROOT)
     names = " ".join(r["name"].split(" (")[0] for r in list(index.values())[:40])
