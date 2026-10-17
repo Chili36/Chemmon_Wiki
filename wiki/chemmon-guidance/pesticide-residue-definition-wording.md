@@ -17,6 +17,7 @@ related:
   - "[[pesticide-residue-definitions-by-food]]"
   - "[[pesticide-reporting]]"
   - "[[legal-limits-database]]"
+  - "[[pesticide-residue-definitions-without-param-link]]"
 select_when: "Working out which substances a pesticide residue definition actually requires: what 'expressed as' means, whether the heading substance must be analysed, how sums, salts, esters, conjugates, isomers, common-moiety methods, 'where only' clauses or 'aka' names count, and whether a result is P005A, P004A or P002A."
 ---
 

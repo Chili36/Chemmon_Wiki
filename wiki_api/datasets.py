@@ -184,6 +184,9 @@ def record_codes(record: dict[str, Any]) -> tuple[set[str], set[str]]:
         params.update(scope.get("param_codes") or [])
         for component in scope.get("components") or []:
             params.update(component.get("param_codes") or [])
+        gap = scope.get("catalogue_gap")
+        if isinstance(gap, dict):
+            params.update(str(t.get("code")) for t in gap.get("related_terms") or [] if isinstance(t, dict))
         commodities.update(scope.get("commodity_codes") or [])
         commodities.update(scope.get("except_codes") or [])
     return params, commodities

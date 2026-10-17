@@ -10,7 +10,10 @@ from tests.test_datasets import RECORDS, commit_records, git
 from tools import ingest_annex_i
 from tools.health_check import run_health_check
 from tools.ingest_rd_bridge import ingest
-from tools.rd_bridge_page import PAGE_NAME, NamesMissing, annex_labels, param_version, render, short_name, write
+from tools.rd_bridge_page import (
+    GAPS_PAGE_NAME, GENERATED, PAGE_NAME, NamesMissing, annex_labels, param_version, render, render_gaps,
+    short_name, write,
+)
 from wiki_api.datasets import claim_problems
 from wiki_api.wiki_store import ROOT_PAGE_PATHS, split_frontmatter
 
@@ -67,8 +70,33 @@ def upstream(tmp_path):
                                     "definition": "M4 only (AE 0172747)", "method": "near",
                                     "param_codes": ["RF-2-PAR"],
                                     "repairs": [{"from": "102000", "to": "1020000", "reason": "digit dropped"}]}]})
+    records[1]["default"]["method"] = "exact"
+    records.append(GAP_RECORD)
     commit_records(repo, records, "first")
     return repo
+
+
+GAP_RECORD = {
+    "residue_id": 3950, "version": 2, "name": "Benthiavalicarb-isopropyl (sum of R-L and S-D)",
+    "default": {
+        "definition": "Benthiavalicarb-isopropyl (sum of R-L and S-D)", "method": "none", "param_codes": [],
+        "components": [{"name": "Benthiavalicarb-isopropyl (R-L)", "param_codes": ["RF-0043-003-PPP"]}],
+        "catalogue_gap": {
+            "kind": "catalogue_scope_mismatch",
+            "legal_source": "https://eur-lex.europa.eu/eli/reg/2026/147/oj/eng",
+            "applies_from": "2026-08-12", "param_catalogue_version": "17.8",
+            "reason": "The reportable PARAM term also includes S-L and R-D.",
+            "related_terms": [
+                {"code": "RF-00004656-PAR", "name": "Benthiavalicarb (four isomers)",
+                 "relationship": "broader_four_isomer_residue"},
+                {"code": "RF-0043-003-PPP", "name": "Benthiavalicarb isopropyl",
+                 "relationship": "nonreportable_individual_substance"},
+            ],
+            "resolution": "Use an updated EFSA code when one exists.",
+        },
+    },
+    "exceptions": [],
+}
 
 
 def test_annex_ingest_follows_pagination_and_rejects_bad_lists(root, tmp_path):
@@ -91,6 +119,8 @@ def test_annex_labels_qualify_relative_names(root):
 
 
 def test_short_names():
+    assert short_name("1,1-dichloro-2,2-bis(4-ethylphenyl)ethane (F)") == "1,1-dichloro-2,2-bis(4-ethylphenyl)ethane"
+    assert short_name("Fosetyl-Al(sum of fosetyl, phosphonic acid)") == "Fosetyl-Al"
     assert short_name("Thiabendazole(R)") == "Thiabendazole"
     assert short_name("2-phenylphenol (sum of 2-phenylphenol and its conjugates)(R)(F)") == "2-phenylphenol"
     assert short_name("Sum of M4 and M6 (both free and conjugated), expressed as pinoxaden(R)(A)") \
@@ -107,7 +137,7 @@ def test_ingest_regenerates_complete_page_without_untrusted_codes(root, upstream
     report, written = ingest(root, str(upstream), "main")
     assert written and f"Regenerated {PAGE_NAME}" in report
     page = (root / "wiki" / "chemmon-guidance" / PAGE_NAME).read_text()
-    assert "2 of 3 definitions" in page and "not listed has one residue definition" in page
+    assert "2 of 4 definitions" in page and "not listed has one residue definition" in page
     assert "Glyphosate" not in page
     assert "| Acetamiprid | `1000000`; **except** `1040000` |" in page
     assert "RF-2-PAR" not in page and "no trustworthy PARAM code (near match only)" in page
@@ -115,7 +145,7 @@ def test_ingest_regenerates_complete_page_without_untrusted_codes(root, upstream
     assert "| `1040000` | Honey and other apiculture products |" in page
     data, body = split_frontmatter(page)
     assert claim_problems(root, PAGE_NAME, data["sources"], body) == ([], [])
-    assert write(root) is False
+    assert write(root) == []
 
 
 def test_missing_annex_name_is_reported_not_guessed(root, upstream):
@@ -141,8 +171,54 @@ def test_health_rejects_stale_or_edited_generated_page(root, upstream):
     assert any("differs from its dataset snapshot" in e for e in run_health_check(root).errors)
 
 
-def test_repository_generated_page_is_current():
-    assert (ROOT / "wiki" / "chemmon-guidance" / PAGE_NAME).read_text() == render(ROOT)
+def test_repository_generated_pages_are_current():
+    for name, render_page in GENERATED.items():
+        assert (ROOT / "wiki" / "chemmon-guidance" / name).read_text() == render_page(ROOT), name
+
+
+def test_gaps_page_separates_confirmed_gaps_from_unconfirmed_links(root, upstream):
+    report, written = ingest(root, str(upstream), "main")
+    assert written and f"Regenerated {GAPS_PAGE_NAME}" in report
+    page = (root / "wiki" / "chemmon-guidance" / GAPS_PAGE_NAME).read_text()
+    gaps, unlinked = page.split("## Confirmed catalogue gaps", 1)[1].split("## No confirmed PARAM link", 1)
+    # Confirmed gap: legal source, date, reason, related terms labelled as not exact, resolution.
+    assert "Benthiavalicarb" in gaps and "https://eur-lex.europa.eu/eli/reg/2026/147/oj/eng" in gaps
+    assert "2026-08-12" in gaps and "PARAM 17.8" in gaps and "also includes S-L and R-D" in gaps
+    assert "`RF-00004656-PAR`" in gaps and "broader four isomer residue" in gaps and "not an exact match" in gaps
+    assert "Use an updated EFSA code" in gaps
+    # Unconfirmed: listed without any code, and not presented as missing from PARAM.
+    assert "| M4 only (AE 0172747) | near match only |" in unlinked.replace("`1020000` † | ", "")
+    assert "RF-2-PAR" not in page and "Benthiavalicarb" not in unlinked
+    assert "not evidence that PARAM has no code" in page
+    assert "Glyphosate" not in page and "Acetamiprid" not in page
+    data, body = split_frontmatter(page)
+    assert claim_problems(root, GAPS_PAGE_NAME, data["sources"], body) == ([], [])
+    assert write(root) == []
+
+
+def test_gap_codes_from_upstream_are_validated(root, upstream):
+    record = json.loads(json.dumps(GAP_RECORD))
+    record["default"]["catalogue_gap"]["related_terms"][0]["code"] = "RF-1`]] [[x"
+    records = json.loads(json.dumps(RECORDS)) + [record]
+    for r in records:
+        for scope in [r["default"], *r["exceptions"]]:
+            scope.setdefault("method", "exact")
+    commit_records(upstream, records, "odd gap code")
+    ingest(root, str(upstream), "main")
+    page = (root / "wiki" / "chemmon-guidance" / GAPS_PAGE_NAME).read_text()
+    assert "[[x" not in page and "`RF-1" not in page
+
+
+def test_health_rejects_edited_gaps_page(root, upstream):
+    for path in ROOT_PAGE_PATHS.values():
+        (root / path).parent.mkdir(parents=True, exist_ok=True)
+        (root / path).write_text("# Orientation\n")
+    (root / "index.md").write_text(f"- [Gaps](wiki/chemmon-guidance/{GAPS_PAGE_NAME}): Generated list\n")
+    ingest(root, str(upstream), "main")
+    assert not any("differs from its dataset snapshot" in e for e in run_health_check(root).errors)
+    page = root / "wiki" / "chemmon-guidance" / GAPS_PAGE_NAME
+    page.write_text(page.read_text().replace("near match only", "exact"))
+    assert any(f"{GAPS_PAGE_NAME}: differs from its dataset snapshot" in e for e in run_health_check(root).errors)
 
 
 def test_upstream_text_cannot_forge_locators_codes_or_links(root, upstream):

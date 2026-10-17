@@ -137,10 +137,11 @@ When rd-bridge merges a new version:
    the source review record, and add a `log.md` entry naming the old and new
    commits.
 
-Generated pages: `pesticide-residue-definitions-by-food.md` is rendered by
+Generated pages: `pesticide-residue-definitions-by-food.md` and
+`pesticide-residue-definitions-without-param-link.md` are rendered by
 `tools/rd_bridge_page.py` from the rd-bridge snapshot and the Annex I names in
-`chemmon_docs/datasets/eu-annex-i/`. Never edit it; change the generator. The
-health check fails when the page differs from what the generator renders. If
+`chemmon_docs/datasets/eu-annex-i/`. Never edit them; change the generator. The
+health check fails when a page differs from what the generator renders. If
 a new snapshot uses an Annex I code without a name, refresh the names with
 `python tools/ingest_annex_i.py` (EU Pesticides Database API).
 
