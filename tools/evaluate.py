@@ -84,7 +84,9 @@ def estimated_cost(usage: dict, prices: dict, model: str) -> float | None:
     rate = prices.get(model)
     if rate is None:
         return None
-    return round((usage.get('input_tokens', 0) * rate['input_per_million'] +
+    # Anthropic prompt caching: 5-minute cache writes cost 1.25x input, reads 0.1x.
+    cached = (usage.get('cache_creation_input_tokens', 0) * 1.25 + usage.get('cache_read_input_tokens', 0) * 0.1)
+    return round(((usage.get('input_tokens', 0) + cached) * rate['input_per_million'] +
                   usage.get('output_tokens', 0) * rate['output_per_million']) / 1e6, 8)
 
 

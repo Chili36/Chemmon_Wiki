@@ -234,6 +234,6 @@ def test_other_providers_keep_max_tokens(monkeypatch):
     import wiki_api.answerer as A
     client = _fake_client(_chat_response(content="x (a.md)"))
     monkeypatch.setattr(A, "client_for_model", lambda s: (client, s.split("/")[-1]))
-    A.WikiAnswerer(model_str="anthropic/claude-sonnet-5-5").run(question="q", pages=[])
+    A.WikiAnswerer(model_str="google/gemini-3-pro").run(question="q", pages=[])
     kwargs = client.chat.completions.create.call_args.kwargs
-    assert kwargs["max_tokens"] == 8192 and "max_completion_tokens" not in kwargs
+    assert kwargs["max_tokens"] == 2000 and "max_completion_tokens" not in kwargs
