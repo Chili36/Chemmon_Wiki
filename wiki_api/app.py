@@ -194,7 +194,7 @@ def context_pack(request: ContextPackRequest) -> dict[str, Any]:
         names = selected_names(store, result.pages_used, request.max_pages - 1)
         trace = _selection_trace(selector, result)
     try:
-        pack = bounded_pack(store, names, request.max_pages, request.max_chars)
+        pack = bounded_pack(store, names, request.max_pages, request.max_chars, question=request.question)
     except (ValueError, OSError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     # Only the selector runs: callers receive evidence, never an intermediate answer.
@@ -502,7 +502,7 @@ def ask_question(request: AskRequest) -> AskResponse:
     page_read_start = time.perf_counter()
     selected_page_names = selected_names(store, selection_result.pages_used, request.max_pages)
     pages_raw = [store.read_page(name) for name in selected_page_names]
-    page_contents = [full_evidence(store, name) for name in selected_page_names]
+    page_contents = [full_evidence(store, name, question=request.question) for name in selected_page_names]
     page_read_end = time.perf_counter()
 
     # Optional navigation hints use only remaining slots; never replace evidence.
