@@ -1,0 +1,1046 @@
+{
+  "version": 1,
+  "created_at": "2026-10-18T09:19:15.319104+00:00",
+  "mode": "select",
+  "execution": "live",
+  "split": "development",
+  "label_status": "draft",
+  "settings": {
+    "models": [
+      "anthropic/claude-haiku-5-5",
+      "jev-1.13.0"
+    ],
+    "catalog_mode": "hints",
+    "answer_max_tokens": 2000,
+    "graph_expansion": false,
+    "temperature": "provider default",
+    "pricing": {
+      "anthropic/claude-haiku-5-5": {
+        "input_per_million": 0.1,
+        "output_per_million": 0.5,
+        "source": "app pricing table"
+      },
+      "jev-1.13.0": {
+        "input_per_million": 0.042,
+        "output_per_million": 0.0,
+        "source": "docs.typesafe.ai/models"
+      }
+    }
+  },
+  "corpus_snapshot": {
+    "chemmon_docs/EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf": "6208be1617c039ed652a2f96c1d4562993f4088d5dd945c145bff939be14202b",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf": "5988380167d3c0029ddab95719cc71b90a296b2675ce6613053d6615be5a13cf",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf": "6d4ef5db15ea29c14266203e8deeaba4bf64a9d5ccea8b6307c74dd8e5185cac",
+    "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf": "473edb8d03366a828c7d0bb0c9709dcf64c8f3b03fceb56b94842f78dcf549bb",
+    "chemmon_docs/datasets/eu-annex-i/manifest.json": "58d1a5af2665d2d42e7ed748cf793ab0bc45833bf749d49e655914e43ace2034",
+    "chemmon_docs/datasets/eu-annex-i/products.json": "9dd93533556b329652089027102b01ad3addd49a24b66eea438aaa63168650a4",
+    "chemmon_docs/datasets/rd-bridge/DATA_SOURCES.md": "588bac6e6e7622877e8eeb4006288ae00d6ac73e684a5507bd657a6d5037dc88",
+    "chemmon_docs/datasets/rd-bridge/interpretation_guidance.json": "f9b731527d265595effdf6b8b2712903239cb1a5dfef9336b31dab123af69536",
+    "chemmon_docs/datasets/rd-bridge/manifest.json": "070e793afc46c3d11f14fbbe2257c7ed8ef091644a6f594b005e73ca4c6dd014",
+    "chemmon_docs/datasets/rd-bridge/residue_param_map.json": "c7d224ba60b704a70faa39d65f18ee085a0d923668359e7421c3d94020904304",
+    "wiki/chemmon-guidance/baby-food-reporting.md": "42eeb612984541f71f26ce136fe0f998f60780e5fffc24ae6d9862042f1200e2",
+    "wiki/chemmon-guidance/business-rules-2026-changes.md": "c7a4504105a516156e59879f0d4c2cf369b3ab221090638bd73d39fecdbfe667",
+    "wiki/chemmon-guidance/business-rules-additives.md": "97c409d28e63952a4805b003409333967b3b6dded6802bf26ceed78fd0504fa9",
+    "wiki/chemmon-guidance/business-rules-baby-food.md": "cbfad369f48dd24d30ae7c98ae0e35f87abc77d204116539ce05ea498f425e55",
+    "wiki/chemmon-guidance/business-rules-contaminant.md": "ec105afce0bd3aaa3ed408ceaef68b4360ffe9dc7e1cb48c7aa541d3826cd6e3",
+    "wiki/chemmon-guidance/business-rules-cross-cutting.md": "ba1231b0b9e1bf0695fa30f6ef3cff7068f17e460d7ef4bfb6ca82b2a2f1e7bd",
+    "wiki/chemmon-guidance/business-rules-gbr-consistency.md": "4911f9142314cf16a8aa1555e5eef37bdf482378e1f9bd871fff908723816084",
+    "wiki/chemmon-guidance/business-rules-gbr-dates.md": "1cf558ea3524473a738264a572357e06c09850f1de8a6916f5094c086f8240dd",
+    "wiki/chemmon-guidance/business-rules-gbr-results.md": "9383f975541f336f34ad70ba4bb69921e3e6e044a9a87a4382b7119c30731abf",
+    "wiki/chemmon-guidance/business-rules-gbr.md": "f1afc9913b9aae935640a936c8969be9c41ca45322834e9eb26e2ddbf62b4cd7",
+    "wiki/chemmon-guidance/business-rules-legal-limits.md": "4a294d5557763f5bc71e2c2f5101d69d538c91bec5501f60c455ae2442bc337c",
+    "wiki/chemmon-guidance/business-rules-pesticide.md": "94bf375090362ed1f80e55c04da88f4dc60d0f9a45ec9c4d9efe258af2b56dc6",
+    "wiki/chemmon-guidance/business-rules-vmpr.md": "6896e0d84577512b9042b021a215ffcb4d38581566d30f7a941b194279969c8e",
+    "wiki/chemmon-guidance/business-rules.md": "9788fa83228d2bee877b705fc9069ef29e06c659a5ad9ffd6aebb789c4b1e282",
+    "wiki/chemmon-guidance/chemmon-background.md": "f84d2a1e083480aaec5bb4a346253a388bbd7b532c0cf0650c48367dd6b04470",
+    "wiki/chemmon-guidance/chemmon-change-management.md": "3f6aabe6cf6a4c8ab1361ff71b2f0a93dab7c69e384b0c7448895e932c9ed5ce",
+    "wiki/chemmon-guidance/chemmon-data-governance-and-transparency.md": "4b832e02253a7a56c7910743d98d29ed08a5eed4cefea0b9b34937341caccb7c",
+    "wiki/chemmon-guidance/chemmon-matrix-classification-algorithms.md": "c3d6eef201b0cbacd9c2f3873e7c817a7c6fcd618f64faa13f5ad6815e744a8d",
+    "wiki/chemmon-guidance/chemmon-overview.md": "79014d2e66e8013587fc6d1e5a26a830d1d8198db73c95461632f48e99290d9a",
+    "wiki/chemmon-guidance/chemmon-reports.md": "956b480a321539882b8d6dfe5681d1f28feca1c814b820fa7882a2655261fc2b",
+    "wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md": "46f87e07e4082bcf23355df12b799c6129d847d41e231fe8db9ecc36ca09f0d3",
+    "wiki/chemmon-guidance/chemmon-single-ssd2-collection.md": "7392250684efbf21a78f0b40573318b7a8e1b4f3f8ce42cc56ab3640a286b7c6",
+    "wiki/chemmon-guidance/contaminant-reporting.md": "caa7d1dc5f06ecc574fc6568f8b7b65bafa5950b5554376ea3910c14c7e98b37",
+    "wiki/chemmon-guidance/controlled-terminology-catalogues.md": "47a7290d6263fa643898b8f8959d8943dc1eb95a87994350761b0442bca0c8f0",
+    "wiki/chemmon-guidance/data-validation-and-acceptance.md": "ab512ae89aecbec8d031f390148696695a26f9576feed9ac74bc16c5be82ea7b",
+    "wiki/chemmon-guidance/fa-ff-no-presence-data-model.md": "0a687505264d45a88278595ea9fd7fea627c44bf003bddba7aa914a40a0fc7e0",
+    "wiki/chemmon-guidance/fa-ff-use-levels-data-model.md": "6f979bccb3cfe47f2683c0a595bd831d4b35681eb90fff9a0581f6cab8e2d628",
+    "wiki/chemmon-guidance/food-additives-reporting.md": "fb6be258580e3e59300124d1bdb059d11b462e9ffd2bd1d5d7cfb82d83046bf7",
+    "wiki/chemmon-guidance/foodex2-facets-legislative-descriptive.md": "c9c2b6623ae270b3b22a5190e493875e56746c6cb64db3fdbdba8d2e94d9e043",
+    "wiki/chemmon-guidance/foodex2-facets-packaging-consumer.md": "ec37218fc86713e7960bba615b68f2f95c5e128d503b96d0bbc5d36c5a75d1dc",
+    "wiki/chemmon-guidance/foodex2-facets-source-origin.md": "e052e0bf9b7cc2c7c070adb20d197e7a735deda037cb749482bb93c62940b353",
+    "wiki/chemmon-guidance/foodex2-facets-state-process.md": "7652b428144a2564e5c548c2c248c6e9b089b197d1e14425de2855db2dc1be1a",
+    "wiki/chemmon-guidance/foodex2-facets.md": "4e503ce7ad06438d0b9c8f80ecc4496ee08a2dc33f5b5fd0050a8793e56b5130",
+    "wiki/chemmon-guidance/foodex2-in-chemmon.md": "04602e505b2ec6a17672ea197a98b7ec0db5b7fe04cdc2b1f01c3792c305f028",
+    "wiki/chemmon-guidance/legal-limits-database.md": "d35d62e4dc69305bb6504c4a57094f409075174d7937e5828d1a2695c0c1707a",
+    "wiki/chemmon-guidance/pesticide-reporting.md": "059801a26aa9bf90b67388c7dc5ee10b3eee13e897e5527b9c4bfee5bb6c35fa",
+    "wiki/chemmon-guidance/pesticide-residue-definition-by-matrix.md": "22deeea6433d0985c686724a3080951f42b5f700c8a731909d8d2e52d28e02c8",
+    "wiki/chemmon-guidance/pesticide-residue-definition-wording.md": "767dd5c795d57da05730bb905fc5ddc43be0d03863401e1a65dc9c0ea0b97112",
+    "wiki/chemmon-guidance/pesticide-residue-definitions-by-food.md": "992d5ec11dbea37c068a0e2b841b73602f49c367ba6f360b2cb5ee277c28cca3",
+    "wiki/chemmon-guidance/reporting-flags.md": "d431193a085fe1d10d2ae0f5f40b509fbfd6644e7e5eb487b4b1ecd7ba2b2df1",
+    "wiki/chemmon-guidance/ssd2-analysis-context.md": "222cf1bc8e738d20e16dfeab9f363aad0f99adde373b950655b1af126160c5f8",
+    "wiki/chemmon-guidance/ssd2-analysis-laboratory.md": "cbda950b95018d77d829ad8314f893b717974955d7799a00aeff8f9309a65360",
+    "wiki/chemmon-guidance/ssd2-analysis-methods.md": "73e4e996f5f51a4993b8df164ad6b7b9d2de494627654d06b988b806ac27e1ef",
+    "wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md": "3fddbfdc19abddfdf2c53ae6c07735d1c7d86836bfa72124b1ce6383e708f386",
+    "wiki/chemmon-guidance/ssd2-data-model.md": "f0f0ea19efc3c7b66fc664cc15e6861f6a2a60eb583df43630a75d22d47a8c47",
+    "wiki/chemmon-guidance/ssd2-elements-analysis.md": "38d90645e0673ad66b34acc67cc2a0028f1c3248aad9e92d0a378f3e743c4218",
+    "wiki/chemmon-guidance/ssd2-elements-evaluation.md": "2c7f980b699ce85972900fc200201c0f644536882698c58cfadec9f6c31b7df0",
+    "wiki/chemmon-guidance/ssd2-elements-matrix.md": "e0abd33cb8b81e372188bfd9d26c4caee7a36ac2711e41a92f097fe01317ec13",
+    "wiki/chemmon-guidance/ssd2-elements-programme.md": "6de4ed46e6e72d890214f833b28d9a265f350a3c98f9c788df6884cc593b070e",
+    "wiki/chemmon-guidance/ssd2-elements-result.md": "0ce962dca163a41b86e1c4e68e48c84ae9bb2f46544a35ef5f16c4e438f48971",
+    "wiki/chemmon-guidance/ssd2-elements-sampling.md": "2ca250540fef3bad69c97804cb50732e96442fa17d2cba7d4e1e8e3c9018689c",
+    "wiki/chemmon-guidance/ssd2-evaluation-actions.md": "15fd7a335c1dc62439be3ca80c46b503109088e94e8b6b899c0b32fc5fae5812",
+    "wiki/chemmon-guidance/ssd2-evaluation-code.md": "1577d0339b0ed8ee4ec07ce093cc926d5a257b0eb90b5322aad8d09f687299d9",
+    "wiki/chemmon-guidance/ssd2-evaluation-conclusions.md": "9e2fc9c1a959e285d085e06b5a6d34d847209c229c983f974a5d43642422198b",
+    "wiki/chemmon-guidance/ssd2-evaluation-limits.md": "1c6790d03dfff2db664aef7777c6aa230572b07c4b4459afe5ac4d61da7bc398",
+    "wiki/chemmon-guidance/ssd2-matrix-analysed-sample.md": "6a5b37f7443cb9388880ddb22b80a8e5befb06ba1678314e5e7d5245da75a515",
+    "wiki/chemmon-guidance/ssd2-matrix-origin.md": "dd78c981c428e9e22d8679133cc2970852bf1c69c3ebcc3d899caed2b9abe70a",
+    "wiki/chemmon-guidance/ssd2-matrix-sampled-matrix.md": "d52741e876a1a8e5e6e1de1a8f0b33319012b84a0620843b4dbcd7a2b3bf8a2a",
+    "wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md": "7f12431a4d6b48fdf4bd4fffb93150c12f6caee6d50734b6b1322b06767ed954",
+    "wiki/chemmon-guidance/ssd2-programme-identification.md": "59143b07021b66b36ebb1e245d98075d24107f7fbba4183e8418606989c3b857",
+    "wiki/chemmon-guidance/ssd2-programme-legal-reference.md": "8a5a0adc1108d36cfd0330f29473d0b8e54da9d5a26cab9b581ea5b09799c61d",
+    "wiki/chemmon-guidance/ssd2-programme-strategy-and-type.md": "91841ba5e4d1cd71d04e22c75c34ac62d3c02ee7a01798fc7429482bb9fe1ffd",
+    "wiki/chemmon-guidance/ssd2-programme-valid-combinations.md": "8c22a50ef5aa157b6fd2efad6587a316ab7a0fd235a806e666437e88aae42cf0",
+    "wiki/chemmon-guidance/ssd2-result-expression-basis.md": "c4981ac5f77905fbf64710137a53dab3139f80068be2881bc957f5f59e31b332",
+    "wiki/chemmon-guidance/ssd2-result-identification.md": "d0c0e0d58000182f00d20b006e8ed5ad4856a1d0a0f344647a8f5ceaa9031f67",
+    "wiki/chemmon-guidance/ssd2-result-method-accreditation.md": "70cf0998a72651568de3ffe9a21c97f075a409a9cb4643b879a4d0ada0483687",
+    "wiki/chemmon-guidance/ssd2-result-recovery-correction.md": "b03135b1cf0bd219e9ce4c37507c3ad22c04701acf8cf254c5d55aa69a7cde44",
+    "wiki/chemmon-guidance/ssd2-result-uncertainty.md": "2ba19e9fe115e5e3b314d3fb07575905ee21fd3bfcddfb12d4a729843bfa883b",
+    "wiki/chemmon-guidance/ssd2-result-units-and-limits.md": "596148255c7689a906ef15f938f6250f4dbbd5b28aa50c1abefa57cc1e3863db",
+    "wiki/chemmon-guidance/ssd2-result-value-and-type.md": "7440d24702ff281e5062698e2b05d6127277e5b3b9660fa0fcb9b7b7359da121",
+    "wiki/chemmon-guidance/ssd2-sample-identifiers.md": "8e68174a8d57ed631da8a2d9eaa4344da1c96e348db2f5ab2c3916448c9d506a",
+    "wiki/chemmon-guidance/ssd2-sampling-country.md": "7c621858964aa24dcbcf938ed1dfca6a9b9ff64d1b18ce4f54641d79c7a8d812",
+    "wiki/chemmon-guidance/ssd2-sampling-date.md": "d59419eb0bf6ef6515a40614d0d41dd3eee37a5d5561c3c15a48eb7679345c09",
+    "wiki/chemmon-guidance/ssd2-sampling-event-and-unit.md": "bd01d848e2ffc6b79422a7ccbcb8df61995ecaa5cbc4137bdea0619f1b3ddb42",
+    "wiki/chemmon-guidance/ssd2-sampling-method-and-point.md": "0037ee26a8fd2bc639d5928c04a18e0e70daffe155f7c2425ab43cd509cb1465",
+    "wiki/chemmon-guidance/vmpr-reporting.md": "6aaaa43fab9d67985bce4d80c6786747cb9054746fb2a5e8f69582fa1c0f77a1",
+    "index.md": "c388ef1dd42283ac5031bfb3fea5713f241a18ede879013ed3c02e9801c7abbf"
+  },
+  "prompt_sha256": "e1ad51bf766ef07f7f52328d6ae8b9bddc1262f090587f2216001ba7f27ba7bc",
+  "catalog_sha256": "83230003489a11c18ff93150a00d5c2a8af75fb1bde78ebfa944ac13da38aa52",
+  "dataset_sha256": "7b3cd66183aea28f8f2d412e28ad777a6edbf77c4cfeb25a73d46959e27a80df",
+  "limitations": [
+    "Draft labels are exploratory, not a human-reviewed quality baseline.",
+    "Citation membership is not claim support. Correctness and support require human grades.",
+    "Provider-default sampling is recorded; repeated runs may differ.",
+    "Model comparison must hold corpus, questions, prompts and budgets fixed."
+  ],
+  "results": [
+    {
+      "case_id": "units-bin",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "In SSD2, does GBR27 require resUnit when resType is BIN? What does GBR28 require?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "State that GBR27 applies when resType differs from BIN.",
+        "GBR28 requires resQualValue for BIN.",
+        "Mention GBR29 if numeric limits are present; do not say BIN never needs units."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-gbr.md",
+        "ssd2-result-value-and-type.md",
+        "ssd2-result-units-and-limits.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6233,
+        "output_tokens": 53,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6286,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6233,
+            "output_tokens": 53,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6286
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0006498,
+      "wall_time_ms": 2187
+    },
+    {
+      "case_id": "vmpr-exception",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "For VMPR reporting, do F01 and F02 always have to be supplied, including feed, water and processed food?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Do not make F01/F02 universal. Preserve feed/water and processed/composite exceptions.",
+        "Do not confuse F01/F02 exceptions with absence of all matrix requirements."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "ssd2-matrix-vmpr-coding.md",
+        "foodex2-facets-source-origin.md",
+        "vmpr-reporting.md",
+        "business-rules-vmpr.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6234,
+        "output_tokens": 72,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6306,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6234,
+            "output_tokens": 72,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6306
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0006594,
+      "wall_time_ms": 1236
+    },
+    {
+      "case_id": "three-paths",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "I have additive information from labels, laboratory results and manufacturers. Can I submit all three with the same data model?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Distinguish SSD2 analytical results, no-presence collection and use-levels collection.",
+        "Ask which type of record is being submitted if necessary; do not apply USE rules universally."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "food-additives-reporting.md",
+        "fa-ff-no-presence-data-model.md",
+        "fa-ff-use-levels-data-model.md",
+        "business-rules-additives.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6233,
+        "output_tokens": 70,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6303,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6233,
+            "output_tokens": 70,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6303
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0006583,
+      "wall_time_ms": 1183
+    },
+    {
+      "case_id": "pre-implicit",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "For 2026 no-presence data, an implicit F33 is already present. Is another explicit F33 an Error?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Identify PRE15 as Warning; explicit F33 is not needed if implicit.",
+        "Do not call it USE23 or a submission-blocking Error."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "fa-ff-no-presence-data-model.md",
+        "business-rules-2026-changes.md",
+        "foodex2-facets-legislative-descriptive.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6234,
+        "output_tokens": 301,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6535,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6234,
+            "output_tokens": 301,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6535
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0007739,
+      "wall_time_ms": 2537
+    },
+    {
+      "case_id": "use-implicit",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "For 2026 use-level data, may I add an explicit F33 that is already implicit in matCode?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "USE23 prohibits the duplicate and is an Error.",
+        "Keep matCode and use-level data distinct from sampMatCode/PRE15."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "fa-ff-use-levels-data-model.md",
+        "foodex2-facets-legislative-descriptive.md",
+        "business-rules-2026-changes.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6230,
+        "output_tokens": 70,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6300,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6230,
+            "output_tokens": 70,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6300
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.000658,
+      "wall_time_ms": 929
+    },
+    {
+      "case_id": "ssd2-additive-implicit",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "For 2026 analytical SSD2 food-additive results, what happens if I repeat the implicit F33?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "CHEMON109 (wiki CHEMMON109) is a Warning in 2026.",
+        "Do not turn a possible 2027 change into the 2026 rule."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "business-rules-2026-changes.md",
+        "foodex2-facets-legislative-descriptive.md",
+        "food-additives-reporting.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6233,
+        "output_tokens": 361,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6594,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6233,
+            "output_tokens": 361,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6594
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0008038,
+      "wall_time_ms": 1881
+    },
+    {
+      "case_id": "pesticide-ll",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "For a processed pesticide sample, do LL_01_PPP and LL_02_PPP apply in the same way as for an unprocessed sample?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "State that these rule definitions require an unprocessed sample.",
+        "Preserve VAL and W002A-or-empty conditions; do not claim processing makes every legal obligation disappear."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-legal-limits.md",
+        "business-rules-pesticide.md",
+        "pesticide-reporting.md",
+        "ssd2-result-value-and-type.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6245,
+        "output_tokens": 62,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6307,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6245,
+            "output_tokens": 62,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6307
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0006555,
+      "wall_time_ms": 1628
+    },
+    {
+      "case_id": "contaminant-action",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "For a contaminant result with evalCode J003A in 2026, is omission of actTakenCode an Error under CHEMON37?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "CHEMON37 is a Warning, and actTakenCode should be reported.",
+        "Do not transfer CHEMON85 VMPR/pesticide requirements to contaminants."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "ssd2-evaluation-actions.md",
+        "business-rules-contaminant.md",
+        "business-rules-cross-cutting.md",
+        "business-rules-2026-changes.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6240,
+        "output_tokens": 667,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6907,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6240,
+            "output_tokens": 667,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6907
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0009575,
+      "wall_time_ms": 3355
+    },
+    {
+      "case_id": "ambiguous-facet",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "Is F03 mandatory for my additive data?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Request reporting path, category and whether F03 is implicit before a categorical answer.",
+        "Distinguish SSD2 recommendations from PRE/USE conditional requirements."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "foodex2-facets-state-process.md",
+        "foodex2-in-chemmon.md",
+        "food-additives-reporting.md"
+      ],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6214,
+        "output_tokens": 225,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6439,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6214,
+            "output_tokens": 225,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6439
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0007339,
+      "wall_time_ms": 1564
+    },
+    {
+      "case_id": "no-evidence",
+      "model": "anthropic/claude-haiku-5-5",
+      "question": "What is the weather in Stockholm tomorrow?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Say the supplied evidence cannot answer; do not invent a weather forecast or cite a reporting page."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": null,
+        "empty_selection_correct": true,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [],
+      "usage": {
+        "model": "claude-haiku-5-5",
+        "calls": 1,
+        "input_tokens": 6216,
+        "output_tokens": 10,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 6226,
+        "per_call": [
+          {
+            "stop_reason": "stop",
+            "input_tokens": 6216,
+            "output_tokens": 10,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6226
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0006266,
+      "wall_time_ms": 2382
+    },
+    {
+      "case_id": "units-bin",
+      "model": "jev-1.13.0",
+      "question": "In SSD2, does GBR27 require resUnit when resType is BIN? What does GBR28 require?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "State that GBR27 applies when resType differs from BIN.",
+        "GBR28 requires resQualValue for BIN.",
+        "Mention GBR29 if numeric limits are present; do not say BIN never needs units."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-gbr.md",
+        "ssd2-result-units-and-limits.md",
+        "ssd2-result-value-and-type.md",
+        "ssd2-elements-result.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24104,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25314,
+        "per_call": [
+          {
+            "input_tokens": 24104,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25314,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101237,
+      "wall_time_ms": 1102
+    },
+    {
+      "case_id": "vmpr-exception",
+      "model": "jev-1.13.0",
+      "question": "For VMPR reporting, do F01 and F02 always have to be supplied, including feed, water and processed food?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Do not make F01/F02 universal. Preserve feed/water and processed/composite exceptions.",
+        "Do not confuse F01/F02 exceptions with absence of all matrix requirements."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "ssd2-matrix-vmpr-coding.md",
+        "vmpr-reporting.md",
+        "business-rules-vmpr.md",
+        "foodex2-facets-source-origin.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24107,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25317,
+        "per_call": [
+          {
+            "input_tokens": 24107,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25317,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101249,
+      "wall_time_ms": 878
+    },
+    {
+      "case_id": "three-paths",
+      "model": "jev-1.13.0",
+      "question": "I have additive information from labels, laboratory results and manufacturers. Can I submit all three with the same data model?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Distinguish SSD2 analytical results, no-presence collection and use-levels collection.",
+        "Ask which type of record is being submitted if necessary; do not apply USE rules universally."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "food-additives-reporting.md",
+        "fa-ff-no-presence-data-model.md",
+        "chemmon-single-ssd2-collection.md",
+        "fa-ff-use-levels-data-model.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24103,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25313,
+        "per_call": [
+          {
+            "input_tokens": 24103,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25313,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101233,
+      "wall_time_ms": 684
+    },
+    {
+      "case_id": "pre-implicit",
+      "model": "jev-1.13.0",
+      "question": "For 2026 no-presence data, an implicit F33 is already present. Is another explicit F33 an Error?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Identify PRE15 as Warning; explicit F33 is not needed if implicit.",
+        "Do not call it USE23 or a submission-blocking Error."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "foodex2-facets-legislative-descriptive.md",
+        "fa-ff-no-presence-data-model.md",
+        "ssd2-matrix-vmpr-coding.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24109,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25319,
+        "per_call": [
+          {
+            "input_tokens": 24109,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25319,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101258,
+      "wall_time_ms": 630
+    },
+    {
+      "case_id": "use-implicit",
+      "model": "jev-1.13.0",
+      "question": "For 2026 use-level data, may I add an explicit F33 that is already implicit in matCode?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "USE23 prohibits the duplicate and is an Error.",
+        "Keep matCode and use-level data distinct from sampMatCode/PRE15."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "foodex2-facets-legislative-descriptive.md",
+        "business-rules-additives.md",
+        "fa-ff-use-levels-data-model.md",
+        "foodex2-in-chemmon.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24106,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25316,
+        "per_call": [
+          {
+            "input_tokens": 24106,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25316,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101245,
+      "wall_time_ms": 592
+    },
+    {
+      "case_id": "ssd2-additive-implicit",
+      "model": "jev-1.13.0",
+      "question": "For 2026 analytical SSD2 food-additive results, what happens if I repeat the implicit F33?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "CHEMON109 (wiki CHEMMON109) is a Warning in 2026.",
+        "Do not turn a possible 2027 change into the 2026 rule."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "foodex2-facets-legislative-descriptive.md",
+        "business-rules-2026-changes.md",
+        "ssd2-matrix-sampled-matrix.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24105,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25315,
+        "per_call": [
+          {
+            "input_tokens": 24105,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25315,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101241,
+      "wall_time_ms": 690
+    },
+    {
+      "case_id": "pesticide-ll",
+      "model": "jev-1.13.0",
+      "question": "For a processed pesticide sample, do LL_01_PPP and LL_02_PPP apply in the same way as for an unprocessed sample?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "State that these rule definitions require an unprocessed sample.",
+        "Preserve VAL and W002A-or-empty conditions; do not claim processing makes every legal obligation disappear."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-legal-limits.md",
+        "business-rules-pesticide.md",
+        "ssd2-evaluation-limits.md",
+        "pesticide-reporting.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24114,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25324,
+        "per_call": [
+          {
+            "input_tokens": 24114,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25324,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101279,
+      "wall_time_ms": 648
+    },
+    {
+      "case_id": "contaminant-action",
+      "model": "jev-1.13.0",
+      "question": "For a contaminant result with evalCode J003A in 2026, is omission of actTakenCode an Error under CHEMON37?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "CHEMON37 is a Warning, and actTakenCode should be reported.",
+        "Do not transfer CHEMON85 VMPR/pesticide requirements to contaminants."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "ssd2-evaluation-actions.md",
+        "business-rules-cross-cutting.md",
+        "ssd2-evaluation-code.md",
+        "ssd2-elements-evaluation.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24116,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25326,
+        "per_call": [
+          {
+            "input_tokens": 24116,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25326,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101287,
+      "wall_time_ms": 537
+    },
+    {
+      "case_id": "ambiguous-facet",
+      "model": "jev-1.13.0",
+      "question": "Is F03 mandatory for my additive data?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Request reporting path, category and whether F03 is implicit before a categorical answer.",
+        "Distinguish SSD2 recommendations from PRE/USE conditional requirements."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": 1.0,
+        "empty_selection_correct": null,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [
+        "business-rules-additives.md",
+        "foodex2-facets-state-process.md",
+        "foodex2-in-chemmon.md",
+        "food-additives-reporting.md"
+      ],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24090,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25300,
+        "per_call": [
+          {
+            "input_tokens": 24090,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25300,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.00101178,
+      "wall_time_ms": 537
+    },
+    {
+      "case_id": "no-evidence",
+      "model": "jev-1.13.0",
+      "question": "What is the weather in Stockholm tomorrow?",
+      "max_pages": 4,
+      "review_status": "draft",
+      "rubric": [
+        "Say the supplied evidence cannot answer; do not invent a weather forecast or cite a reporting page."
+      ],
+      "status": "completed",
+      "metrics": {
+        "required_page_recall": null,
+        "empty_selection_correct": true,
+        "wrong_domain_or_path_count": 0,
+        "wrong_domain_or_path_pages": []
+      },
+      "pages_used": [],
+      "usage": {
+        "model": "jev-1.13.0",
+        "calls": 1,
+        "input_tokens": 24088,
+        "output_tokens": 1210,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 25298,
+        "per_call": [
+          {
+            "input_tokens": 24088,
+            "output_tokens": 1210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 25298,
+            "stop_reason": "completed"
+          }
+        ]
+      },
+      "estimated_cost_usd": 0.0010117,
+      "wall_time_ms": 650
+    }
+  ],
+  "summary": {
+    "anthropic/claude-haiku-5-5": {
+      "cases": 10,
+      "completed": 10,
+      "errors": 0,
+      "mean_required_page_recall": 1.0,
+      "wrong_domain_or_path_cases": 0,
+      "answer_accuracy": null,
+      "citation_support_rate": null,
+      "graded_answers": 0,
+      "mean_wall_time_ms": 1888.2,
+      "estimated_total_cost_usd": 0.0071767
+    },
+    "jev-1.13.0": {
+      "cases": 10,
+      "completed": 10,
+      "errors": 0,
+      "mean_required_page_recall": 1.0,
+      "wrong_domain_or_path_cases": 0,
+      "answer_accuracy": null,
+      "citation_support_rate": null,
+      "graded_answers": 0,
+      "mean_wall_time_ms": 694.8,
+      "estimated_total_cost_usd": 0.01012377
+    }
+  },
+  "pricing_file_sha256": "be31a9f06d40b29eddc16107ac28470db61a3d8986c3782e4ab4c60d4da9a9c2"
+}
