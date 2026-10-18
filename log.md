@@ -1052,6 +1052,21 @@ are not cited; the OECD text itself was not available to verify the
 paraphrases; rd-bridge's audit of 33 unresolved interpretation differences is
 not wiki content.
 
+## 2026-10-18 — Shorter by-food page (#40)
+
+`pesticide-residue-definitions-by-food.md` cost about 13,400 tokens whenever it
+was selected, nearly half of a typical pesticide answer. It is now one line per
+pesticide, with a one-line Annex I legend (farmed-animal tissue codes explained
+by their numbering pattern instead of 40 entries) and three short instruction
+bullets plus a limits line. Every legal definition, scope and trusted code is
+kept verbatim (checked programmatically). 13,400 -> 10,800 tokens.
+
+The claim check pairs scopes with codes only in table rows, so a new test checks
+that pairing on the list. Live check: the abamectin question gave the same
+content; total tokens about 30k -> 27k.
+
+Lesson kept from the FoodEx2 wiki: shorter pages, but never by deleting
+knowledge. The remaining bulk is the definitions and codes themselves.
 ## 2026-10-18 — Jev page selector evaluated against Haiku (#44)
 
 Ported the FoodEx2 wiki's Jev selector as an opt-in (`selector_model:

@@ -107,12 +107,13 @@ def test_ingest_regenerates_complete_page_without_untrusted_codes(root, upstream
     report, written = ingest(root, str(upstream), "main")
     assert written and f"Regenerated {PAGE_NAME}" in report
     page = (root / "wiki" / "chemmon-guidance" / PAGE_NAME).read_text()
-    assert "2 of 3 definitions" in page and "not listed has one residue definition" in page
+    assert "2 of 3 definitions" in page and "not listed has **one definition and one whole-residue code" in page
     assert "Glyphosate" not in page
-    assert "| Acetamiprid | `1000000`; **except** `1040000` |" in page
-    assert "RF-2-PAR" not in page and "no trustworthy PARAM code (near match only)" in page
-    assert "reads code `102000`; rd-bridge reads `1020000`" in page
-    assert "| `1040000` | Honey and other apiculture products |" in page
+    assert ("- **Acetamiprid**: default: Acetamiprid (RF-0014-001-PPP); `1000000` except `1040000`: "
+            "Sum of acetamiprid and IM-2-1 (RF-00003326-PAR)") in page
+    assert "RF-2-PAR" not in page and "M4 only (AE 0172747) (no reliable code)" in page
+    assert "EU footnote reads `102000`, read as `1020000`" in page
+    assert "`1040000` Honey and other apiculture products" in page
     data, body = split_frontmatter(page)
     assert claim_problems(root, PAGE_NAME, data["sources"], body) == ([], [])
     assert write(root) is False
@@ -139,6 +140,24 @@ def test_health_rejects_stale_or_edited_generated_page(root, upstream):
     assert not any("differs from its dataset snapshot" in e for e in run_health_check(root).errors)
     page.write_text(page.read_text().replace("Acetamiprid", "Acetamiprid ", 1))
     assert any("differs from its dataset snapshot" in e for e in run_health_check(root).errors)
+
+
+def test_each_scope_is_paired_with_its_own_code():
+    """The list is not a table, so the claim check cannot pair scopes and codes; check it here."""
+    import re
+    from wiki_api.datasets import load_rd_bridge
+    from tools.rd_bridge_page import _short_code
+    _, index = load_rd_bridge(ROOT)
+    page = (ROOT / "wiki" / "chemmon-guidance" / PAGE_NAME).read_text()
+    lines = {m.group(1): m.group(2) for m in re.finditer(r"^- \*\*(.+?)\*\*: (.+)$", page, re.M)}
+    varying = [r for r in index.values() if r.get("exceptions")]
+    assert len(lines) == len({short_name(r["name"]) for r in varying})
+    for record in varying:
+        line = lines[short_name(record["name"]).replace("|", "/")]
+        assert f"default: " in line and f"({_short_code(record['default'])})" in line
+        for exception in record["exceptions"]:
+            scope = ", ".join(f"`{c}`" for c in exception["commodity_codes"])
+            assert re.search(re.escape(scope) + r"[^;]*\(" + re.escape(_short_code(exception)) + r"\)", line), line
 
 
 def test_repository_generated_page_is_current():
