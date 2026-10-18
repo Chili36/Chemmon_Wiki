@@ -106,6 +106,7 @@ class AskResponse(BaseModel):
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     # A mounted app's own lifespan never runs, so the MCP session manager is started here.
+    # It can run once per process: tests share one TestClient (tests/test_mcp_http.py).
     async with mcp_server.mcp.session_manager.run():
         yield
 
@@ -125,9 +126,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# MCP for agents at exactly /mcp: the sub-app's /mcp route is added to this app's routes
+# MCP for agents at exactly /mcp: the sub-app's endpoint is added as a route of this app
 # (a Mount at /mcp would redirect POST /mcp to /mcp/). Its Host allowlist covers /mcp only.
-app.router.routes.extend(mcp_server.http_app().routes)
+app.router.routes.append(mcp_server.http_route())
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 

@@ -16,6 +16,7 @@ from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import ToolAnnotations
 from pydantic import Field, ValidationError
 from starlette.applications import Starlette
+from starlette.routing import Route
 
 T = TypeVar("T")
 
@@ -114,3 +115,9 @@ def http_app() -> Starlette:
             streamable_http_path="/mcp", stateless_http=True, json_response=True,
             transport_security=TransportSecuritySettings(allowed_hosts=allowed_hosts()))
     return _http_app
+
+
+def http_route() -> Route:
+    """POST /mcp only. Stateless JSON mode sends nothing server-initiated, so a GET (which the SDK
+    would hold open as an event stream) or DELETE is answered 405."""
+    return Route("/mcp", endpoint=http_app().routes[0].endpoint, methods=["POST"])

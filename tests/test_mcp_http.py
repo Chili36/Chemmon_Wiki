@@ -39,3 +39,8 @@ def test_extra_hosts_from_env(monkeypatch):
 
 def test_rest_api_is_unaffected_by_the_allowlist(client):
     assert client.get("/health", headers={"Host": "evil.example"}).status_code == 200
+
+
+def test_get_is_refused_instead_of_held_open(client):
+    # Stateless JSON mode has no server-initiated stream; a GET must not hang a connection.
+    assert client.get("/mcp", headers={"Accept": "text/event-stream"}).status_code == 405
