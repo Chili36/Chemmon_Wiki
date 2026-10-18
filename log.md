@@ -1067,3 +1067,13 @@ content; total tokens about 30k -> 27k.
 
 Lesson kept from the FoodEx2 wiki: shorter pages, but never by deleting
 knowledge. The remaining bulk is the definitions and codes themselves.
+## 2026-10-18 — Jev page selector evaluated against Haiku (#44)
+
+Ported the FoodEx2 wiki's Jev selector as an opt-in (`selector_model:
+jev-1.13.0`); Haiku 5.5 remains the default. Prompt adapted to ChemMon domains
+and frozen before the run. On all 16 eval cases × 3 repeats: recall 95.2% (Jev)
+vs 97.6% (Haiku), the difference being one selection in 48; no wrong-domain
+picks; Jev median 0.64 s vs 1.30 s; Jev about 45% more expensive per selection
+because its request is about four times larger. Details:
+`reports/selection-eval/2026-10-18/README.md`. Switching the default is a
+separate decision.

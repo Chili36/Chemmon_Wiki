@@ -1,0 +1,3 @@
+{"retrieved": "2026-10-18", "models": {
+ "anthropic/claude-haiku-5-5": {"input_per_million": 0.10, "output_per_million": 0.50, "source": "app pricing table"},
+ "jev-1.13.0": {"input_per_million": 0.042, "output_per_million": 0.0, "source": "docs.typesafe.ai/models"}}}
