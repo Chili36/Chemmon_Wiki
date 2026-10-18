@@ -1104,3 +1104,13 @@ Live: the second question read the 6,102-token catalogue from cache (36
 uncached selector tokens). Selection eval, 16 cases x 3: recall 97.6%, the same
 single miss as before; every selection read the cache. Median selection time
 1.9 s against 1.3 s on the old path; not yet explained.
+
+## 2026-10-18 — rd-bridge re-pinned to d399cea (refresh PR #49)
+
+First refresh PR opened by the scheduled workflow itself, now that Actions may
+create PRs. rd-bridge `b4e9020` -> `d399cea`: rd-bridge#29 (four matcher
+fixes) and #31 (Sonnet 5.5 model links for definitions the rules cannot
+link). 31 records changed PARAM links; no definition text changed. Pass B:
+the matrix and wording pages' cited records (residue_id 10, 210, 2058, 253, 7,
+3050, 284) are unchanged; Source commits updated. Generated pages regenerated
+by the workflow.
