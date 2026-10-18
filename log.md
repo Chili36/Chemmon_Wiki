@@ -1077,3 +1077,13 @@ picks; Jev median 0.64 s vs 1.30 s; Jev about 45% more expensive per selection
 because its request is about four times larger. Details:
 `reports/selection-eval/2026-10-18/README.md`. Switching the default is a
 separate decision.
+
+## 2026-10-18 — By-food page trimmed to the named pesticides (#42)
+
+When the selector picks `pesticide-residue-definitions-by-food.md` and the
+question names pesticides on it, `/wiki/ask` and `/wiki/context-pack` now send
+the reading guide, those pesticides' lines and notes, the Annex I legend and
+the attribution instead of all 77 entries (abamectin: 21,700 -> 3,400
+characters). Questions naming none get the whole page. The page stays one
+catalogue entry; deterministic whole-word matching in `wiki_api/page_excerpt.py`.
+Live abamectin question: same answer, about 21.5k tokens total (30k this morning).

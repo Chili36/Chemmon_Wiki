@@ -125,7 +125,10 @@ such a comment; cite the residue records for codes.
 
 A page rendered from a dataset says so in an HTML comment under its title and
 is never edited by hand. `pesticide-residue-definitions-by-food.md` is the
-first; see [[INGEST_WORKFLOW]].
+first; see [[INGEST_WORKFLOW]]. When a question names pesticides on that list,
+the API sends only the reading guide, their lines, their notes, the Annex I
+legend and the attribution (`wiki_api/page_excerpt.py`). Keep its section
+headings and the `- **Name**:` entry format, which the excerpt relies on.
 
 ### Rule ID conventions
 
