@@ -61,3 +61,32 @@ async def get_guidance_page(
     """One full wiki page with its metadata and sources (free)."""
     from .app import get_page
     return await _call(get_page, page_name, include_content=True)
+
+
+@mcp.tool(annotations=READ_ONLY)
+async def get_reporting_context(
+    question: Question,
+    max_pages: Annotated[int, Field(ge=1, le=10)] = 6,
+    max_chars: Annotated[int, Field(ge=2000, le=120000)] = 60000,
+) -> dict[str, Any]:
+    """Wiki evidence for a question, for you to reason over: a small model selects pages and their
+    content comes back with citability; no answer is written. Costs a page selection plus the page
+    tokens in your context."""
+    from .app import ContextPackRequest, context_pack
+    pack = await _call(lambda: context_pack(ContextPackRequest(question=question, max_pages=max_pages, max_chars=max_chars)))
+    trace = pack.pop("trace", {})
+    pack["cost_usd"] = trace.get("selector", {}).get("estimated_cost_usd", 0.0)
+    return pack
+
+
+@mcp.tool(annotations=READ_ONLY)
+async def ask_guidance(
+    question: Question,
+    max_pages: Annotated[int, Field(ge=1, le=10)] = 6,
+) -> dict[str, Any]:
+    """A prepared answer to a ChemMon reporting question, citing the wiki pages it rests on (most
+    expensive tool). Read cited pages with get_guidance_page."""
+    from .app import AskRequest, ask_question
+    response = await _call(lambda: ask_question(AskRequest(question=question, max_pages=max_pages, stream=False)))
+    return {"answer": response.answer, "citations": response.citations, "pages_used": response.pages_used,
+            "cost_usd": response.trace.get("total", {}).get("total_cost_usd")}
