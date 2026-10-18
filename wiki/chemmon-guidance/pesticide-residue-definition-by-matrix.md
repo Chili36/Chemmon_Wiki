@@ -2,13 +2,13 @@
 title: "Pesticide Residue Definition and paramCode by Matrix"
 type: "domain-guide"
 domain: "pesticide"
-last_updated: "2026-10-17"
+last_updated: "2026-10-18"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "datasets/rd-bridge/residue_param_map.json"
 source_pages:
   - "ChemMon 2026 pp. 59-60 (K.01 paramType), p. 143 (LL_04/LL_04_b), p. 148 (Section 8)"
-  - "rd-bridge residue_param_map.json @ b4e9020, residue_id 10, 210, 2058"
+  - "rd-bridge residue_param_map.json @ d399cea, residue_id 10, 210, 2058"
 related:
   - "[[ssd2-analysis-parameter-coding]]"
   - "[[business-rules-legal-limits]]"
@@ -45,9 +45,9 @@ select_when: "Choosing which pesticide paramCode or residue definition to report
 
 ## Examples: one pesticide, different codes by food
 
-<!-- Source: datasets/rd-bridge/residue_param_map.json @ b4e9020, residue_id 10, 210, 2058 -->
+<!-- Source: datasets/rd-bridge/residue_param_map.json @ d399cea, residue_id 10, 210, 2058 -->
 
-Snapshot: rd-bridge commit `b4e9020`, residue map last changed 2026-10-14, derived from the EU Pesticides Database (DG SANTE) and EFSA PARAM 17.8. These are the **latest** EU definitions in that snapshot, not a historical record.
+Snapshot: rd-bridge commit `d399cea`, residue map last changed 2026-10-17, derived from the EU Pesticides Database (DG SANTE) and EFSA PARAM 17.8. These are the **latest** EU definitions in that snapshot, not a historical record.
 
 | Pesticide | Scope (Annex I) | Residue definition | Whole-residue `paramCode` |
 |---|---|---|---|

@@ -2,15 +2,15 @@
 title: "Reading Pesticide Residue Definition Wording"
 type: "domain-guide"
 domain: "pesticide"
-last_updated: "2026-10-17"
+last_updated: "2026-10-18"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "datasets/rd-bridge/interpretation_guidance.json"
   - "datasets/rd-bridge/residue_param_map.json"
 source_pages:
   - "ChemMon 2026 pp. 59-61 (K.01 paramType, Table 5, examples)"
-  - "rd-bridge interpretation_guidance.json @ b4e9020, 11 rules"
-  - "rd-bridge residue_param_map.json @ b4e9020, residue_id 253"
+  - "rd-bridge interpretation_guidance.json @ d399cea, 11 rules"
+  - "rd-bridge residue_param_map.json @ d399cea, residue_id 253"
 related:
   - "[[ssd2-analysis-parameter-coding]]"
   - "[[pesticide-residue-definition-by-matrix]]"
@@ -24,7 +24,7 @@ select_when: "Working out which substances a pesticide residue definition actual
 
 ## Rule Summary (Rule-First)
 
-<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ b4e9020, rules EU-TEXT-CONTROLS, OECD-ENFORCEMENT-SCOPE, OECD-EXPRESSION-BASIS, EFSA-WHOLE-VS-PARTS -->
+<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ d399cea, rules EU-TEXT-CONTROLS, OECD-ENFORCEMENT-SCOPE, OECD-EXPRESSION-BASIS, EFSA-WHOLE-VS-PARTS -->
 
 - **The exact EU residue definition for the sampled commodity decides which substances make up the residue.** A pesticide's common name, the heading of the entry, a PARAM catalogue family or a broader risk-assessment definition does not add analytes.
 - **"Expressed as X" names the basis for calculating the result**, possibly with a molecular-weight conversion. It does not by itself require X to be measured.
@@ -35,7 +35,7 @@ These are readings of the legal wording, not extra rules. Where a reading and th
 
 ## How to read common wording
 
-<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ b4e9020, rules OECD-SUMMED-COMPONENTS, OECD-CONVERSION, OECD-FREE-CONJUGATED, OECD-ISOMER-COVERAGE, OECD-COMMODITY-VARIANTS, EU-CONDITIONAL-CLAUSE, EU-ALIASES-NOT-EXTRA -->
+<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ d399cea, rules OECD-SUMMED-COMPONENTS, OECD-CONVERSION, OECD-FREE-CONJUGATED, OECD-ISOMER-COVERAGE, OECD-COMMODITY-VARIANTS, EU-CONDITIONAL-CLAUSE, EU-ALIASES-NOT-EXTRA -->
 
 | Wording | Reading | Not |
 |---|---|---|
@@ -47,13 +47,13 @@ These are readings of the legal wording, not extra rules. Where a reading and th
 | "Where only Y is detected …, the residue definition of Y applies" | An alternative rule that depends on which substances are found. | Both branches treated as one sum that must be measured together. |
 | "aka", "also called", "formerly" | An alternative or former name of the same substance. | A second component. Separately listed strains or isomers stay separate. |
 
-<!-- Source: datasets/rd-bridge/residue_param_map.json @ b4e9020, residue_id 7, 3050, 284 -->
+<!-- Source: datasets/rd-bridge/residue_param_map.json @ d399cea, residue_id 7, 3050, 284 -->
 
 Examples from the EU wording: 2,4-D is the "sum of 2,4-D, its salts, its esters and its conjugates, expressed as 2,4-D". Cycloxydim includes products "which can be determined as" two glutaric acid derivatives, "calculated in total as cycloxydim". Dinocap's definition switches to meptyldinocap's "where only meptyldinocap or its corresponding phenol are detected". The legal text for each pesticide is in the EU Pesticides Database.
 
 ## Worked example: chloridazon
 
-<!-- Source: datasets/rd-bridge/residue_param_map.json @ b4e9020, residue_id 253 -->
+<!-- Source: datasets/rd-bridge/residue_param_map.json @ d399cea, residue_id 253 -->
 
 Commission Regulation (EU) 2023/710 gives chloridazon two definitions. In rd-bridge this is the one case so far where the reading has been checked against the legal act.
 
@@ -81,7 +81,7 @@ ChemMon's own example: "aldicarb (sum of aldicarb, its sulfoxide and its sulfone
 
 ## Status of these readings
 
-<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ b4e9020, rules EU-TEXT-CONTROLS, OECD-ENFORCEMENT-SCOPE, OECD-EXPRESSION-BASIS, OECD-SUMMED-COMPONENTS, OECD-CONVERSION, OECD-FREE-CONJUGATED, OECD-ISOMER-COVERAGE, OECD-COMMODITY-VARIANTS, EU-CONDITIONAL-CLAUSE, EU-ALIASES-NOT-EXTRA, EFSA-WHOLE-VS-PARTS -->
+<!-- Source: datasets/rd-bridge/interpretation_guidance.json @ d399cea, rules EU-TEXT-CONTROLS, OECD-ENFORCEMENT-SCOPE, OECD-EXPRESSION-BASIS, OECD-SUMMED-COMPONENTS, OECD-CONVERSION, OECD-FREE-CONJUGATED, OECD-ISOMER-COVERAGE, OECD-COMMODITY-VARIANTS, EU-CONDITIONAL-CLAUSE, EU-ALIASES-NOT-EXTRA, EFSA-WHOLE-VS-PARTS -->
 
 - **Order of authority:** the residue definition in Regulation (EC) No 396/2005 and its amendments decides; EFSA validates against its Legal Limits database ([[legal-limits-database]]); the readings above help interpret the wording.
 - **Where the readings come from:** the wording rules paraphrase the OECD *Guidance Document on the Definition of Residue* (revised 2009, ENV/JM/MONO(2009)30). It explains how enforcement residues are chosen and expressed, but it is **not EU law**. The rules about EU wording (conditional clauses, alternative names) are rd-bridge's readings of the legal text. They are taken from rd-bridge's curated guidance index, which records a source and locator for each rule. They are not verbatim quotes and the wiki has not checked them against the OECD text.
