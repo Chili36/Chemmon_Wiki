@@ -20,9 +20,19 @@ def _norm(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text).strip()
 
 
+GENERIC_PART = re.compile(r"^(?:its |their |free|conjugated|expressed as|sum of)")
+
+
+def _keys(name: str) -> set[str]:
+    """The entry heading and each substance it combines ("Carbendazim and benomyl" -> both)."""
+    head = re.split(r"\s*\(", name, maxsplit=1)[0]
+    parts = [p.strip() for p in re.split(r",|\band\b", head)]
+    keys = {_norm(head)} | {_norm(p) for p in parts if p and not GENERIC_PART.match(p.lower())}
+    return {k for k in keys if len(k) >= 3}
+
+
 def _named(name: str, question: str) -> bool:
-    key = _norm(re.split(r"\s*\(", name, maxsplit=1)[0])
-    return len(key) >= 3 and f" {key} " in question
+    return any(f" {key} " in question for key in _keys(name))
 
 
 def excerpt(content: str, question: str) -> str | None:

@@ -55,3 +55,30 @@ def test_excerpt_is_marked_and_other_pages_are_untouched():
 
 def test_unrelated_text_is_returned_unchanged():
     assert excerpt("# Some page\n\nNo list here.", "abamectin") is None
+
+
+def test_each_substance_of_a_combined_entry_selects_it():
+    trimmed = content("Compare abamectin and benomyl in milk")["content"]
+    assert "**Abamectin**" in trimmed and "**Carbendazim and benomyl**" in trimmed
+    assert "**MCPA and MCPB**" in content("residue definition for MCPB")["content"]
+    assert "**Metalaxyl and metalaxyl-M**" in content("metalaxyl-M in grapes")["content"]
+
+
+def test_ask_response_reports_the_excerpt_the_answerer_saw():
+    import wiki_api.app as app_module
+    from tests.test_app import FakeAnswerer, request
+    from wiki_api.page_selector import PageSelectionResult
+
+    class PicksByFood:
+        model_id = "fake"
+        def run(self, payload):
+            return PageSelectionResult(pages_used=[BY_FOOD_PAGE], tool_trace=[],
+                                       token_summary={"model": "fake", "calls": 1, "input_tokens": 0, "output_tokens": 0,
+                                                      "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0,
+                                                      "total_tracked_tokens": 0, "per_call": []},
+                                       timing_summary={"calls": 1, "llm_time_ms": 0, "per_call": []})
+    app_module.selector_runner, app_module.answerer_runner = PicksByFood(), FakeAnswerer()
+    payload = request("POST", "/wiki/ask", json={"question": "abamectin in milk"}).json()
+    page = next(p for p in payload["pages"] if p["page_name"] == BY_FOOD_PAGE)
+    sent = app_module.answerer_runner.calls[0]["pages"][0]["content"]
+    assert page["content"] == sent and "**Acetamiprid**" not in page["content"]

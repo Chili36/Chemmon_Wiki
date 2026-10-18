@@ -530,6 +530,8 @@ def ask_question(request: AskRequest) -> AskResponse:
             continue
 
     pages = []
+    # Report the evidence the answerer actually received (an excerpt for the by-food list).
+    supplied = {p["page_name"]: p["content"] for p in page_contents}
     for page in pages_raw:
         pages.append(
             PageSummary(
@@ -538,7 +540,7 @@ def ask_question(request: AskRequest) -> AskResponse:
                 summary=page.summary,
                 sources=page.sources,
                 related=page.related,
-                content=store.clean_content_for_model(page),
+                content=supplied.get(page.name, store.clean_content_for_model(page)),
                 source_pages=list(page.source_pages),
             )
         )
