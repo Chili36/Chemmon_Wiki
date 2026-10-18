@@ -90,6 +90,7 @@ Main endpoints:
 - `POST /wiki/select`: inspect selected topic metadata and selector usage
 - `POST /wiki/context-pack`: bounded policy and full evidence, without an answer call
 - `GET /wiki/review-status`: scoped audit freshness and rule-inventory gaps
+- `POST /mcp`: the same wiki as an MCP server for agents (see below)
 
 ### Evidence and navigation contracts
 
@@ -145,6 +146,53 @@ curl -s http://localhost:8005/wiki/context-pack \
 See [source review](SOURCE_REVIEW.md), [maintenance workflow](MAINTENANCE_WORKFLOW.md)
 and [evaluation guide](EVALUATION.md). No default model change or vector database
 is justified by offline checks; both remain evaluation decisions.
+
+## MCP server for agents
+
+The API also serves the wiki as an MCP server at `/mcp` (Streamable HTTP, stateless,
+JSON responses), in the same process and on the same port. Agents connect to
+`http://127.0.0.1:8005/mcp`, or `http://host.docker.internal:8005/mcp` from a
+container such as DMT's. The tools run the same code as the endpoints above:
+
+| Tool | Same as | Cost |
+|---|---|---|
+| `search_guidance(query, domain?, limit?)` | `GET /wiki/search` | free |
+| `get_guidance_page(page_name)` | `GET /wiki/pages/{page_name}` | free |
+| `get_reporting_context(question, max_pages?, max_chars?)` | `POST /wiki/context-pack`, without `trace`, plus `cost_usd` | one page selection, plus the page tokens in the agent's context |
+| `ask_guidance(question, max_pages?)` | `POST /wiki/ask`: `answer`, `citations`, `pages_used`, `cost_usd` | most expensive |
+
+`/mcp` answers only requests addressed to `localhost`, `127.0.0.1` or
+`host.docker.internal` (any port); `WIKI_MCP_ALLOWED_HOSTS` adds comma-separated
+hosts. This guards against DNS rebinding and is not authentication: like the rest
+of the API, `/mcp` has none, and the deploy container publishes :8005 on all
+interfaces.
+
+A minimal agent loop with the Anthropic SDK and the MCP Python client:
+
+```python
+import anthropic
+from mcp import Client
+
+async def ask_agent(question: str) -> str:
+    claude = anthropic.AsyncAnthropic()
+    async with Client("http://host.docker.internal:8005/mcp") as wiki:
+        tools = [{"name": t.name, "description": t.description, "input_schema": t.input_schema}
+                 for t in (await wiki.list_tools()).tools]
+        messages = [{"role": "user", "content": question}]
+        while True:
+            reply = await claude.messages.create(model="claude-sonnet-5-5", max_tokens=4096,
+                                                 tools=tools, messages=messages)
+            messages.append({"role": "assistant", "content": reply.content})
+            if reply.stop_reason != "tool_use":
+                return "".join(b.text for b in reply.content if b.type == "text")
+            results = []
+            for block in reply.content:
+                if block.type == "tool_use":
+                    result = await wiki.call_tool(block.name, block.input)
+                    results.append({"type": "tool_result", "tool_use_id": block.id, "is_error": result.is_error,
+                                    "content": [{"type": "text", "text": c.text} for c in result.content if c.type == "text"]})
+            messages.append({"role": "user", "content": results})
+```
 
 ## Maintenance and roadmap
 
