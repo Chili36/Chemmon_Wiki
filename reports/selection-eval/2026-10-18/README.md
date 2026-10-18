@@ -30,5 +30,9 @@ lower price per token. FoodEx2's large saving was measured against Sonnet 5,
 not Haiku. Costs are estimates from returned usage and the prices in
 `prices.json`; Jev output tokens are free.
 
+Provenance note: these raw reports predate per-model prompt hashes; their
+`prompt_sha256` is the Haiku prompt. The Jev prompt used is the one in commit
+7a41f04.
+
 Limits: draft labels; 16 cases; provider-default sampling. Not evidence of
 general superiority either way.

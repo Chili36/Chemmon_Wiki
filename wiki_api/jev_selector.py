@@ -7,6 +7,7 @@ reporting domains and fixed before any ChemMon evaluation was run.
 """
 from __future__ import annotations
 
+import json
 import math
 import os
 import time
@@ -45,6 +46,10 @@ COMPARISON = (
     "Use `catalogue` to distinguish this page from other pages: a broad summary cannot substitute for "
     "a page covering the exact field, domain or rule needed. Judge this page on its own selection conditions."
 )
+
+
+# Everything that shapes Jev's judgments; reports record its hash as the Jev prompt fingerprint.
+PROMPT_FINGERPRINT = json.dumps([RULES, LEVELS, COMPARISON, SCORE_THRESHOLD], sort_keys=True)
 
 
 def build_request(store: WikiStore, question: str, model: str, *, use_hints: bool = True
@@ -107,8 +112,11 @@ class JevWikiPageSelector:
         body, mapping = build_request(self.store, payload["question"], self.model_id, use_hints=self.use_hints)
         llm_started = time.perf_counter()
         try:
-            client = self.client or httpx.Client(timeout=15.0)
-            response = client.post(TYPESAFE_URL, json=body, headers={"Authorization": f"Bearer {api_key}"})
+            if self.client is not None:
+                response = self.client.post(TYPESAFE_URL, json=body, headers={"Authorization": f"Bearer {api_key}"})
+            else:
+                with httpx.Client(timeout=15.0) as client:  # closed after each request
+                    response = client.post(TYPESAFE_URL, json=body, headers={"Authorization": f"Bearer {api_key}"})
             response.raise_for_status()
             data = response.json()
         except (httpx.HTTPError, ValueError):

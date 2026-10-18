@@ -85,3 +85,33 @@ def test_factory_routes_jev_models_and_keeps_chat_default(monkeypatch):
     assert isinstance(make_selector(store=STORE, model_str="jev-1.13.0"), JevWikiPageSelector)
     monkeypatch.setenv("ANTHROPIC_API_KEY", "x")
     assert isinstance(make_selector(store=STORE, model_str="anthropic/claude-haiku-5-5"), WikiPageSelector)
+
+
+def test_internal_client_is_closed_after_each_request(monkeypatch):
+    monkeypatch.setenv("TYPESAFE_API_KEY", "test-key")
+    created = []
+    real = httpx.Client
+    transport = respond({})._transport  # built before Client is patched
+
+    class Tracking(real):
+        def __init__(self, *args, **kwargs):
+            kwargs["transport"] = transport
+            super().__init__(*args, **kwargs)
+            created.append(self)
+    monkeypatch.setattr("wiki_api.jev_selector.httpx.Client", Tracking)
+    selector = JevWikiPageSelector(store=STORE)
+    selector.run({"question": "q"})
+    selector.run({"question": "q"})
+    assert len(created) == 2 and all(c.is_closed for c in created)
+
+
+def test_eval_report_records_the_prompt_each_selector_used():
+    import hashlib
+    from tools.evaluate import run_suite
+    from wiki_api.jev_selector import PROMPT_FINGERPRINT
+    from wiki_api.page_selector import SELECTION_SYSTEM_PROMPT
+    dataset = json.loads((ROOT / "evals" / "cases.json").read_text())
+    report = run_suite(STORE, dataset, mode="select", models=["anthropic/claude-haiku-5-5", "jev-1.13.0"])
+    by_model = report["prompt_sha256_by_model"]
+    assert by_model["jev-1.13.0"] == hashlib.sha256(PROMPT_FINGERPRINT.encode()).hexdigest()
+    assert by_model["anthropic/claude-haiku-5-5"] == hashlib.sha256(SELECTION_SYSTEM_PROMPT.encode()).hexdigest()

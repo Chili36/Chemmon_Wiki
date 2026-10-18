@@ -16,7 +16,7 @@ from wiki_api.wiki_store import WikiStore
 from wiki_api.source_review import corpus_snapshot, sha256
 from wiki_api.evidence import full_evidence, selected_names
 from wiki_api.page_selector import SELECTION_SYSTEM_PROMPT
-from wiki_api.jev_selector import make_selector
+from wiki_api.jev_selector import PROMPT_FINGERPRINT as JEV_PROMPT, make_selector
 from wiki_api.answerer import WikiAnswerer, ANSWERER_SYSTEM_PROMPT
 
 
@@ -103,6 +103,9 @@ def run_suite(store: WikiStore, dataset: dict, *, mode: str, models: list[str], 
               'settings': {'models': models, 'catalog_mode': catalog_mode, 'answer_max_tokens': 2000,
                            'graph_expansion': False, 'temperature': 'provider default', 'pricing': prices or {}},
               'corpus_snapshot': frozen, 'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
+              # Selectors differ in prompt: record the one each model actually used.
+              'prompt_sha256_by_model': {m: hashlib.sha256((JEV_PROMPT if mode == 'select' and m.startswith('jev-')
+                                                            else prompt).encode()).hexdigest() for m in models},
               'catalog_sha256': hashlib.sha256(catalog.encode()).hexdigest(),
               'dataset_sha256': hashlib.sha256(json.dumps(dataset, sort_keys=True).encode()).hexdigest(),
               'limitations': ['Draft labels are exploratory, not a human-reviewed quality baseline.',
