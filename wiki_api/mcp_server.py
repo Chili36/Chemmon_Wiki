@@ -5,14 +5,17 @@ app.py imports this module to mount it, so the endpoint functions are imported i
 """
 from __future__ import annotations
 
+import os
 from typing import Annotated, Any, Callable, TypeVar
 
 import anyio
 from fastapi import HTTPException
 from mcp.server.mcpserver import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
+from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import ToolAnnotations
 from pydantic import Field, ValidationError
+from starlette.applications import Starlette
 
 T = TypeVar("T")
 
@@ -90,3 +93,24 @@ async def ask_guidance(
     response = await _call(lambda: ask_question(AskRequest(question=question, max_pages=max_pages, stream=False)))
     return {"answer": response.answer, "citations": response.citations, "pages_used": response.pages_used,
             "cost_usd": response.trace.get("total", {}).get("total_cost_usd")}
+
+
+DEFAULT_HOSTS = ("localhost", "127.0.0.1", "host.docker.internal")
+_http_app: Starlette | None = None
+
+
+def allowed_hosts() -> list[str]:
+    """Host headers /mcp answers (DNS-rebinding protection, not authentication), with and without a port.
+    WIKI_MCP_ALLOWED_HOSTS adds comma-separated hosts."""
+    extra = [h.strip() for h in os.getenv("WIKI_MCP_ALLOWED_HOSTS", "").split(",") if h.strip()]
+    return [form for host in (*DEFAULT_HOSTS, *extra) for form in (host, f"{host}:*")]
+
+
+def http_app() -> Starlette:
+    """The Streamable HTTP app (stateless, JSON responses), built once; app.py mounts it."""
+    global _http_app
+    if _http_app is None:
+        _http_app = mcp.streamable_http_app(
+            streamable_http_path="/mcp", stateless_http=True, json_response=True,
+            transport_security=TransportSecuritySettings(allowed_hosts=allowed_hosts()))
+    return _http_app

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+from contextlib import asynccontextmanager
 import os
 import re
 from pathlib import Path
@@ -24,6 +25,7 @@ from .jev_selector import make_selector
 from .wiki_store import WikiStore
 from .evidence import selected_names, full_evidence, bounded_pack
 from .source_review import source_review_status, rule_inventory_status
+from . import mcp_server
 
 
 _WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
@@ -101,7 +103,15 @@ class AskResponse(BaseModel):
     trace: dict[str, Any]
 
 
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    # A mounted app's own lifespan never runs, so the MCP session manager is started here.
+    async with mcp_server.mcp.session_manager.run():
+        yield
+
+
 app = FastAPI(
+    lifespan=lifespan,
     title="ChemMon Wiki API",
     version="0.3.0",
     description="Wiki-owned Q&A API for EFSA Chemical Monitoring reporting guidance.",
@@ -114,6 +124,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# MCP for agents at exactly /mcp: the sub-app's /mcp route is added to this app's routes
+# (a Mount at /mcp would redirect POST /mcp to /mcp/). Its Host allowlist covers /mcp only.
+app.router.routes.extend(mcp_server.http_app().routes)
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
