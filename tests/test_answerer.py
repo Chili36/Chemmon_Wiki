@@ -199,6 +199,7 @@ def test_structured_provider_sends_strict_schema_and_parses_it():
 def test_structured_output_is_enabled_only_for_verified_providers(monkeypatch):
     import wiki_api.answerer as A
     monkeypatch.setattr(A, "client_for_model", lambda s: (MagicMock(), s.split("/")[-1]))
+    monkeypatch.setattr(A, "native_client", lambda: MagicMock())
     assert A.WikiAnswerer(model_str="anthropic/claude-sonnet-5-5").structured_output is True
     assert A.WikiAnswerer(model_str="openai/gpt-5.4-mini").structured_output is True
     assert A.WikiAnswerer(model_str="google/gemini-3-pro").structured_output is False

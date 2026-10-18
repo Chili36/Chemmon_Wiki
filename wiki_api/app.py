@@ -12,7 +12,11 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
-from openai import APIError
+from anthropic import APIError as AnthropicAPIError
+from openai import APIError as OpenAIAPIError
+
+# Provider failures from either SDK become a sanitized 503.
+APIError = (OpenAIAPIError, AnthropicAPIError)
 
 from .answerer import AnswerResult, WikiAnswerer
 from .page_selector import WikiPageSelector

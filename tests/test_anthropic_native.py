@@ -88,3 +88,19 @@ def test_cache_reads_and_writes_are_priced():
     assert _compute_call_cost(base) == 0.10
     assert round(_compute_call_cost({**base, "input_tokens": 0, "cache_read_input_tokens": 1_000_000}), 6) == 0.01
     assert round(_compute_call_cost({**base, "input_tokens": 0, "cache_creation_input_tokens": 1_000_000}), 6) == 0.125
+
+
+def test_anthropic_outage_is_a_sanitized_503():
+    import anthropic
+    import httpx
+    import wiki_api.app as app_module
+    from tests.test_app import request
+
+    class Failing:
+        model_id = "claude-haiku-5-5"
+        def run(self, payload):
+            raise anthropic.APIConnectionError(request=httpx.Request("POST", "https://api.anthropic.com/v1/messages"))
+    app_module.selector_runner = Failing()
+    for path in ("/wiki/select", "/wiki/ask"):
+        response = request("POST", path, json={"question": "q"})
+        assert response.status_code == 503 and "anthropic.com" not in response.text
