@@ -110,7 +110,9 @@ def test_verified_providers_get_strict_selection_schema(monkeypatch):
     import wiki_api.page_selector as S
     monkeypatch.setattr(S, "client_for_model", lambda s: (MagicMock(), s.split("/")[-1]))
     store = MagicMock()
-    for model, expected in (("anthropic/claude-haiku-5-5", True), ("openai/gpt-5.4-mini", True),
+    monkeypatch.setattr(S, "native_client", lambda: MagicMock())
+    assert S.WikiPageSelector(store=store, model_str="anthropic/claude-haiku-5-5").native is True
+    for model, expected in (("openai/gpt-5.4-mini", True),
                             ("google/gemini-3-pro", False), ("lmstudio/local", False)):
         selector = S.WikiPageSelector(store=store, model_str=model)
         assert selector.structured_output is expected

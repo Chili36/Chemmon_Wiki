@@ -12,7 +12,11 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
-from openai import APIError
+from anthropic import APIError as AnthropicAPIError
+from openai import APIError as OpenAIAPIError
+
+# Provider failures from either SDK become a sanitized 503.
+APIError = (OpenAIAPIError, AnthropicAPIError)
 
 from .answerer import AnswerResult, WikiAnswerer
 from .page_selector import WikiPageSelector
@@ -145,7 +149,11 @@ def _compute_call_cost(token_summary: dict[str, Any]) -> float | None:
     input_price, output_price = prices
     input_tokens = int(token_summary.get("input_tokens", 0) or 0)
     output_tokens = int(token_summary.get("output_tokens", 0) or 0)
-    return (input_tokens * input_price + output_tokens * output_price) / 1_000_000
+    # Anthropic prompt caching: 5-minute cache writes cost 1.25x input, reads 0.1x.
+    cache_writes = int(token_summary.get("cache_creation_input_tokens", 0) or 0)
+    cache_reads = int(token_summary.get("cache_read_input_tokens", 0) or 0)
+    return (input_tokens * input_price + output_tokens * output_price
+            + cache_writes * input_price * 1.25 + cache_reads * input_price * 0.1) / 1_000_000
 
 
 def _total_cost(*summaries: dict[str, Any]) -> float | None:

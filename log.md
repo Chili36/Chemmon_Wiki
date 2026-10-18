@@ -1087,3 +1087,20 @@ the attribution instead of all 77 entries (abamectin: 21,700 -> 3,400
 characters). Questions naming none get the whole page. The page stays one
 catalogue entry; deterministic whole-word matching in `wiki_api/page_excerpt.py`.
 Live abamectin question: same answer, about 21.5k tokens total (30k this morning).
+
+## 2026-10-18 — Claude called through the native Anthropic SDK (#47)
+
+The selector and answerer reached Claude through Anthropic's OpenAI-compatible
+endpoint, which does not support prompt caching and ignores `response_format`.
+So the cache hit rate was zero (Anthropic emailed about a low org-wide hit
+rate), and the "verified" strict JSON of 2026-10-13 was requested, not enforced.
+Anthropic models now use the native Messages API: the selector sends its rules
+and page catalogue as a cached system prefix with the question after it, and
+both roles use `output_config` json_schema. Other providers keep the
+OpenAI-compatible path; Jev is unaffected. `anthropic` added to requirements.
+Costs count cache writes (1.25x) and reads (0.1x).
+
+Live: the second question read the 6,102-token catalogue from cache (36
+uncached selector tokens). Selection eval, 16 cases x 3: recall 97.6%, the same
+single miss as before; every selection read the cache. Median selection time
+1.9 s against 1.3 s on the old path; not yet explained.

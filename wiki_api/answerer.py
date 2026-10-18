@@ -15,6 +15,7 @@ from .providers import (
     normalize_usage as _normalize_usage,
     resolve_provider,
 )
+from .anthropic_native import json_schema_format, native_client, response_text, usage_dict
 
 
 ANSWERER_SYSTEM_PROMPT = """You are the ChemMon wiki assistant.
@@ -39,8 +40,8 @@ Write the answer as plain text (Markdown lists and code formatting are fine). Do
 STRUCTURED_FORMAT = """
 Put the full answer, with its inline citations, in "answer". List every page you cited in "citations"."""
 
-# Providers verified to enforce json_schema output through the OpenAI-compatible
-# endpoint (Anthropic 2026-10-13, OpenAI 2026-10-14; streaming and not).
+# Structured answers: OpenAI enforces json_schema on its endpoint; Anthropic is called natively
+# with output_config, because its OpenAI-compatible endpoint ignores response_format.
 # Others get the plain-text contract; citations then come from inline mentions.
 STRUCTURED_OUTPUT_PROVIDERS = {"anthropic", "openai"}
 
@@ -106,14 +107,18 @@ class WikiAnswerer:
         max_tokens: int | None = None,
         structured_output: bool | None = None,
     ):
+        self.native = False
         if client and model_id:
             self.client = client
             self.model_id = model_id
             provider = None
         else:
             resolved_str = model_str or os.getenv("WIKI_ANSWERER_MODEL", "anthropic/claude-sonnet-5-5")
-            provider, _ = resolve_provider(resolved_str)
-            self.client, self.model_id = client_for_model(resolved_str)
+            provider, self.model_id = resolve_provider(resolved_str)
+            if provider == "anthropic":
+                self.native, self.client = True, native_client()
+            else:
+                self.client, self.model_id = client_for_model(resolved_str)
         self.provider = provider
         self.structured_output = (
             structured_output if structured_output is not None else provider in STRUCTURED_OUTPUT_PROVIDERS
@@ -145,6 +150,62 @@ class WikiAnswerer:
             },
         ]
 
+    def _native_kwargs(self, question: str, pages: list[dict[str, Any]], budget: int) -> dict[str, Any]:
+        system, user = (m["content"] for m in self._build_messages(question, pages))
+        kwargs: dict[str, Any] = {
+            "model": self.model_id, "max_tokens": budget,
+            # Stable instructions first, marked for caching; the question and evidence vary.
+            "system": [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
+            "messages": [{"role": "user", "content": user}],
+        }
+        if self.structured_output:
+            kwargs["output_config"] = json_schema_format(ANSWER_RESPONSE_FORMAT["json_schema"]["schema"])
+        return kwargs
+
+    def _call(self, question: str, pages: list[dict[str, Any]], budget: int) -> tuple[str, dict, str | None]:
+        if self.native:
+            message = self.client.messages.create(**self._native_kwargs(question, pages, budget))
+            return response_text(message), usage_dict(message.usage, message.stop_reason), message.stop_reason
+        response = self.client.chat.completions.create(
+            model=self.model_id,
+            **self._limit_kwargs(budget),
+            messages=self._build_messages(question, pages),
+            stream=False,
+            **self._format_kwargs(),
+        )
+        finish_reason = response.choices[0].finish_reason if response.choices else None
+        text = response.choices[0].message.content or "" if response.choices else ""
+        return text, _normalize_usage(response.usage, finish_reason), finish_reason
+
+    def _stream_chunks(self, question: str, pages: list[dict[str, Any]], budget: int, final: dict) -> Iterator[str]:
+        """Yield answer text; on completion put usage and stop reason in `final`."""
+        if self.native:
+            with self.client.messages.stream(**self._native_kwargs(question, pages, budget)) as stream:
+                for text in stream.text_stream:
+                    yield text
+                message = stream.get_final_message()
+            final.update(usage=usage_dict(message.usage, message.stop_reason), stop=message.stop_reason)
+            return
+        usage_data = None
+        response_stream = self.client.chat.completions.create(
+            model=self.model_id,
+            **self._limit_kwargs(budget),
+            messages=self._build_messages(question, pages),
+            stream=True,
+            stream_options={"include_usage": True},
+            **self._format_kwargs(),
+        )
+        for chunk in response_stream:
+            if chunk.choices:
+                delta = chunk.choices[0].delta
+                if delta and delta.content:
+                    yield delta.content
+                if chunk.choices[0].finish_reason:
+                    final["stop"] = chunk.choices[0].finish_reason
+            if chunk.usage:
+                usage_data = chunk.usage
+        final["usage"] = _normalize_usage(usage_data, final.get("stop"))
+
     def _parse_answer(self, text: str) -> tuple[str, list[str]]:
         if not text.strip():
             raise RuntimeError("The answer model returned no answer. Please try a narrower question.")
@@ -175,15 +236,8 @@ class WikiAnswerer:
         budget = self.max_tokens
         for attempt in range(2):
             call_started = time.perf_counter()
-            response = self.client.chat.completions.create(
-                model=self.model_id,
-                **self._limit_kwargs(budget),
-                messages=self._build_messages(question, pages),
-                stream=False,
-                **self._format_kwargs(),
-            )
-            finish_reason = response.choices[0].finish_reason if response.choices else None
-            usages.append(_normalize_usage(response.usage, finish_reason))
+            text, usage, finish_reason = self._call(question, pages, budget)
+            usages.append(usage)
             timings.append({"call_number": attempt + 1, "duration_ms": int((time.perf_counter() - call_started) * 1000), "stop_reason": finish_reason})
             if finish_reason not in {"length", "max_tokens"}:
                 break
@@ -192,7 +246,6 @@ class WikiAnswerer:
                 raise RuntimeError("The answer exceeded its output limit. Please try a narrower question.")
             budget = retry_budget
 
-        text = response.choices[0].message.content or "" if response.choices else ""
         answer, citations = self._parse_answer(text)
         return self._build_result(answer, citations, usages, timings, started)
 
@@ -206,30 +259,14 @@ class WikiAnswerer:
         budget = self.max_tokens
         for attempt in range(2):
             accumulated_text = ""
-            usage_data: Any = None
-            finish_reason: str | None = None
+            final: dict[str, Any] = {}
             any_deltas_sent = False
             call_started = time.perf_counter()
             try:
-                response_stream = self.client.chat.completions.create(
-                    model=self.model_id,
-                    **self._limit_kwargs(budget),
-                    messages=self._build_messages(question, pages),
-                    stream=True,
-                    stream_options={"include_usage": True},
-                    **self._format_kwargs(),
-                )
-                for chunk in response_stream:
-                    if chunk.choices:
-                        delta = chunk.choices[0].delta
-                        if delta and delta.content:
-                            accumulated_text += delta.content
-                            any_deltas_sent = True
-                            yield {"type": "delta", "text": delta.content}
-                        if chunk.choices[0].finish_reason:
-                            finish_reason = chunk.choices[0].finish_reason
-                    if chunk.usage:
-                        usage_data = chunk.usage
+                for text in self._stream_chunks(question, pages, budget, final):
+                    accumulated_text += text
+                    any_deltas_sent = True
+                    yield {"type": "delta", "text": text}
             except Exception:
                 if any_deltas_sent or usages:
                     raise
@@ -238,7 +275,8 @@ class WikiAnswerer:
                 yield {"type": "final", "result": result}
                 return
 
-            usages.append(_normalize_usage(usage_data, finish_reason))
+            finish_reason = final.get("stop")
+            usages.append(final.get("usage") or _normalize_usage(None, finish_reason))
             timings.append({"call_number": attempt + 1, "duration_ms": int((time.perf_counter() - call_started) * 1000), "stop_reason": finish_reason})
             if finish_reason not in {"length", "max_tokens"}:
                 break
