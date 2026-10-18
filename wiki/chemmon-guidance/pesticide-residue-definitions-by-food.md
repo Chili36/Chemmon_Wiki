@@ -21,256 +21,109 @@ select_when: "Whether a named pesticide's residue definition or PARAM code diffe
 
 <!-- Source: datasets/rd-bridge/residue_param_map.json @ b4e9020, residue_id 2830, 5, 2058, 8, 10, 2694, 236, 2671, 26, 2693, 244, 2631, 34, 36, 38, 39, 2633, 47, 253, 53, 3970, 57, 60, 776, 267, 272, 277, 3811, 3010, 3810, 2632, 2513, 300, 101, 301, 105, 778, 307, 2276, 310, 113, 313, 314, 115, 322, 129, 135, 139, 145, 3370, 334, 166, 2653, 3430, 4010, 2890, 357, 185, 359, 192, 801, 194, 199, 2790, 2296, 2750, 206, 376, 379, 808, 385, 210, 213, 215, 3390, 395, 2850 -->
 
-## How to use this list
+## How to read this list
 
-- **Complete for this snapshot.** This page lists every pesticide whose EU residue definition differs by commodity in rd-bridge snapshot `b4e9020` (residue map of 2026-10-14): 77 of 684 definitions, with 83 commodity-specific definitions. A pesticide in the EU Pesticides Database that is **not listed has one residue definition and one whole-residue PARAM code for all foods**.
-- **Latest definitions, not historical ones.** The snapshot holds the latest EU-published definitions as of 2026-10-14. For samples from earlier years, confirm the definition that applied on the sampling date in the legislation or EFSA's Legal Limits database.
-- **Reading a row.** "Default" applies to every food not covered by one of that pesticide's exceptions. An exception covers the listed Annex I codes and everything under them, minus the codes after **except**. Code names are in the Annex I table at the end. Report the whole-residue code with `paramType` `P005A` (or `P004A` for a subset) and components with `P002A`; see [[pesticide-residue-definition-by-matrix]].
-- **No trustworthy code.** Where rd-bridge has no reliable PARAM link, the row says so. Do not substitute a similar-looking code.
-- **Placing a food.** Rows use Annex I codes of Regulation (EC) No 396/2005. Plain commodities (milk, bovine liver, honey) can be placed directly. Processed, composite or FoodEx2-coded foods need EFSA's FoodEx2-to-Annex I mapping; use rd-bridge `resolve`, which returns candidates rather than guessing.
-- **Scope.** Pesticide residue definitions under Regulation (EC) No 396/2005 only. Veterinary medicines have separate VMPR marker residues ([[vmpr-reporting]]). Definitions and codes only: no MRL values or compliance judgements.
-- **Authority.** rd-bridge is a derived, non-official bridge. The legislation decides; EFSA validates pesticide `paramCode`s against the sampled matrix with LL_04 using its Legal Limits database ([[legal-limits-database]]).
+- **Complete:** every pesticide whose EU residue definition differs by food in rd-bridge snapshot `b4e9020` (map of 2026-10-14): 77 of 684 definitions. A pesticide not listed has **one definition and one whole-residue code for all foods**.
+- **Scopes:** "default" covers every food not in an exception. An exception covers the Annex I codes given and everything under them, minus the codes after "except"; † marks a scope rd-bridge interpreted from the EU footnote. Report the whole-residue code in brackets (`P005A`, or `P004A` for a subset) and parts as `P002A`; see [[pesticide-residue-definition-by-matrix]].
+- **Status:** latest EU definitions from a derived, non-official source. For older samples use the definition valid on the sampling date; the legislation decides and EFSA validates with LL_04 ([[legal-limits-database]]). "no reliable code" means rd-bridge found no trustworthy PARAM link; do not substitute a similar code. Annex I code names are at the end.
+- **Limits:** pesticides under Regulation (EC) No 396/2005 only (veterinary medicines: [[vmpr-reporting]]); definitions, not MRL values. A processed or composite food may not fall in one Annex I code: check the candidate scopes instead of guessing.
 
 ## Definitions by pesticide
 
-| Pesticide | Scope (Annex I) | Residue definition | Whole-residue paramCode |
-|---|---|---|---|
-| 1,4-dimethylnaphthalene | Default | 1,4-dimethylnaphthalene | `RF-00004728-PAR` |
-| 1,4-dimethylnaphthalene | `1000000`; **except** `1040000` | Sum of 1,4-dimethylnaphthalene and its metabolite M23 free and conjugated, expressed as 1,4-dimethylnaphthalene | `RF-00014206-PAR` |
-| 2,4-DB | Default | 2,4-DB (sum of 2,4-DB, its salts, its esters and its conjugates, expressed as 2,4-DB) | `RF-0008-001-PPP` |
-| 2,4-DB | `1000000`; **except** `1040000` | sum of 2,4-DB and its conjugates, expressed as 2,4-DB | `RF-00002605-PAR` |
-| 2-phenylphenol | Default | 2-phenylphenol (sum of 2-phenylphenol and its conjugates, expressed as 2-phenylphenol) | `RF-00007633-PAR` |
-| 2-phenylphenol | `1000000`; **except** `1040000` † | 2-phenylphenol | `RF-0823-001-PPP` |
-| Abamectin | Default | Abamectin (sum of avermectin B1a, avermectin B1b and delta-8,9 isomer of avermectin B1a, expressed as avermectin B1a) | `RF-00004655-PAR` |
-| Abamectin | `1000000`; **except** `1040000` | avermectin B1a | `RF-0011-003-PPP` |
-| Acetamiprid | Default | Acetamiprid | `RF-0014-001-PPP` |
-| Acetamiprid | `1000000`; **except** `1040000` | Sum of acetamiprid and N-desmethyl-acetamiprid (IM-2-1), expressed as acetamiprid | `RF-00003326-PAR` |
-| Ametoctradin | Default | Ametoctradin | `RF-1055-001-PPP` |
-| Ametoctradin | `1000000`; **except** `1040000` | Ametoctradin, metabolite 4-(7-amino-5-ethyl [1,2,4]triazolo, [1,5-a]pyrimidin-6-yl) butanoic acid (M650F01) and metabolite 6-(7-amino-5-ethyl [1,2,4]triazolo [1,5-a]pyrimidin-6-yl) hexanoic acid (M650F06), expressed as ametoctradin | `RF-00002606-PAR` |
-| Amidosulfuron | Default | Amidosulfuron | `RF-0022-001-PPP` |
-| Amidosulfuron | `1000000`; **except** `1040000` | amidosulfuron (sum of amidosulfuron and desmethyl amidosulfuron, expressed as amidosulfuron) | `RF-00001230-PAR` |
-| Aminopyralid | Default | Aminopyralid (sum of aminopyralid, its salts and its conjugates, expressed as aminopyralid) | `RF-00013471-PAR` |
-| Aminopyralid | `1000000`; **except** `1040000` | aminopyralid | `RF-0023-001-PPP` |
-| Bentazone | Default | Bentazone (Sum of bentazone, its salts and 6-hydroxy (free and conjugated) and 8-hydroxy bentazone (free and conjugated), expressed as bentazone) | `RF-0042-001-PPP` |
-| Bentazone | `1010000`, `1020000`, `1030000`, `1040000`, `1050000`, `1060000`, `1070000`; **except** `1040000` | Sum of bentazone, its salts and 6-hydroxy (free and conjugated), expressed as bentazone | no trustworthy PARAM code (near match only) |
-| Bixafen | Default | Bixafen | `RF-1056-001-PPP` |
-| Bixafen | `1000000`; **except** `1040000` | sum of bixafen and desmethyl bixafen expressed as bixafen | `RF-00000010-PAR` |
-| Boscalid | Default | Boscalid | `RF-0049-001-PPP` |
-| Boscalid | `1000000`; **except** `1040000`, `1011010`, `1011020`, `1011050`, `1012010`, `1012020`, `1012050`, `1013010`, `1013020`, `1013050`, `1014010`, `1014020`, `1014050`, `1015010`, `1015020`, `1015050`, `1016010`, `1016020`, `1017010`, `1017020`, `1017050`, `1020000`, `1030000` | Sum of boscalid and its hydroxy metabolite 2-chloro-N-(4′-chloro-5-hydroxybiphenyl-2-yl)nicotinamide (free and conjugated) expressed as boscalid | `RF-00005715-PAR` |
-| Bupirimate | Default | Bupirimate | `RF-0055-001-PPP` |
-| Bupirimate | `1000000` | Desethyl ethirimol | `RF-00005868-PAR` |
-| Camphechlor | Default | Camphechlor (Toxaphene) | `RF-0059-001-PPP` |
-| Camphechlor | `1000000`; **except** `1040000` | Sum of the three indicator compounds Parlar No 26, 50 and 62 | `RF-0059-003-PPP` |
-| Captan | Default | Captan (Sum of captan and THPI, expressed as captan) | `RF-00004681-PAR` |
-| Captan | `1000000`; **except** `1040000` | Sum of THPI, 3-OH THPI and 5-OH THPI, expressed as captan | `RF-00004685-PAR` |
-| Captan | `0151020` | captan | `RF-0061-001-PPP` |
-| Carbendazim and benomyl | Default | Carbendazim and benomyl (sum of benomyl and carbendazim expressed as carbendazim) | `RF-0041-001-PPP` |
-| Carbendazim and benomyl | `1000000` | Carbendazim and thiophanate-methyl, expressed as carbendazim | `RF-1002-001-PPP` |
-| Carbofuran | Default | Carbofuran (sum of carbofuran (including any carbofuran generated from carbosulfan, benfuracarb or furathiocarb) and 3-OH carbofuran expressed as carbofuran) | `RF-00003374-PAR` |
-| Carbofuran | `1000000`; **except** `1040000` | 3-OH-carbofuran (free and conjugated) expressed as carbofuran | `RF-00003322-PAR` |
-| Carfentrazone-ethyl | Default | Carfentrazone-ethyl (sum of carfentrazone-ethyl and carfentrazone, expressed as carfentrazone-ethyl) | `RF-00012874-PAR` |
-| Carfentrazone-ethyl | `1000000` | Carfentrazone- ethyl | `RF-0070-003-PPP` |
-| Chlordane | Default | Chlordane (sum of cis- and trans-chlordane) | `RF-0075-001-PPP` |
-| Chlordane | `1000000` | Sum of cis- and trans-isomers and oxychlordane expressed as chlordane | `RF-0075-005-PPP` |
-| Chloridazon | Default | Chloridazon (sum of chloridazon and chloridazon-desphenyl, expressed as chloridazon) | `RF-00005729-PAR` |
-| Chloridazon | `1000000`; **except** `1040000` | Chloridazon (chloridazon-desphenyl, expressed as chloridazon) | `RF-00005712-PAR` |
-| Chlorothalonil | Default | Chlorothalonil | `RF-0084-001-PPP` |
-| Chlorothalonil | `1000000`, `1010000`, `1020000`, `1030000`, `1040000`, `1050000`, `1060000`, `1070000`; **except** `1040000` | 2,5,6-trichloro-4-hydroxyphtalonitrile (SDS-3701) | `RF-00000012-PAR` |
-| Chlorpropham | Default | Chlorpropham | `RF-0086-003-PPP` |
-| Chlorpropham | `1016000`, `1030000` | chlorpropham and 3-chloro-4-hydroxyaniline conjugates, expressed as chlorpropham | `RF-00003035-PAR` |
-| Chlorpropham | `1000000`; **except** `1016000`, `1030000`, `1040000` | Chlorpropham and 4'-hydroxychlorpropham-O-sulphonic acid (4-HSA),expressed as chlorpropham | `RF-0086-004-PPP` |
-| Chlorpyrifos-methyl | Default | Chlorpyrifos-methyl | `RF-0088-001-PPP` |
-| Chlorpyrifos-methyl | `0500000` † | sum of chlorpyrifos-methyl and desmethyl chlorpyrifos-methyl | `RF-00007588-PAR` |
-| Clofentezine | Default | Clofentezine | `RF-0098-001-PPP` |
-| Clofentezine | `0500000`, `1000000` | Sum of all compounds containing the 2-chlorobenzoyl moiety expressed as clofentezine | `RF-0098-002-PPP` |
-| Cyflufenamid | Default | Cyflufenamid (sum of cyflufenamid (Z-isomer) and its E-isomer, expressed as cyflufenamid) | `RF-0107-001-PPP` |
-| Cyflufenamid | `1000000`; **except** `1040000` | sum of cyflufenamid (Z-isomer), its E-isomer and metabolite 149-F1, expressed as cyflufenamid | `RF-00012291-PAR` |
-| Cyprodinil | Default | Cyprodinil | `RF-0114-001-PPP` |
-| Cyprodinil | `1000000`; **except** `1020000`, `1040000` | Cyprodinil (sum of cyprodinil and CGA 304075 (free), expressed as cyprodinil) | `RF-0114-002-PPP` |
-| Cyprodinil | `1020000` | Cyprodinil (Sum of cyprodinil and CGA 304075 (free and conjugated), expressed as cyprodinil) | `RF-00003338-PAR` |
-| Dichlorprop | Default | Dichlorprop (Sum of dichlorprop (including dichlorprop-P), its salts, esters and conjugates, expressed as dichlorprop) | `RF-00004659-PAR` |
-| Dichlorprop | `1000000`; **except** `1040000` | Sum of dichlorprop (including dichlorprop-P) and its salts, expressed as dichlorprop | `RF-00004682-PAR` |
-| Diflubenzuron | Default | Diflubenzuron | `RF-0134-001-PPP` |
-| Diflubenzuron | `1000000` | Sum of Diflubenzuron and 4 –chlorophenylurea expressed as Diflubenzuron | `RF-0134-002-PPP` |
-| Dimoxystrobin | Default | Dimoxystrobin | `RF-0141-001-PPP` |
-| Dimoxystrobin | `1000000`; **except** `1040000` | 505M09, expressed as dimoxystrobin | `RF-00004653-PAR` |
-| Emamectin B1a and its salts, expressed as emamectin B1a | Default | Emamectin B1a and its salts, expressed as emamectin B1a (free base) | `RF-00014212-PAR` |
-| Emamectin B1a and its salts, expressed as emamectin B1a | `1000000` | Emamectin B1a | `RF-0649-001-PPP` |
-| Ethephon | Default | Ethephon | `RF-0160-001-PPP` |
-| Ethephon | `0500000` | Sum of ethephon free and conjugates, expressed as ethephon | no trustworthy PARAM code (no match) |
-| Ethirimol | Default | Ethirimol | `RF-0162-001-PPP` |
-| Ethirimol | `1000000` | Desethyl ethirimol | `RF-00005868-PAR` |
-| Fenpicoxamid | Default | Fenpicoxamid | `RF-00010217-PAR` |
-| Fenpicoxamid | `1000000`; **except** `1040000` | X12326349 expressed as fenpicoxamid | `RF-00011521-PAR` |
-| Fenpropidin | Default | Fenpropidin (sum of fenpropidin and its salts, expressed as fenpropidin) | `RF-0184-001-PPP` |
-| Fenpropidin | `1000000`; **except** `1040000` | sum of fenpropidin, 2-methyl-2-[4-(2-methyl-3- piperidin-1-yl-propyl)-phenyl]propionic acid, and their salts, expressed as fenpropidin | `RF-0184-002-PPP` |
-| Fenpropimorph | Default | Fenpropimorph (sum of isomers) | `RF-0185-001-PPP` |
-| Fenpropimorph | `1000000`; **except** `1040000` | Fenpropimorph carboxylic acid (BF 421-2) expressed as fenpropimorph | `RF-0185-002-PPP` |
-| Fenpyroximate | Default | Fenpyroximate | `RF-0186-001-PPP` |
-| Fenpyroximate | `1012030`, `1012040`, `1013030`, `1013040`, `1014030`, `1014040`, `1015030`, `1015040`, `1017030`, `1017040` | Fenpyroximate (metabolite M-3, expressed as fenpyroximate (F)) | `RF-00005723-PAR` |
-| Fenvalerate | Default | Fenvalerate (any ratio of constituent isomers (RR, SS, RS & SR) including esfenvalerate) | `RF-0690-006-PPP` |
-| Fenvalerate | `1011030`, `1011040`, `1012030`, `1012040`, `1013030`, `1013040`, `1014030`, `1014040`, `1015030`, `1015040`, `1016030`, `1016040`, `1017030`, `1017040` | sum of fenvalerate (any ratio of constituent isomers including esfenvalerate) and CPIA (chlorophenyl isovaleric acid), expressed as fenvalerate | `RF-00003017-PAR` |
-| Flonicamid | Default | Flonicamid (sum of flonicamid, TFNA and TFNG expressed as flonicamid) | `RF-00004683-PAR` |
-| Flonicamid | `1000000`; **except** `1040000` | Sum of flonicamid and TFNA-AM, expressed as flonicamid | `RF-1070-001-PPP` |
-| Fludioxonil | Default | Fludioxonil | `RF-0202-001-PPP` |
-| Fludioxonil | `1000000`; **except** `1040000` | sum of fludioxonil and its metabolites oxidized to metabolite 2,2-difluoro-benzo[1,3]dioxole-4 carboxylic acid, expressed as fludioxonil | `RF-00003352-PAR` |
-| Fluopyram | Default | Fluopyram | `RF-1071-001-PPP` |
-| Fluopyram | `1000000`; **except** `1040000` | sum of fluopyram and fluopyram-benzamide (M25) expressed as fluopyram | `RF-00000023-PAR` |
-| Fluoxastrobin | Default | Fluoxastrobin (sum of fluoxastrobin and its Z-isomer) | `RF-00005720-PAR` |
-| Fluoxastrobin | `1000000`; **except** `1040000` | Fluoxastrobin (sum of fluoxastrobin, its Z-isomer and its metabolite 6-(2-chlorophenoxy)-5-fluoro-4-pyrimidinol, expressed as fluoxastrobin) | `RF-00005722-PAR` |
-| Fluroxypyr | Default | Fluroxypyr (sum of fluroxypyr, its salts, its esters, and its conjugates, expressed as fluroxypyr) | `RF-00004663-PAR` |
-| Fluroxypyr | `1000000`; **except** `1040000` | Fluroxypyr (sum of fluroxypyr and its salts, expressed as fluroxypyr) | `RF-00005714-PAR` |
-| Flusilazole | Default | Flusilazole | `RF-0218-001-PPP` |
-| Flusilazole | `1000000`; **except** `1040000` | Sum of flusilazole and its metabolite IN-F7321 ([bis-(4-fluorophenyl)methyl]silanol) expressed as flusilazole | `RF-0218-002-PPP` |
-| Flutolanil | Default | Flutolanil | `RF-0219-001-PPP` |
-| Flutolanil | `1000000`; **except** `1040000` | Flutolanil (Flutolanil and metabolites containing the 2-trifluoromethylbenzoic acid moiety, expressed as flutolanil) | `RF-00003353-PAR` |
-| Folpet | Default | Folpet (sum of folpet and phtalimide, expressed as folpet) | `RF-00004687-PAR` |
-| Folpet | `1000000`; **except** `1040000` | Phtalimide, expressed as folpet | `RF-00004688-PAR` |
-| Haloxyfop | Default | Haloxyfop (Sum of haloxyfop, its esters, salts and conjugates expressed as haloxyfop (sum of the R- and S- isomers at any ratio)) | `RF-00004667-PAR` |
-| Haloxyfop | `1000000`; **except** `1040000` | Sum of haloxyfop, its salts and conjugates expressed as haloxyfop (sum of the R- and S- isomers at any ratio) | `RF-00004684-PAR` |
-| Imazalil | Default | Imazalil (any ratio of constituent isomers) | `RF-00012046-PAR` |
-| Imazalil | `1000000`; **except** `1040000` | sum of imazalil and metabolite FK-772 (any ratio of constituent isomers), expressed as imazalil | `RF-00011998-PAR` |
-| Iprodione | Default | Iprodione | `RF-0255-001-PPP` |
-| Iprodione | `1000000`; **except** `1040000` | Sum of iprodione and all metabolites containing the 3,5-dichloroaniline moiety, expressed as iprodione | `RF-00003375-PAR` |
-| Kresoxim-methyl | Default | Kresoxim-methyl | `RF-0260-001-PPP` |
-| Kresoxim-methyl | `1000000`; **except** `1040000` | kresoxim methyl (BF-490-9, expressed as parent) | no trustworthy PARAM code (no match) |
-| MCPA and MCPB | Default | MCPA and MCPB (MCPA, MCPB including their salts, esters and conjugates expressed as MCPA) | `RF-0271-004-PPP` |
-| MCPA and MCPB | `1000000` | MCPA, MCPB and MCPA thioethyl expressed as MCPA | `RF-0271-006-PPP` |
-| Metalaxyl and metalaxyl-M | Default | Metalaxyl and metalaxyl-M (metalaxyl including other mixtures of constituent isomers including metalaxyl-M (sum of isomers)) | `RF-0281-001-PPP` |
-| Metalaxyl and metalaxyl-M | `1000000`; **except** `1040000` † | Sum of metalaxyl (sum of enantiomers) and metabolites (free + conjugated) M3 (N- (2,6-dimethylphenyl)-N-(hydroxyacetyl)alanine methyl ester) and M8 (N-(2-hydroxymethyl-6- methylphenyl)-N-(methoxyacetyl)alanine methyl ester (sum of enantiomers), expressed as metalaxyl | `RF-00015695-PAR` |
-| Metazachlor | Default | Metazachlor (Sum of metabolites 479M04, 479M08 and 479M16, expressed as metazachlor) | `RF-00003344-PAR` |
-| Metazachlor | `1000000`; **except** `1040000` | Sum of metazachlor and its metabolites containing the 2,6-dimethylaniline moiety, expressed as metazachlor | `RF-00003345-PAR` |
-| Myclobutanil | Default | Myclobutanil (sum of constituent isomers) | `RF-00012801-PAR` |
-| Myclobutanil | `1000000`; **except** `1040000` | free and conjugated forms of alpha-(3-hydroxybutyl) - alpha - (4-chloro-phenyl) - 1H - 1,2,4 - triazole -1-propanenitrile (RH9090), expressed as myclobutanil | `RF-00013001-PAR` |
-| Pencycuron | Default | Pencycuron (sum of pencycuron and pencycuron-PB-amine, expressed as pencycuron) | `RF-00012803-PAR` |
-| Pencycuron | `1000000` | pencycuron | `RF-0330-001-PPP` |
-| Phosphonic acid and its salts expressed as phosphonic acid | Default | Phosphonic acid and its salts expressed as phosphonic acid | `RF-00015700-PAR` |
-| Phosphonic acid and its salts expressed as phosphonic acid | `1000000`; **except** `1040000` | Phosphonic acid | no trustworthy PARAM code (no match) |
-| Picloram, free and conjugated, expressed as picloram | Default | Picloram, free and conjugated, expressed as picloram | `RF-00016362-PAR` |
-| Picloram, free and conjugated, expressed as picloram | `1000000`; **except** `1040000` | picloram | `RF-0343-001-PPP` |
-| Pinoxaden (sum of M4 and M6) | Default | Sum of M4 and M6 (both free and conjugated), expressed as pinoxaden | `RF-00014208-PAR` |
-| Pinoxaden (sum of M4 and M6) | `1000000`; **except** `1040000` | M4 (free and conjugated), expressed as pinoxaden | `RF-00014209-PAR` |
-| Pirimicarb | Default | Pirimicarb | `RF-0347-002-PPP` |
-| Pirimicarb | `1000000`; **except** `1016000`, `1030000`, `1040000` | Sum of pirimicarb and desmethyl pirimicarb, expressed as pirimicarb | `RF-0347-001-PPP` |
-| Procymidone | Default | Procymidone | `RF-0350-001-PPP` |
-| Procymidone | `1000000` | Vinclozolin, iprodione, procymidone, sum of compounds and all metabolites containing the 3,5-dichloroaniline moiety expressed as 3,5 dichloroaniline | `RF-1003-001-PPP` |
-| Propamocarb | Default | Propamocarb (Sum of propamocarb and its salts, expressed as propamocarb) | `RF-0354-001-PPP` |
-| Propamocarb | `1000000`; **except** `1016000`, `1030000`, `1040000` | N-oxide propamocarb | `RF-00003364-PAR` |
-| Propamocarb | `1016000`, `1030000` | N-desmethyl propamocarb | `RF-0354-003-PPP` |
-| Propyzamide | Default | Propyzamide | `RF-0364-001-PPP` |
-| Propyzamide | `1000000` | Sum of propyzamide and all metabolites containing the 3,5-dichlorobenzoic acid moiety, expressed as propyzamide | no trustworthy PARAM code (near match only) |
-| Proquinazid | Default | Proquinazid | `RF-0365-001-PPP` |
-| Proquinazid | `1000000`; **except** `1040000` | Sum of proquinazid and metabolite 3-[(6-iodo-4-oxo-3-propyl-3,4-dihydroquinazolin-2-yl)oxy]propanoic acid (IN-MU210) expressed as proquinazid | `RF-00012898-PAR` |
-| Pymetrozine | Default | Pymetrozine | `RF-0369-001-PPP` |
-| Pymetrozine | `1020000` | pymetrozine, 6-hydroxymethylpymetrozine and its phosphate conjugate, expressed as pymetrozine | `RF-00003365-PAR` |
-| Pyrimethanil | Default | Pyrimethanil | `RF-0377-001-PPP` |
-| Pyrimethanil | `1020000` | Sum of pyrimethanil and 2-anilino-4.6-dimethylpyrimidine-5-ol, expressed as pyrimethanil | `RF-00003371-PAR` |
-| Pyrimethanil | `1011000`, `1012000`, `1013000`, `1014000`, `1015000`, `1017000` | Sum of pyrimethanil and 2-(4-hydroxyanilino)-4.6-dimethylpyrimidine, expressed as pyrimethanil | `RF-00003370-PAR` |
-| Quinmerac | Default | Quinmerac (sum of quinmerac and its metabolites BH 518-2 and BH 518-4 expressed as quinmerac) | `RF-00014207-PAR` |
-| Quinmerac | `1000000`; **except** `1040000` | quinmerac | `RF-0381-001-PPP` |
-| Saflufenacil | Default | Saflufenacil (sum of saflufenacil, M800H11 and M800H35, expressed as saflufenacil) | `RF-00004817-PAR` |
-| Saflufenacil | `1000000`; **except** `1040000` | Saflufenacil | `RF-00004816-PAR` |
-| Spirotetramat and spirotetramat-enol | Default | Spirotetramat and spirotetramat-enol (sum of), expressed as spirotetramat | no trustworthy PARAM code (no match) |
-| Spirotetramat and spirotetramat-enol | `1000000`; **except** `1040000` | spirotetramat-enol expressed as spirotetramat | `RF-00012871-PAR` |
-| Spiroxamine | Default | Spiroxamine (sum of isomers) | `RF-0397-001-PPP` |
-| Spiroxamine | `1000000`; **except** `1040000` | Spiroxamine carboxylic acid metabolite M06, expressed as spiroxamine (sum of isomers) | `RF-1006-001-PPP` |
-| Sulcotrione | Default | Sulcotrione | `RF-0398-001-PPP` |
-| Sulcotrione | `1000000`; **except** `1040000` | CMBA (2-chloro-4-(methylsulfonyl)benzoic acid) | `RF-00005718-PAR` |
-| Tebuconazole | Default | Tebuconazole | `RF-0403-001-PPP` |
-| Tebuconazole | `1000000`; **except** `1040000` | sum of tebuconazole, hydroxy-tebuconazole, and their conjugates, expressed as tebuconazole | `RF-00003037-PAR` |
-| Tembotrione | Default | Tembotrione (Sum of parent tembotrione (AE 0172747) and its metabolite M5 (4,6-dihydroxy tembotrione), expressed as tembotrione) | `RF-00012293-PAR` |
-| Tembotrione | `1000000`; **except** `1040000` | Metabolite M5 (Dihydroxy-tembotrione) | `RF-00002608-PAR` |
-| Terbuthylazine | Default | Terbuthylazine | `RF-0413-001-PPP` |
-| Terbuthylazine | `1020000` | Sum of terbuthylazine and desethyl-terbuthylazine, expressed as terbuthylazine | `RF-00013000-PAR` |
-| Thiabendazole | Default | Thiabendazole | `RF-0416-001-PPP` |
-| Thiabendazole | `1000000`; **except** `1020000`, `1040000` † | sum of thiabendazole and 5-hydroxythiabendazole, expressed as thiabendazole | `RF-00007629-PAR` |
-| Thiabendazole | `1020000` | sum of thiabendazole, 5-hydroxythiabendazole and its sulfate conjugate, expressed as thiabendazole | `RF-00007630-PAR` |
-| Thiophanate-methyl | Default | Thiophanate-methyl | `RF-0422-001-PPP` |
-| Thiophanate-methyl | `1000000` | Carbendazim and thiophanate-methyl, expressed as carbendazim | `RF-1002-001-PPP` |
-| Tolylfluanid | Default | Tolylfluanid (Sum of tolylfluanid and dimethylaminosulfotoluidide expressed as tolylfluanid) | `RF-0425-001-PPP` |
-| Tolylfluanid | `1000000`; **except** `1040000` | Dimethylaminosulfotoluidide | `RF-0644-001-PPP` |
-| Trifloxystrobin | Default | Trifloxystrobin | `RF-0439-001-PPP` |
-| Trifloxystrobin | `1000000`; **except** `1040000` | the sum of trifloxystrobin and its metabolite (E, E)-methoxyimino- {2-[1-(3-trifluoromethyl-phenyl)-ethylideneamino-oxymethyl]-phenyl}-acetic acid (CGA 321113) expressed as trifloxystrobin | `RF-00015733-PAR` |
-| Triflumizole | Default | Triflumizole: Triflumizole and metabolite FM-6-1(N-(4-chloro-2-trifluoromethylphenyl)-n-propoxyacetamidine), expressed as Triflumizole | `RF-0440-001-PPP` |
-| Triflumizole | `1000000`; **except** `1040000` † | triflumizole | `RF-0440-002-PPP` |
-| Valifenalate | Default | Valifenalate | `RF-1057-001-PPP` |
-| Valifenalate | `1000000`; **except** `1040000` | Valifenalate and valifenalate acid (IR5839) | `RF-00014211-PAR` |
+- **1,4-dimethylnaphthalene**: default: 1,4-dimethylnaphthalene (RF-00004728-PAR); `1000000` except `1040000`: Sum of 1,4-dimethylnaphthalene and its metabolite M23 free and conjugated, expressed as 1,4-dimethylnaphthalene (RF-00014206-PAR)
+- **2,4-DB**: default: 2,4-DB (sum of 2,4-DB, its salts, its esters and its conjugates, expressed as 2,4-DB) (RF-0008-001-PPP); `1000000` except `1040000`: sum of 2,4-DB and its conjugates, expressed as 2,4-DB (RF-00002605-PAR)
+- **2-phenylphenol**: default: 2-phenylphenol (sum of 2-phenylphenol and its conjugates, expressed as 2-phenylphenol) (RF-00007633-PAR); `1000000` except `1040000` †: 2-phenylphenol (RF-0823-001-PPP)
+- **Abamectin**: default: Abamectin (sum of avermectin B1a, avermectin B1b and delta-8,9 isomer of avermectin B1a, expressed as avermectin B1a) (RF-00004655-PAR); `1000000` except `1040000`: avermectin B1a (RF-0011-003-PPP)
+- **Acetamiprid**: default: Acetamiprid (RF-0014-001-PPP); `1000000` except `1040000`: Sum of acetamiprid and N-desmethyl-acetamiprid (IM-2-1), expressed as acetamiprid (RF-00003326-PAR)
+- **Ametoctradin**: default: Ametoctradin (RF-1055-001-PPP); `1000000` except `1040000`: Ametoctradin, metabolite 4-(7-amino-5-ethyl [1,2,4]triazolo, [1,5-a]pyrimidin-6-yl) butanoic acid (M650F01) and metabolite 6-(7-amino-5-ethyl [1,2,4]triazolo [1,5-a]pyrimidin-6-yl) hexanoic acid (M650F06), expressed as ametoctradin (RF-00002606-PAR)
+- **Amidosulfuron**: default: Amidosulfuron (RF-0022-001-PPP); `1000000` except `1040000`: amidosulfuron (sum of amidosulfuron and desmethyl amidosulfuron, expressed as amidosulfuron) (RF-00001230-PAR)
+- **Aminopyralid**: default: Aminopyralid (sum of aminopyralid, its salts and its conjugates, expressed as aminopyralid) (RF-00013471-PAR); `1000000` except `1040000`: aminopyralid (RF-0023-001-PPP)
+- **Bentazone**: default: Bentazone (Sum of bentazone, its salts and 6-hydroxy (free and conjugated) and 8-hydroxy bentazone (free and conjugated), expressed as bentazone) (RF-0042-001-PPP); `1010000`, `1020000`, `1030000`, `1040000`, `1050000`, `1060000`, `1070000` except `1040000`: Sum of bentazone, its salts and 6-hydroxy (free and conjugated), expressed as bentazone (no reliable code)
+- **Bixafen**: default: Bixafen (RF-1056-001-PPP); `1000000` except `1040000`: sum of bixafen and desmethyl bixafen expressed as bixafen (RF-00000010-PAR)
+- **Boscalid**: default: Boscalid (RF-0049-001-PPP); `1000000` except `1040000`, `1011010`, `1011020`, `1011050`, `1012010`, `1012020`, `1012050`, `1013010`, `1013020`, `1013050`, `1014010`, `1014020`, `1014050`, `1015010`, `1015020`, `1015050`, `1016010`, `1016020`, `1017010`, `1017020`, `1017050`, `1020000`, `1030000`: Sum of boscalid and its hydroxy metabolite 2-chloro-N-(4′-chloro-5-hydroxybiphenyl-2-yl)nicotinamide (free and conjugated) expressed as boscalid (RF-00005715-PAR)
+- **Bupirimate**: default: Bupirimate (RF-0055-001-PPP); `1000000`: Desethyl ethirimol (RF-00005868-PAR)
+- **Camphechlor**: default: Camphechlor (Toxaphene) (RF-0059-001-PPP); `1000000` except `1040000`: Sum of the three indicator compounds Parlar No 26, 50 and 62 (RF-0059-003-PPP)
+- **Captan**: default: Captan (Sum of captan and THPI, expressed as captan) (RF-00004681-PAR); `1000000` except `1040000`: Sum of THPI, 3-OH THPI and 5-OH THPI, expressed as captan (RF-00004685-PAR); `0151020`: captan (RF-0061-001-PPP)
+- **Carbendazim and benomyl**: default: Carbendazim and benomyl (sum of benomyl and carbendazim expressed as carbendazim) (RF-0041-001-PPP); `1000000`: Carbendazim and thiophanate-methyl, expressed as carbendazim (RF-1002-001-PPP)
+- **Carbofuran**: default: Carbofuran (sum of carbofuran (including any carbofuran generated from carbosulfan, benfuracarb or furathiocarb) and 3-OH carbofuran expressed as carbofuran) (RF-00003374-PAR); `1000000` except `1040000`: 3-OH-carbofuran (free and conjugated) expressed as carbofuran (RF-00003322-PAR)
+- **Carfentrazone-ethyl**: default: Carfentrazone-ethyl (sum of carfentrazone-ethyl and carfentrazone, expressed as carfentrazone-ethyl) (RF-00012874-PAR); `1000000`: Carfentrazone- ethyl (RF-0070-003-PPP)
+- **Chlordane**: default: Chlordane (sum of cis- and trans-chlordane) (RF-0075-001-PPP); `1000000`: Sum of cis- and trans-isomers and oxychlordane expressed as chlordane (RF-0075-005-PPP)
+- **Chloridazon**: default: Chloridazon (sum of chloridazon and chloridazon-desphenyl, expressed as chloridazon) (RF-00005729-PAR); `1000000` except `1040000`: Chloridazon (chloridazon-desphenyl, expressed as chloridazon) (RF-00005712-PAR)
+- **Chlorothalonil**: default: Chlorothalonil (RF-0084-001-PPP); `1000000`, `1010000`, `1020000`, `1030000`, `1040000`, `1050000`, `1060000`, `1070000` except `1040000`: 2,5,6-trichloro-4-hydroxyphtalonitrile (SDS-3701) (RF-00000012-PAR)
+- **Chlorpropham**: default: Chlorpropham (RF-0086-003-PPP); `1016000`, `1030000`: chlorpropham and 3-chloro-4-hydroxyaniline conjugates, expressed as chlorpropham (RF-00003035-PAR); `1000000` except `1016000`, `1030000`, `1040000`: Chlorpropham and 4'-hydroxychlorpropham-O-sulphonic acid (4-HSA),expressed as chlorpropham (RF-0086-004-PPP)
+- **Chlorpyrifos-methyl**: default: Chlorpyrifos-methyl (RF-0088-001-PPP); `0500000` †: sum of chlorpyrifos-methyl and desmethyl chlorpyrifos-methyl (RF-00007588-PAR)
+- **Clofentezine**: default: Clofentezine (RF-0098-001-PPP); `0500000`, `1000000`: Sum of all compounds containing the 2-chlorobenzoyl moiety expressed as clofentezine (RF-0098-002-PPP)
+- **Cyflufenamid**: default: Cyflufenamid (sum of cyflufenamid (Z-isomer) and its E-isomer, expressed as cyflufenamid) (RF-0107-001-PPP); `1000000` except `1040000`: sum of cyflufenamid (Z-isomer), its E-isomer and metabolite 149-F1, expressed as cyflufenamid (RF-00012291-PAR)
+- **Cyprodinil**: default: Cyprodinil (RF-0114-001-PPP); `1000000` except `1020000`, `1040000`: Cyprodinil (sum of cyprodinil and CGA 304075 (free), expressed as cyprodinil) (RF-0114-002-PPP); `1020000`: Cyprodinil (Sum of cyprodinil and CGA 304075 (free and conjugated), expressed as cyprodinil) (RF-00003338-PAR)
+- **Dichlorprop**: default: Dichlorprop (Sum of dichlorprop (including dichlorprop-P), its salts, esters and conjugates, expressed as dichlorprop) (RF-00004659-PAR); `1000000` except `1040000`: Sum of dichlorprop (including dichlorprop-P) and its salts, expressed as dichlorprop (RF-00004682-PAR)
+- **Diflubenzuron**: default: Diflubenzuron (RF-0134-001-PPP); `1000000`: Sum of Diflubenzuron and 4 –chlorophenylurea expressed as Diflubenzuron (RF-0134-002-PPP)
+- **Dimoxystrobin**: default: Dimoxystrobin (RF-0141-001-PPP); `1000000` except `1040000`: 505M09, expressed as dimoxystrobin (RF-00004653-PAR)
+- **Emamectin B1a and its salts, expressed as emamectin B1a**: default: Emamectin B1a and its salts, expressed as emamectin B1a (free base) (RF-00014212-PAR); `1000000`: Emamectin B1a (RF-0649-001-PPP)
+- **Ethephon**: default: Ethephon (RF-0160-001-PPP); `0500000`: Sum of ethephon free and conjugates, expressed as ethephon (no reliable code)
+- **Ethirimol**: default: Ethirimol (RF-0162-001-PPP); `1000000`: Desethyl ethirimol (RF-00005868-PAR)
+- **Fenpicoxamid**: default: Fenpicoxamid (RF-00010217-PAR); `1000000` except `1040000`: X12326349 expressed as fenpicoxamid (RF-00011521-PAR)
+- **Fenpropidin**: default: Fenpropidin (sum of fenpropidin and its salts, expressed as fenpropidin) (RF-0184-001-PPP); `1000000` except `1040000`: sum of fenpropidin, 2-methyl-2-[4-(2-methyl-3- piperidin-1-yl-propyl)-phenyl]propionic acid, and their salts, expressed as fenpropidin (RF-0184-002-PPP)
+- **Fenpropimorph**: default: Fenpropimorph (sum of isomers) (RF-0185-001-PPP); `1000000` except `1040000`: Fenpropimorph carboxylic acid (BF 421-2) expressed as fenpropimorph (RF-0185-002-PPP)
+- **Fenpyroximate**: default: Fenpyroximate (RF-0186-001-PPP); `1012030`, `1012040`, `1013030`, `1013040`, `1014030`, `1014040`, `1015030`, `1015040`, `1017030`, `1017040`: Fenpyroximate (metabolite M-3, expressed as fenpyroximate (F)) (RF-00005723-PAR)
+- **Fenvalerate**: default: Fenvalerate (any ratio of constituent isomers (RR, SS, RS & SR) including esfenvalerate) (RF-0690-006-PPP); `1011030`, `1011040`, `1012030`, `1012040`, `1013030`, `1013040`, `1014030`, `1014040`, `1015030`, `1015040`, `1016030`, `1016040`, `1017030`, `1017040`: sum of fenvalerate (any ratio of constituent isomers including esfenvalerate) and CPIA (chlorophenyl isovaleric acid), expressed as fenvalerate (RF-00003017-PAR)
+- **Flonicamid**: default: Flonicamid (sum of flonicamid, TFNA and TFNG expressed as flonicamid) (RF-00004683-PAR); `1000000` except `1040000`: Sum of flonicamid and TFNA-AM, expressed as flonicamid (RF-1070-001-PPP)
+- **Fludioxonil**: default: Fludioxonil (RF-0202-001-PPP); `1000000` except `1040000`: sum of fludioxonil and its metabolites oxidized to metabolite 2,2-difluoro-benzo[1,3]dioxole-4 carboxylic acid, expressed as fludioxonil (RF-00003352-PAR)
+- **Fluopyram**: default: Fluopyram (RF-1071-001-PPP); `1000000` except `1040000`: sum of fluopyram and fluopyram-benzamide (M25) expressed as fluopyram (RF-00000023-PAR)
+- **Fluoxastrobin**: default: Fluoxastrobin (sum of fluoxastrobin and its Z-isomer) (RF-00005720-PAR); `1000000` except `1040000`: Fluoxastrobin (sum of fluoxastrobin, its Z-isomer and its metabolite 6-(2-chlorophenoxy)-5-fluoro-4-pyrimidinol, expressed as fluoxastrobin) (RF-00005722-PAR)
+- **Fluroxypyr**: default: Fluroxypyr (sum of fluroxypyr, its salts, its esters, and its conjugates, expressed as fluroxypyr) (RF-00004663-PAR); `1000000` except `1040000`: Fluroxypyr (sum of fluroxypyr and its salts, expressed as fluroxypyr) (RF-00005714-PAR)
+- **Flusilazole**: default: Flusilazole (RF-0218-001-PPP); `1000000` except `1040000`: Sum of flusilazole and its metabolite IN-F7321 ([bis-(4-fluorophenyl)methyl]silanol) expressed as flusilazole (RF-0218-002-PPP)
+- **Flutolanil**: default: Flutolanil (RF-0219-001-PPP); `1000000` except `1040000`: Flutolanil (Flutolanil and metabolites containing the 2-trifluoromethylbenzoic acid moiety, expressed as flutolanil) (RF-00003353-PAR)
+- **Folpet**: default: Folpet (sum of folpet and phtalimide, expressed as folpet) (RF-00004687-PAR); `1000000` except `1040000`: Phtalimide, expressed as folpet (RF-00004688-PAR)
+- **Haloxyfop**: default: Haloxyfop (Sum of haloxyfop, its esters, salts and conjugates expressed as haloxyfop (sum of the R- and S- isomers at any ratio)) (RF-00004667-PAR); `1000000` except `1040000`: Sum of haloxyfop, its salts and conjugates expressed as haloxyfop (sum of the R- and S- isomers at any ratio) (RF-00004684-PAR)
+- **Imazalil**: default: Imazalil (any ratio of constituent isomers) (RF-00012046-PAR); `1000000` except `1040000`: sum of imazalil and metabolite FK-772 (any ratio of constituent isomers), expressed as imazalil (RF-00011998-PAR)
+- **Iprodione**: default: Iprodione (RF-0255-001-PPP); `1000000` except `1040000`: Sum of iprodione and all metabolites containing the 3,5-dichloroaniline moiety, expressed as iprodione (RF-00003375-PAR)
+- **Kresoxim-methyl**: default: Kresoxim-methyl (RF-0260-001-PPP); `1000000` except `1040000`: kresoxim methyl (BF-490-9, expressed as parent) (no reliable code)
+- **MCPA and MCPB**: default: MCPA and MCPB (MCPA, MCPB including their salts, esters and conjugates expressed as MCPA) (RF-0271-004-PPP); `1000000`: MCPA, MCPB and MCPA thioethyl expressed as MCPA (RF-0271-006-PPP)
+- **Metalaxyl and metalaxyl-M**: default: Metalaxyl and metalaxyl-M (metalaxyl including other mixtures of constituent isomers including metalaxyl-M (sum of isomers)) (RF-0281-001-PPP); `1000000` except `1040000` †: Sum of metalaxyl (sum of enantiomers) and metabolites (free + conjugated) M3 (N- (2,6-dimethylphenyl)-N-(hydroxyacetyl)alanine methyl ester) and M8 (N-(2-hydroxymethyl-6- methylphenyl)-N-(methoxyacetyl)alanine methyl ester (sum of enantiomers), expressed as metalaxyl (RF-00015695-PAR)
+- **Metazachlor**: default: Metazachlor (Sum of metabolites 479M04, 479M08 and 479M16, expressed as metazachlor) (RF-00003344-PAR); `1000000` except `1040000`: Sum of metazachlor and its metabolites containing the 2,6-dimethylaniline moiety, expressed as metazachlor (RF-00003345-PAR)
+- **Myclobutanil**: default: Myclobutanil (sum of constituent isomers) (RF-00012801-PAR); `1000000` except `1040000`: free and conjugated forms of alpha-(3-hydroxybutyl) - alpha - (4-chloro-phenyl) - 1H - 1,2,4 - triazole -1-propanenitrile (RH9090), expressed as myclobutanil (RF-00013001-PAR)
+- **Pencycuron**: default: Pencycuron (sum of pencycuron and pencycuron-PB-amine, expressed as pencycuron) (RF-00012803-PAR); `1000000`: pencycuron (RF-0330-001-PPP)
+- **Phosphonic acid and its salts expressed as phosphonic acid**: default: Phosphonic acid and its salts expressed as phosphonic acid (RF-00015700-PAR); `1000000` except `1040000`: Phosphonic acid (no reliable code)
+- **Picloram, free and conjugated, expressed as picloram**: default: Picloram, free and conjugated, expressed as picloram (RF-00016362-PAR); `1000000` except `1040000`: picloram (RF-0343-001-PPP)
+- **Pinoxaden (sum of M4 and M6)**: default: Sum of M4 and M6 (both free and conjugated), expressed as pinoxaden (RF-00014208-PAR); `1000000` except `1040000`: M4 (free and conjugated), expressed as pinoxaden (RF-00014209-PAR)
+- **Pirimicarb**: default: Pirimicarb (RF-0347-002-PPP); `1000000` except `1016000`, `1030000`, `1040000`: Sum of pirimicarb and desmethyl pirimicarb, expressed as pirimicarb (RF-0347-001-PPP)
+- **Procymidone**: default: Procymidone (RF-0350-001-PPP); `1000000`: Vinclozolin, iprodione, procymidone, sum of compounds and all metabolites containing the 3,5-dichloroaniline moiety expressed as 3,5 dichloroaniline (RF-1003-001-PPP)
+- **Propamocarb**: default: Propamocarb (Sum of propamocarb and its salts, expressed as propamocarb) (RF-0354-001-PPP); `1000000` except `1016000`, `1030000`, `1040000`: N-oxide propamocarb (RF-00003364-PAR); `1016000`, `1030000`: N-desmethyl propamocarb (RF-0354-003-PPP)
+- **Propyzamide**: default: Propyzamide (RF-0364-001-PPP); `1000000`: Sum of propyzamide and all metabolites containing the 3,5-dichlorobenzoic acid moiety, expressed as propyzamide (no reliable code)
+- **Proquinazid**: default: Proquinazid (RF-0365-001-PPP); `1000000` except `1040000`: Sum of proquinazid and metabolite 3-[(6-iodo-4-oxo-3-propyl-3,4-dihydroquinazolin-2-yl)oxy]propanoic acid (IN-MU210) expressed as proquinazid (RF-00012898-PAR)
+- **Pymetrozine**: default: Pymetrozine (RF-0369-001-PPP); `1020000`: pymetrozine, 6-hydroxymethylpymetrozine and its phosphate conjugate, expressed as pymetrozine (RF-00003365-PAR)
+- **Pyrimethanil**: default: Pyrimethanil (RF-0377-001-PPP); `1020000`: Sum of pyrimethanil and 2-anilino-4.6-dimethylpyrimidine-5-ol, expressed as pyrimethanil (RF-00003371-PAR); `1011000`, `1012000`, `1013000`, `1014000`, `1015000`, `1017000`: Sum of pyrimethanil and 2-(4-hydroxyanilino)-4.6-dimethylpyrimidine, expressed as pyrimethanil (RF-00003370-PAR)
+- **Quinmerac**: default: Quinmerac (sum of quinmerac and its metabolites BH 518-2 and BH 518-4 expressed as quinmerac) (RF-00014207-PAR); `1000000` except `1040000`: quinmerac (RF-0381-001-PPP)
+- **Saflufenacil**: default: Saflufenacil (sum of saflufenacil, M800H11 and M800H35, expressed as saflufenacil) (RF-00004817-PAR); `1000000` except `1040000`: Saflufenacil (RF-00004816-PAR)
+- **Spirotetramat and spirotetramat-enol**: default: Spirotetramat and spirotetramat-enol (sum of), expressed as spirotetramat (no reliable code); `1000000` except `1040000`: spirotetramat-enol expressed as spirotetramat (RF-00012871-PAR)
+- **Spiroxamine**: default: Spiroxamine (sum of isomers) (RF-0397-001-PPP); `1000000` except `1040000`: Spiroxamine carboxylic acid metabolite M06, expressed as spiroxamine (sum of isomers) (RF-1006-001-PPP)
+- **Sulcotrione**: default: Sulcotrione (RF-0398-001-PPP); `1000000` except `1040000`: CMBA (2-chloro-4-(methylsulfonyl)benzoic acid) (RF-00005718-PAR)
+- **Tebuconazole**: default: Tebuconazole (RF-0403-001-PPP); `1000000` except `1040000`: sum of tebuconazole, hydroxy-tebuconazole, and their conjugates, expressed as tebuconazole (RF-00003037-PAR)
+- **Tembotrione**: default: Tembotrione (Sum of parent tembotrione (AE 0172747) and its metabolite M5 (4,6-dihydroxy tembotrione), expressed as tembotrione) (RF-00012293-PAR); `1000000` except `1040000`: Metabolite M5 (Dihydroxy-tembotrione) (RF-00002608-PAR)
+- **Terbuthylazine**: default: Terbuthylazine (RF-0413-001-PPP); `1020000`: Sum of terbuthylazine and desethyl-terbuthylazine, expressed as terbuthylazine (RF-00013000-PAR)
+- **Thiabendazole**: default: Thiabendazole (RF-0416-001-PPP); `1000000` except `1020000`, `1040000` †: sum of thiabendazole and 5-hydroxythiabendazole, expressed as thiabendazole (RF-00007629-PAR); `1020000`: sum of thiabendazole, 5-hydroxythiabendazole and its sulfate conjugate, expressed as thiabendazole (RF-00007630-PAR)
+- **Thiophanate-methyl**: default: Thiophanate-methyl (RF-0422-001-PPP); `1000000`: Carbendazim and thiophanate-methyl, expressed as carbendazim (RF-1002-001-PPP)
+- **Tolylfluanid**: default: Tolylfluanid (Sum of tolylfluanid and dimethylaminosulfotoluidide expressed as tolylfluanid) (RF-0425-001-PPP); `1000000` except `1040000`: Dimethylaminosulfotoluidide (RF-0644-001-PPP)
+- **Trifloxystrobin**: default: Trifloxystrobin (RF-0439-001-PPP); `1000000` except `1040000`: the sum of trifloxystrobin and its metabolite (E, E)-methoxyimino- {2-[1-(3-trifluoromethyl-phenyl)-ethylideneamino-oxymethyl]-phenyl}-acetic acid (CGA 321113) expressed as trifloxystrobin (RF-00015733-PAR)
+- **Triflumizole**: default: Triflumizole: Triflumizole and metabolite FM-6-1(N-(4-chloro-2-trifluoromethylphenyl)-n-propoxyacetamidine), expressed as Triflumizole (RF-0440-001-PPP); `1000000` except `1040000` †: triflumizole (RF-0440-002-PPP)
+- **Valifenalate**: default: Valifenalate (RF-1057-001-PPP); `1000000` except `1040000`: Valifenalate and valifenalate acid (IR5839) (RF-00014211-PAR)
 
 ## Interpreted source wording
 
-† These scopes are rd-bridge interpretations of the EU footnote text, not verbatim:
-
-- 2-phenylphenol: the EU footnote reads code `100000`; rd-bridge reads `1000000` (except codes nest inside it).
-- Chlorpyrifos-methyl: the EU footnote reads code `500000`; rd-bridge reads `0500000` (leading zero dropped).
-- Metalaxyl and metalaxyl-M: the EU footnote reads code `100000`; rd-bridge reads `1000000` (except codes nest inside it).
-- Thiabendazole: the EU footnote reads code `100000`; rd-bridge reads `1000000` (except codes nest inside it).
-- Triflumizole: the EU footnote reads code `100000`; rd-bridge reads `1000000` (except codes nest inside it).
-
-## Annex I codes used above
+- 2-phenylphenol: EU footnote reads `100000`, read as `1000000` (except codes nest inside it).
+- Chlorpyrifos-methyl: EU footnote reads `500000`, read as `0500000` (leading zero dropped).
+- Metalaxyl and metalaxyl-M: EU footnote reads `100000`, read as `1000000` (except codes nest inside it).
+- Thiabendazole: EU footnote reads `100000`, read as `1000000` (except codes nest inside it).
+- Triflumizole: EU footnote reads `100000`, read as `1000000` (except codes nest inside it).
 
 <!-- Source: datasets/eu-annex-i/products.json, retrieved 2026-10-13 -->
 
-Names from the EU Pesticides Database; sub-group names are qualified by their parent group.
+## Annex I codes
 
-| Code | Annex I commodity |
-|---|---|
-| `0151020` | Wine grapes |
-| `0500000` | Cereals |
-| `1000000` | Products of animal origin - terrestrial animals |
-| `1010000` | Commodities from swine, bovine, sheep, goat, equine, poultry, other farmed terrestrial animals |
-| `1011000` | Commodities from swine |
-| `1011010` | Swine muscle |
-| `1011020` | Swine fat |
-| `1011030` | Swine liver |
-| `1011040` | Swine kidney |
-| `1011050` | Swine edible offals (other than liver and kidney) |
-| `1012000` | Commodities from bovine |
-| `1012010` | Bovine muscle |
-| `1012020` | Bovine fat |
-| `1012030` | Bovine liver |
-| `1012040` | Bovine kidney |
-| `1012050` | Bovine edible offals (other than liver and kidney) |
-| `1013000` | Commodities from sheep |
-| `1013010` | Sheep muscle |
-| `1013020` | Sheep fat |
-| `1013030` | Sheep liver |
-| `1013040` | Sheep kidney |
-| `1013050` | Sheep edible offals (other than liver and kidney) |
-| `1014000` | Commodities from goat |
-| `1014010` | Goat muscle |
-| `1014020` | Goat fat |
-| `1014030` | Goat liver |
-| `1014040` | Goat kidney |
-| `1014050` | Goat edible offals (other than liver and kidney) |
-| `1015000` | Commodities from equine |
-| `1015010` | Equine muscle |
-| `1015020` | Equine fat |
-| `1015030` | Equine liver |
-| `1015040` | Equine kidney |
-| `1015050` | Equine edible offals (other than liver and kidney) |
-| `1016000` | Commodities from poultry |
-| `1016010` | Poultry muscle |
-| `1016020` | Poultry fat |
-| `1016030` | Poultry liver |
-| `1016040` | Poultry kidney |
-| `1017000` | Commodities from other farmed terrestrial animals |
-| `1017010` | Other farmed terrestrial animals muscle |
-| `1017020` | Other farmed terrestrial animals fat |
-| `1017030` | Other farmed terrestrial animals liver |
-| `1017040` | Other farmed terrestrial animals kidney |
-| `1017050` | Other farmed terrestrial animals edible offals (other than liver and kidney) |
-| `1020000` | Milk |
-| `1030000` | Birds eggs |
-| `1040000` | Honey and other apiculture products |
-| `1050000` | Amphibians and Reptiles |
-| `1060000` | Terrestrial invertebrate animals |
-| `1070000` | Wild terrestrial vertebrate animals |
+`0151020` Wine grapes; `0500000` Cereals; `1000000` Products of animal origin - terrestrial animals; `1010000` Commodities from swine, bovine, sheep, goat, equine, poultry, other farmed terrestrial animals; `1020000` Milk; `1030000` Birds eggs; `1040000` Honey and other apiculture products; `1050000` Amphibians and Reptiles; `1060000` Terrestrial invertebrate animals; `1070000` Wild terrestrial vertebrate animals; `101ATTT` commodities from a farmed animal (A: 1 swine, 2 bovine, 3 sheep, 4 goat, 5 equine, 6 poultry, 7 other farmed terrestrial animals) and tissue (TTT: 010 muscle, 020 fat, 030 liver, 040 kidney, 050 edible offals (other than liver and kidney); 000 the whole animal group).
 
 <!-- Source: datasets/rd-bridge/DATA_SOURCES.md @ b4e9020 -->
 
 ## Sources and attribution
 
-- rd-bridge contributors, *rd-bridge* reference dataset, commit `b4e9020e856fbadc03fc15c084b4b39543eea9af`, https://github.com/Chili36/rd-bridge. Derived and non-official; the project's data contributions are offered under CC BY 4.0 (see its DATA_SOURCES.md).
-- European Commission, DG SANTE, *EU Pesticides Database*: residue definitions and Annex I product names (names retrieved 2026-10-13). The database is informational and has no legal value; only the legislation has legal force.
-- European Food Safety Authority, *PARAM catalogue*, version 17.8.
-- No endorsement by the European Commission, EFSA or any Member State is implied.
+- rd-bridge contributors, *rd-bridge*, commit `b4e9020e856fbadc03fc15c084b4b39543eea9af`, https://github.com/Chili36/rd-bridge; derived, non-official, data contributions under CC BY 4.0. European Commission, DG SANTE, *EU Pesticides Database* (residue definitions, Annex I names, retrieved 2026-10-13; informational, no legal value). EFSA, *PARAM catalogue*, version 17.8. No endorsement by the European Commission, EFSA or any Member State is implied.

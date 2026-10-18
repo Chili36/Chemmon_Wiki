@@ -123,6 +123,34 @@ def _digits(value: Any) -> str:
     return value
 
 
+def _legend(codes: list[str], labels: dict[str, str]) -> str:
+    """Annex I names for the codes used. Commodities by farmed animal and tissue (101ATTT) follow
+    Annex I's numbering, so they are explained once instead of listed one by one."""
+    tissue = re.compile(r"^101([1-7])(0[1-5]0|000)$")
+    farmed = [c for c in codes if tissue.match(c)]
+    named = [c for c in codes if c not in farmed]
+    text = "; ".join(f"`{_digits(c)}` {_cell(labels[c])}" for c in named)
+    if farmed:
+        animals = sorted({(m.group(1), labels.get(f"101{m.group(1)}000", "")) for m in map(tissue.match, farmed)})
+        def tissue_name(code: str, animal: str) -> str:
+            # "Swine edible offals (other than liver and kidney)" -> "edible offals (...)"
+            name = labels.get(code, "")
+            prefix = labels.get(f"101{animal}000", "").replace("Commodities from ", "")
+            return name[len(prefix):].strip() if prefix and name.lower().startswith(prefix.lower()) else name
+        tissues = sorted({(m.group(2), tissue_name(c, m.group(1)))
+                          for c, m in ((c, tissue.match(c)) for c in farmed) if m.group(2) != "000"})
+        animal_text = ", ".join(f"{a} {_cell(label.replace('Commodities from ', ''))}" for a, label in animals)
+        tissue_text = ", ".join(f"{t} {_cell(name)}" for t, name in tissues)
+        text += (f"; `101ATTT` commodities from a farmed animal (A: {animal_text})"
+                 + (f" and tissue (TTT: {tissue_text}; 000 the whole animal group)" if tissues else ""))
+    return text
+
+
+def _short_code(scope: dict[str, Any]) -> str:
+    code = _code(scope)
+    return "no reliable code" if code.startswith("no trustworthy") else code.replace("`", "")
+
+
 def param_version(sources_md: str) -> str | None:
     """The PARAM catalogue version named in rd-bridge's DATA_SOURCES.md, if any."""
     match = re.search(r"PARAM catalogue, version \**([\d.]*\d)", sources_md)
@@ -142,23 +170,23 @@ def render(root: Path) -> str:
     n_exc = sum(len(r["exceptions"]) for r in varying)
     updated = max(manifest["ingested_at"], annex["retrieved_at"])
 
-    rows, repairs, used = [], [], set()
+    lines, repairs, used = [], [], set()
     for record in varying:
         name = _cell(short_name(record["name"]))
-        rows.append(f"| {name} | Default | {_cell(record['default']['definition'])} "
-                    f"| {_code(record['default'])} |")
+        parts = [f"default: {_cell(record['default']['definition'])} ({_short_code(record['default'])})"]
         for exception in record["exceptions"]:
             used.update(exception["commodity_codes"], exception.get("except_codes") or [])
-            rows.append(f"| {name} | {_scope(exception, labels)} | {_cell(exception['definition'])} "
-                        f"| {_code(exception)} |")
+            parts.append(f"{_scope(exception, labels).replace('; **except**', ' except')}: "
+                         f"{_cell(exception['definition'])} ({_short_code(exception)})")
             for repair in exception.get("repairs") or []:
-                repairs.append(f"- {name}: the EU footnote reads code `{_digits(repair['from'])}`; rd-bridge "
-                               f"reads `{_digits(repair['to'])}` ({_cell(repair['reason'])}).")
+                repairs.append(f"- {name}: EU footnote reads `{_digits(repair['from'])}`, read as "
+                               f"`{_digits(repair['to'])}` ({_cell(repair['reason'])}).")
         for scope in [record["default"], *record["exceptions"]]:
             for issue in scope.get("issues") or []:
                 repairs.append(f"- {name}: {_cell(str(issue))}")
+        lines.append(f"- **{name}**: " + "; ".join(parts))
     ids = ", ".join(str(r["residue_id"]) for r in varying)
-    legend = "\n".join(f"| `{_digits(c)}` | {_cell(labels[c])} |" for c in sorted(used))
+    legend = _legend(sorted(used), labels)
 
     page = f'''---
 title: "Pesticides Whose Residue Definition Changes by Food"
@@ -183,46 +211,32 @@ select_when: "Whether a named pesticide's residue definition or PARAM code diffe
 
 <!-- Source: {RD_BRIDGE_MAP} @ {short}, residue_id {ids} -->
 
-## How to use this list
+## How to read this list
 
-- **Complete for this snapshot.** This page lists every pesticide whose EU residue definition differs by commodity in rd-bridge snapshot `{short}` (residue map of {changed}): {len(varying)} of {len(index)} definitions, with {n_exc} commodity-specific definitions. A pesticide in the EU Pesticides Database that is **not listed has one residue definition and one whole-residue PARAM code for all foods**.
-- **Latest definitions, not historical ones.** The snapshot holds the latest EU-published definitions as of {changed}. For samples from earlier years, confirm the definition that applied on the sampling date in the legislation or EFSA's Legal Limits database.
-- **Reading a row.** "Default" applies to every food not covered by one of that pesticide's exceptions. An exception covers the listed Annex I codes and everything under them, minus the codes after **except**. Code names are in the Annex I table at the end. Report the whole-residue code with `paramType` `P005A` (or `P004A` for a subset) and components with `P002A`; see [[pesticide-residue-definition-by-matrix]].
-- **No trustworthy code.** Where rd-bridge has no reliable PARAM link, the row says so. Do not substitute a similar-looking code.
-- **Placing a food.** Rows use Annex I codes of Regulation (EC) No 396/2005. Plain commodities (milk, bovine liver, honey) can be placed directly. Processed, composite or FoodEx2-coded foods need EFSA's FoodEx2-to-Annex I mapping; use rd-bridge `resolve`, which returns candidates rather than guessing.
-- **Scope.** Pesticide residue definitions under Regulation (EC) No 396/2005 only. Veterinary medicines have separate VMPR marker residues ([[vmpr-reporting]]). Definitions and codes only: no MRL values or compliance judgements.
-- **Authority.** rd-bridge is a derived, non-official bridge. The legislation decides; EFSA validates pesticide `paramCode`s against the sampled matrix with LL_04 using its Legal Limits database ([[legal-limits-database]]).
+- **Complete:** every pesticide whose EU residue definition differs by food in rd-bridge snapshot `{short}` (map of {changed}): {len(varying)} of {len(index)} definitions. A pesticide not listed has **one definition and one whole-residue code for all foods**.
+- **Scopes:** "default" covers every food not in an exception. An exception covers the Annex I codes given and everything under them, minus the codes after "except"; † marks a scope rd-bridge interpreted from the EU footnote. Report the whole-residue code in brackets (`P005A`, or `P004A` for a subset) and parts as `P002A`; see [[pesticide-residue-definition-by-matrix]].
+- **Status:** latest EU definitions from a derived, non-official source. For older samples use the definition valid on the sampling date; the legislation decides and EFSA validates with LL_04 ([[legal-limits-database]]). "no reliable code" means rd-bridge found no trustworthy PARAM link; do not substitute a similar code. Annex I code names are at the end.
+- **Limits:** pesticides under Regulation (EC) No 396/2005 only (veterinary medicines: [[vmpr-reporting]]); definitions, not MRL values. A processed or composite food may not fall in one Annex I code: check the candidate scopes instead of guessing.
 
 ## Definitions by pesticide
 
-| Pesticide | Scope (Annex I) | Residue definition | Whole-residue paramCode |
-|---|---|---|---|
-{chr(10).join(rows)}
+{chr(10).join(lines)}
 
 ## Interpreted source wording
 
-† These scopes are rd-bridge interpretations of the EU footnote text, not verbatim:
-
 {chr(10).join(repairs) if repairs else "- None in this snapshot."}
-
-## Annex I codes used above
 
 <!-- Source: {ANNEX_SOURCE}, retrieved {annex["retrieved_at"]} -->
 
-Names from the EU Pesticides Database; sub-group names are qualified by their parent group.
+## Annex I codes
 
-| Code | Annex I commodity |
-|---|---|
-{legend}
+{legend}.
 
 <!-- Source: {ATTRIBUTION_SOURCE} @ {short} -->
 
 ## Sources and attribution
 
-- rd-bridge contributors, *rd-bridge* reference dataset, commit `{_cell(commit)}`, {_cell(manifest["repository"])}. Derived and non-official; the project's data contributions are offered under CC BY 4.0 (see its DATA_SOURCES.md).
-- European Commission, DG SANTE, *EU Pesticides Database*: residue definitions and Annex I product names (names retrieved {annex["retrieved_at"]}). The database is informational and has no legal value; only the legislation has legal force.
-- European Food Safety Authority, *PARAM catalogue*{f", version {version}" if version else ""}.
-- No endorsement by the European Commission, EFSA or any Member State is implied.
+- rd-bridge contributors, *rd-bridge*, commit `{_cell(commit)}`, {_cell(manifest["repository"])}; derived, non-official, data contributions under CC BY 4.0. European Commission, DG SANTE, *EU Pesticides Database* (residue definitions, Annex I names, retrieved {annex["retrieved_at"]}; informational, no legal value). EFSA, *PARAM catalogue*{f", version {version}" if version else ""}. No endorsement by the European Commission, EFSA or any Member State is implied.
 '''
     return page
 
