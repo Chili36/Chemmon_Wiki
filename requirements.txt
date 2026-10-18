@@ -6,3 +6,4 @@ pytest>=9.0,<10.0
 python-dotenv>=1.0,<2.0
 httpx>=0.27,<1.0
 anthropic>=0.91,<1.0
+mcp>=2.3,<3
