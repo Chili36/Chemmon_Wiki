@@ -544,7 +544,7 @@ def test_request_model_overrides_do_not_change_defaults(monkeypatch):
         obj = FakeAnswerer()
         obj.model_id = kwargs['model_str']
         return obj
-    monkeypatch.setattr(app_module, 'WikiPageSelector', selector_factory)
+    monkeypatch.setattr(app_module, 'make_selector', selector_factory)
     monkeypatch.setattr(app_module, 'WikiAnswerer', answerer_factory)
     result = request('POST', '/wiki/ask', json={'question': 'test', 'selector_model': 'test/selector', 'answerer_model': 'test/answer'}).json()
     assert result['trace']['selector']['model'] == 'test/selector'
