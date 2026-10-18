@@ -16,6 +16,7 @@ from openai import APIError
 
 from .answerer import AnswerResult, WikiAnswerer
 from .page_selector import WikiPageSelector
+from .jev_selector import make_selector
 from .wiki_store import WikiStore
 from .evidence import selected_names, full_evidence, bounded_pack
 from .source_review import source_review_status, rule_inventory_status
@@ -37,7 +38,7 @@ def get_selector_runner() -> WikiPageSelector:
     """Return a page-selector instance using the unified WikiPageSelector."""
     global selector_runner
     if selector_runner is None:
-        selector_runner = WikiPageSelector(store=store)
+        selector_runner = make_selector(store=store)
     return selector_runner
 
 
@@ -124,6 +125,7 @@ _MODEL_PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     "claude-opus-4-6": (15.0, 75.0),
     "claude-3-7-sonnet-latest": (3.0, 15.0),
     "gpt-5.4-mini": (0.75, 4.50),
+    "jev-1.13.0": (0.042, 0.0),  # TypeSafe; output tokens free (docs.typesafe.ai/models, 2026-10-18)
     "gpt-5.4-mini-2026-03-17": (0.75, 4.50),
 }
 
@@ -153,7 +155,7 @@ def _total_cost(*summaries: dict[str, Any]) -> float | None:
 
 def _select(request: SelectionRequest, limit: int | None = None):
     try:
-        selector = WikiPageSelector(store=store, model_str=request.selector_model) if request.selector_model else get_selector_runner()
+        selector = make_selector(store=store, model_str=request.selector_model) if request.selector_model else get_selector_runner()
         result = selector.run({"question": request.question, "max_pages": limit if limit is not None else request.max_pages})
         return selector, result
     except APIError as exc:
