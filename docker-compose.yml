@@ -1,0 +1,15 @@
+# The live wiki: API on :8005 (incl. /mcp for agents, /wiki/view and /chat).
+# Update: git pull on main, then `docker compose up -d --build`.
+services:
+  api:
+    build: .
+    ports:
+      - "8005:8005"
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8005/health').read()\""]
+      interval: 10s
+      timeout: 3s
+      retries: 10

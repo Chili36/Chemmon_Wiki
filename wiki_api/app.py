@@ -12,6 +12,7 @@ from typing import Any, Literal
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from anthropic import APIError as AnthropicAPIError
 from openai import APIError as OpenAIAPIError
@@ -415,6 +416,14 @@ class _JsonStringFieldExtractor:
 @app.get("/wiki/view", include_in_schema=False)
 def wiki_viewer():
     return FileResponse(STATIC_DIR / "viewer.html", media_type="text/html")
+
+
+@app.get("/chat", include_in_schema=False)
+def chat_page():
+    return FileResponse(STATIC_DIR / "chat" / "index.html", media_type="text/html")
+
+
+app.mount("/chat/static", StaticFiles(directory=STATIC_DIR / "chat"), name="chat-static")
 
 
 @app.get("/health")
