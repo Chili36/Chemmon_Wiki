@@ -70,7 +70,21 @@ tokens; usage and timing include both attempts. Streaming retries are allowed
 only before visible text has been emitted. Further truncation is returned as
 an error, not a completed answer.
 
-Run it locally with:
+The live wiki runs in Docker from this repo (`Dockerfile`, `docker-compose.yml`),
+with keys and model settings from `.env`:
+
+```bash
+docker compose up -d --build      # start, or update after `git pull` on main
+docker compose ps                 # api should be "healthy"
+```
+
+The container restarts on its own (`restart: unless-stopped`). For it to come back
+after a reboot, enable Docker Desktop's "Start Docker Desktop when you sign in".
+The image is built from the checkout, so commit-or-discard local edits before
+rebuilding. Browse the wiki at <http://localhost:8005/wiki/view> and ask questions
+at <http://localhost:8005/chat>.
+
+For development without Docker:
 
 ```bash
 . .venv/bin/activate
@@ -86,6 +100,7 @@ Main endpoints:
 - `GET /wiki/pages/{page_name}/backlinks`: topic pages linking to a page
 - `GET /wiki/search?q=resLOQ`: search topic titles, summaries and body text
 - `GET /wiki/view`: browser-based wiki viewer
+- `GET /chat`: browser chat page that asks `/wiki/ask` and shows the cited pages
 - `POST /wiki/ask`: ask a question, get a grounded answer with citations
 - `POST /wiki/select`: inspect selected topic metadata and selector usage
 - `POST /wiki/context-pack`: bounded policy and full evidence, without an answer call
