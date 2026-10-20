@@ -4,19 +4,6 @@ const input = document.getElementById("input");
 const sendBtn = document.getElementById("send");
 const useGraphExpansion = document.getElementById("useGraphExpansion");
 
-function _apiOverrideBase() {
-  const params = new URLSearchParams(window.location.search);
-  const raw = (params.get("api") || "").trim();
-  if (!raw) return null;
-  // Normalize to avoid accidental double-slashes on `${base}/wiki/ask`.
-  return raw.replace(/\/+$/, "");
-}
-
-// The API serves this page, so it asks its own origin unless ?api=<base> points elsewhere.
-function _apiBase() {
-  return _apiOverrideBase() || "";
-}
-
 function addMessage(role, text, meta, resp) {
   const msg = document.createElement("div");
   msg.className = `msg ${role}`;
@@ -172,7 +159,7 @@ async function* askWikiStream(question) {
     body: JSON.stringify(payload),
   };
 
-  const res = await fetch(`${_apiBase()}/wiki/ask`, fetchOpts);
+  const res = await fetch("/wiki/ask", fetchOpts);
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}: ${await res.text()}`);
   }

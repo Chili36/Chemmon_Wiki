@@ -21,3 +21,9 @@ def test_chat_asks_the_same_origin_api():
     script = request("GET", "/chat/static/app.js").text
     assert "/api/wiki/ask" not in script and "127.0.0.1:8005" not in script
     assert "/wiki/ask" in script
+
+
+def test_chat_cannot_be_pointed_at_another_server():
+    # A crafted ?api= link must not send questions to, or render answers from, another origin.
+    script = request("GET", "/chat/static/app.js").text
+    assert 'params.get("api")' not in script and "fetch(\"/wiki/ask\"" in script
