@@ -1,9 +1,21 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-10-05"
+last_updated: "2026-10-21"
 ---
 
 # Log
+
+## [2026-10-21] ingest | SSD2 element reference for column mapping
+
+- Added `docs/ssd2-elements.json` and the generated page
+  `ssd2-element-reference.md` (#56): all 97 SSD2 elements from ChemMon 2026
+  Table 7 (pp. 80-84: label, type, catalogue, ChemMon status, SSD1 name) with
+  SSD2 2013 descriptions (pp. 23-32) and a link to the page that covers each.
+  The JSON is the input for column-mapping tools; the page is rendered from it
+  by `tools/ssd2_elements.py` and the health check rejects hand edits.
+- Verification: 93 rows by an independent parse, four by hand; names agree
+  with the SSD2 2013 table; every page link names its element. `labInfo` and
+  `resRefId` have no wiki page. 228 tests passed; health check clean.
 
 ## [2026-10-05] correction and runtime | First FoodEx2 parity milestone
 

@@ -144,6 +144,14 @@ health check fails when the page differs from what the generator renders. If
 a new snapshot uses an Annex I code without a name, refresh the names with
 `python tools/ingest_annex_i.py` (EU Pesticides Database API).
 
+`ssd2-element-reference.md` is rendered by `tools/ssd2_elements.py page` from
+`docs/ssd2-elements.json`, which is extracted from ChemMon Table 7 and the SSD2
+2013 element table. The JSON is the input for column-mapping tools. For a new
+guidance edition, run `python tools/ssd2_elements.py extract --output NEW.json`,
+check its page ranges and the rows against the PDF, then replace the JSON and
+re-render the page. Element-to-page links live in the tool's `WIKI_PAGES`; a
+test requires each linked page to name its elements.
+
 Dataset rules:
 
 - Cite claims with the dataset locator in [[SCHEMA]] (file, commit, `residue_id`).
