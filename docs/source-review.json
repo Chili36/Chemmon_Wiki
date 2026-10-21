@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "reviewed_at": "2026-10-18",
-  "reviewer": "Codex (assistant source review with independent GPT-6 Astra/ultra passage reassessment; human review unavailable; 2026-10-13 dataset ingest and #19 page by Claude Opus 5.5 assistant; 2026-10-17 rd-bridge b4e9020 re-pin and follow-ups by Claude Opus 5.5 assistant)",
+  "reviewed_at": "2026-10-21",
+  "reviewer": "Codex (assistant source review with independent GPT-6 Astra/ultra passage reassessment; human review unavailable; 2026-10-13 dataset ingest and #19 page by Claude Opus 5.5 assistant; 2026-10-17 rd-bridge b4e9020 re-pin and follow-ups by Claude Opus 5.5 assistant; 2026-10-21 SSD2 element reference by Claude Opus 5.5 assistant)",
   "scope": [
     "Independent five-family ID/status inventory from full source table columns: ChemMon Tables 9/10 pp.98–143, PRE Table3 pp.19–21, USE Table3 pp.24–28.",
     "Full semantic comparison of all applicable active GBR Table 9 rows, all CHEMON/LL Table 10 rows including inactive/named-rule rows, full continuations, severity, scope, triggers and exceptions.",
@@ -16,7 +16,8 @@
     "2026-10-17: rd-bridge interpretation_guidance.json (11 rules) pinned at b4e9020 with rule-ID locators. New pesticide-residue-definition-wording page: wording readings attributed to the curated rules; chloridazon codes checked against residue_id 253; paramType section and aldicarb example against ChemMon pp. 59-61. Link patches on ssd2-analysis-parameter-coding and pesticide-residue-definition-by-matrix.",
     "2026-10-18: pesticide-residue-definitions-by-food regenerated in compact form (one line per pesticide, one-line Annex I legend with a 101ATTT pattern line, shorter instructions); programmatic check that every definition and trusted code is retained; scope/code pairing checked by a test since the list is no longer a table. 13.4k -> 10.8k tokens.",
     "2026-10-18: by-food page instruction restored to name paramCode vs paramType explicitly (Codex review on #41).",
-    "2026-10-18: rd-bridge re-pinned b4e9020 -> d399cea (31 records gained or changed PARAM links: four matcher fixes and Sonnet 5.5 model links; no definition text changed). Cited residue_id 10, 210, 2058, 253, 7, 3050, 284 re-checked: codes and scopes unchanged; Source commits updated on the matrix and wording pages."
+    "2026-10-18: rd-bridge re-pinned b4e9020 -> d399cea (31 records gained or changed PARAM links: four matcher fixes and Sonnet 5.5 model links; no definition text changed). Cited residue_id 10, 210, 2058, 253, 7, 3050, 284 re-checked: codes and scopes unchanged; Source commits updated on the matrix and wording pages.",
+    "2026-10-21: new generated ssd2-element-reference page and docs/ssd2-elements.json from ChemMon Table 7 pp. 80-84 and SSD2 2013 element table pp. 23-32. All 97 Table 7 rows checked for type, catalogue and status (93 by an independent row parse, the four evalInfo sub-elements by hand); element names cross-checked against the SSD2 2013 table (only ChemMon dotted sub-elements differ); every element-to-page link checked to name its element. No existing page changed."
   ],
   "limitations": [
     "Not an exhaustive review of the four PDFs or all 76 topic pages.",
@@ -86,6 +87,7 @@
     "wiki/chemmon-guidance/ssd2-analysis-methods.md": "73e4e996f5f51a4993b8df164ad6b7b9d2de494627654d06b988b806ac27e1ef",
     "wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md": "3fddbfdc19abddfdf2c53ae6c07735d1c7d86836bfa72124b1ce6383e708f386",
     "wiki/chemmon-guidance/ssd2-data-model.md": "f0f0ea19efc3c7b66fc664cc15e6861f6a2a60eb583df43630a75d22d47a8c47",
+    "wiki/chemmon-guidance/ssd2-element-reference.md": "421d650abc3fa3f2c9390c0bf609ca16363e65520b00a7e3d0ca3861a876f1e9",
     "wiki/chemmon-guidance/ssd2-elements-analysis.md": "38d90645e0673ad66b34acc67cc2a0028f1c3248aad9e92d0a378f3e743c4218",
     "wiki/chemmon-guidance/ssd2-elements-evaluation.md": "2c7f980b699ce85972900fc200201c0f644536882698c58cfadec9f6c31b7df0",
     "wiki/chemmon-guidance/ssd2-elements-matrix.md": "e0abd33cb8b81e372188bfd9d26c4caee7a36ac2711e41a92f097fe01317ec13",
@@ -117,14 +119,15 @@
     "wiki/chemmon-guidance/ssd2-sampling-event-and-unit.md": "bd01d848e2ffc6b79422a7ccbcb8df61995ecaa5cbc4137bdea0619f1b3ddb42",
     "wiki/chemmon-guidance/ssd2-sampling-method-and-point.md": "0037ee26a8fd2bc639d5928c04a18e0e70daffe155f7c2425ab43cd509cb1465",
     "wiki/chemmon-guidance/vmpr-reporting.md": "6aaaa43fab9d67985bce4d80c6786747cb9054746fb2a5e8f69582fa1c0f77a1",
-    "index.md": "c388ef1dd42283ac5031bfb3fea5713f241a18ede879013ed3c02e9801c7abbf"
+    "index.md": "886c41b73b432320b005a41e2768c00f34eee5cd6eb8601d782af6663417a55c"
   },
   "supporting_artifacts": {
     "reports/source-review/2026-10-05-catalogue-check.json": "1c189cc19e4b854a26ebb19236b9f20b35ba5d85064913fb451290f51cad076b",
     "docs/rule-inventory.json": "866e62e038db6ea5f8dcff168c604f32ee5e2305ebcf4294038e78793b2b38d8",
     "reports/source-review/2026-10-05-cheese-catalogue-check.json": "611fb58659253fac539cc8ac6c3a07abacb8a6db665d1e593ae8e330ad24f5ae",
     "reports/source-review/2026-10-05-broader-review.json": "0e549c70a60b80e1f29fc2ba3b82d5a6004a1c7af0fa77f0fe0da92d783bae3f",
-    "reports/source-review/2026-10-05-contextual-reassessment.json": "461e5a4b555eebce6c0ae7ab796100c1617547291c1faa8dffc660bbeaf598a0"
+    "reports/source-review/2026-10-05-contextual-reassessment.json": "461e5a4b555eebce6c0ae7ab796100c1617547291c1faa8dffc660bbeaf598a0",
+    "docs/ssd2-elements.json": "3cb073d85195718987caf3f0eef4ee6ae67c7f5e3bf38aef34a8f5b81366ae91"
   },
   "findings": [
     {

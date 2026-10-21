@@ -39,12 +39,17 @@ try:
     from wiki_api.wiki_store import INDEX_ENTRY_RE, ROOT_PAGE_PATHS, WikiStore, split_frontmatter
     from wiki_api.source_review import source_review_status, rule_inventory_status
     from wiki_api.datasets import claim_problems, manifest_problems
-    from tools.rd_bridge_page import PAGE_NAME as GENERATED_PAGE, render as render_generated_page
+    from tools import rd_bridge_page, ssd2_elements
 except ImportError as exc:
     print(f"ERROR: could not import wiki_api.wiki_store: {exc}")
     sys.exit(2)
 
 WIKI_DIR = REPO_ROOT / "wiki" / "chemmon-guidance"
+# Pages rendered from data, with the command that rewrites them.
+GENERATED_PAGES = [
+    (rd_bridge_page.PAGE_NAME, rd_bridge_page.render, "its dataset snapshot", "python tools/rd_bridge_page.py"),
+    (ssd2_elements.PAGE_NAME, ssd2_elements.render, "docs/ssd2-elements.json", "python tools/ssd2_elements.py page"),
+]
 METADATA_FILES = [
     REPO_ROOT / "README.md",
     REPO_ROOT / "PROJECT_CONTEXT.md",
@@ -288,14 +293,16 @@ def run_health_check(root: Path = REPO_ROOT) -> HealthReport:
     check_rule_id_uniqueness(report, rule_occurrences)
     for problem in manifest_problems(root):
         report.error(problem)
-    generated = wiki_dir / GENERATED_PAGE
-    if generated.is_file():
+    for page_name, render, source, command in GENERATED_PAGES:
+        generated = wiki_dir / page_name
+        if not generated.is_file():
+            continue
         try:
-            if generated.read_text(encoding="utf-8") != render_generated_page(root):
-                report.error(f"{GENERATED_PAGE}: differs from its dataset snapshot; "
-                             "run python tools/rd_bridge_page.py instead of editing it")
+            if generated.read_text(encoding="utf-8") != render(root):
+                report.error(f"{page_name}: differs from {source}; "
+                             f"run {command} instead of editing it")
         except (OSError, ValueError, KeyError, TypeError) as exc:
-            report.error(f"{GENERATED_PAGE}: cannot regenerate: {exc}")
+            report.error(f"{page_name}: cannot regenerate: {exc}")
     if root == REPO_ROOT:
         check_no_old_path_references(report, file_contents)
 
