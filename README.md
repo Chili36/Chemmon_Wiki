@@ -24,8 +24,17 @@ wiki/chemmon-guidance/
   and EFSA official clarifications
 
 wiki_api/
-  FastAPI service exposing the wiki catalog, raw page reads, and
-  a Q&A endpoint for answering ChemMon reporting questions
+  FastAPI service exposing the wiki catalog, raw page reads, a Q&A
+  endpoint, the MCP server for agents (/mcp) and the chat page (/chat)
+
+docs/ssd2-elements.json
+  Machine-readable SSD2 element table for column-mapping tools
+
+tools/
+  Health check, evaluation, source review and dataset ingest scripts
+
+Dockerfile, docker-compose.yml
+  The live service on :8005
 ```
 
 ## Page Conventions
@@ -179,8 +188,8 @@ container such as DMT's. The tools run the same code as the endpoints above:
 `/mcp` answers only requests addressed to `localhost`, `127.0.0.1` or
 `host.docker.internal` (any port); `WIKI_MCP_ALLOWED_HOSTS` adds comma-separated
 hosts. This guards against DNS rebinding and is not authentication: like the rest
-of the API, `/mcp` has none, and the deploy container publishes :8005 on all
-interfaces.
+of the API, `/mcp` has none, and the container publishes :8005 on all
+interfaces. Hosts added to `WIKI_MCP_ALLOWED_HOSTS` take effect after a restart.
 
 A minimal agent loop with the Anthropic SDK and the MCP Python client:
 
