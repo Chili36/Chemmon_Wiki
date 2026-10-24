@@ -1126,3 +1126,12 @@ link). 31 records changed PARAM links; no definition text changed. Pass B:
 the matrix and wording pages' cited records (residue_id 10, 210, 2058, 253, 7,
 3050, 284) are unchanged; Source commits updated. Generated pages regenerated
 by the workflow.
+
+## 2026-10-24 — rd-bridge re-pinned to ad3e16f (refresh PR #55)
+
+rd-bridge `d399cea` -> `ad3e16f`: rd-bridge#33 (CLAUDE.md), #35 (faster PARAM
+shortlists, same output) and #36 (scheduled EU reference refresh). Only
+`manifest.json` changed; the residue map, interpretation guidance and
+DATA_SOURCES.md are byte-identical. Pass B: cited records and rules unchanged
+by construction; Source commits updated on the matrix and wording pages.
+Superseded refresh PR #52 closed.

@@ -17,7 +17,8 @@
     "2026-10-18: pesticide-residue-definitions-by-food regenerated in compact form (one line per pesticide, one-line Annex I legend with a 101ATTT pattern line, shorter instructions); programmatic check that every definition and trusted code is retained; scope/code pairing checked by a test since the list is no longer a table. 13.4k -> 10.8k tokens.",
     "2026-10-18: by-food page instruction restored to name paramCode vs paramType explicitly (Codex review on #41).",
     "2026-10-18: rd-bridge re-pinned b4e9020 -> d399cea (31 records gained or changed PARAM links: four matcher fixes and Sonnet 5.5 model links; no definition text changed). Cited residue_id 10, 210, 2058, 253, 7, 3050, 284 re-checked: codes and scopes unchanged; Source commits updated on the matrix and wording pages.",
-    "2026-10-21: new generated ssd2-element-reference page and docs/ssd2-elements.json from ChemMon Table 7 pp. 80-84 and SSD2 2013 element table pp. 23-32. All 97 Table 7 rows checked for type, catalogue and status (93 by an independent row parse, the four evalInfo sub-elements by hand); element names cross-checked against the SSD2 2013 table (only ChemMon dotted sub-elements differ); every element-to-page link checked to name its element. No existing page changed."
+    "2026-10-21: new generated ssd2-element-reference page and docs/ssd2-elements.json from ChemMon Table 7 pp. 80-84 and SSD2 2013 element table pp. 23-32. All 97 Table 7 rows checked for type, catalogue and status (93 by an independent row parse, the four evalInfo sub-elements by hand); element names cross-checked against the SSD2 2013 table (only ChemMon dotted sub-elements differ); every element-to-page link checked to name its element. No existing page changed.",
+    "2026-10-24: rd-bridge re-pinned d399cea -> ad3e16f. Only manifest.json changed; residue_param_map.json, interpretation_guidance.json and DATA_SOURCES.md are byte-identical, so the cited residue_id 10, 210, 2058, 253, 7, 3050, 284 and the 11 interpretation rules are unchanged. Source commits updated on the matrix and wording pages; by-food page regenerated."
   ],
   "limitations": [
     "Not an exhaustive review of the four PDFs or all 76 topic pages.",
@@ -40,7 +41,7 @@
     "chemmon_docs/datasets/eu-annex-i/products.json": "9dd93533556b329652089027102b01ad3addd49a24b66eea438aaa63168650a4",
     "chemmon_docs/datasets/rd-bridge/DATA_SOURCES.md": "588bac6e6e7622877e8eeb4006288ae00d6ac73e684a5507bd657a6d5037dc88",
     "chemmon_docs/datasets/rd-bridge/interpretation_guidance.json": "f9b731527d265595effdf6b8b2712903239cb1a5dfef9336b31dab123af69536",
-    "chemmon_docs/datasets/rd-bridge/manifest.json": "b925a32faf296d5afac79e816742ec6fcd6ba07ff05b2ff9a92e0db87edb2811",
+    "chemmon_docs/datasets/rd-bridge/manifest.json": "f19a690a1e96d8ce93150dadf634277566f714b77e6ceecde40f1d3c44c16120",
     "chemmon_docs/datasets/rd-bridge/residue_param_map.json": "d216557a81dc42952652de751c765a68a1523d2e74389b806fce4d9068ad5441",
     "wiki/chemmon-guidance/baby-food-reporting.md": "42eeb612984541f71f26ce136fe0f998f60780e5fffc24ae6d9862042f1200e2",
     "wiki/chemmon-guidance/business-rules-2026-changes.md": "c7a4504105a516156e59879f0d4c2cf369b3ab221090638bd73d39fecdbfe667",
@@ -78,9 +79,9 @@
     "wiki/chemmon-guidance/foodex2-in-chemmon.md": "04602e505b2ec6a17672ea197a98b7ec0db5b7fe04cdc2b1f01c3792c305f028",
     "wiki/chemmon-guidance/legal-limits-database.md": "d35d62e4dc69305bb6504c4a57094f409075174d7937e5828d1a2695c0c1707a",
     "wiki/chemmon-guidance/pesticide-reporting.md": "059801a26aa9bf90b67388c7dc5ee10b3eee13e897e5527b9c4bfee5bb6c35fa",
-    "wiki/chemmon-guidance/pesticide-residue-definition-by-matrix.md": "f8c155c0849f570594345564e90fdffb86a268beec8c1945592560639765d829",
-    "wiki/chemmon-guidance/pesticide-residue-definition-wording.md": "715ccb45944f33d1f9c4eee647704ad8d73804b2e60758836625cd0e5f1d5dcf",
-    "wiki/chemmon-guidance/pesticide-residue-definitions-by-food.md": "03a19f6d8d3dc516ed4d4ac713b4cac9fe1e7e1790377253b4568d9c3110fcde",
+    "wiki/chemmon-guidance/pesticide-residue-definition-by-matrix.md": "75995ce913505c174d32ea5c67f70a8a21c3786f4a3d382c8eba0278b25daf20",
+    "wiki/chemmon-guidance/pesticide-residue-definition-wording.md": "9aee8f86a8ffb7a0cc78ee6314ab12060259c11de50cfd56f982d0f61508ffe0",
+    "wiki/chemmon-guidance/pesticide-residue-definitions-by-food.md": "af58b5f0362cf0a20dd2ef1496d9eaf8b1a26ee1899201febdd4c429ac707cc9",
     "wiki/chemmon-guidance/reporting-flags.md": "d431193a085fe1d10d2ae0f5f40b509fbfd6644e7e5eb487b4b1ecd7ba2b2df1",
     "wiki/chemmon-guidance/ssd2-analysis-context.md": "222cf1bc8e738d20e16dfeab9f363aad0f99adde373b950655b1af126160c5f8",
     "wiki/chemmon-guidance/ssd2-analysis-laboratory.md": "cbda950b95018d77d829ad8314f893b717974955d7799a00aeff8f9309a65360",
