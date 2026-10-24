@@ -6,6 +6,18 @@ It follows the "LLM wiki" pattern: raw source documents stay immutable, while an
 
 See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale.
 
+## Dave says
+
+In this naive version the main focus is getting plumbing in place and just having
+something up and running. The main focus as the name says is ChemMon, but there's no
+reason we can't add more domains if needed. At the same time, focus is good and
+sprawling is bad.
+
+It bears repeating that the main user of this wiki is machines in the form of agents.
+Of course it's readable by humans, but it's really targeted towards agents, both in
+ingestion and using. I would recommend hooking up the [MCP](#mcp-server-for-agents) to
+your harness of choice and seeing if it's usable for you.
+
 ## Directory Layout
 
 ```text
