@@ -37,8 +37,8 @@ Open findings and missing active IDs are actionable backlog. Structural health
 checks cannot infer whether regulatory prose is complete or correct.
 
 The rule checker distinguishes missing active definitions, unexpected wiki IDs,
-inactive definitions and duplicates. CHEMON (source) maps to CHEMMON (wiki).
-The old duplicate CHEMMON03 was a wiki error, not an exception to uniqueness.
+inactive definitions and duplicates. Rule IDs use the source spelling CHEMON.
+The old duplicate CHEMON03 was a wiki error, not an exception to uniqueness.
 
 Keep evaluation labels and answer grading separate from ingestion. See
 [[EVALUATION]]. Never update a gold label solely because a model disagreed with it.

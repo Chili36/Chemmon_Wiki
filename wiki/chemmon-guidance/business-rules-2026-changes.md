@@ -26,47 +26,47 @@ Annual delta of business rule changes for the 2026 ChemMon data collection. This
 
 ## Amended rules
 
-- **CHEMMON08** -- `resVal`/`resLOQ` relationship updated: if `resVal` equals `resLOQ`, `resType` must be VAL. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON40** -- Result type validation expanded for qualitative results; replaces deactivated CHEMMON47. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON50** -- Programme type validation expanded; absorbs deactivated CHEMMON49. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON84_a** -- Food additive/flavouring `exprResType` requirement updated. Defined in [[business-rules-additives]].
-- **CHEMMON84_b** -- Expression of result type recommended guidance revised for contaminants. Defined in [[business-rules-contaminant]].
-- **CHEMMON86** -- Physical-state facet scope amended for food additives/flavourings. Defined in [[business-rules-additives]].
-- **CHEMMON88** -- Restriction/exception reporting scope amended. Defined in [[business-rules-additives]].
-- **CHEMMON94** -- Third-country import sampling point restriction tightened to require E010A for K038A. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON95** -- PPP non-compliant origin country validation revised; expanded list of excluded generic codes. Defined in [[business-rules-pesticide]].
-- **CHEMMON96** -- VMPR sampling strategy for official programmes updated to include ST90A. Defined in [[business-rules-vmpr]].
+- **CHEMON08** -- `resVal`/`resLOQ` relationship updated: if `resVal` equals `resLOQ`, `resType` must be VAL. Defined in [[business-rules-cross-cutting]].
+- **CHEMON40** -- Result type validation expanded for qualitative results; replaces deactivated CHEMON47. Defined in [[business-rules-cross-cutting]].
+- **CHEMON50** -- Programme type validation expanded; absorbs deactivated CHEMON49. Defined in [[business-rules-cross-cutting]].
+- **CHEMON84_a** -- Food additive/flavouring `exprResType` requirement updated. Defined in [[business-rules-additives]].
+- **CHEMON84_b** -- Expression of result type recommended guidance revised for contaminants. Defined in [[business-rules-contaminant]].
+- **CHEMON86** -- Physical-state facet scope amended for food additives/flavourings. Defined in [[business-rules-additives]].
+- **CHEMON88** -- Restriction/exception reporting scope amended. Defined in [[business-rules-additives]].
+- **CHEMON94** -- Third-country import sampling point restriction tightened to require E010A for K038A. Defined in [[business-rules-cross-cutting]].
+- **CHEMON95** -- PPP non-compliant origin country validation revised; expanded list of excluded generic codes. Defined in [[business-rules-pesticide]].
+- **CHEMON96** -- VMPR sampling strategy for official programmes updated to include ST90A. Defined in [[business-rules-vmpr]].
 
 ## Merged rules
 
-- **CHEMMON39** -- Previous CHEMON39_a and CHEMON39_b rules are merged into CHEMON39 in 2026. Defined in [[business-rules-additives]].
-- **CHEMMON79** -- Previous CHEMON79_a, CHEMON79_b and CHEMON79_c rules are merged into CHEMON79 in 2026. Method code cannot be Unknown/Unspecified/Classification not possible. Defined in [[business-rules-cross-cutting]].
+- **CHEMON39** -- Previous CHEMON39_a and CHEMON39_b rules are merged into CHEMON39 in 2026. Defined in [[business-rules-additives]].
+- **CHEMON79** -- Previous CHEMON79_a, CHEMON79_b and CHEMON79_c rules are merged into CHEMON79 in 2026. Method code cannot be Unknown/Unspecified/Classification not possible. Defined in [[business-rules-cross-cutting]].
 
 ## New rules
 
-- **CHEMMON43_b** -- Sampling year validation for additives/flavourings (Warning; becomes Error 2027). Defined in [[business-rules-additives]].
-- **CHEMMON90_a** -- Copper facet requirement for F20/F28. Defined in [[business-rules-pesticide]].
-- **CHEMMON90_b** -- Measurement uncertainty mandatory for copper when `resType` = VAL. Defined in [[business-rules-pesticide]].
-- **CHEMMON97** -- Multi-domain sampling strategy validation for K005A across PPP/CONT/ADD/FLAV. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON98** -- Programme type restriction for contaminants under N375A. Defined in [[business-rules-contaminant]].
-- **CHEMMON99** -- Import origin validation: `origCountry` cannot equal `sampCountry` for import programmes. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON100** — VMPR evaluation restricted to six codes, including J041A (Detected). Warning in 2026. Defined in [[business-rules-vmpr]].
-- **CHEMMON101** -- N422A regulation requires K019A programme type and ST30A strategy. Defined in [[business-rules-pesticide]].
-- **CHEMMON102** -- VMPR geographic consistency check across `sampEventId` records. Defined in [[business-rules-vmpr]].
-- **CHEMMON103** -- Organic/conventional production mutual exclusivity. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON104** -- N422A exclusive programme reference (no concatenation). Defined in [[business-rules-pesticide]].
-- **CHEMMON105** — N317A exclusive programme reference (no concatenation); not limited to contaminants. Defined in [[business-rules-cross-cutting]].
-- **CHEMMON106** -- Potassium sorbate `paramText` should specify free acid or salt form (Warning). Defined in [[business-rules-additives]].
-- **CHEMMON107** — LOD highly recommended for the six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`. Defined in [[business-rules-additives]].
-- **CHEMMON108** -- Generic `sampMatCode` terms restricted for additives/flavourings. Defined in [[business-rules-additives]].
-- **CHEMMON109** -- Implicit F33 makes explicit F33 unnecessary for additives/flavourings. Defined in [[business-rules-additives]].
+- **CHEMON43_b** -- Sampling year validation for additives/flavourings (Warning; becomes Error 2027). Defined in [[business-rules-additives]].
+- **CHEMON90_a** -- Copper facet requirement for F20/F28. Defined in [[business-rules-pesticide]].
+- **CHEMON90_b** -- Measurement uncertainty mandatory for copper when `resType` = VAL. Defined in [[business-rules-pesticide]].
+- **CHEMON97** -- Multi-domain sampling strategy validation for K005A across PPP/CONT/ADD/FLAV. Defined in [[business-rules-cross-cutting]].
+- **CHEMON98** -- Programme type restriction for contaminants under N375A. Defined in [[business-rules-contaminant]].
+- **CHEMON99** -- Import origin validation: `origCountry` cannot equal `sampCountry` for import programmes. Defined in [[business-rules-cross-cutting]].
+- **CHEMON100** — VMPR evaluation restricted to six codes, including J041A (Detected). Warning in 2026. Defined in [[business-rules-vmpr]].
+- **CHEMON101** -- N422A regulation requires K019A programme type and ST30A strategy. Defined in [[business-rules-pesticide]].
+- **CHEMON102** -- VMPR geographic consistency check across `sampEventId` records. Defined in [[business-rules-vmpr]].
+- **CHEMON103** -- Organic/conventional production mutual exclusivity. Defined in [[business-rules-cross-cutting]].
+- **CHEMON104** -- N422A exclusive programme reference (no concatenation). Defined in [[business-rules-pesticide]].
+- **CHEMON105** — N317A exclusive programme reference (no concatenation); not limited to contaminants. Defined in [[business-rules-cross-cutting]].
+- **CHEMON106** -- Potassium sorbate `paramText` should specify free acid or salt form (Warning). Defined in [[business-rules-additives]].
+- **CHEMON107** — LOD highly recommended for the six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`. Defined in [[business-rules-additives]].
+- **CHEMON108** -- Generic `sampMatCode` terms restricted for additives/flavourings. Defined in [[business-rules-additives]].
+- **CHEMON109** -- Implicit F33 makes explicit F33 unnecessary for additives/flavourings. Defined in [[business-rules-additives]].
 - **LL_01_FA_FF** -- MPL comparison for food additives/flavourings. Defined in [[business-rules-legal-limits]].
 - **LL_02_FA_FF** -- MPL threshold evaluation for food additives/flavourings. Defined in [[business-rules-legal-limits]].
 - **LL_03_FA_FF** -- Substance authorisation check for food additives/flavourings. Defined in [[business-rules-legal-limits]].
 
 ## Deactivated rules
 
-- **CHEMMON47** -- Replaced by CHEMMON40 (qualitative result value validation).
-- **CHEMMON49** -- Included in CHEMMON50 (programme type validation).
-- **CHEMMON53** -- Obsolete per 2025 update.
-- **CHEMMON81** -- Replaced by CHEMMON40 (result type validation).
+- **CHEMON47** -- Replaced by CHEMON40 (qualitative result value validation).
+- **CHEMON49** -- Included in CHEMON50 (programme type validation).
+- **CHEMON53** -- Obsolete per 2025 update.
+- **CHEMON81** -- Replaced by CHEMON40 (result type validation).

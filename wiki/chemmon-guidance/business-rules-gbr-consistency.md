@@ -52,7 +52,7 @@ exception, documented in [[business-rules-gbr]].
 | GBR18 | Error | If `anMethCode.base` is F001A (Classification not possible), `anMethText` must be supplied. | 101 |
 
 GBR18 describes a text requirement; it does **not** authorise F001A in a domain
-that separately forbids that method code. Check CHEMMON79 for contaminants,
+that separately forbids that method code. Check CHEMON79 for contaminants,
 additives and flavourings in [[business-rules-cross-cutting]]. Likewise, GBR15
 and GBR16 concern the generic-term facet, not every base term whose label
 happens to contain the word “other”.

@@ -47,7 +47,7 @@ BaseTermCode#FacetHeader.FacetCode$FacetHeader.FacetCode
 
 - Many base terms carry **implicit facets** -- attributes already encoded in the term itself. For example, `A01YM` (pig kidney) implicitly carries F01.A057 (source = pigs) and F02.A069N (part-nature = kidney). (ChemMon 2026 p35)
 - **Do not duplicate** an implicit facet as an explicit facet unless a specific business rule requires it. Redundant explicit facets trigger validation warnings. (ChemMon 2026 p35)
-- Exception: business rule CHEMMON12 for acrylamide requires certain facets to be stated explicitly even when they are already implicit in the base term. See [[contaminant-reporting]] and [[business-rules-contaminant]]. (ChemMon 2026 p36)
+- Exception: business rule CHEMON12 for acrylamide requires certain facets to be stated explicitly even when they are already implicit in the base term. See [[contaminant-reporting]] and [[business-rules-contaminant]]. (ChemMon 2026 p36)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p36-39 -->
 ## Mandatory Facets by Domain
@@ -118,7 +118,7 @@ A read-only check on 5 October 2026 of the **local MTX catalogue 17.2**
   Slices, steaks or other flat cuts. Do not infer a physical state from the
   fact that a product is cheese.
 - In that snapshot, omit an explicit F33.A0C5F because it duplicates the
-  implicit class. CHEMMON109 and PRE15 assign Warning severity to duplicate
+  implicit class. CHEMON109 and PRE15 assign Warning severity to duplicate
   F33; USE23 assigns Error severity. The collection-specific conditions remain
   in [[food-additives-reporting]].
 

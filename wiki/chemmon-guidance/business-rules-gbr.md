@@ -36,10 +36,10 @@ definitions are covered once each across this page and three focused references:
 - [[business-rules-gbr-dates]]: 35 rules for valid dates, ranges and chronology.
 
 This covers Table 9's applicable active GBR definitions, not every rule needed
-for a valid ChemMon submission. CHEMMON/LL rules, field specifications and
+for a valid ChemMon submission. CHEMON/LL rules, field specifications and
 collection-specific conditions still apply; PRE and USE are separate data models.
 
-See [[business-rules]] for the hub and [[business-rules-cross-cutting]] for CHEMMON rules spanning multiple domains; check each row's applicability.
+See [[business-rules]] for the hub and [[business-rules-cross-cutting]] for CHEMON rules spanning multiple domains; check each row's applicability.
 
 ## Sampling Event & Sample Consistency
 

@@ -25,7 +25,7 @@ related:
 - `sampEventId` represents the sampling unit at a point in time. Multiple samples taken from the same unit should share it.
 - If `sampEventId` is omitted, EFSA substitutes `sampId`.
 - `sampUnitType` describes what that sampling unit is (batch, individual sample, tanker, etc.).
-- `sampUnitSize` and `sampUnitSizeUnit` are normally optional, but become mandatory for pooled samples. In pooled cases, `sampUnitSizeUnit` must be `G005A` and `sampUnitSize` must be the number of pooled single samples. (`CHEMMON77`)
+- `sampUnitSize` and `sampUnitSizeUnit` are normally optional, but become mandatory for pooled samples. In pooled cases, `sampUnitSizeUnit` must be `G005A` and `sampUnitSize` must be the number of pooled single samples. (`CHEMON77`)
 
 ## sampEventId — Sampling event identification code
 
@@ -48,7 +48,7 @@ If no value is reported in `sampEventId`, EFSA automatically substitutes `sampId
 
 ### Consistency check
 
-A business rule checks whether samples with different `sampId` values but the same `sampEventId` refer to the same animal species. See [[business-rules-vmpr]] for `CHEMMON76`.
+A business rule checks whether samples with different `sampId` values but the same `sampEventId` refer to the same animal species. See [[business-rules-vmpr]] for `CHEMON76`.
 
 ## sampUnitType — Sampling unit type
 

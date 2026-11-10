@@ -75,12 +75,12 @@ related:
 
 ## Related Business Rules
 
-- `CHEMMON14`: for bisphenol compounds, `F19` packaging material is mandatory. See [[business-rules-contaminant]].
-- `CHEMMON15`: for PAHs, `F19` packaging material should be reported. See [[business-rules-contaminant]].
-- `CHEMMON73`: for VMPR feed/water matrices, `F23` should be reported. See [[business-rules-vmpr]].
-- `CHEMMON83`: if `sampMatCode` **contains facet** F10.A18PX, do not report F19 (packaging material) or F18 (packaging format); Warning. See [[business-rules-cross-cutting]].
-- `CHEMMON89`: for FA/FF category 13, `F23` target consumer is recommended. See [[business-rules-additives]].
-- `CHEMMON90_a`: for pesticide copper, `F20` and/or `F28` are needed. See [[business-rules-pesticide]].
+- `CHEMON14`: for bisphenol compounds, `F19` packaging material is mandatory. See [[business-rules-contaminant]].
+- `CHEMON15`: for PAHs, `F19` packaging material should be reported. See [[business-rules-contaminant]].
+- `CHEMON73`: for VMPR feed/water matrices, `F23` should be reported. See [[business-rules-vmpr]].
+- `CHEMON83`: if `sampMatCode` **contains facet** F10.A18PX, do not report F19 (packaging material) or F18 (packaging format); Warning. See [[business-rules-cross-cutting]].
+- `CHEMON89`: for FA/FF category 13, `F23` target consumer is recommended. See [[business-rules-additives]].
+- `CHEMON90_a`: for pesticide copper, `F20` and/or `F28` are needed. See [[business-rules-pesticide]].
 
 ## Navigation
 

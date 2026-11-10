@@ -238,7 +238,7 @@ dataset steps in [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md); a daily workflow
 proposes the same refresh as a pull request. GitHub Actions
 runs both checks on pull requests and pushes to main or `codex/**` branches.
 The health check validates topic metadata, dates, links including `related`,
-local sources, index/API registration and duplicate CHEMMON IDs. The
+local sources, index/API registration and duplicate CHEMON IDs. The
 source-derived inventory and scoped review report missing coverage and drift.
 These checks do not establish
 rule completeness or semantic accuracy.

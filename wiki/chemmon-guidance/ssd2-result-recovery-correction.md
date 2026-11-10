@@ -25,8 +25,8 @@ related:
 
 ## Relevant Business Rules
 
-- **CHEMMON04/05/42** — Recovery ranges and dependency rules for `resValRec`/`resValRecCorr`.
-- **CHEMMON80** — For contaminants, `resValRecCorr` should be reported.
+- **CHEMON04/05/42** — Recovery ranges and dependency rules for `resValRec`/`resValRecCorr`.
+- **CHEMON80** — For contaminants, `resValRecCorr` should be reported.
 
 See [[business-rules-contaminant]].
 
@@ -69,8 +69,8 @@ Unless otherwise specified, the result expressed is considered by EFSA as **not 
 
 ### Related business rules
 
-- **CHEMMON04** — `resValRec` should be ≥ 1%.
-- **CHEMMON05** — `resValRec` should be between 50% and 150%.
-- **CHEMMON42** — If `resValRecCorr=Y`, `resValRec` should be reported (Warning). The error message mentions 70–120%, but the rule description is a presence condition; use CHEMMON04/05 for their separate range warnings (Table 10, p. 122).
-- **CHEMMON80** — For contaminants, `resValRecCorr` should be reported.
+- **CHEMON04** — `resValRec` should be ≥ 1%.
+- **CHEMON05** — `resValRec` should be between 50% and 150%.
+- **CHEMON42** — If `resValRecCorr=Y`, `resValRec` should be reported (Warning). The error message mentions 70–120%, but the rule description is a presence condition; use CHEMON04/05 for their separate range warnings (Table 10, p. 122).
+- **CHEMON80** — For contaminants, `resValRecCorr` should be reported.
 

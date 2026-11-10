@@ -69,7 +69,7 @@ Source: ChemMon 2026 Table 10 p. 141
 
 Expected page alternatives: [["business-rules-additives.md", "food-additives-reporting.md"]]
 
-- CHEMON109 (wiki CHEMMON109) is a Warning in 2026.
+- CHEMON109 (wiki CHEMON109) is a Warning in 2026.
 - Do not turn a possible 2027 change into the 2026 rule.
 
 ## pesticide-ll (development)

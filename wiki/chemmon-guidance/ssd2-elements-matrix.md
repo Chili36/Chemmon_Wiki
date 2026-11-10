@@ -50,10 +50,10 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 ## Relevant Business Rules
 
 - `FOODEX2_SAMPMAT`, `FOODEX2_ANMAT` — `sampMatCode` / `anMatCode` must be valid FoodEx2 codes. See [[business-rules-cross-cutting]].
-- `CHEMMON27` — for VMPR and pesticides, `sampMatCode` should usually equal `anMatCode`. See [[business-rules-cross-cutting]].
-- `CHEMMON76` — VMPR event-level species consistency. See [[business-rules-vmpr]].
-- `CHEMMON95`, `CHEMMON99`, `GBR13` — origin-country restrictions. See [[business-rules-pesticide]], [[business-rules-cross-cutting]], and [[business-rules-gbr]].
-- `CHEMMON108`, `CHEMMON109` — additives/flavourings matrix specificity and implicit `F33` duplication. See [[business-rules-additives]].
+- `CHEMON27` — for VMPR and pesticides, `sampMatCode` should usually equal `anMatCode`. See [[business-rules-cross-cutting]].
+- `CHEMON76` — VMPR event-level species consistency. See [[business-rules-vmpr]].
+- `CHEMON95`, `CHEMON99`, `GBR13` — origin-country restrictions. See [[business-rules-pesticide]], [[business-rules-cross-cutting]], and [[business-rules-gbr]].
+- `CHEMON108`, `CHEMON109` — additives/flavourings matrix specificity and implicit `F33` duplication. See [[business-rules-additives]].
 
 ## Relevant Policy
 

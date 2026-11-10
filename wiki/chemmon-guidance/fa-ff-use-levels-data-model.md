@@ -241,4 +241,4 @@ Verify the current year's pilot scope against the latest EFSA reporting guidance
 
 - **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — sample-level measured concentrations. Analytical data and use levels answer different exposure-assessment questions; both may be collected for the same substance.
 - **[[fa-ff-no-presence-data-model]]** — sample-level negative reports. Uses `sampId`/`sampY`/`sampCountry` rather than `prodId`/`marketYear`/`marketCountry`.
-- Rule IDs in this DM (`USE…`, `USE_LLDB…`) are a separate namespace from SSD2 CHEMMON rules catalogued under [[business-rules]]; they do not overlap.
+- Rule IDs in this DM (`USE…`, `USE_LLDB…`) are a separate namespace from SSD2 CHEMON rules catalogued under [[business-rules]]; they do not overlap.

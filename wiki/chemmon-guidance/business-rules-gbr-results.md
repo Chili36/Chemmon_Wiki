@@ -44,7 +44,7 @@ data models.
 
 Do not apply the Warning severity of the fat-weight rule to the dry-matter
 rule. See [[ssd2-result-expression-basis]] for the field descriptions and
-[[business-rules-cross-cutting]] for additional CHEMMON plausibility checks.
+[[business-rules-cross-cutting]] for additional CHEMON plausibility checks.
 
 ## Evaluation limits and result comparison
 
@@ -87,5 +87,5 @@ and threshold guidance, use [[ssd2-result-method-accreditation]].
 | GBR51 | Error | `resValUncert` must be greater than 0. | 106 |
 
 Keep recovery rate, uncertainty standard deviation and uncertainty distinct.
-Additional recovery ranges and recommendations are defined by CHEMMON rules;
+Additional recovery ranges and recommendations are defined by CHEMON rules;
 these three GBR rows do not replace them.

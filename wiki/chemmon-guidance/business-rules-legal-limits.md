@@ -26,7 +26,7 @@ related:
 
 Legal limit rules compare reported result values against regulatory thresholds (MRLs, MLs, MPLs). They ensure that evaluation codes are consistent with the numeric comparison between result values and applicable limits, and that parameter/matrix combinations match the legal limits database.
 
-Apply each rule only within its stated domain and conditions; see [[business-rules-vmpr]], [[business-rules-pesticide]], and [[business-rules-additives]] for the underlying CHEMMON rules they interact with.
+Apply each rule only within its stated domain and conditions; see [[business-rules-vmpr]], [[business-rules-pesticide]], and [[business-rules-additives]] for the underlying CHEMON rules they interact with.
 
 ## VMPR & Pesticide Legal Limits
 

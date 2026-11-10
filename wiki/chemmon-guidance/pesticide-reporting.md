@@ -59,8 +59,8 @@ Each pesticide submission must carry a `progLegalRef` code identifying the regul
 
 Copper is reported in the pesticide domain. Specific F20 facet codes are required to distinguish preparation states across commodities.
 
-- **CHEMMON90_a** (Warning): for copper, facet F20 (part-consumed-analysed) and/or facet F28 (process) is needed to describe sample preparation. (ChemMon 2026 Table 10)
-- **CHEMMON90_b** (Error): for copper with `resType=VAL`, result value uncertainty (`resValUncert`) is mandatory. (ChemMon 2026 Table 10)
+- **CHEMON90_a** (Warning): for copper, facet F20 (part-consumed-analysed) and/or facet F28 (process) is needed to describe sample preparation. (ChemMon 2026 Table 10)
+- **CHEMON90_b** (Error): for copper with `resType=VAL`, result value uncertainty (`resValUncert`) is mandatory. (ChemMon 2026 Table 10)
 
 <!-- Source: ChemMon 2026 pp. 40-41 (Coding of copper samples under pesticides or contaminants) -->
 
@@ -84,7 +84,7 @@ For coffee beans specifically: contaminants use roasted beans (`F28.A07GY`), whi
 
 ### Measurement uncertainty (resValUncert)
 
-When reporting copper with `resType=VAL`, `resValUncert` is mandatory (CHEMMON90_b). (ChemMon 2026 p31)
+When reporting copper with `resType=VAL`, `resValUncert` is mandatory (CHEMON90_b). (ChemMon 2026 p31)
 
 <!-- Source: ChemMon 2026 p42 (Drinking water recommendation) -->
 ## Drinking Water (A03DK)
@@ -96,12 +96,12 @@ EFSA encourages data providers to collect and submit available information for p
 
 | Rule | Severity | Description |
 | --- | --- | --- |
-| CHEMMON90_a | Warning | Copper-specific F20 facet codes required |
-| CHEMMON90_b | Error | Result value uncertainty mandatory for copper |
-| CHEMMON94 | Error | Third-country import sampling point restriction (amended 2026) |
-| CHEMMON95 | Warning | PPP sampling country validation (amended 2026) |
-| CHEMMON101 | Error | N422A regulation programme type (new 2026) |
-| CHEMMON104 | Error | N422A regulation exclusive programme reference (new 2026) |
-| CHEMMON105 | Error | N317A regulation exclusive programme reference (new 2026) |
+| CHEMON90_a | Warning | Copper-specific F20 facet codes required |
+| CHEMON90_b | Error | Result value uncertainty mandatory for copper |
+| CHEMON94 | Error | Third-country import sampling point restriction (amended 2026) |
+| CHEMON95 | Warning | PPP sampling country validation (amended 2026) |
+| CHEMON101 | Error | N422A regulation programme type (new 2026) |
+| CHEMON104 | Error | N422A regulation exclusive programme reference (new 2026) |
+| CHEMON105 | Error | N317A regulation exclusive programme reference (new 2026) |
 
 See [[business-rules]] for the full rule catalogue.

@@ -24,7 +24,7 @@ Every wiki page declares a `type` field. The allowed values and their meaning:
 | `overview` | High-level orientation for ChemMon as a whole. One per wiki. | `chemmon-overview.md` |
 | `reference` | Stable specifications derived from external standards (data models, classification systems). | `ssd2-data-model.md`, `foodex2-in-chemmon.md` |
 | `domain-guide` | Reporting rules and worked examples for a specific reporting domain. | `vmpr-reporting.md`, `pesticide-reporting.md`, `contaminant-reporting.md`, `food-additives-reporting.md`, `baby-food-reporting.md` |
-| `rule-reference` | Canonical EFSA business rules (GBR, CHEMMON, Legal Limit) grouped by applicability. | `business-rules-gbr.md`, `business-rules-cross-cutting.md`, `business-rules-vmpr.md`, `business-rules-pesticide.md`, `business-rules-additives.md`, `business-rules-baby-food.md`, `business-rules-legal-limits.md`, `business-rules-2026-changes.md` |
+| `rule-reference` | Canonical EFSA business rules (GBR, CHEMON, Legal Limit) grouped by applicability. | `business-rules-gbr.md`, `business-rules-cross-cutting.md`, `business-rules-vmpr.md`, `business-rules-pesticide.md`, `business-rules-additives.md`, `business-rules-baby-food.md`, `business-rules-legal-limits.md`, `business-rules-2026-changes.md` |
 | `hub` | Short orientation page that links to a family of related pages. No rule text of its own. | `business-rules.md` |
 
 ## Domain Values
@@ -88,7 +88,7 @@ Rule text and prose claims are attributed to source documents via HTML comments 
 
 <!-- Source: EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance 2026 data collection.pdf, pp. 14-16 -->
 
-**CHEMMON03**: ...
+**CHEMON03**: ...
 ```
 
 The comment is invisible in the human viewer. Model evidence preserves it as a
@@ -134,7 +134,7 @@ headings and the `- **Name**:` entry format, which the excerpt relies on.
 ### Rule ID conventions
 
 - **GBR rules**: `GBR2`, `GBR12`, `GBR27` — General Business Rules from SSD2.
-- **CHEMMON rules**: preserve source IDs and suffixes, such as `CHEMMON03`, `CHEMMON84_a` and `CHEMMON90_b`. The PDF spells the prefix `CHEMON`; the wiki uses `CHEMMON` as an explicit alias. Numbering has gaps and merged IDs; do not infer a continuous range.
+- **CHEMON rules**: preserve source IDs and suffixes, such as `CHEMON03`, `CHEMON84_a` and `CHEMON90_b`. Use the source spelling `CHEMON`. The wiki spelled it `CHEMMON` until 2026-11-10 (#63); the wiki doctor now rejects that spelling. Numbering has gaps and merged IDs; do not infer a continuous range.
 - **Legal Limit rules**: `LL_01_VMPR`, `LL_02_PPP`, `LL_03_FA_FF`, etc.; preserve the source-derived inventory's underscore form.
 - **FoodEx2 validation**: `FOODEX2_SAMPMAT`, `FOODEX2_ANMAT`.
 
@@ -143,7 +143,7 @@ Canonical SSD2 rule definitions belong in the topic/domain
 USE definitions belong to their separate data-model pages. The health check
 compares all five families with the independently source-derived inventory,
 reporting missing, unexpected, duplicate and inactive definitions. The former
-CHEMMON03 duplicate was a wiki error, corrected on 5 October 2026.
+CHEMON03 duplicate was a wiki error, corrected on 5 October 2026.
 ID coverage is complete for applicable active rows, including all 83 generic
 rules, but this does **not** prove that every description matches its source.
 See [[SOURCE_REVIEW]] for completed source comparisons, unresolved PDF wording and review limits.

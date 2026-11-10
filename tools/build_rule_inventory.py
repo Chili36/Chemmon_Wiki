@@ -19,7 +19,7 @@ from wiki_api.source_review import sha256, normalize_rule_id
 # Physical PDF pages, first-column width, known namespace, source filename pattern.
 TABLES = [
     ('*Chemical monitoring*.pdf', 98, 112, 16, 'GBR'),
-    ('*Chemical monitoring*.pdf', 113, 143, 21, 'CHEMMON'),
+    ('*Chemical monitoring*.pdf', 113, 143, 21, 'CHEMON'),
     ('*No*presence*.pdf', 19, 21, 21, 'PRE'),
     ('*use levels*.pdf', 24, 28, 33, 'USE'),
 ]
@@ -66,8 +66,8 @@ def extract_inventory(root: Path) -> dict:
                         'source': name, 'pdf_page': page, 'status': status,
                         'applicability': 'biological-only' if wiki_id in BIOLOGICAL_ONLY else 'check-rule-scope'})
     # These are source-table counts, not counts learned from existing wiki definitions.
-    counts = {family: sum(r['family'] == family for r in rules) for family in ('GBR','CHEMMON','LL','PRE','USE')}
-    return {'version': 1, 'edition': '2026 supplied PDFs', 'method': 'pdftotext -layout, first-column IDs in Tables 9/10 and FA/FF Table 3; wrapped suffixes joined; CHEMON mapped to wiki CHEMMON',
+    counts = {family: sum(r['family'] == family for r in rules) for family in ('GBR','CHEMON','LL','PRE','USE')}
+    return {'version': 1, 'edition': '2026 supplied PDFs', 'method': 'pdftotext -layout, first-column IDs in Tables 9/10 and FA/FF Table 3; wrapped suffixes joined',
             'limitations': ['ID/status inventory only. Descriptions and applicability still need semantic review.',
                 'Inactive and explicitly biological-only GBR rows retained but excluded from missing-active warnings.',
                 'DOMAIN VALIDATION and FOODEX2 namespaces are outside this five-family inventory.'],

@@ -36,7 +36,7 @@ FA/FF intake monitoring uses **three parallel data-collection paths**, all submi
 
 | Path | Granularity | Data model | Rule prefix | Wiki page |
 |---|---|---|---|---|
-| Analytical (measured concentrations) | Sample level | **SSD2** ChemMon | `CHEMMON…`, `GBR…`, `LL_…FA_FF` | this page + [[business-rules-additives]] |
+| Analytical (measured concentrations) | Sample level | **SSD2** ChemMon | `CHEMON…`, `GBR…`, `LL_…FA_FF` | this page + [[business-rules-additives]] |
 | Use levels (industry-reported min/typ/max) | Product-category level | Separate (**not** in SSD2) | `USE…`, `USE_LLDB…` | [[fa-ff-use-levels-data-model]] |
 | No-presence (FA/FF not on label / not added) | Sample level | SSD2-*derived* but separate | `PRE…` | [[fa-ff-no-presence-data-model]] |
 
@@ -55,10 +55,10 @@ Some rule families are shared in concept but not in severity or exact field plac
 
 | Topic | SSD2 analytical | No-presence DM | Use-levels DM |
 | --- | --- | --- | --- |
-| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMMON87`) and uses the FA/FF CONCLUS codes (source spelling `fa_ff`; see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
-| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMMON39`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
-| Physical state (`F03`) | Recommended / warning path (`CHEMMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
-| Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
+| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMON87`) and uses the FA/FF CONCLUS codes (source spelling `fa_ff`; see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
+| Legislative class (`F33`) | Mandatory for FA/FF (`CHEMON39`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
+| Physical state (`F03`) | Recommended / warning path (`CHEMON86`) | Required for the listed legislative categories (`PRE09`) | Required for the listed legislative categories (`USE17`) |
+| Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
 | Limit comparison date | Analytical legal-limit checks use the sampling date | No separate LLDB layer in this DM | LLDB checks use the marketing date (`USE_LLDB01`, `USE_LLDB02`) |
 
 Use [[controlled-terminology-catalogues]] for the shared catalogue layer, [[legal-limits-database]] for the date-driven limit logic, and [[data-validation-and-acceptance]] for the common DCF submission flow.
@@ -112,8 +112,8 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Result Reporting
 
-- For potassium sorbate (RF-00000248-ADD), CHEMMON106 recommends that `paramText` state “Expressed as free acid” or “Expressed as salt” (Warning, Table 10 p. 140). This rule does not impose that text on every grouped additive; see [[ssd2-analysis-parameter-coding]].
-- The field prose p. 66 recommends LOD for FA/FF binary negative results generally. CHEMMON107 (Table 10 p. 140) specifically warns for six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`; see [[business-rules-additives]] for the complete list.
+- For potassium sorbate (RF-00000248-ADD), CHEMON106 recommends that `paramText` state “Expressed as free acid” or “Expressed as salt” (Warning, Table 10 p. 140). This rule does not impose that text on every grouped additive; see [[ssd2-analysis-parameter-coding]].
+- The field prose p. 66 recommends LOD for FA/FF binary negative results generally. CHEMON107 (Table 10 p. 140) specifically warns for six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`; see [[business-rules-additives]] for the complete list.
 - Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level. (ChemMon 2026)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
@@ -121,13 +121,13 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 
 | Rule | Description | Status |
 | --- | --- | --- |
-| CHEMMON39 | Legislative class validation | Merged 2026 |
-| CHEMMON84_a | Result type validation | Amended 2026 |
-| CHEMMON86 | Physical-state facet recommendation | Amended 2026 |
-| CHEMMON106 | Potassium sorbate `paramText` recommendation (Warning) | New 2026 |
-| CHEMMON107 | LOD recommendation for six named parameters with BIN/NEG | New 2026 |
-| CHEMMON108 | Food colour/additive classification codes | New 2026 |
-| CHEMMON109 | Implicit additive/flavouring legislative category | New 2026 |
+| CHEMON39 | Legislative class validation | Merged 2026 |
+| CHEMON84_a | Result type validation | Amended 2026 |
+| CHEMON86 | Physical-state facet recommendation | Amended 2026 |
+| CHEMON106 | Potassium sorbate `paramText` recommendation (Warning) | New 2026 |
+| CHEMON107 | LOD recommendation for six named parameters with BIN/NEG | New 2026 |
+| CHEMON108 | Food colour/additive classification codes | New 2026 |
+| CHEMON109 | Implicit additive/flavouring legislative category | New 2026 |
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Legal Limit Rules (New 2026)
@@ -166,6 +166,6 @@ discrepancy, query provenance and limits. Other rows reproduce the supplied
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Conclusion Reporting
 
-- `evalInfo.conclusion` is highly recommended. (CHEMMON87)
+- `evalInfo.conclusion` is highly recommended. (CHEMON87)
 - Indicates whether the food additive was on the label (`C19A`) or not (`C20A`), or is of natural occurrence (`C05A`). (ChemMon 2026)
 - Multiple conclusions may apply; for example, ascorbic acid added as a food additive and also naturally occurring: `C19A$C05A`. (ChemMon 2026)

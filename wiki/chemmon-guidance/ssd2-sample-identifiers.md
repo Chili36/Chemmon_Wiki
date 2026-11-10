@@ -24,7 +24,7 @@ related:
 - `sampId` is mandatory, maximum 100 characters, and must be reused across all analytical results from the same physical sample.
 - `sampId` is used to determine overall sample compliance and to count samples for programme/reporting purposes.
 - `origSampId` is optional and only used to tie a sample back to an original sample in a follow-up or feed-to-animal investigation.
-- If `origSampId` is reported, the guidance expects suspect sampling (`sampStrategy = ST30A`). (`CHEMMON22`)
+- If `origSampId` is reported, the guidance expects suspect sampling (`sampStrategy = ST30A`). (`CHEMON22`)
 
 ## sampId — Sample taken identification code
 
@@ -74,4 +74,4 @@ An explicit connection is also relevant for follow-up samples originating from a
 
 ### Related business rule
 
-`CHEMMON22` — If `origSampId` is reported, `sampStrategy` should be `ST30A` (suspect sampling).
+`CHEMON22` — If `origSampId` is reported, `sampStrategy` should be `ST30A` (suspect sampling).

@@ -59,13 +59,13 @@ def test_malformed_review_cannot_look_current(reviewed, fault):
 
 def test_rule_inventory_is_source_derived_and_explicit_about_inactive_rules():
     record = json.loads((ROOT/'docs/rule-inventory.json').read_text())
-    assert record['source_counts'] == {'GBR':92, 'CHEMMON':104, 'LL':11, 'PRE':17, 'USE':29}
+    assert record['source_counts'] == {'GBR':92, 'CHEMON':104, 'LL':11, 'PRE':17, 'USE':29}
     rules = {r['wiki_id']: r for r in record['rules']}
-    assert rules['CHEMMON84_a']['source_id'] == 'CHEMON84_a'
+    assert rules['CHEMON84_a']['source_id'] == 'CHEMON84_a'
     assert rules['LL_01_FA_FF']['pdf_page'] == 142
     assert rules['LL_04_b']['pdf_page'] == 143
     assert rules['GBR1']['status'] == 'inactive'
-    assert rules['CHEMMON49']['status'] == 'inactive'
+    assert rules['CHEMON49']['status'] == 'inactive'
     assert rules['GBR6']['applicability'] == 'biological-only'
     result = rule_inventory_status(ROOT)
     assert result['status'] == 'current'
@@ -121,8 +121,11 @@ def test_reviewed_chemon_pre_use_severities_match_independent_source_evidence():
     report = json.loads((ROOT/'reports/source-review/2026-10-05-broader-review.json').read_text())
     inventory = json.loads((ROOT/'docs/rule-inventory.json').read_text())
     expected = {r['wiki_id']: r for r in inventory['rules']
-                if r['family'] in {'CHEMMON', 'PRE', 'USE'}}
-    reviewed_rows = {r['wiki_id']: r for r in report['rules']}
+                if r['family'] in {'CHEMON', 'PRE', 'USE'}}
+    # The 5 October report predates the CHEMMON -> CHEMON respelling (#63); read it in source spelling.
+    rows = [{**r, 'wiki_id': r['wiki_id'].replace('CHEMMON', 'CHEMON'),
+             'family': r['family'].replace('CHEMMON', 'CHEMON')} for r in report['rules']]
+    reviewed_rows = {r['wiki_id']: r for r in rows}
     assert len(reviewed_rows) == len(report['rules']) == 150
     assert reviewed_rows.keys() == expected.keys()
     assert all(sha256(ROOT/p) == digest for p, digest in report['sources'].items())
@@ -138,7 +141,7 @@ def test_reviewed_chemon_pre_use_severities_match_independent_source_evidence():
         row = next(line for line in text.splitlines()
                    if re.match(r'^\|\s*' + re.escape(key) + r'\s*\|', line))
         cells = [cell.strip() for cell in row.split('|')[1:-1]]
-        assert len(cells) == (5 if source['family'] == 'CHEMMON' else 4)
+        assert len(cells) == (5 if source['family'] == 'CHEMON' else 4)
         assert cells[1] == source['severity'], key
         assert int(re.split(r'[-–]', cells[-1])[0]) == source['pdf_page'], key
 

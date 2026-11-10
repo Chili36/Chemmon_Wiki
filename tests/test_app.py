@@ -69,7 +69,7 @@ class FakeAnswerer:
     def run(self, question: str, pages: list[dict[str, object]]) -> AnswerResult:
         self.calls.append({"question": question, "pages": pages})
         return AnswerResult(
-            answer="F33 is mandatory for acrylamide per CHEMMON12.",
+            answer="F33 is mandatory for acrylamide per CHEMON12.",
             citations=["contaminant-reporting.md"],
             token_summary={
                 "model": "fake-claude",
@@ -150,7 +150,7 @@ def test_ask_returns_answer_with_citations() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["answer"] == "F33 is mandatory for acrylamide per CHEMMON12."
+    assert payload["answer"] == "F33 is mandatory for acrylamide per CHEMON12."
     assert payload["citations"] == ["contaminant-reporting.md"]
     assert "contaminant-reporting.md" in payload["pages_used"]
     assert payload["trace"]["selection_method"] == "service-owned llm page selector + answerer"
@@ -187,13 +187,13 @@ def test_ask_streams_answer_when_requested() -> None:
 
         def stream(self, question: str, pages: list[dict[str, object]]):  # type: ignore[no-untyped-def]
             raw_json_1 = '{"answer":"F33 is mandatory for'
-            raw_json_2 = ' acrylamide per CHEMMON12.","citations":["contaminant-reporting.md"]}'
+            raw_json_2 = ' acrylamide per CHEMON12.","citations":["contaminant-reporting.md"]}'
             yield {"type": "delta", "text": raw_json_1}
             yield {"type": "delta", "text": raw_json_2}
             yield {
                 "type": "final",
                 "result": AnswerResult(
-                    answer="F33 is mandatory for acrylamide per CHEMMON12.",
+                    answer="F33 is mandatory for acrylamide per CHEMON12.",
                     citations=["contaminant-reporting.md"],
                     token_summary={
                         "model": "fake-claude",
@@ -239,11 +239,11 @@ def test_ask_streams_answer_when_requested() -> None:
     assert "contaminant-reporting.md" in events[0]["pages_used"]
 
     streamed_answer = "".join(e["text"] for e in events if e["type"] == "delta")
-    assert streamed_answer == "F33 is mandatory for acrylamide per CHEMMON12."
+    assert streamed_answer == "F33 is mandatory for acrylamide per CHEMON12."
 
     done = [e for e in events if e["type"] == "done"][0]
     response = done["response"]
-    assert response["answer"] == "F33 is mandatory for acrylamide per CHEMMON12."
+    assert response["answer"] == "F33 is mandatory for acrylamide per CHEMON12."
     assert response["citations"] == ["contaminant-reporting.md"]
 
 

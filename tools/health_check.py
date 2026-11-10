@@ -4,7 +4,7 @@
 Validates:
   1. Frontmatter schema compliance for every page under wiki/chemmon-guidance/
   2. Every [[wiki-link]] resolves to an existing page
-  3. Rule-ID uniqueness — CHEMMON IDs are checked across the slice files.
+  3. Rule-ID uniqueness — CHEMON IDs are checked across the slice files.
      This is not a semantic-completeness check. Duplicate definitions surface as warnings.
   4. No prose reference to the old `raw/chemmon-guidance/` path remains in
      any tracked file under the repo root or the wiki directory.
@@ -74,9 +74,9 @@ REQUIRED_FIELDS = {"title", "type", "domain", "last_updated"}
 OLD_PATH_LITERAL = "raw/chemmon-guidance/"
 
 WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
-# Matches a table row whose first cell is a rule ID like CHEMMON12 or CHEMMON79_a/b/c
+# Matches a table row whose first cell is a rule ID like CHEMON12 or CHEMON79_a/b/c
 RULE_ID_TABLE_ROW_RE = re.compile(
-    r"^\|\s*(CHEMMON\s*\d+(?:_[a-z](?:/[a-z])*)?)\s*\|",
+    r"^\|\s*(CHEMON\s*\d+(?:_[a-z](?:/[a-z])*)?)\s*\|",
     re.MULTILINE,
 )
 

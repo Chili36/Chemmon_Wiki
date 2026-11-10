@@ -27,12 +27,12 @@ related:
 - `resLOD` must be reported when `resType = LOD` (GBR36) and must be ≤ `resLOQ` (GBR37).
 - `resLOQ` is expected for most chemical-monitoring results and is required unless the guidance explicitly allows exceptions (unvalidated methods; `resInfo.notSummed = Y`; some VMPR cases where `resLOD`/`CCalpha`/`CCbeta` are used instead; `resType = BIN`).
 - VMPR: at least one of `resLOD`, `resLOQ`, `CCalpha`, or `CCbeta` must be reported for each result (see also [[ssd2-result-method-accreditation]]).
-- `resLOQ` must not use placeholder values like 99999/9999 (CHEMMON82). If a summed LOQ is not available, use `resInfo.notSummed = Y` and leave `resLOQ` NULL where allowed, rather than inventing a fake numeric LOQ.
+- `resLOQ` must not use placeholder values like 99999/9999 (CHEMON82). If a summed LOQ is not available, use `resInfo.notSummed = Y` and leave `resLOQ` NULL where allowed, rather than inventing a fake numeric LOQ.
 
 ## Relevant Business Rules
 
 - Unit/limit presence and consistency: GBR27/28/29, GBR36/37/47, GBR102. See [[business-rules-gbr]].
-- `resLOQ` rules/exceptions: CHEMMON44/45/78/82, CHEMMON62. See [[business-rules-cross-cutting]].
+- `resLOQ` rules/exceptions: CHEMON44/45/78/82, CHEMON62. See [[business-rules-cross-cutting]].
 
 ## resUnit — Result unit
 
@@ -127,7 +127,7 @@ In cases where neither the LOD nor LOQ is provided, results cannot be used in ex
 
 ### VMPR rule
 
-The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` for each result. The full validation rule CHEMMON45 (pp. 123-124) explicitly excludes unvalidated methods and `resInfo.notSummed=Y`; preserve those exceptions when describing the rule.
+The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `resLOQ`, `CCalpha` and `CCbeta` for each result. The full validation rule CHEMON45 (pp. 123-124) explicitly excludes unvalidated methods and `resInfo.notSummed=Y`; preserve those exceptions when describing the rule.
 
 ### Example
 
@@ -137,10 +137,10 @@ The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `r
 
 ### Related business rules
 
-- **CHEMMON44** — `resLOQ` must be reported unless method is unvalidated, `notSummed = Y`, domain is VMPR, or `resType` = BIN.
-- **CHEMMON45** — If the method is not unvalidated and `resInfo.notSummed` is not Y, report at least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` (Table 10, pp. 123-124).
-- **CHEMMON78** — If `resType` = BIN, `resLOQ` must be empty.
-- **CHEMMON82** — `resLOQ` cannot be a placeholder value (99999, 999, 9999, 999999, 9999999).
+- **CHEMON44** — `resLOQ` must be reported unless method is unvalidated, `notSummed = Y`, domain is VMPR, or `resType` = BIN.
+- **CHEMON45** — If the method is not unvalidated and `resInfo.notSummed` is not Y, report at least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` (Table 10, pp. 123-124).
+- **CHEMON78** — If `resType` = BIN, `resLOQ` must be empty.
+- **CHEMON82** — `resLOQ` cannot be a placeholder value (99999, 999, 9999, 999999, 9999999).
 
 ## resInfo.notSummed — Summing status
 
@@ -161,5 +161,5 @@ For the calculated sum of contaminants, there are currently no standard guidelin
 
 ### Related business rule
 
-**CHEMMON62** — If `notSummed = Y`, the LOQ of at least one component in the sum must be reported elsewhere in the submission.
+**CHEMON62** — If `notSummed = Y`, the LOQ of at least one component in the sum must be reported elsewhere in the submission.
 

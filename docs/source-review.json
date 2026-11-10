@@ -162,7 +162,7 @@
       "status": "resolved",
       "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
       "locator": "Table 10 pp. 113–143 (complete ID column); pp. 121–122, 129, 132",
-      "observation": "The purported source duplicate CHEMMON03 is a wiki error; merged IDs and CHEMON64 coverage also differed.",
+      "observation": "The purported source duplicate CHEMON03 is a wiki error; merged IDs and CHEMON64 coverage also differed.",
       "action": "Reconcile source IDs independently from the wiki.",
       "wiki_pages": [
         "business-rules-cross-cutting.md",
@@ -170,7 +170,7 @@
         "business-rules-additives.md",
         "pesticide-reporting.md"
       ],
-      "resolution": "Removed unsupported CHEMMON01/02 and second CHEMMON03; documented source spelling CHEMON, merged39/79, added64. Rendered p.113 confirms one method row."
+      "resolution": "Removed unsupported CHEMON01/02 and second CHEMON03; documented source spelling CHEMON, merged39/79, added64. Rendered p.113 confirms one method row."
     },
     {
       "id": "SRC-004",
@@ -276,13 +276,13 @@
       "status": "resolved",
       "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
       "locator": "ChemMon p.40 worked examples; Table9 pp.98–99 and112",
-      "observation": "The additive summary called an explicit omelette F33 implicit and mistyped A1B1Y as A1BY; the sample-identifiers page retained an unsupported CHEMMON01 reference.",
+      "observation": "The additive summary called an explicit omelette F33 implicit and mistyped A1B1Y as A1BY; the sample-identifiers page retained an unsupported CHEMON01 reference.",
       "action": "Correct the source-backed examples and replace the unsupported reference with the distinct GBR2/3/101 requirements.",
       "wiki_pages": [
         "food-additives-reporting.md",
         "ssd2-sample-identifiers.md"
       ],
-      "resolution": "Compared the p.40 example columns; labelled omelette F33 explicit and restored syrup-type A1B1Y. Replaced CHEMMON01 with source-grounded event/sample consistency and result-uniqueness references."
+      "resolution": "Compared the p.40 example columns; labelled omelette F33 explicit and restored syrup-type A1B1Y. Replaced CHEMON01 with source-grounded event/sample consistency and result-uniqueness references."
     },
     {
       "id": "SRC-012",

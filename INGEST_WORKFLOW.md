@@ -182,7 +182,7 @@ For every page you touch:
   other — load-bearing, not decorative
 - **Add `<!-- Source: <pdf>, <page range> -->` HTML comments** next to
   claims a maintainer would need to verify against the source
-- **Add a `Relevant Business Rules` section** when CHEMMON / GBR / LL rules
+- **Add a `Relevant Business Rules` section** when CHEMON / GBR / LL rules
   materially constrain the page — list them with the rule ID and a short
   explanation of how they constrain the topic
 - **Add a `Relevant Policy` section** when decision order matters — e.g.

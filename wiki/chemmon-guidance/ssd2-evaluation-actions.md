@@ -1,6 +1,6 @@
 ---
 title: "SSD2 Evaluation: Action Taken"
-select_when: "Action taken after SSD2 results; distinguish CHEMMON37 recommendations for contaminants/FA/FF from VMPR/pesticide CHEMMON85 conditions."
+select_when: "Action taken after SSD2 results; distinguish CHEMON37 recommendations for contaminants/FA/FF from VMPR/pesticide CHEMON85 conditions."
 type: "reference"
 domain: "all"
 last_updated: "2026-10-05"
@@ -21,8 +21,8 @@ related:
 
 - `actTakenCode` reports enforcement or follow-up action taken after a non-conformity or above-limit finding.
 - Multiple actions may be reported.
-- For VMPR/pesticides, CHEMMON85 requires action reporting for J038A assessment, or empty assessment with detected/above-limit evaluation; see the complete rule and its source-wording note.
-- For contaminants, additives and flavourings with `evalCode` J041A or J003A, action reporting is recommended; CHEMMON37 is a Warning.
+- For VMPR/pesticides, CHEMON85 requires action reporting for J038A assessment, or empty assessment with detected/above-limit evaluation; see the complete rule and its source-wording note.
+- For contaminants, additives and flavourings with `evalCode` J041A or J003A, action reporting is recommended; CHEMON37 is a Warning.
 
 ## actTakenCode — Action taken
 
@@ -36,10 +36,10 @@ Report the action taken when a non-conformity is identified or the measured subs
 
 ### Requirements and recommendations
 
-- VMPR/pesticides: CHEMMON85 uses both `evalCode` and `evalInfo.resAsses`; do not reduce it to a numerical exceedance alone.
-- Contaminants/additives/flavourings: recommended when `evalCode` is J041A or J003A; `CHEMMON37` is a Warning (Table 10, p. 121).
+- VMPR/pesticides: CHEMON85 uses both `evalCode` and `evalInfo.resAsses`; do not reduce it to a numerical exceedance alone.
+- Contaminants/additives/flavourings: recommended when `evalCode` is J041A or J003A; `CHEMON37` is a Warning (Table 10, p. 121).
 
 ## Related business rules
 
-- `CHEMMON37` — for contaminants/additives/flavourings, `evalCode` J041A or J003A should have `actTakenCode`; missing values trigger a Warning (Table 10, p. 121). See [[business-rules-cross-cutting]].
-- `CHEMMON85` — for VMPR/PPP, `actTakenCode` is mandatory for J038A assessment, or empty assessment with J041A/J003A evaluation. The surrounding assessment guidance and Table 10 p. 133 support this grouping; [[business-rules-cross-cutting]] gives the explicit conditions and rationale.
+- `CHEMON37` — for contaminants/additives/flavourings, `evalCode` J041A or J003A should have `actTakenCode`; missing values trigger a Warning (Table 10, p. 121). See [[business-rules-cross-cutting]].
+- `CHEMON85` — for VMPR/PPP, `actTakenCode` is mandatory for J038A assessment, or empty assessment with J041A/J003A evaluation. The surrounding assessment guidance and Table 10 p. 133 support this grouping; [[business-rules-cross-cutting]] gives the explicit conditions and rationale.

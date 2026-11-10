@@ -45,8 +45,8 @@ Baby foods are **always** considered processed products.
 
 Baby food samples are **excluded** from the VMPR Annual Report per Regulation (EU) 2022/1646.
 
-- **CHEMMON55** prevents baby foods being reported with `progLegalRef` N371A. See [[business-rules-baby-food]].
-- **CHEMMON63**: If `sampMatCode` is under A03PZ, `progLegalRef` cannot be N371A. See [[business-rules-baby-food]].
+- **CHEMON55** prevents baby foods being reported with `progLegalRef` N371A. See [[business-rules-baby-food]].
+- **CHEMON63**: If `sampMatCode` is under A03PZ, `progLegalRef` cannot be N371A. See [[business-rules-baby-food]].
 
 See [[vmpr-reporting]] for full VMPR reporting rules.
 

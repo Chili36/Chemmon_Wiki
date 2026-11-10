@@ -69,8 +69,8 @@ For contaminants, food additives, and food flavourings, generic fallback method 
 
 ## Related business rules
 
-- `CHEMMON23` — `anMethType` must be `AT06A` or `AT08A`. See [[business-rules-cross-cutting]].
-- `CHEMMON30` — if `evalCode = J003A`, `anMethType` must be `AT08A`. See [[business-rules-cross-cutting]].
-- `CHEMMON33` — if `resType=BIN`, `anMethType` must be AT06A; published severity is **Error**, despite “should” in the description (Table 10, p. 120). See [[business-rules-cross-cutting]].
-- `CHEMMON34` — if `anMethType = AT08A`, `resType` should not be `BIN`. See [[business-rules-cross-cutting]].
-- `CHEMMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes such as `F001A`, `F500A`, or `F598A`. See [[business-rules-cross-cutting]].
+- `CHEMON23` — `anMethType` must be `AT06A` or `AT08A`. See [[business-rules-cross-cutting]].
+- `CHEMON30` — if `evalCode = J003A`, `anMethType` must be `AT08A`. See [[business-rules-cross-cutting]].
+- `CHEMON33` — if `resType=BIN`, `anMethType` must be AT06A; published severity is **Error**, despite “should” in the description (Table 10, p. 120). See [[business-rules-cross-cutting]].
+- `CHEMON34` — if `anMethType = AT08A`, `resType` should not be `BIN`. See [[business-rules-cross-cutting]].
+- `CHEMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes such as `F001A`, `F500A`, or `F598A`. See [[business-rules-cross-cutting]].
