@@ -168,4 +168,4 @@ The list rotates annually. Verify the current year's pilot scope against the lat
 
 - **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — mandatory positive presence with measured levels goes here, not the no-presence DM.
 - **[[fa-ff-use-levels-data-model]]** — category-level industry-reported use levels; parallel to, not a replacement for, sample-level no-presence data.
-- Business-rule IDs in this DM (`PRE…`) are a separate namespace from the SSD2 CHEMMON rules catalogued under [[business-rules]]; they do not overlap.
+- Business-rule IDs in this DM (`PRE…`) are a separate namespace from the SSD2 CHEMON rules catalogued under [[business-rules]]; they do not overlap.

@@ -77,12 +77,12 @@ related:
 
 ## Related Business Rules
 
-- `CHEMMON17`: for mycotoxins, `F21` production method should be reported. See [[business-rules-contaminant]].
-- `CHEMMON18`: for arsenic in rice, `F28` should specify processed or unprocessed state. See [[business-rules-contaminant]].
-- `CHEMMON19`: for chlorates/perchlorates/QACs, `F28` should be reported. See [[business-rules-contaminant]].
-- `CHEMMON86`: `F03` is recommended for specified FA/FF categories where physical state affects legal limits. See [[business-rules-additives]].
-- `CHEMMON90_a`: for pesticide copper, `F20` and/or `F28` are needed to describe sample preparation. See [[business-rules-pesticide]].
-- `CHEMMON103`: organic and conventional production facets must not be reported together. See [[business-rules-cross-cutting]].
+- `CHEMON17`: for mycotoxins, `F21` production method should be reported. See [[business-rules-contaminant]].
+- `CHEMON18`: for arsenic in rice, `F28` should specify processed or unprocessed state. See [[business-rules-contaminant]].
+- `CHEMON19`: for chlorates/perchlorates/QACs, `F28` should be reported. See [[business-rules-contaminant]].
+- `CHEMON86`: `F03` is recommended for specified FA/FF categories where physical state affects legal limits. See [[business-rules-additives]].
+- `CHEMON90_a`: for pesticide copper, `F20` and/or `F28` are needed to describe sample preparation. See [[business-rules-pesticide]].
+- `CHEMON103`: organic and conventional production facets must not be reported together. See [[business-rules-cross-cutting]].
 
 ## Navigation
 

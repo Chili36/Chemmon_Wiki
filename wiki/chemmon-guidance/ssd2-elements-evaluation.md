@@ -40,10 +40,10 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 
 ## Relevant Business Rules
 
-- `CHEMMON35`, `CHEMMON46`, `CHEMMON48`, `CHEMMON59` — limit-type / limit-value logic. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
-- `CHEMMON30`, `CHEMMON36`, `CHEMMON60`, `CHEMMON100` — allowed evaluation-code logic and interactions with result/method fields. See [[business-rules-cross-cutting]], [[business-rules-pesticide]], and [[business-rules-vmpr]].
-- `CHEMMON37`, `CHEMMON85` — action-taken requirements. See [[business-rules-cross-cutting]].
-- `CHEMMON26`, `CHEMMON66_a`, `CHEMMON66_b`, `CHEMMON87`, `CHEMMON88` — conclusion/comment recommendations and exception handling. See [[business-rules-cross-cutting]] and [[business-rules-additives]].
+- `CHEMON35`, `CHEMON46`, `CHEMON48`, `CHEMON59` — limit-type / limit-value logic. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
+- `CHEMON30`, `CHEMON36`, `CHEMON60`, `CHEMON100` — allowed evaluation-code logic and interactions with result/method fields. See [[business-rules-cross-cutting]], [[business-rules-pesticide]], and [[business-rules-vmpr]].
+- `CHEMON37`, `CHEMON85` — action-taken requirements. See [[business-rules-cross-cutting]].
+- `CHEMON26`, `CHEMON66_a`, `CHEMON66_b`, `CHEMON87`, `CHEMON88` — conclusion/comment recommendations and exception handling. See [[business-rules-cross-cutting]] and [[business-rules-additives]].
 
 ## Relevant Policy
 

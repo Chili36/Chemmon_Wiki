@@ -130,7 +130,7 @@ Only **four authorised insects** are currently recognised:
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
 ## Baby Food Exclusion
 
-Baby food samples are **excluded** from the VMPR Annual Report (CHEMMON63).
+Baby food samples are **excluded** from the VMPR Annual Report (CHEMON63).
 
 See [[baby-food-reporting]] for full baby food rules.
 
@@ -154,9 +154,9 @@ VMPR analytical results are reported using one of these result type codes:
 
 The following business rules apply specifically to the VMPR domain:
 
-- **CHEMMON96**: Validates that VMPR samples carry the correct sampling strategy for the declared programme type (amended 2026). (ChemMon 2026 Table 10 p. 137)
-- **CHEMMON100**: Restricts which evaluation codes are permitted for VMPR results (new 2026). (ChemMon 2026 Table 10 p. 138)
-- **CHEMMON102**: Checks consistency across records sharing the same `sampEventId` in VMPR submissions (new 2026). (ChemMon 2026 Table 10 p. 139)
+- **CHEMON96**: Validates that VMPR samples carry the correct sampling strategy for the declared programme type (amended 2026). (ChemMon 2026 Table 10 p. 137)
+- **CHEMON100**: Restricts which evaluation codes are permitted for VMPR results (new 2026). (ChemMon 2026 Table 10 p. 138)
+- **CHEMON102**: Checks consistency across records sharing the same `sampEventId` in VMPR submissions (new 2026). (ChemMon 2026 Table 10 p. 139)
 
 See [[business-rules]] for the full rule catalogue.
 

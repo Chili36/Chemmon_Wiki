@@ -44,7 +44,7 @@ When relevant, the result may also need the matching expression-basis informatio
 
 ### Related business rule
 
-- `CHEMMON20` — for fish matrices with BFRs, dioxins, or mercury, `origFishAreaCode` should be reported. See [[business-rules-contaminant]].
+- `CHEMON20` — for fish matrices with BFRs, dioxins, or mercury, `origFishAreaCode` should be reported. See [[business-rules-contaminant]].
 
 ## analysisY — Year of analysis
 

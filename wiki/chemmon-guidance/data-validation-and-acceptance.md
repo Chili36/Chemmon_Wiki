@@ -29,7 +29,7 @@ related:
 
 1. **Transmit dataset to DCF**: the system sends an automatic acknowledgement ("ack") message.
 2. **Receive validation output**: the data provider receives an "ack details" message (downloadable as XML) listing errors found, followed by business-rule validation results.
-3. **Fix and re-transmit as needed**: data providers use the troubleshooting suggestions in the GBR and CHEMMON tables (Tables 9 and 10) to resolve errors/warnings, plus network FAQ resources; if needed, contact EFSA via `data.collection@efsa.europa.eu`. (ChemMon 2026 p152)
+3. **Fix and re-transmit as needed**: data providers use the troubleshooting suggestions in the GBR and CHEMON tables (Tables 9 and 10) to resolve errors/warnings, plus network FAQ resources; if needed, contact EFSA via `data.collection@efsa.europa.eu`. (ChemMon 2026 p152)
 4. **Submit when valid**: once datasets reach **Valid** or **Valid with Warning** status, the data provider can **Submit** them to the EFSA scientific data warehouse (sDWH) in DCF.
 5. **Review in MicroStrategy**: submitted data become visible via validation reports in MicroStrategy for both data providers and validators.
 6. **Accept/Reject by validator**: data validators set the final status (**Accepted** or **Rejected**) in MicroStrategy and submit the final status for each dataset ID. (ChemMon 2026 p152)
@@ -49,5 +49,5 @@ Once data are **Accepted** in the sDWH, the guidance notes they can only be corr
 The two FA/FF parallel data models — [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] — use the **same** transmit → ack → BR-validation → submit-to-sDWH → accept/reject flow described above. What differs:
 
 - **Reporting tool**: each DM has its own Excel template published on Zenodo. No-presence: `10.5281/zenodo.14893698`. Use-levels: `10.5281/zenodo.14893177`.
-- **Rule namespace**: validation uses `PRE…` codes for no-presence submissions and `USE…`/`USE_LLDB…` codes for use-levels submissions, instead of the `GBR…`/`CHEMMON…`/`LL_…` codes used for SSD2 ChemMon.
+- **Rule namespace**: validation uses `PRE…` codes for no-presence submissions and `USE…`/`USE_LLDB…` codes for use-levels submissions, instead of the `GBR…`/`CHEMON…`/`LL_…` codes used for SSD2 ChemMon.
 - **Catalogues**: both DMs use the `faff` sub-hierarchies of the same EFSA catalogues (`LEGREF.faff`, `PARAM.addAnalysis`/`flavAnalysis`, `CONCLUS.faff`, `ADDFOOD.FARestExc`/`FFRestExc`). See [[controlled-terminology-catalogues]].

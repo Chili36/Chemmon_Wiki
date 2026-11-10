@@ -46,10 +46,10 @@ Use these as the "fast path" when coding/debugging result records:
 This page is constrained by business rules; the most load-bearing ones:
 
 - GBR result-shape rules (units/required fields): GBR27/28/29, GBR36/39/46/47/48, GBR37, GBR102. See [[business-rules-gbr]].
-- `resLOQ`/limits rules: CHEMMON44/45, CHEMMON78, CHEMMON82. See [[business-rules-cross-cutting]].
-- VMPR CCalpha/CCbeta requirements: CHEMMON31/32. See [[business-rules-vmpr]].
-- Recovery metadata: CHEMMON04/05/42, CHEMMON80. See [[business-rules-contaminant]].
-- Uncertainty: CHEMMON72 (recommended for pesticides), CHEMMON90_b (mandatory for copper). See [[business-rules-pesticide]].
+- `resLOQ`/limits rules: CHEMON44/45, CHEMON78, CHEMON82. See [[business-rules-cross-cutting]].
+- VMPR CCalpha/CCbeta requirements: CHEMON31/32. See [[business-rules-vmpr]].
+- Recovery metadata: CHEMON04/05/42, CHEMON80. See [[business-rules-contaminant]].
+- Uncertainty: CHEMON72 (recommended for pesticides), CHEMON90_b (mandatory for copper). See [[business-rules-pesticide]].
 
 ## Relevant Policy
 

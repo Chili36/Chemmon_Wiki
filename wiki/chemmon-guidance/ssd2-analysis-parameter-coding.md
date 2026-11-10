@@ -103,6 +103,6 @@ For food additives regulated as groups, `paramText` must state whether the resul
 
 ## Related business rules
 
-- `CHEMMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
-- `CHEMMON92` validates the VMPR **matrix** base terms (`sampMatCode`, `anMatCode`) against VetDrugRes, not `paramCode`. See [[business-rules-vmpr]].
-- `CHEMMON106` — potassium sorbate `paramText` should specify free-acid vs salt expression. See [[business-rules-additives]].
+- `CHEMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
+- `CHEMON92` validates the VMPR **matrix** base terms (`sampMatCode`, `anMatCode`) against VetDrugRes, not `paramCode`. See [[business-rules-vmpr]].
+- `CHEMON106` — potassium sorbate `paramText` should specify free-acid vs salt expression. See [[business-rules-additives]].

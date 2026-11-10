@@ -22,7 +22,7 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- `sampMethod` is optional, but some codes carry downstream meaning. In particular, pooled-sample methods (`N002A`, `N031A`) trigger mandatory unit-size reporting on the sampling-unit fields. See [[ssd2-sampling-event-and-unit]]. (`CHEMMON77`)
+- `sampMethod` is optional, but some codes carry downstream meaning. In particular, pooled-sample methods (`N002A`, `N031A`) trigger mandatory unit-size reporting on the sampling-unit fields. See [[ssd2-sampling-event-and-unit]]. (`CHEMON77`)
 - `sampler` is mandatory and identifies whether the sample was taken under official control or by a food business operator.
 - `sampPoint` is mandatory and locates the sample in the food chain; VMPR reporting also remaps `sampPoint` through a dedicated `vmprClasses` hierarchy.
 - For furan and alkylfurans, the guidance points to `sampMethod=N011A` where the dedicated sampling procedure applies. See [[contaminant-reporting]].

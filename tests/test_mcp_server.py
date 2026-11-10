@@ -85,7 +85,7 @@ def test_context_matches_the_http_endpoint(fakes):
 
 def test_ask_returns_answer_and_citations(fakes):
     got = call("ask_guidance", {"question": "Is F33 mandatory for acrylamide?"}).structured_content
-    assert got["answer"] == "F33 is mandatory for acrylamide per CHEMMON12."
+    assert got["answer"] == "F33 is mandatory for acrylamide per CHEMON12."
     assert got["citations"] == ["contaminant-reporting.md"] and got["pages_used"] == ["contaminant-reporting.md"]
     assert set(got) == {"answer", "citations", "pages_used", "cost_usd"}
 

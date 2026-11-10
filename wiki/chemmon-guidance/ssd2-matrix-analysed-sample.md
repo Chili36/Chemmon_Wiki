@@ -57,6 +57,6 @@ Each analysed sample must have a unique identifier no longer than 100 characters
 
 ## Related business rules
 
-- `CHEMMON27` — in VMPR and pesticides, `sampMatCode` should equal `anMatCode`. See [[business-rules-cross-cutting]].
+- `CHEMON27` — in VMPR and pesticides, `sampMatCode` should equal `anMatCode`. See [[business-rules-cross-cutting]].
 - `FOODEX2_ANMAT` — analysed matrix must be a valid FoodEx2 code. See [[business-rules-cross-cutting]].
 - `GBR4` — analysed-sample / analysed-matrix consistency. See [[business-rules-gbr]].

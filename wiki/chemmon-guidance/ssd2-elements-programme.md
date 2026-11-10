@@ -2,7 +2,7 @@
 title: "SSD2 Elements: Programme"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-10"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -49,15 +49,15 @@ Use these as the fast path when coding or debugging programme metadata:
 
 The most load-bearing rules for this group are:
 
-- `CHEMMON68` — `progLegalRef` domain must match `paramCode`. See [[business-rules-cross-cutting]].
-- `CHEMMON50`, `CHEMMON51` — pesticides `progType` / `sampStrategy` constraints with `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
-- `CHEMMON96`, `CHEMMON97` — valid strategy combinations for VMPR and other domains with `K005A`. See [[business-rules-cross-cutting]].
-- `CHEMMON101` — `N422A` requires `progType=K019A` and `sampStrategy=ST30A`. See [[business-rules-pesticide]].
-- `CHEMMON104`, `CHEMMON105` — exclusivity for N422A and N317A. See [[business-rules-pesticide]] and [[business-rules-cross-cutting]].
+- `CHEMON68` — `progLegalRef` domain must match `paramCode`. See [[business-rules-cross-cutting]].
+- `CHEMON50`, `CHEMON51` — pesticides `progType` / `sampStrategy` constraints with `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
+- `CHEMON96`, `CHEMON97` — valid strategy combinations for VMPR and other domains with `K005A`. See [[business-rules-cross-cutting]].
+- `CHEMON101` — `N422A` requires `progType=K019A` and `sampStrategy=ST30A`. See [[business-rules-pesticide]].
+- `CHEMON104`, `CHEMON105` — exclusivity for N422A and N317A. See [[business-rules-pesticide]] and [[business-rules-cross-cutting]].
 
 ## Relevant Policy
 
-- Treat Table 2 combination logic as binding operational guidance, not as optional narrative background. If the chosen `progLegalRef` / `progType` / `sampStrategy` combination does not fit the Table 2 pattern, it is almost certainly wrong.
+- Treat Table 2 as binding: its constraints are implemented as business rules for the pesticide, VMPR, contaminant, food additive and food flavouring domains. In those domains, a `progLegalRef` / `progType` / `sampStrategy` combination not in the grid on [[ssd2-programme-valid-combinations]] is wrong; other domains accept other combinations. (ChemMon 2026 p22)
 - Prefer the most specific `LEGREF` term that matches the actual legal framework, because report inclusion and downstream flags depend on it. See [[controlled-terminology-catalogues]] and [[reporting-flags]].
 
 ## Subpages

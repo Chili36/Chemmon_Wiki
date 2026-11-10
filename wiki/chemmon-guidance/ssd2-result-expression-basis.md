@@ -27,9 +27,9 @@ related:
 
 ## Relevant Business Rules
 
-- **CHEMMON56/70** — Pesticide constraints for `exprResType`. See [[business-rules-pesticide]].
-- **CHEMMON71** — Contaminants in feed: `exprResType` is mandatory. See [[business-rules-contaminant]].
-- **CHEMMON84_a / CHEMMON84_b** — Additives/flavourings mandatory; contaminants in food recommended. Contaminants in feed have mandatory CHEMMON71. See [[business-rules-additives]] and [[business-rules-contaminant]].
+- **CHEMON56/70** — Pesticide constraints for `exprResType`. See [[business-rules-pesticide]].
+- **CHEMON71** — Contaminants in feed: `exprResType` is mandatory. See [[business-rules-contaminant]].
+- **CHEMON84_a / CHEMON84_b** — Additives/flavourings mandatory; contaminants in food recommended. Contaminants in feed have mandatory CHEMON71. See [[business-rules-additives]] and [[business-rules-contaminant]].
 
 ## exprResPerc / exprResType — Expression of result
 
@@ -78,9 +78,9 @@ Directive (EC) 2002/32 describes maximum levels of undesirable substances in mg/
 
 ### Related business rules
 
-- **CHEMMON56** — For pesticides, `exprResType` can only be B001A, B003A, or B007A. See [[business-rules-pesticide]].
-- **CHEMMON70** — For pesticides in egg/milk matrices, `exprResType` must be B001A.
-- **CHEMMON71** — For contaminants in feed, `exprResType` is mandatory. See [[business-rules-contaminant]].
-- **CHEMMON84_a** — `exprResType` is mandatory for food additives and flavourings. See [[business-rules-additives]].
-- **CHEMMON84_b** — `exprResType` is highly recommended for contaminants **in food**; feed is governed by CHEMMON71.
+- **CHEMON56** — For pesticides, `exprResType` can only be B001A, B003A, or B007A. See [[business-rules-pesticide]].
+- **CHEMON70** — For pesticides in egg/milk matrices, `exprResType` must be B001A.
+- **CHEMON71** — For contaminants in feed, `exprResType` is mandatory. See [[business-rules-contaminant]].
+- **CHEMON84_a** — `exprResType` is mandatory for food additives and flavourings. See [[business-rules-additives]].
+- **CHEMON84_b** — `exprResType` is highly recommended for contaminants **in food**; feed is governed by CHEMON71.
 

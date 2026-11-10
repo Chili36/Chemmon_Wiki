@@ -21,8 +21,8 @@ does not certify the whole wiki or establish model-answer quality.
   event/sample identifiers as well as the descriptor fields. This is an
   assistant source comparison, not an independently certified validator.
 - **CHEMON attribution corrected:** Table 10 has one CHEMON03, for the analytical
-  method. The alleged source duplicate was a wiki error. Unsupported CHEMMON01,
-  CHEMMON02 and the country-consistency CHEMMON03 entries were removed. The
+  method. The alleged source duplicate was a wiki error. Unsupported CHEMON01,
+  CHEMON02 and the country-consistency CHEMON03 entries were removed. The
   source uses CHEMON; this wiki retains CHEMMON as an explicit spelling alias.
   Merged CHEMON39/79 IDs and the missing CHEMON64 definition were corrected.
 - **Recommendation strength corrected:** CHEMON37 is a Warning for action-taken
@@ -51,7 +51,7 @@ does not certify the whole wiki or establish model-answer quality.
   catalogue release intended by ChemMon p. 39 is still unknown; this check
   does not establish that the source example was correct in an earlier release.
 - **Related summary defects corrected:** removed a leftover unsupported
-  CHEMMON01 cross-reference, restored VMPR F01/F02 exceptions in the FoodEx2
+  CHEMON01 cross-reference, restored VMPR F01/F02 exceptions in the FoodEx2
   overview (p. 33), and corrected the omelette's explicit-F33 label and the
   syrup-type code A1B1Y in the additive worked examples (p. 40).
 

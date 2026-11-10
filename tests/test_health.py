@@ -25,7 +25,7 @@ def test_review_reports_real_source_gaps_not_a_source_duplicate():
     assert report.rule_inventory['missing_active_ids'] == []
     assert report.rule_inventory['duplicate_wiki_ids'] == {}
     assert report.rule_inventory['unexpected_wiki_ids'] == []
-    assert not any('rule CHEMMON03 defined' in w for w in report.warnings)
+    assert not any('rule CHEMON03 defined' in w for w in report.warnings)
 
 
 @pytest.fixture

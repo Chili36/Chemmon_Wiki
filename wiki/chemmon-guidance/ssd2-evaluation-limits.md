@@ -53,7 +53,7 @@ For non-regulated processed products, the limit to report is the one applicable 
 
 For pesticides, the typical type is `W002A` (MRL). If `W990A` (national or local limit) is used, the result is disregarded from EU report analysis. (ChemMon 2026 p74)
 
-For VMPR, p. 74 lists six main values (W002A/W005A/W006A/W012A/W001A/W007A). The list below also includes W008A/W990A from the cross-domain CHEMMON35 recommendation on p. 120:
+For VMPR, p. 74 lists six main values (W002A/W005A/W006A/W012A/W001A/W007A). The list below also includes W008A/W990A from the cross-domain CHEMON35 recommendation on p. 120:
 
 - `W002A` — MRL
 - `W005A` — minimum required performance limit
@@ -61,12 +61,12 @@ For VMPR, p. 74 lists six main values (W002A/W005A/W006A/W012A/W001A/W007A). The
 - `W012A` — presence
 - `W001A` — maximum limit
 - `W007A` — action level
-- `W008A` — target level (CHEMMON35, Table 10 p. 120; additional to the VMPR prose list)
-- `W990A` — national or local limit (CHEMMON35; additional to the VMPR prose list)
+- `W008A` — target level (CHEMON35, Table 10 p. 120; additional to the VMPR prose list)
+- `W990A` — national or local limit (CHEMON35; additional to the VMPR prose list)
 
 ## Related business rules
 
-- `CHEMMON35` — recommended `evalLimitType` codes; Warning severity, not a blanket Error constraint. See [[business-rules-cross-cutting]].
-- `CHEMMON46` — if `evalCode` is J003A **or J031A**, and `evalLimitType` is not W012A (Presence), `resType` must be VAL. See [[business-rules-cross-cutting]].
-- `CHEMMON48` — if `paramType` is not `P002A` and `resVal >= evalLowLimit`, `evalCode` should not be `J029A`. See [[business-rules-cross-cutting]].
-- `CHEMMON59` — pesticides only allow `W002A`, `W990A`, or blank. See [[business-rules-pesticide]].
+- `CHEMON35` — recommended `evalLimitType` codes; Warning severity, not a blanket Error constraint. See [[business-rules-cross-cutting]].
+- `CHEMON46` — if `evalCode` is J003A **or J031A**, and `evalLimitType` is not W012A (Presence), `resType` must be VAL. See [[business-rules-cross-cutting]].
+- `CHEMON48` — if `paramType` is not `P002A` and `resVal >= evalLowLimit`, `evalCode` should not be `J029A`. See [[business-rules-cross-cutting]].
+- `CHEMON59` — pesticides only allow `W002A`, `W990A`, or blank. See [[business-rules-pesticide]].

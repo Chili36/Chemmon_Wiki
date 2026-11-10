@@ -72,5 +72,5 @@ EFSA notes matrix and reported unit can also affect flags, and the algorithm may
 
 <!-- Source: ChemMon 2026 p149-150 -->
 
-- Business rules can be applied according to flags (the guidance gives the example that CHEMMON73 applies if `VMPR=1`). (ChemMon 2026 p149)
+- Business rules can be applied according to flags (the guidance gives the example that CHEMON73 applies if `VMPR=1`). (ChemMon 2026 p149)
 - Validation dashboards and other downstream reports filter records using these flags (see [[chemmon-reports]]). (ChemMon 2026 p150)

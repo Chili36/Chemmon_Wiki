@@ -26,8 +26,8 @@ related:
 
 ## Relevant Business Rules
 
-- **CHEMMON72** — For pesticides, `resValUncert` should be reported when `resType = VAL`.
-- **CHEMMON90_b** — For copper parameters, `resValUncert` is mandatory when `resType = VAL`.
+- **CHEMON72** — For pesticides, `resValUncert` should be reported when `resType = VAL`.
+- **CHEMON90_b** — For copper parameters, `resValUncert` is mandatory when `resType = VAL`.
 
 See [[business-rules-pesticide]].
 

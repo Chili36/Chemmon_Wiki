@@ -25,14 +25,14 @@ related:
 - `accredProc` is mandatory and describes the validation/accreditation status of the method linked to `anMethRefId`. For the method-identifier and method-type fields themselves, see [[ssd2-analysis-methods]].
 - For VMPR, decision-threshold fields `CCalpha` (confirmatory) and `CCbeta` (screening) may be required depending on method accreditation and method type.
 - If `accredProc = V007A` (ISO/IEC 17025 + validated per Commission Implementing Regulation (EU) 2021/808):
-  - **CHEMMON31**: for confirmation methods, `CCalpha` is mandatory **unless `paramType=P002A` (Part of a sum)** (Table 10 p. 119).
-  - **CHEMMON32**: for screening methods, `CCbeta` is mandatory.
-- CHEMMON45 requires a limit/threshold when the method is not unvalidated and `resInfo.notSummed` is not Y; see [[ssd2-result-units-and-limits]].
+  - **CHEMON31**: for confirmation methods, `CCalpha` is mandatory **unless `paramType=P002A` (Part of a sum)** (Table 10 p. 119).
+  - **CHEMON32**: for screening methods, `CCbeta` is mandatory.
+- CHEMON45 requires a limit/threshold when the method is not unvalidated and `resInfo.notSummed` is not Y; see [[ssd2-result-units-and-limits]].
 
 ## Relevant Business Rules
 
-- **CHEMMON31** — If `accredProc=V007A`, `anMethType=AT08A` and `paramType` is not P002A, CCalpha is mandatory.
-- **CHEMMON32** — If `accredProc` = V007A and method is Screening, CCbeta is mandatory.
+- **CHEMON31** — If `accredProc=V007A`, `anMethType=AT08A` and `paramType` is not P002A, CCalpha is mandatory.
+- **CHEMON32** — If `accredProc` = V007A and method is Screening, CCbeta is mandatory.
 
 See [[business-rules-vmpr]].
 

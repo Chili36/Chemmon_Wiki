@@ -50,5 +50,5 @@ The complete date on which the sample was taken is mandatory. This information i
 
 ### Related business rules
 
-- `CHEMMON43` — for pesticides/VMPR, `sampY` must be less than or equal to submission year minus one.
-- `CHEMMON43_b` — for additives/flavourings, `sampY` should be **less than or equal to** submission year minus one; Warning in 2026 (Table 10, p. 123).
+- `CHEMON43` — for pesticides/VMPR, `sampY` must be less than or equal to submission year minus one.
+- `CHEMON43_b` — for additives/flavourings, `sampY` should be **less than or equal to** submission year minus one; Warning in 2026 (Table 10, p. 123).

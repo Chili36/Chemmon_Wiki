@@ -41,11 +41,11 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 
 ## Relevant Business Rules
 
-- `CHEMMON20` — fish matrices with BFRs/dioxins/mercury should report `origFishAreaCode`. See [[business-rules-contaminant]].
-- `CHEMMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
-- `CHEMMON23`, `CHEMMON30`, `CHEMMON33`, `CHEMMON34` — analytical-method type rules. See [[business-rules-cross-cutting]].
-- `CHEMMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes. See [[business-rules-cross-cutting]].
-- `CHEMMON92` — VMPR `sampMatCode` and `anMatCode` base terms must belong to the VetDrugRes matrix hierarchy; this is not a parameter-code rule. See [[business-rules-vmpr]].
+- `CHEMON20` — fish matrices with BFRs/dioxins/mercury should report `origFishAreaCode`. See [[business-rules-contaminant]].
+- `CHEMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
+- `CHEMON23`, `CHEMON30`, `CHEMON33`, `CHEMON34` — analytical-method type rules. See [[business-rules-cross-cutting]].
+- `CHEMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes. See [[business-rules-cross-cutting]].
+- `CHEMON92` — VMPR `sampMatCode` and `anMatCode` base terms must belong to the VetDrugRes matrix hierarchy; this is not a parameter-code rule. See [[business-rules-vmpr]].
 
 ## Relevant Policy
 

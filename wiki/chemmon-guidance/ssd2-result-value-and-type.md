@@ -25,14 +25,14 @@ related:
 
 - `resType` is mandatory and determines which value/limit fields are allowed or required.
 - If `resType = VAL`, `resVal` is mandatory and must be > 0.
-- If `resType` indicates a qualitative or below-threshold result (`BIN`, `LOD`, `LOQ`), `resVal` must be empty (CHEMMON40; GBR47 for `LOD`).
+- If `resType` indicates a qualitative or below-threshold result (`BIN`, `LOD`, `LOQ`), `resVal` must be empty (CHEMON40; GBR47 for `LOD`).
 - If `resType = BIN`, report `resQualValue` (expected `NEG` in most cases) and leave `resVal` empty.
 - Exceptional VMPR case: `resType = AWR` (above working range) is allowed only under strict conditions and still requires a numeric threshold (`CCalpha` or `resLOQ`) and `resVal`.
 
 ## Relevant Business Rules
 
 - Result value presence: GBR46/48. See [[business-rules-gbr]].
-- Result-type/value compatibility: CHEMMON08/24/40/41. See [[business-rules-cross-cutting]].
+- Result-type/value compatibility: CHEMON08/24/40/41. See [[business-rules-cross-cutting]].
 
 ## resVal — Result value
 
@@ -88,7 +88,7 @@ As mentioned also in section M.04, for food additives and food flavourings, if `
 
 ### Related business rule
 
-**CHEMMON24** — `resQualValue` must equal NEG except for the specific parameter RF-00011484-PAR (MOAHs 3 to 7 ring), not all MOAHs (Table 10 p. 118).
+**CHEMON24** — `resQualValue` must equal NEG except for the specific parameter RF-00011484-PAR (MOAHs 3 to 7 ring), not all MOAHs (Table 10 p. 118).
 
 ## resType — Type of result
 
@@ -134,8 +134,8 @@ If `resType = AWR` is selected, a numerical value for `CCalpha` (or `resLOQ`) an
 
 ### Related business rules
 
-- **CHEMMON08** — If `resVal = resLOQ`, `resType` must be VAL.
-- **CHEMMON40** — For qualitative results (`resType` = BIN/LOQ/LOD), `resVal` must be empty.
-- **CHEMMON41** — `resLOQ` should not exceed `resVal` for positive detections.
-- **CHEMMON61** — For pesticides, `resType` can only be LOD, LOQ, BIN, or VAL.
+- **CHEMON08** — If `resVal = resLOQ`, `resType` must be VAL.
+- **CHEMON40** — For qualitative results (`resType` = BIN/LOQ/LOD), `resVal` must be empty.
+- **CHEMON41** — `resLOQ` should not exceed `resVal` for positive detections.
+- **CHEMON61** — For pesticides, `resType` can only be LOD, LOQ, BIN, or VAL.
 

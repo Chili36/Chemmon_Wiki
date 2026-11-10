@@ -84,6 +84,6 @@ related:
 
 ## Related business rules
 
-- `CHEMMON50`, `CHEMMON51` — valid pesticide combinations for `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
-- `CHEMMON96`, `CHEMMON97` — valid strategy combinations for `K005A`. See [[business-rules-cross-cutting]].
-- `CHEMMON101` — `N422A` requires `K019A` plus `ST30A`. See [[business-rules-pesticide]].
+- `CHEMON50`, `CHEMON51` — valid pesticide combinations for `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
+- `CHEMON96`, `CHEMON97` — valid strategy combinations for `K005A`. See [[business-rules-cross-cutting]].
+- `CHEMON101` — `N422A` requires `K019A` plus `ST30A`. See [[business-rules-pesticide]].

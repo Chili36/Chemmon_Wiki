@@ -24,8 +24,9 @@ edition to make a fingerprint check pass.
    Record reviewer, date, scope, limitations and evidence for each finding;
    resolved findings need a resolution. Set `snapshot` to the reviewed result
    of `wiki_api.source_review.corpus_snapshot(root)`. A fresh hash is not a review.
-6. Run `python tools/source_review.py`, `python tools/health_check.py --json`,
-   and `pytest -q`. Inspect warnings; ordinary health success allows documented
+6. Run `python tools/source_review.py`, `python -m wiki_api.doctor`,
+   and `pytest -q`. If you changed which source tables a page covers, update
+   `docs/source-tables.json`. Inspect warnings; ordinary health success allows documented
    coverage gaps. CI also rejects stale/invalid/missing review records.
 7. Add a dated entry to `log.md`. Keep deployment separate from content review.
 
@@ -37,8 +38,8 @@ Open findings and missing active IDs are actionable backlog. Structural health
 checks cannot infer whether regulatory prose is complete or correct.
 
 The rule checker distinguishes missing active definitions, unexpected wiki IDs,
-inactive definitions and duplicates. CHEMON (source) maps to CHEMMON (wiki).
-The old duplicate CHEMMON03 was a wiki error, not an exception to uniqueness.
+inactive definitions and duplicates. Rule IDs use the source spelling CHEMON.
+The old duplicate CHEMON03 was a wiki error, not an exception to uniqueness.
 
 Keep evaluation labels and answer grading separate from ingestion. See
 [[EVALUATION]]. Never update a gold label solely because a model disagreed with it.

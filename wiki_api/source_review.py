@@ -94,7 +94,7 @@ def source_review_status(root: Path) -> dict:
 
 
 def normalize_rule_id(raw: str) -> str:
-    return re.sub(r'\s+', '', raw).replace('CHEMON', 'CHEMMON')
+    return re.sub(r'\s+', '', raw)
 
 
 def wiki_rule_definitions(root: Path) -> dict[str, list[str]]:
@@ -105,7 +105,7 @@ def wiki_rule_definitions(root: Path) -> dict[str, list[str]]:
             continue
         for raw in re.findall(r'^\|\s*([^|]+?)\s*\|', p.read_text(), re.M):
             raw = raw.replace('`', '').strip()
-            if re.fullmatch(r'(?:CHEMMON|GBR|LL_|PRE|USE)\w+(?:/\w+)*', raw):
+            if re.fullmatch(r'(?:CHEMON|GBR|LL_|PRE|USE)\w+(?:/\w+)*', raw):
                 # Old merged IDs are intentionally not rewritten: they must be flagged.
                 definitions.setdefault(normalize_rule_id(raw), []).append(p.name)
     return definitions
@@ -124,7 +124,7 @@ def rule_inventory_status(root: Path) -> dict:
                 raise ValueError('invalid rule source')
             if not isinstance(row.get('pdf_page'), int) or row['pdf_page'] < 1:
                 raise ValueError('invalid rule locator')
-            if row.get('status') not in {'active', 'inactive'} or row.get('family') not in {'GBR', 'CHEMMON', 'LL', 'PRE', 'USE'}:
+            if row.get('status') not in {'active', 'inactive'} or row.get('family') not in {'GBR', 'CHEMON', 'LL', 'PRE', 'USE'}:
                 raise ValueError('invalid rule status/family')
             key = row['wiki_id']
             if key in expected:

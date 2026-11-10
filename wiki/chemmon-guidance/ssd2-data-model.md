@@ -12,7 +12,8 @@ related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
-last_updated: "2026-10-05"
+  - "[[ssd2-element-reference]]"
+last_updated: "2026-11-10"
 ---
 
 # SSD2 Data Model
@@ -105,3 +106,4 @@ In addition to the SSD2 logical-model overview, this wiki maintains ChemMon-focu
 - [[ssd2-elements-analysis]] — analysis hub; see also [[ssd2-analysis-parameter-coding]] and [[ssd2-analysis-methods]]
 - [[ssd2-elements-result]] — result limits/values/types/expression/uncertainty
 - [[ssd2-elements-evaluation]] — evaluation hub; see also [[ssd2-evaluation-code]] and [[ssd2-evaluation-conclusions]]
+- [[ssd2-element-reference]] — every SSD2 element in one list (ChemMon Table 7: type, catalogue, mandatory status), with links to the page that explains it
