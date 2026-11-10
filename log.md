@@ -5,6 +5,15 @@ last_updated: "2026-10-21"
 
 # Log
 
+## 2026-10-24 — rd-bridge re-pinned to ad3e16f (refresh PR #55)
+
+rd-bridge `d399cea` -> `ad3e16f`: rd-bridge#33 (CLAUDE.md), #35 (faster PARAM
+shortlists, same output) and #36 (scheduled EU reference refresh). Only
+`manifest.json` changed; the residue map, interpretation guidance and
+DATA_SOURCES.md are byte-identical. Pass B: cited records and rules unchanged
+by construction; Source commits updated on the matrix and wording pages.
+Superseded refresh PR #52 closed.
+
 ## [2026-10-21] ingest | SSD2 element reference for column mapping
 
 - Added `docs/ssd2-elements.json` and the generated page
@@ -16,6 +25,241 @@ last_updated: "2026-10-21"
 - Verification: 93 rows by an independent parse, four by hand; names agree
   with the SSD2 2013 table; every page link names its element. `labInfo` and
   `resRefId` have no wiki page. 228 tests passed; health check clean.
+
+## 2026-10-18 — Shorter by-food page (#40)
+
+`pesticide-residue-definitions-by-food.md` cost about 13,400 tokens whenever it
+was selected, nearly half of a typical pesticide answer. It is now one line per
+pesticide, with a one-line Annex I legend (farmed-animal tissue codes explained
+by their numbering pattern instead of 40 entries) and three short instruction
+bullets plus a limits line. Every legal definition, scope and trusted code is
+kept verbatim (checked programmatically). 13,400 -> 10,800 tokens.
+
+The claim check pairs scopes with codes only in table rows, so a new test checks
+that pairing on the list. Live check: the abamectin question gave the same
+content; total tokens about 30k -> 27k.
+
+Lesson kept from the FoodEx2 wiki: shorter pages, but never by deleting
+knowledge. The remaining bulk is the definitions and codes themselves.
+
+## 2026-10-18 — Jev page selector evaluated against Haiku (#44)
+
+Ported the FoodEx2 wiki's Jev selector as an opt-in (`selector_model:
+jev-1.13.0`); Haiku 5.5 remains the default. Prompt adapted to ChemMon domains
+and frozen before the run. On all 16 eval cases × 3 repeats: recall 95.2% (Jev)
+vs 97.6% (Haiku), the difference being one selection in 48; no wrong-domain
+picks; Jev median 0.64 s vs 1.30 s; Jev about 45% more expensive per selection
+because its request is about four times larger. Details:
+`reports/selection-eval/2026-10-18/README.md`. Switching the default is a
+separate decision.
+
+## 2026-10-18 — By-food page trimmed to the named pesticides (#42)
+
+When the selector picks `pesticide-residue-definitions-by-food.md` and the
+question names pesticides on it, `/wiki/ask` and `/wiki/context-pack` now send
+the reading guide, those pesticides' lines and notes, the Annex I legend and
+the attribution instead of all 77 entries (abamectin: 21,700 -> 3,400
+characters). Questions naming none get the whole page. The page stays one
+catalogue entry; deterministic whole-word matching in `wiki_api/page_excerpt.py`.
+Live abamectin question: same answer, about 21.5k tokens total (30k this morning).
+
+## 2026-10-18 — Claude called through the native Anthropic SDK (#47)
+
+The selector and answerer reached Claude through Anthropic's OpenAI-compatible
+endpoint, which does not support prompt caching and ignores `response_format`.
+So the cache hit rate was zero (Anthropic emailed about a low org-wide hit
+rate), and the "verified" strict JSON of 2026-10-13 was requested, not enforced.
+Anthropic models now use the native Messages API: the selector sends its rules
+and page catalogue as a cached system prefix with the question after it, and
+both roles use `output_config` json_schema. Other providers keep the
+OpenAI-compatible path; Jev is unaffected. `anthropic` added to requirements.
+Costs count cache writes (1.25x) and reads (0.1x).
+
+Live: the second question read the 6,102-token catalogue from cache (36
+uncached selector tokens). Selection eval, 16 cases x 3: recall 97.6%, the same
+single miss as before; every selection read the cache. Median selection time
+1.9 s against 1.3 s on the old path; not yet explained.
+
+## 2026-10-18 — rd-bridge re-pinned to d399cea (refresh PR #49)
+
+First refresh PR opened by the scheduled workflow itself, now that Actions may
+create PRs. rd-bridge `b4e9020` -> `d399cea`: rd-bridge#29 (four matcher
+fixes) and #31 (Sonnet 5.5 model links for definitions the rules cannot
+link). 31 records changed PARAM links; no definition text changed. Pass B:
+the matrix and wording pages' cited records (residue_id 10, 210, 2058, 253, 7,
+3050, 284) are unchanged; Source commits updated. Generated pages regenerated
+by the workflow.
+
+## 2026-10-17 — rd-bridge re-pinned to b4e9020 (#30)
+
+Dataset ingest: rd-bridge `104448e` (map of 2026-10-11) -> `b4e9020` (map of
+2026-10-14), taken from the branch the scheduled refresh pushed on 2026-10-14.
+That run could not open its PR (GitHub Actions is not permitted to create pull
+requests in this repository), and later runs skipped silently because the
+branch existed. The workflow now retries PR creation when a branch has no PR,
+so the failure stays visible until the repository setting is changed.
+
+The ingest report shows no changes in the fields the wiki uses (names, scopes,
+definitions, PARAM codes, notes). New upstream fields arrive with the snapshot
+but are not yet used: `interpretation_evidence`, `model_guidance`,
+`catalogue_gap`, `expanded_from` (#31, #32). PARAM moves from 17.6 to 17.8.
+
+Patched `pesticide-residue-definition-by-matrix.md` (Source commit, snapshot
+date, PARAM version; residue_id 10, 210, 2058 re-checked). Regenerated
+`pesticide-residue-definitions-by-food.md`; the generator again shows the
+PARAM version, which it lost when rd-bridge began writing it in bold.
+
+Left out: nothing in the cited records changed, so no other page needed Pass B.
+
+## 2026-10-17 — Reading residue-definition wording (#31)
+
+Source: rd-bridge `b4e9020` `data/interpretation_guidance.json`, now pinned in
+the dataset snapshot (11 curated rules paraphrasing OECD 2009 and EU wording,
+each with a source and locator), with ChemMon 2026 pp. 59-61.
+
+Pass A: paramType rules already live on `ssd2-analysis-parameter-coding`; the
+missing concept was how to read the wording of a definition (which substances
+it names). One page created, two patched.
+
+- Created `pesticide-residue-definition-wording.md`: "expressed as" is the
+  calculation basis, not an extra analyte; sums, common-moiety methods,
+  salts/esters/conjugates, isomers, commodity variants, "where only" clauses,
+  aliases; chloridazon worked example (residue_id 253, the one case rd-bridge
+  has checked against the legal act); mapping to P005A/P004A/P002A with
+  ChemMon's aldicarb example; status of the readings.
+- Patched `ssd2-analysis-parameter-coding.md` and
+  `pesticide-residue-definition-by-matrix.md` (links).
+- Tooling: the ingest pins `interpretation_guidance.json`, validates it and
+  reports changed rules with the pages citing them. A new locator form
+  (`..., rules ID, ID`) is checked by the health check: rules must exist, and
+  no PARAM code may sit under a rule citation.
+
+Live check: a chloridazon-in-milk question selected the new page and answered
+P005A for chloridazon-desphenyl alone, with the correct codes.
+
+Left out: rd-bridge's model readings (`model_guidance`, `model_parts.json`)
+are not cited; the OECD text itself was not available to verify the
+paraphrases; rd-bridge's audit of 33 unresolved interpretation differences is
+not wiki content.
+
+## 2026-10-14 — OpenAI answer model works again (#26)
+
+The answerer sent `max_tokens`, which OpenAI's GPT-5 models reject. It now
+sends `max_completion_tokens` for the OpenAI provider and `max_tokens`
+elsewhere. With requests working, json_schema structured output was verified
+for OpenAI and enabled.
+
+Verification with `answerer_model: openai/gpt-5.4-mini` on four questions in
+ask and stream modes: every request succeeded with citations, and streamed text
+equalled the final answer. Answer quality was weaker than Sonnet 5.5: the
+glyphosate answer opened with "Yes" while saying it is not listed, and the
+animal-products list was incomplete. The default answerer stays Sonnet 5.5.
+
+## 2026-10-13 — Ingest rd-bridge dataset; add residue-definition-by-matrix page (#19)
+
+Source: rd-bridge `104448e98ccf47695b8360f46c9524a156195962` (residue map last
+changed 2026-10-11; 684 definitions, 77 vary by commodity, 83 exceptions),
+plus ChemMon 2026 pp. 60, 143 and 148.
+
+Added the first dataset source. `tools/ingest_rd_bridge.py` copies
+`residue_param_map.json` and `DATA_SOURCES.md` verbatim from a pinned commit
+into `chemmon_docs/datasets/rd-bridge/` with a checksum manifest, and reports
+changed definitions and citing pages on each new version. The health check now
+rejects hand-edited snapshots and dataset-cited codes that are missing from
+the cited records or paired with the wrong scope. Dataset files are part of
+the source-review fingerprint.
+
+Created `pesticide-residue-definition-by-matrix.md`: residue definitions can
+differ by Annex I commodity, so the pesticide `paramCode` follows the sampled
+matrix. Grounded in ChemMon p. 60 and LL_04/LL_04_b p. 143, with worked codes
+for acetamiprid, 2-phenylphenol and thiabendazole. Patched (links only)
+`ssd2-analysis-parameter-coding.md`, `pesticide-reporting.md`,
+`business-rules-legal-limits.md` and `legal-limits-database.md`. The existing
+paramCode page had no home for this concept, so a new page was justified.
+
+Left out: the full list of the 77 food-dependent substances (#20), MRL values,
+and historical (as-of-date) definitions, which rd-bridge does not hold yet.
+
+Verification: `/wiki/ask` answered acetamiprid in cow milk vs apples
+(`RF-00003326-PAR` vs `RF-0014-001-PPP`) and thiabendazole in honey
+(`RF-0416-001-PPP`) correctly from the new page. The first response's
+structured `citations` array was empty although the answer cited the page
+inline; the answerer was not changed.
+
+## 2026-10-13 — Generated list of pesticides whose residue definition changes by food (#20)
+
+Source: rd-bridge `104448e` (unchanged since #19) and a new snapshot of EU
+Annex I product codes and names from the EU Pesticides Database API (381
+products, retrieved 2026-10-13).
+
+Created `pesticide-residue-definitions-by-food.md`, rendered by
+`tools/rd_bridge_page.py`: all 77 of 684 definitions that differ by commodity
+(83 exceptions), one row per scope, with a completeness statement, snapshot
+date, Annex I legend, interpreted-footnote notes and attribution. Rows whose
+rd-bridge link is `near`, `ambiguous` or `none` show "no trustworthy PARAM
+code" (six rows). Page size about 27.6k characters.
+Patched (link only) `pesticide-residue-definition-by-matrix.md`.
+
+Ingest: `tools/ingest_rd_bridge.py` regenerates the page; the health check
+fails if it differs from the generator's output. Annex I code detection now
+requires backticks, after a compound number in a definition was misread.
+`.github/workflows/rd-bridge-refresh.yml` runs the ingest daily and opens a PR
+when rd-bridge changes.
+
+Verification: `/wiki/ask` with live models gave `RF-00007630-PAR` for
+thiabendazole in milk with the snapshot caveat, `RF-00003326-PAR` for
+acetamiprid in bovine meat, and "no, not listed" for glyphosate. The list
+question exceeded this branch's 2,000-token answer limit; with 8,192 (the
+Sonnet 5.5 branch default) it finished at 2,918 tokens and listed the
+pesticides correctly, apart from naming ethephon (a cereals exception) among
+animal rows without a code. A general programme question selected the same
+four pages before and after; the list page was not selected for it.
+
+## 2026-10-13 — Fix empty citations from Sonnet 5.5 answers
+
+Live `/wiki/ask` answers often had an empty `citations` list. Root cause:
+the answerer asked for JSON only, but Sonnet 5.5 usually answered in prose with
+inline `(page.md)` citations, and only sometimes appended a JSON copy. Without
+the copy (5 of 8 runs of one question) citations were lost; with it, the
+answer was generated twice, and streaming showed both.
+
+The prompt now asks for plain text with inline page citations, and
+`citations` is derived from those mentions. The API still keeps only pages
+supplied as evidence. JSON replies still parse.
+
+Verification: 8 of 8 runs of the failing question returned citations with no
+JSON copy; six questions checked in ask and stream modes, with streamed text
+equal to the final answer. 149 tests pass.
+
+## 2026-10-13 — Structured answer output for Anthropic
+
+The answerer now sends a strict `json_schema` response format (`answer`,
+`citations`) for the Anthropic provider, after verifying that the
+OpenAI-compatible endpoint enforces it with Sonnet 5.5 both with and without
+streaming. The answer keeps inline `(page.md)` citations; `citations` is the
+union of the listed and inline pages, filtered by the API to supplied evidence.
+Other providers keep the plain-text contract. OpenAI was not enabled: its
+answerer already fails on `main` because GPT-5 models reject `max_tokens`
+(issue filed).
+
+Verification: 6 of 6 raw outputs were pure JSON; six questions in ask and
+stream modes had citations, and the streamed text equalled the final answer.
+151 tests pass.
+
+## 2026-10-13 — Page selector: structured output and Haiku 5.5
+
+At the user's request the selector moves from `gpt-5.4-mini` to
+`claude-haiku-5-5`. Claude selectors could not run before: the selector sent
+`response_format: {"type": "json_object"}`, which Anthropic rejects (it
+accepts only `json_schema`). The selector now sends a strict `json_schema`
+(`page_names`) for Anthropic and OpenAI, both verified, and no format for
+other providers. This supersedes PR #17.
+
+Selection eval (live, `tools/evaluate.py --mode select`): Haiku 5.5 completed
+16 of 16 cases with required-page recall 1.0 on both splits and no
+wrong-domain selections; mean selection time about 2.4 s against about 1.0 s
+for gpt-5.4-mini, whose recall varied between runs (0.89 to 1.0). The 16
+cases are draft labels, so this is a sanity check, not a benchmark.
 
 ## [2026-10-05] correction and runtime | First FoodEx2 parity milestone
 
@@ -47,6 +291,104 @@ a whole-source ingest or completeness audit. Source coverage/fingerprints,
 an independently verified rule inventory, reviewed held-out answer evaluations,
 model comparisons and context-pack integration remain in later milestones.
 Other source/page-locator claims have not been comprehensively re-audited.
+
+## 2026-10-05 — Source review, evaluation tools and evidence export
+
+Implemented the FoodEx2 parity plan on `codex/chemmon-foodex2-parity`.
+Source-led review corrected GBR27–29, GBR2/101 scope, CHEMON attribution and
+merged IDs, missing CHEMON64, CHEMON37 severity, and LL preconditions/exceptions.
+The old claim of a duplicate CHEMMON03 in the PDF was wrong: it was a wiki error.
+The source inventory now compares five namespaces independently of wiki IDs;
+67 missing active non-biological GBR definitions remain explicit review backlog.
+A fresh local catalogue query corroborates the earlier sheep/goat F23 correction.
+
+Added scoped review manifests with source/corpus hashes, preparation/inventory
+commands, health/CI drift checks, maintenance and review navigation, 20 selection
+hints, and 16 draft evaluation cases with reserved held-out cases. Evaluation
+compares selectors or answers on frozen evidence and separates citation membership
+from human correctness/support grades. Saved dry runs made zero provider calls;
+human-reviewed labels and a live quality baseline remain pending.
+
+Added inspectable selection, review-status and bounded context-pack endpoints,
+provenance, non-citable policy and selection metadata, request-local model
+overrides, and unknown-cost handling. Offline tests cover the new boundaries.
+No source PDFs, credentials, model defaults or deployed services were changed.
+
+## 2026-10-05 — Complete applicable GBR coverage and qualify FoodEx2 examples
+
+Reviewed Table 9 pp. 98–112, including continuations, severity, comments and
+exceptions. Added 67 missing active non-biological rules across identifier/text/
+unit consistency, numeric-result constraints and date references. All 83
+applicable GBR IDs now have exactly one canonical definition; the two inactive
+and seven biological-only rows remain documented separately. GBR22/42 retain
+Warning severity. Expanded GBR3/4 descriptor lists and related identifiers,
+registered the new pages in the selector catalogue and viewer, and added a
+regression comparison against the independent source-ID inventory.
+
+Compared the A02RH examples in all three 2026 guides and queried the local MTX
+17.2 catalogue read-only. Recorded catalogue metadata, database hash, queries
+and returned term attributes. The wiki now gives a version-qualified example
+without duplicate F33 and adds sliced-state F03 only when known. The historical
+catalogue edition intended by ChemMon p. 39 remains unknown and is stated as
+a limitation. Corrected the omelette explicit-F33 label, syrup-type A1B1Y typo,
+leftover unsupported CHEMMON01 reference, overview VMPR facet exceptions and
+outdated continuous-rule-numbering claims.
+
+Closed SRC-007 and scoped SRC-009; recorded the additional corrections as
+SRC-011. SRC-008 (remaining CHEMON semantics) and SRC-010 (remaining PRE/USE
+field semantics) stay open. Refreshed the reviewed corpus fingerprints only
+after the content comparison. Verification: 114 tests pass; health has zero
+errors and two review warnings; all 84 pages are readable from the preview.
+Prior dry-run evaluation reports remain historical; no provider calls were made.
+
+## 2026-10-05 — Complete broader CHEMON and PRE/USE source comparison
+
+At the user's request, proceeded with broader source review while recording
+independent human review as unavailable and deferred. Read complete ChemMon
+Table 10 pp.113–143 and the PRE/USE introductions, field sections, examples and
+Tables1–3. Compared 100 active/four inactive CHEMON rows, 17 PRE and 29 USE rules,
+and all 49 parallel-model fields. Reconciled relevant ChemMon field prose and
+related rule summaries. Source PDFs remain unchanged.
+
+Corrected matrix-versus-parameter scope, Error/Warning labels, sampling-year
+inequality, decision-threshold exceptions, evaluation codes, programme/domain
+conditions, field spelling, additive parameter scope and MPL interpretation.
+Added source pages and scope to canonical CHEMON rows and severity/page columns
+to PRE/USE tables. Documented overall assessment and the pesticide counting
+exception. Preserved all identified source ambiguities instead of inventing
+executable predicates or live-catalogue aliases.
+
+Closed SRC-008/010; opened SRC-012/013/014 for ambiguous Boolean grouping,
+USE19 zero-level wording and CONCLUS hierarchy spelling. Saved independent
+source severity evidence and the complete field checklist in the broader-review
+report. Added regression checks for rule/field coverage, severity and page
+locators. Adjusted table wrapping so short labels and field names stay readable.
+
+Verification: 116 tests pass; health has zero errors and three documented source
+warnings; review/inventory fingerprints are current with no missing, duplicate,
+unexpected or inactive canonical rule IDs. Browser checks confirm rendered USE
+rule columns and source notes. No live model evaluation or human-approved
+benchmark is claimed; evaluation cases remain draft.
+
+## 2026-10-05 — Reassess source wording with a separate model reading
+
+The user requested a smarter-model reading of the three source issues. A
+separate GPT-6 Astra review at ultra reasoning read the original passages and
+surrounding context without first seeing the wiki conclusions. Parent and
+independent readings agree: the context supports explicit CHEMON grouping;
+USE19 is best read as requiring at least one positive typical/maximum level;
+and CONCLUS fa_ff/faff is a naming discrepancy for the same concept family.
+
+Resolved SRC-012/013/014 as wiki content findings, retaining source wording,
+reasoning, confidence and the distinction from live-validator behaviour. Added
+parenthesized triggers and the USE19 edge-case interpretation to the references.
+The original broader-review evidence remains unchanged; a separate reassessment
+report supersedes its finding dispositions. Human review remains unavailable.
+This is a source interpretation review, not a benchmark of the wiki's models.
+
+Verification: 116 tests pass, including review-status coverage corrected to
+allow a legitimately empty backlog. Health and source fingerprints are current
+with zero errors/warnings and all 14 findings resolved within their stated scope.
 
 ## [2026-04-24] maintenance | Split ChemMon background into narrow pages
 
@@ -765,6 +1107,15 @@ Aligned the repo with community best practices that have crystallized around Kar
 - No rename of `chemmon_docs/` → `raw/`.
 - No rule rewording, renumbering, or severity changes.
 
+## [2026-04-08] ingest | Full-document second pass (pages 21-156)
+
+- Expanded business-rules.md from 30 rules to 100+ rules across GBR, CHEMMON, and legal limit categories, organized into 9 subcategories.
+- Added baby-food-reporting.md covering VMPR exclusion (CHEMMON55/63), accepted domains, classification codes, and legal limit basis.
+- Expanded vmpr-reporting.md with feed/water coding, processed products with F33, wild game exclusions, insects as novel food, and baby food exclusion cross-reference.
+- Expanded contaminant-reporting.md with 9 new substance sections: dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, and nitrates.
+- Expanded food-additives-reporting.md with result reporting rules, 4 new worked examples, restriction/exception coding, and conclusion reporting.
+- Updated index.md with revised page descriptions and the new baby food page.
+
 ## [2026-04-07] setup | Initial ChemMon wiki repo
 
 - Created the ChemMon wiki repo following the LLM wiki pattern.
@@ -785,353 +1136,3 @@ Aligned the repo with community best practices that have crystallized around Kar
 - Moved copper-specific F20 requirements from contaminant-reporting.md to a new pesticide-reporting.md page, since CHEMMON90_a/b are PPP-domain rules.
 - Added pesticide-reporting.md covering legal references, sampling strategies, copper facet codes, and PPP-domain business rules.
 - Added page number citations to contaminant-reporting.md source comments.
-
-## [2026-04-08] ingest | Full-document second pass (pages 21-156)
-
-- Expanded business-rules.md from 30 rules to 100+ rules across GBR, CHEMMON, and legal limit categories, organized into 9 subcategories.
-- Added baby-food-reporting.md covering VMPR exclusion (CHEMMON55/63), accepted domains, classification codes, and legal limit basis.
-- Expanded vmpr-reporting.md with feed/water coding, processed products with F33, wild game exclusions, insects as novel food, and baby food exclusion cross-reference.
-- Expanded contaminant-reporting.md with 9 new substance sections: dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, and nitrates.
-- Expanded food-additives-reporting.md with result reporting rules, 4 new worked examples, restriction/exception coding, and conclusion reporting.
-- Updated index.md with revised page descriptions and the new baby food page.
-
-## 2026-10-05 — Source review, evaluation tools and evidence export
-
-Implemented the FoodEx2 parity plan on `codex/chemmon-foodex2-parity`.
-Source-led review corrected GBR27–29, GBR2/101 scope, CHEMON attribution and
-merged IDs, missing CHEMON64, CHEMON37 severity, and LL preconditions/exceptions.
-The old claim of a duplicate CHEMMON03 in the PDF was wrong: it was a wiki error.
-The source inventory now compares five namespaces independently of wiki IDs;
-67 missing active non-biological GBR definitions remain explicit review backlog.
-A fresh local catalogue query corroborates the earlier sheep/goat F23 correction.
-
-Added scoped review manifests with source/corpus hashes, preparation/inventory
-commands, health/CI drift checks, maintenance and review navigation, 20 selection
-hints, and 16 draft evaluation cases with reserved held-out cases. Evaluation
-compares selectors or answers on frozen evidence and separates citation membership
-from human correctness/support grades. Saved dry runs made zero provider calls;
-human-reviewed labels and a live quality baseline remain pending.
-
-Added inspectable selection, review-status and bounded context-pack endpoints,
-provenance, non-citable policy and selection metadata, request-local model
-overrides, and unknown-cost handling. Offline tests cover the new boundaries.
-No source PDFs, credentials, model defaults or deployed services were changed.
-
-## 2026-10-05 — Complete applicable GBR coverage and qualify FoodEx2 examples
-
-Reviewed Table 9 pp. 98–112, including continuations, severity, comments and
-exceptions. Added 67 missing active non-biological rules across identifier/text/
-unit consistency, numeric-result constraints and date references. All 83
-applicable GBR IDs now have exactly one canonical definition; the two inactive
-and seven biological-only rows remain documented separately. GBR22/42 retain
-Warning severity. Expanded GBR3/4 descriptor lists and related identifiers,
-registered the new pages in the selector catalogue and viewer, and added a
-regression comparison against the independent source-ID inventory.
-
-Compared the A02RH examples in all three 2026 guides and queried the local MTX
-17.2 catalogue read-only. Recorded catalogue metadata, database hash, queries
-and returned term attributes. The wiki now gives a version-qualified example
-without duplicate F33 and adds sliced-state F03 only when known. The historical
-catalogue edition intended by ChemMon p. 39 remains unknown and is stated as
-a limitation. Corrected the omelette explicit-F33 label, syrup-type A1B1Y typo,
-leftover unsupported CHEMMON01 reference, overview VMPR facet exceptions and
-outdated continuous-rule-numbering claims.
-
-Closed SRC-007 and scoped SRC-009; recorded the additional corrections as
-SRC-011. SRC-008 (remaining CHEMON semantics) and SRC-010 (remaining PRE/USE
-field semantics) stay open. Refreshed the reviewed corpus fingerprints only
-after the content comparison. Verification: 114 tests pass; health has zero
-errors and two review warnings; all 84 pages are readable from the preview.
-Prior dry-run evaluation reports remain historical; no provider calls were made.
-
-## 2026-10-05 — Complete broader CHEMON and PRE/USE source comparison
-
-At the user's request, proceeded with broader source review while recording
-independent human review as unavailable and deferred. Read complete ChemMon
-Table 10 pp.113–143 and the PRE/USE introductions, field sections, examples and
-Tables1–3. Compared 100 active/four inactive CHEMON rows, 17 PRE and 29 USE rules,
-and all 49 parallel-model fields. Reconciled relevant ChemMon field prose and
-related rule summaries. Source PDFs remain unchanged.
-
-Corrected matrix-versus-parameter scope, Error/Warning labels, sampling-year
-inequality, decision-threshold exceptions, evaluation codes, programme/domain
-conditions, field spelling, additive parameter scope and MPL interpretation.
-Added source pages and scope to canonical CHEMON rows and severity/page columns
-to PRE/USE tables. Documented overall assessment and the pesticide counting
-exception. Preserved all identified source ambiguities instead of inventing
-executable predicates or live-catalogue aliases.
-
-Closed SRC-008/010; opened SRC-012/013/014 for ambiguous Boolean grouping,
-USE19 zero-level wording and CONCLUS hierarchy spelling. Saved independent
-source severity evidence and the complete field checklist in the broader-review
-report. Added regression checks for rule/field coverage, severity and page
-locators. Adjusted table wrapping so short labels and field names stay readable.
-
-Verification: 116 tests pass; health has zero errors and three documented source
-warnings; review/inventory fingerprints are current with no missing, duplicate,
-unexpected or inactive canonical rule IDs. Browser checks confirm rendered USE
-rule columns and source notes. No live model evaluation or human-approved
-benchmark is claimed; evaluation cases remain draft.
-
-## 2026-10-05 — Reassess source wording with a separate model reading
-
-The user requested a smarter-model reading of the three source issues. A
-separate GPT-6 Astra review at ultra reasoning read the original passages and
-surrounding context without first seeing the wiki conclusions. Parent and
-independent readings agree: the context supports explicit CHEMON grouping;
-USE19 is best read as requiring at least one positive typical/maximum level;
-and CONCLUS fa_ff/faff is a naming discrepancy for the same concept family.
-
-Resolved SRC-012/013/014 as wiki content findings, retaining source wording,
-reasoning, confidence and the distinction from live-validator behaviour. Added
-parenthesized triggers and the USE19 edge-case interpretation to the references.
-The original broader-review evidence remains unchanged; a separate reassessment
-report supersedes its finding dispositions. Human review remains unavailable.
-This is a source interpretation review, not a benchmark of the wiki's models.
-
-Verification: 116 tests pass, including review-status coverage corrected to
-allow a legitimately empty backlog. Health and source fingerprints are current
-with zero errors/warnings and all 14 findings resolved within their stated scope.
-
-## 2026-10-13 — Ingest rd-bridge dataset; add residue-definition-by-matrix page (#19)
-
-Source: rd-bridge `104448e98ccf47695b8360f46c9524a156195962` (residue map last
-changed 2026-10-11; 684 definitions, 77 vary by commodity, 83 exceptions),
-plus ChemMon 2026 pp. 60, 143 and 148.
-
-Added the first dataset source. `tools/ingest_rd_bridge.py` copies
-`residue_param_map.json` and `DATA_SOURCES.md` verbatim from a pinned commit
-into `chemmon_docs/datasets/rd-bridge/` with a checksum manifest, and reports
-changed definitions and citing pages on each new version. The health check now
-rejects hand-edited snapshots and dataset-cited codes that are missing from
-the cited records or paired with the wrong scope. Dataset files are part of
-the source-review fingerprint.
-
-Created `pesticide-residue-definition-by-matrix.md`: residue definitions can
-differ by Annex I commodity, so the pesticide `paramCode` follows the sampled
-matrix. Grounded in ChemMon p. 60 and LL_04/LL_04_b p. 143, with worked codes
-for acetamiprid, 2-phenylphenol and thiabendazole. Patched (links only)
-`ssd2-analysis-parameter-coding.md`, `pesticide-reporting.md`,
-`business-rules-legal-limits.md` and `legal-limits-database.md`. The existing
-paramCode page had no home for this concept, so a new page was justified.
-
-Left out: the full list of the 77 food-dependent substances (#20), MRL values,
-and historical (as-of-date) definitions, which rd-bridge does not hold yet.
-
-Verification: `/wiki/ask` answered acetamiprid in cow milk vs apples
-(`RF-00003326-PAR` vs `RF-0014-001-PPP`) and thiabendazole in honey
-(`RF-0416-001-PPP`) correctly from the new page. The first response's
-structured `citations` array was empty although the answer cited the page
-inline; the answerer was not changed.
-
-## 2026-10-13 — Generated list of pesticides whose residue definition changes by food (#20)
-
-Source: rd-bridge `104448e` (unchanged since #19) and a new snapshot of EU
-Annex I product codes and names from the EU Pesticides Database API (381
-products, retrieved 2026-10-13).
-
-Created `pesticide-residue-definitions-by-food.md`, rendered by
-`tools/rd_bridge_page.py`: all 77 of 684 definitions that differ by commodity
-(83 exceptions), one row per scope, with a completeness statement, snapshot
-date, Annex I legend, interpreted-footnote notes and attribution. Rows whose
-rd-bridge link is `near`, `ambiguous` or `none` show "no trustworthy PARAM
-code" (six rows). Page size about 27.6k characters.
-Patched (link only) `pesticide-residue-definition-by-matrix.md`.
-
-Ingest: `tools/ingest_rd_bridge.py` regenerates the page; the health check
-fails if it differs from the generator's output. Annex I code detection now
-requires backticks, after a compound number in a definition was misread.
-`.github/workflows/rd-bridge-refresh.yml` runs the ingest daily and opens a PR
-when rd-bridge changes.
-
-Verification: `/wiki/ask` with live models gave `RF-00007630-PAR` for
-thiabendazole in milk with the snapshot caveat, `RF-00003326-PAR` for
-acetamiprid in bovine meat, and "no, not listed" for glyphosate. The list
-question exceeded this branch's 2,000-token answer limit; with 8,192 (the
-Sonnet 5.5 branch default) it finished at 2,918 tokens and listed the
-pesticides correctly, apart from naming ethephon (a cereals exception) among
-animal rows without a code. A general programme question selected the same
-four pages before and after; the list page was not selected for it.
-
-## 2026-10-13 — Fix empty citations from Sonnet 5.5 answers
-
-Live `/wiki/ask` answers often had an empty `citations` list. Root cause:
-the answerer asked for JSON only, but Sonnet 5.5 usually answered in prose with
-inline `(page.md)` citations, and only sometimes appended a JSON copy. Without
-the copy (5 of 8 runs of one question) citations were lost; with it, the
-answer was generated twice, and streaming showed both.
-
-The prompt now asks for plain text with inline page citations, and
-`citations` is derived from those mentions. The API still keeps only pages
-supplied as evidence. JSON replies still parse.
-
-Verification: 8 of 8 runs of the failing question returned citations with no
-JSON copy; six questions checked in ask and stream modes, with streamed text
-equal to the final answer. 149 tests pass.
-
-## 2026-10-13 — Structured answer output for Anthropic
-
-The answerer now sends a strict `json_schema` response format (`answer`,
-`citations`) for the Anthropic provider, after verifying that the
-OpenAI-compatible endpoint enforces it with Sonnet 5.5 both with and without
-streaming. The answer keeps inline `(page.md)` citations; `citations` is the
-union of the listed and inline pages, filtered by the API to supplied evidence.
-Other providers keep the plain-text contract. OpenAI was not enabled: its
-answerer already fails on `main` because GPT-5 models reject `max_tokens`
-(issue filed).
-
-Verification: 6 of 6 raw outputs were pure JSON; six questions in ask and
-stream modes had citations, and the streamed text equalled the final answer.
-151 tests pass.
-
-## 2026-10-13 — Page selector: structured output and Haiku 5.5
-
-At the user's request the selector moves from `gpt-5.4-mini` to
-`claude-haiku-5-5`. Claude selectors could not run before: the selector sent
-`response_format: {"type": "json_object"}`, which Anthropic rejects (it
-accepts only `json_schema`). The selector now sends a strict `json_schema`
-(`page_names`) for Anthropic and OpenAI, both verified, and no format for
-other providers. This supersedes PR #17.
-
-Selection eval (live, `tools/evaluate.py --mode select`): Haiku 5.5 completed
-16 of 16 cases with required-page recall 1.0 on both splits and no
-wrong-domain selections; mean selection time about 2.4 s against about 1.0 s
-for gpt-5.4-mini, whose recall varied between runs (0.89 to 1.0). The 16
-cases are draft labels, so this is a sanity check, not a benchmark.
-
-## 2026-10-14 — OpenAI answer model works again (#26)
-
-The answerer sent `max_tokens`, which OpenAI's GPT-5 models reject. It now
-sends `max_completion_tokens` for the OpenAI provider and `max_tokens`
-elsewhere. With requests working, json_schema structured output was verified
-for OpenAI and enabled.
-
-Verification with `answerer_model: openai/gpt-5.4-mini` on four questions in
-ask and stream modes: every request succeeded with citations, and streamed text
-equalled the final answer. Answer quality was weaker than Sonnet 5.5: the
-glyphosate answer opened with "Yes" while saying it is not listed, and the
-animal-products list was incomplete. The default answerer stays Sonnet 5.5.
-
-## 2026-10-17 — rd-bridge re-pinned to b4e9020 (#30)
-
-Dataset ingest: rd-bridge `104448e` (map of 2026-10-11) -> `b4e9020` (map of
-2026-10-14), taken from the branch the scheduled refresh pushed on 2026-10-14.
-That run could not open its PR (GitHub Actions is not permitted to create pull
-requests in this repository), and later runs skipped silently because the
-branch existed. The workflow now retries PR creation when a branch has no PR,
-so the failure stays visible until the repository setting is changed.
-
-The ingest report shows no changes in the fields the wiki uses (names, scopes,
-definitions, PARAM codes, notes). New upstream fields arrive with the snapshot
-but are not yet used: `interpretation_evidence`, `model_guidance`,
-`catalogue_gap`, `expanded_from` (#31, #32). PARAM moves from 17.6 to 17.8.
-
-Patched `pesticide-residue-definition-by-matrix.md` (Source commit, snapshot
-date, PARAM version; residue_id 10, 210, 2058 re-checked). Regenerated
-`pesticide-residue-definitions-by-food.md`; the generator again shows the
-PARAM version, which it lost when rd-bridge began writing it in bold.
-
-Left out: nothing in the cited records changed, so no other page needed Pass B.
-
-## 2026-10-17 — Reading residue-definition wording (#31)
-
-Source: rd-bridge `b4e9020` `data/interpretation_guidance.json`, now pinned in
-the dataset snapshot (11 curated rules paraphrasing OECD 2009 and EU wording,
-each with a source and locator), with ChemMon 2026 pp. 59-61.
-
-Pass A: paramType rules already live on `ssd2-analysis-parameter-coding`; the
-missing concept was how to read the wording of a definition (which substances
-it names). One page created, two patched.
-
-- Created `pesticide-residue-definition-wording.md`: "expressed as" is the
-  calculation basis, not an extra analyte; sums, common-moiety methods,
-  salts/esters/conjugates, isomers, commodity variants, "where only" clauses,
-  aliases; chloridazon worked example (residue_id 253, the one case rd-bridge
-  has checked against the legal act); mapping to P005A/P004A/P002A with
-  ChemMon's aldicarb example; status of the readings.
-- Patched `ssd2-analysis-parameter-coding.md` and
-  `pesticide-residue-definition-by-matrix.md` (links).
-- Tooling: the ingest pins `interpretation_guidance.json`, validates it and
-  reports changed rules with the pages citing them. A new locator form
-  (`..., rules ID, ID`) is checked by the health check: rules must exist, and
-  no PARAM code may sit under a rule citation.
-
-Live check: a chloridazon-in-milk question selected the new page and answered
-P005A for chloridazon-desphenyl alone, with the correct codes.
-
-Left out: rd-bridge's model readings (`model_guidance`, `model_parts.json`)
-are not cited; the OECD text itself was not available to verify the
-paraphrases; rd-bridge's audit of 33 unresolved interpretation differences is
-not wiki content.
-
-## 2026-10-18 — Shorter by-food page (#40)
-
-`pesticide-residue-definitions-by-food.md` cost about 13,400 tokens whenever it
-was selected, nearly half of a typical pesticide answer. It is now one line per
-pesticide, with a one-line Annex I legend (farmed-animal tissue codes explained
-by their numbering pattern instead of 40 entries) and three short instruction
-bullets plus a limits line. Every legal definition, scope and trusted code is
-kept verbatim (checked programmatically). 13,400 -> 10,800 tokens.
-
-The claim check pairs scopes with codes only in table rows, so a new test checks
-that pairing on the list. Live check: the abamectin question gave the same
-content; total tokens about 30k -> 27k.
-
-Lesson kept from the FoodEx2 wiki: shorter pages, but never by deleting
-knowledge. The remaining bulk is the definitions and codes themselves.
-## 2026-10-18 — Jev page selector evaluated against Haiku (#44)
-
-Ported the FoodEx2 wiki's Jev selector as an opt-in (`selector_model:
-jev-1.13.0`); Haiku 5.5 remains the default. Prompt adapted to ChemMon domains
-and frozen before the run. On all 16 eval cases × 3 repeats: recall 95.2% (Jev)
-vs 97.6% (Haiku), the difference being one selection in 48; no wrong-domain
-picks; Jev median 0.64 s vs 1.30 s; Jev about 45% more expensive per selection
-because its request is about four times larger. Details:
-`reports/selection-eval/2026-10-18/README.md`. Switching the default is a
-separate decision.
-
-## 2026-10-18 — By-food page trimmed to the named pesticides (#42)
-
-When the selector picks `pesticide-residue-definitions-by-food.md` and the
-question names pesticides on it, `/wiki/ask` and `/wiki/context-pack` now send
-the reading guide, those pesticides' lines and notes, the Annex I legend and
-the attribution instead of all 77 entries (abamectin: 21,700 -> 3,400
-characters). Questions naming none get the whole page. The page stays one
-catalogue entry; deterministic whole-word matching in `wiki_api/page_excerpt.py`.
-Live abamectin question: same answer, about 21.5k tokens total (30k this morning).
-
-## 2026-10-18 — Claude called through the native Anthropic SDK (#47)
-
-The selector and answerer reached Claude through Anthropic's OpenAI-compatible
-endpoint, which does not support prompt caching and ignores `response_format`.
-So the cache hit rate was zero (Anthropic emailed about a low org-wide hit
-rate), and the "verified" strict JSON of 2026-10-13 was requested, not enforced.
-Anthropic models now use the native Messages API: the selector sends its rules
-and page catalogue as a cached system prefix with the question after it, and
-both roles use `output_config` json_schema. Other providers keep the
-OpenAI-compatible path; Jev is unaffected. `anthropic` added to requirements.
-Costs count cache writes (1.25x) and reads (0.1x).
-
-Live: the second question read the 6,102-token catalogue from cache (36
-uncached selector tokens). Selection eval, 16 cases x 3: recall 97.6%, the same
-single miss as before; every selection read the cache. Median selection time
-1.9 s against 1.3 s on the old path; not yet explained.
-
-## 2026-10-18 — rd-bridge re-pinned to d399cea (refresh PR #49)
-
-First refresh PR opened by the scheduled workflow itself, now that Actions may
-create PRs. rd-bridge `b4e9020` -> `d399cea`: rd-bridge#29 (four matcher
-fixes) and #31 (Sonnet 5.5 model links for definitions the rules cannot
-link). 31 records changed PARAM links; no definition text changed. Pass B:
-the matrix and wording pages' cited records (residue_id 10, 210, 2058, 253, 7,
-3050, 284) are unchanged; Source commits updated. Generated pages regenerated
-by the workflow.
-
-## 2026-10-24 — rd-bridge re-pinned to ad3e16f (refresh PR #55)
-
-rd-bridge `d399cea` -> `ad3e16f`: rd-bridge#33 (CLAUDE.md), #35 (faster PARAM
-shortlists, same output) and #36 (scheduled EU reference refresh). Only
-`manifest.json` changed; the residue map, interpretation guidance and
-DATA_SOURCES.md are byte-identical. Pass B: cited records and rules unchanged
-by construction; Source commits updated on the matrix and wording pages.
-Superseded refresh PR #52 closed.

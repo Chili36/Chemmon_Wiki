@@ -1,0 +1,336 @@
+{
+  "version": 1,
+  "purpose": "How each table in the source PDFs is covered by the wiki. The wiki doctor rejects a page whose source_pages cites a table missing here, and checks that every must_contain string is still on the listed pages. Statuses: transcribed (every row carried over), generated (rendered from a data file and checked by the health check), rule-inventory (rule IDs checked against docs/rule-inventory.json), summarised (described, not carried over row by row; reason required), partial or not-covered (known gap; issue required, reported as a warning).",
+  "sources": {
+    "chemmon": {
+      "file": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "aliases": [
+        "ChemMon"
+      ]
+    },
+    "no-presence": {
+      "file": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf",
+      "aliases": [
+        "No-presence"
+      ]
+    },
+    "use-levels": {
+      "file": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf",
+      "aliases": [
+        "Use-levels"
+      ]
+    },
+    "ssd2-2013": {
+      "file": "chemmon_docs/EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf",
+      "aliases": [
+        "SSD2 2013"
+      ]
+    }
+  },
+  "tables": [
+    {
+      "source": "chemmon",
+      "table": 1,
+      "title": "Main changes introduced with the 2026 Chemical Monitoring data collection",
+      "pdf_pages": "11-16",
+      "status": "summarised",
+      "pages": [
+        "chemmon-change-management.md"
+      ],
+      "reason": "Change log grouped into categories; the rule changes themselves are on business-rules-2026-changes and the element pages."
+    },
+    {
+      "source": "chemmon",
+      "table": 2,
+      "title": "Combinations of progLegalRef, progType and sampStrategy",
+      "pdf_pages": "23-24",
+      "status": "transcribed",
+      "pages": [
+        "ssd2-programme-valid-combinations.md"
+      ],
+      "must_contain": [
+        "| `N027A` (Reg. 396/2005; Reg. (EU) 2024/989) | Pesticide residues: EU-coordinated programme | — | ST10A, ST20A | ST10A, ST20A | — | — |",
+        "| `N027A` (Reg. 396/2005; Reg. 2021/1355) | Pesticide residues: national programmes | ST10A, ST20A, ST30A | — | ST10A, ST20A | — | — |",
+        "| `N027A` (Reg. 396/2005; Reg. 2021/1355) | Pesticide residues: national programmes, control at borders (animal and non-animal origin) | — | — | — | — | ST10A, ST20A, ST30A |",
+        "| `N028A` / `N318A` (printed \"Regulation 2016/125/EC\", Reg. 2016/128 and Dir. 2006/125/EC) | Pesticide residues: baby food | ST10A, ST20A, ST30A | ST10A, ST20A | ST10A, ST20A | — | ST10A, ST20A, ST30A |",
+        "| `N371A` (Reg. 2022/1646 and 2022/1644) | VMPR Plan 1 | ST20A | — | ST20A | — | — |",
+        "| `N371A` (Reg. 2022/1646 and 2022/1644) | VMPR Plan 2 | ST10A | — | ST10A | — | — |",
+        "| `N371A` (Reg. 2022/1646 and 2022/1644) | VMPR Plan 3 | — | — | — | — | ST20A |",
+        "| `N371A` (Reg. 2022/1646 and 2022/1644) | VMPR Other control activities | ST30A, ST90A | — | ST30A, ST90A | — | ST30A, ST90A |",
+        "| `N129A`, `N379A`, `N323A`, etc. (Reg. 178/2002, 2023/915, (EU) 625/2017) | Contaminants | ST10A, ST20A, ST30A | ST10A, ST20A | ST10A, ST20A | — | ST10A, ST20A, ST30A |",
+        "| `N375A` (Reg. 2022/932 and 2022/931) | Contaminants: control plan for food placed on the Union market | ST10A, ST20A, ST30A | — | ST10A, ST20A | — | — |",
+        "| `N375A` (Reg. 2022/932 and 2022/931) | Contaminants: control plan for food of animal origin entering the Union | — | — | — | — | ST20A, ST30A |",
+        "| `N112A` (Reg. 1333/2008) | Food additives | ST10A, ST20A, ST30A | ST10A, ST20A | ST10A, ST20A | — | ST10A, ST20A, ST30A |",
+        "| `N113A` (Reg. 1334/2008) | Food flavourings | ST10A, ST20A, ST30A | ST10A, ST20A | ST10A, ST20A | — | ST10A, ST20A, ST30A |",
+        "| `N317A` (Reg. 2019/1793) | Increased control on imported food of non-animal origin | — | — | — | ST30A | — |",
+        "| `N422A` (Reg. 2019/1873) | Increased control on imported food of animal origin | — | — | — | ST30A | — |"
+      ],
+      "note": "Grid transcribed cell by cell on 2026-11-10 (#63); before that the page held only the plan flags and examples."
+    },
+    {
+      "source": "chemmon",
+      "table": 3,
+      "title": "Reportable unspecific country codes for sampCountry and origCountry",
+      "pdf_pages": "31",
+      "status": "transcribed",
+      "pages": [
+        "ssd2-sampling-country.md"
+      ],
+      "must_contain": [
+        "| EEA (European Economic Area) | `AA` | Excluded | Unknown (`XX`) |",
+        "| Non-EEA | `XC` |",
+        "| Non-domestic, import | `XD` |",
+        "| Non-European Union | `XE` |",
+        "| Unknown | `XX` |"
+      ]
+    },
+    {
+      "source": "chemmon",
+      "table": 4,
+      "title": "FoodEx2 main facet descriptions and their relevance for each data domain",
+      "pdf_pages": "43-51",
+      "status": "transcribed",
+      "pages": [
+        "foodex2-facets.md",
+        "foodex2-facets-source-origin.md",
+        "foodex2-facets-state-process.md",
+        "foodex2-facets-packaging-consumer.md",
+        "foodex2-facets-legislative-descriptive.md"
+      ],
+      "must_contain": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F06",
+        "F07",
+        "F10",
+        "F11",
+        "F17",
+        "F18",
+        "F19",
+        "F20",
+        "F21",
+        "F23",
+        "F27",
+        "F28",
+        "F31",
+        "F32",
+        "F33"
+      ],
+      "note": "Rows split across the four facet pages by facet group."
+    },
+    {
+      "source": "chemmon",
+      "table": 5,
+      "title": "paramType codes and correspondent interpretation",
+      "pdf_pages": "60",
+      "status": "transcribed",
+      "pages": [
+        "pesticide-residue-definition-wording.md",
+        "ssd2-analysis-parameter-coding.md"
+      ],
+      "must_contain": [
+        "P002A",
+        "P004A",
+        "P005A",
+        "P001A",
+        "P003A"
+      ]
+    },
+    {
+      "source": "chemmon",
+      "table": 6,
+      "title": "List of analysis hierarchies of PARAM catalogue and associated domain",
+      "pdf_pages": "63",
+      "status": "transcribed",
+      "pages": [
+        "ssd2-analysis-parameter-coding.md"
+      ],
+      "must_contain": [
+        "vmprParam",
+        "pestParam",
+        "chemAnalysis",
+        "addAnalysis",
+        "flavAnalysis"
+      ]
+    },
+    {
+      "source": "chemmon",
+      "table": 7,
+      "title": "Full list of SSD2 elements, mapping to SSD1 and mandatory SSD2 elements",
+      "pdf_pages": "80-84",
+      "status": "generated",
+      "pages": [
+        "ssd2-element-reference.md"
+      ],
+      "data": "docs/ssd2-elements.json"
+    },
+    {
+      "source": "chemmon",
+      "table": 8,
+      "title": "Specific reporting requirements for certain contaminants, food additives and food flavourings",
+      "pdf_pages": "86-96",
+      "status": "summarised",
+      "pages": [
+        "contaminant-reporting.md"
+      ],
+      "reason": "Requirements paraphrased per substance group; rows have not been compared cell by cell.",
+      "must_contain": [
+        "acrylamide",
+        "mycotoxin",
+        "dioxin",
+        "arsenic",
+        "cadmium",
+        "mercury",
+        "chlorate",
+        "bisphenol",
+        "furan",
+        "nitrate",
+        "MCPD",
+        "mineral oil"
+      ]
+    },
+    {
+      "source": "chemmon",
+      "table": 9,
+      "title": "Full list of general business rules (GBR)",
+      "pdf_pages": "98-112",
+      "status": "rule-inventory",
+      "pages": [
+        "business-rules-gbr.md",
+        "business-rules-gbr-consistency.md",
+        "business-rules-gbr-results.md",
+        "business-rules-gbr-dates.md",
+        "ssd2-result-units-and-limits.md"
+      ]
+    },
+    {
+      "source": "chemmon",
+      "table": 10,
+      "title": "Full list of chemical monitoring business rules",
+      "pdf_pages": "113-143",
+      "status": "rule-inventory",
+      "pages": [
+        "business-rules-cross-cutting.md",
+        "business-rules-pesticide.md",
+        "business-rules-vmpr.md",
+        "business-rules-contaminant.md",
+        "business-rules-additives.md",
+        "business-rules-baby-food.md",
+        "business-rules-legal-limits.md",
+        "ssd2-sampling-country.md"
+      ]
+    },
+    {
+      "source": "chemmon",
+      "table": 11,
+      "title": "Full list of catalogues and the hierarchies in use for chemical monitoring reporting",
+      "pdf_pages": "144-145",
+      "status": "partial",
+      "pages": [
+        "controlled-terminology-catalogues.md"
+      ],
+      "issue": "#65",
+      "covered": "LEGREF, PARAM, MTX, UNIT, SAMPSTR, VALTYP, ADDFOOD (plus CONCLUS, FUNC, EXPRRES, YESNO from the FA/FF guides)",
+      "missing": "ACTION, ANLYMD, ANLYREFMD, ANLYTYP, COUNTRY, FAREA, LABACC, LMTTYP, MDACC, NUTS, PARAMTYP, POSNEG, PRGTYP, REFTM, RESEVAL, SAMPLR, SAMPMD, SAMPNT, SAMPUNTYP and their hierarchies"
+    },
+    {
+      "source": "chemmon",
+      "table": 12,
+      "title": "List of LEGREF values for the progLegalRef data element and domain attributes",
+      "pdf_pages": "146-149",
+      "status": "not-covered",
+      "pages": [
+        "controlled-terminology-catalogues.md"
+      ],
+      "issue": "#65",
+      "missing": "The LEGREF codes and their VMPR/PEST/OCC/ADD/FLAV attributes; the page holds only the surrounding guidance text."
+    },
+    {
+      "source": "chemmon",
+      "table": 13,
+      "title": "Summary of reports",
+      "pdf_pages": "150-151",
+      "status": "transcribed",
+      "pages": [
+        "chemmon-reports.md"
+      ],
+      "must_contain": [
+        "is_occ",
+        "is_add",
+        "is_flav",
+        "is_vmpr"
+      ]
+    },
+    {
+      "source": "no-presence",
+      "table": 1,
+      "title": "Data elements of the no-presence data model",
+      "status": "transcribed",
+      "pages": [
+        "fa-ff-no-presence-data-model.md"
+      ],
+      "verified_by": "tests/test_source_review.py::test_reviewed_parallel_field_inventory_has_no_omitted_names"
+    },
+    {
+      "source": "no-presence",
+      "table": 2,
+      "title": "List of food additive classes",
+      "status": "summarised",
+      "pages": [
+        "fa-ff-no-presence-data-model.md"
+      ],
+      "reason": "The classes are the FUNC catalogue; the page points to it instead of copying 33 class names."
+    },
+    {
+      "source": "no-presence",
+      "table": 3,
+      "title": "Business rules applicable",
+      "status": "rule-inventory",
+      "pages": [
+        "fa-ff-no-presence-data-model.md"
+      ]
+    },
+    {
+      "source": "use-levels",
+      "table": 1,
+      "title": "Data elements of the use levels data model",
+      "status": "transcribed",
+      "pages": [
+        "fa-ff-use-levels-data-model.md"
+      ],
+      "verified_by": "tests/test_source_review.py::test_reviewed_parallel_field_inventory_has_no_omitted_names"
+    },
+    {
+      "source": "use-levels",
+      "table": 2,
+      "title": "List of food additive classes",
+      "status": "summarised",
+      "pages": [
+        "fa-ff-use-levels-data-model.md"
+      ],
+      "reason": "The classes are the FUNC catalogue; the page points to it instead of copying 33 class names."
+    },
+    {
+      "source": "use-levels",
+      "table": 3,
+      "title": "Business rules applicable",
+      "status": "rule-inventory",
+      "pages": [
+        "fa-ff-use-levels-data-model.md"
+      ]
+    },
+    {
+      "source": "ssd2-2013",
+      "table": 4,
+      "title": "List of the data elements for the SSD",
+      "pdf_pages": "23-32",
+      "status": "generated",
+      "pages": [
+        "ssd2-element-reference.md"
+      ],
+      "data": "docs/ssd2-elements.json"
+    }
+  ]
+}

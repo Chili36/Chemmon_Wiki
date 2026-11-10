@@ -232,7 +232,10 @@ async def ask_agent(question: str) -> str:
 
 ## Maintenance and roadmap
 
-Run `python tools/health_check.py` and `pytest -q` after changes. When rd-bridge
+Run `python -m wiki_api.doctor` and `pytest -q` after changes. The doctor
+includes the health check and adds source-table coverage (`docs/source-tables.json`),
+rule-scope consistency, rule-ID spelling, log order and link checks; see
+[INGEST_WORKFLOW.md](INGEST_WORKFLOW.md). A weekly run also checks external links. When rd-bridge
 publishes a new version, run `python tools/ingest_rd_bridge.py` and follow the
 dataset steps in [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md); a daily workflow
 proposes the same refresh as a pull request. GitHub Actions

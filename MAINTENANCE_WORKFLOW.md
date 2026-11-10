@@ -24,8 +24,9 @@ edition to make a fingerprint check pass.
    Record reviewer, date, scope, limitations and evidence for each finding;
    resolved findings need a resolution. Set `snapshot` to the reviewed result
    of `wiki_api.source_review.corpus_snapshot(root)`. A fresh hash is not a review.
-6. Run `python tools/source_review.py`, `python tools/health_check.py --json`,
-   and `pytest -q`. Inspect warnings; ordinary health success allows documented
+6. Run `python tools/source_review.py`, `python -m wiki_api.doctor`,
+   and `pytest -q`. If you changed which source tables a page covers, update
+   `docs/source-tables.json`. Inspect warnings; ordinary health success allows documented
    coverage gaps. CI also rejects stale/invalid/missing review records.
 7. Add a dated entry to `log.md`. Keep deployment separate from content review.
 

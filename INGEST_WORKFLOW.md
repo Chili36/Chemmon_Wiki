@@ -34,7 +34,7 @@ Before touching any wiki file:
 
 1. `PROJECT_CONTEXT.md` — why this wiki exists
 2. `SCHEMA.md` — page types, required frontmatter, wiki-link convention
-3. The last 2-3 entries of `log.md` — recent state, open items, known gaps
+3. The first 2-3 entries of `log.md` (newest first) — recent state, open items, known gaps
 4. `index.md` — current page catalog
 
 Then classify the source you're about to ingest. Pages in this wiki fall
@@ -259,13 +259,23 @@ Run:
 
 ```bash
 . .venv/bin/activate
-python tools/health_check.py      # frontmatter, cross-links, rule-ID coverage
+python -m wiki_api.doctor         # health check + source tables, rule scope, spelling, log, links
 pytest -q                          # public API + store behavior
 ```
 
-Both must pass. The health check catches broken cross-links, missing
-frontmatter fields, and duplicate rule IDs. The test suite guards the
-store and API contract.
+Both must pass. The doctor runs the health check (broken cross-links, missing
+frontmatter fields, duplicate rule IDs) and adds the checks from #63/#64:
+
+- **Source tables.** If `source_pages` names a table ("Table 2"), register it in
+  `docs/source-tables.json` with an honest status: `transcribed` (every row is on
+  the page; list `must_contain` strings), `summarised` (give a reason), or
+  `partial` / `not-covered` (open an issue). Citing a table you only described
+  is how the Table 2 grid went missing.
+- **Rule scope.** A paragraph citing one rule must not name fewer domains than
+  the rule's row on its business-rules page (CHEMON58 is pesticides **and** VMPR).
+- **Spelling.** Rule IDs are `CHEMON<n>`, as in the source.
+
+The test suite guards the store and API contract.
 
 ## What NOT to do
 
