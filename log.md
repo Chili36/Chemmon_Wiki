@@ -1,9 +1,19 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-10-21"
+last_updated: "2026-11-10"
 ---
 
 # Log
+
+## [2026-11-10] correction and maintenance | Issue #63 fixes and wiki doctor (#64)
+
+- **Table 2 grid transcribed** on [[ssd2-programme-valid-combinations]] (pp. 23-24, cell by cell). The page had cited Table 2 since April but held only the plan flags and examples. Also corrected: other domains accept combinations outside Table 2 (p. 22); K018A MANCP condition (p. 26).
+- **CHEMON58 covers pesticides and VMPR** (Table 10 p. 127); fixed on [[ssd2-sampling-country]] and [[ssd2-elements-sampling]], which followed the narrower D.03 text (p. 31).
+- **Rule IDs respelled CHEMON** (source spelling); previously CHEMMON as an alias. Entries below keep the old spelling.
+- **Unsourced claim relabelled**: "business rules take precedence over prose" is not in the guidance; now marked as the wiki's reading.
+- **Wiki doctor** (`python -m wiki_api.doctor`, CI and weekly): health check plus source-table registry (`docs/source-tables.json`), rule-scope consistency, rule-ID spelling, log order and link checks. Run on the pre-fix main it reports all three #63 findings.
+- **New gap tracked**: Table 12 (LEGREF values) and most of Table 11 (catalogues) are cited but not transcribed (#65, SRC-019).
+- Log sorted newest first; [[ssd2-element-reference]] linked from [[ssd2-data-model]].
 
 ## 2026-10-24 — rd-bridge re-pinned to ad3e16f (refresh PR #55)
 
