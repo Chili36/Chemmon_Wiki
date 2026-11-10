@@ -15,7 +15,7 @@ related:
   - "[[vmpr-reporting]]"
   - "[[baby-food-reporting]]"
   - "[[pesticide-residue-definition-by-matrix]]"
-last_updated: "2026-10-13"
+last_updated: "2026-11-10"
 ---
 
 # Pesticide Residues Reporting
@@ -32,16 +32,17 @@ last_updated: "2026-10-13"
 
 Each pesticide submission must carry a `progLegalRef` code identifying the regulatory basis:
 
-| Code | Regulation |
-| --- | --- |
-| N027A | Regulation (EU) 2024/989 -- EU coordinated programme for pesticide residues |
-| N028A / N318A | Regulation 2021/1355 -- baby food sampling. See [[baby-food-reporting]]. |
-| N371A | Regulation 2022/1646 -- VMPR sampling. See [[vmpr-reporting]]. |
-| N375A / N112A / N113A | Contamination control plans |
-| N317A | Border control posts |
-| N422A | Regulation (EU) -- intensified official controls at border control posts for animal-origin products (new 2026) |
+| Code | Regulation | Domain attributes (Table 12) |
+| --- | --- | --- |
+| N027A | Regulation (EC) No 396/2005; EU MACP under Reg. (EU) 2024/989, national programmes under Reg. (EU) 2021/1355 (Table 2) | PEST |
+| N028A | Directive 2006/125/EC -- baby food. See [[baby-food-reporting]]. | PEST, OCC, ADD |
+| N318A | Delegated Reg. (EU) 2016/127 and Reg. (EU) 2016/128 -- baby food. See [[baby-food-reporting]]. | PEST, OCC, ADD |
+| N371A | Reg. (EU) 2022/1646 and 2022/1644 -- VMPR; concatenated with N027A for a sample used in both domains (p. 26). See [[vmpr-reporting]]. | VMPR |
+| N375A | Reg. (EU) 2022/931 and 2022/932 -- contaminant control plans; concatenated with N027A in the p. 27 import example. | OCC |
+| N317A | Reg. (EU) 2019/1793 -- increased controls on imported food of non-animal origin | PEST, OCC, ADD |
+| N422A | Reg. (EU) 2019/1873 -- intensified official controls on products of animal origin (new 2026) | OCC, PEST, VMPR |
 
-(ChemMon 2026 p26-28)
+The full list of 31 codes is on [[ssd2-programme-legal-reference]]. (ChemMon 2026 pp. 19, 23-27, 146)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p28-30 -->
 ## Sampling Strategies

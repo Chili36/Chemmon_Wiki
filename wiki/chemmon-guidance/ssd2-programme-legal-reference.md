@@ -2,11 +2,12 @@
 title: "SSD2 Programme: Legal Reference (progLegalRef)"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-10"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 18-19 (Section 2, element B.02)"
+  - "ChemMon 2026 pp. 146-147 (Table 12)"
 related:
   - "[[ssd2-elements-programme]]"
   - "[[controlled-terminology-catalogues]]"
@@ -55,21 +56,51 @@ For VMPR National Control Plan results in group A3b substances that are not auth
 
 The choice changes whether the result is also routed into pesticide reporting. (ChemMon 2026 pp. 18-19)
 
-### Canonical values
+### LEGREF values and domain attributes (Table 12)
 
-| Code | Legal reference | Main use |
-| --- | --- | --- |
-| `N027A` | Regulation (EC) No 396/2005 + Reg. (EU) 2021/1355 / 2024/989 | Pesticide residues, EU-coordinated programme |
-| `N028A` / `N318A` | Directive 2006/125/EC / Reg. (EU) 2016/127 and 2016/128 | Baby-food pesticide reporting |
-| `N371A` | Reg. (EU) 2022/1646 and 2022/1644 | VMPR |
-| `N112A` | Regulation (EC) No 1333/2008 | Food additives |
-| `N113A` | Regulation (EC) No 1334/2008 | Food flavourings |
-| `N379A` | Regulation (EU) 2023/915 | Contaminants, maximum levels |
-| `N375A` | Regulation (EU) 2022/932 and 2022/931 | Contaminants, control plans |
-| `N317A` | Regulation (EU) 2019/1793 | Suspect or targeted border samples |
-| `N422A` | Regulation (EU) 2019/1873 | Increased official controls on products of animal origin (new for 2026) |
+<!-- Source: ChemMon 2026 p. 146 (Table 12); main-use notes from p. 19 -->
 
-(ChemMon 2026 p19)
+Table 12 lists the `progLegalRef` codes in the `ChemMonLegRef` hierarchy and the domains each is applicable to. These attributes decide the legislation half of the domain flags (see [[reporting-flags]]). Attributes: `PEST` pesticides, `VMPR` veterinary medicinal residues, `OCC` contaminants, `ADD` food additives, `FLAV` food flavourings. "Main use" is the B.02 description (p. 19), given only for the codes it names. (ChemMon 2026 p146)
+
+| Code | Legal reference (as printed in Table 12) | Domain attributes | Main use (p. 19) |
+| --- | --- | --- | --- |
+| `N023A` | Commission Regulation (EC) No 2073/2005 (amended) | OCC |  |
+| `N027A` | Regulation (EC) No 396/2005 (amended) | PEST | Pesticide residues, EU-coordinated programme; p. 19 also names Reg. (EU) 2021/1355 / 2024/989 |
+| `N028A` | Directive 2006/125/EC | PEST, OCC, ADD | Baby-food pesticide reporting |
+| `N101A` | Regulation (EC) No 767/2009 (amended) | OCC |  |
+| `N112A` | Regulation (EC) No 1333/2008 (amended) | ADD | Food additives |
+| `N113A` | Regulation (EC) No 1334/2008 (amended) | FLAV | Food flavourings |
+| `N129A` | Regulation (EC) No 178/2002 (amended) | OCC |  |
+| `N139A` | Regulation (EC) No 853/2004 (amended) | OCC |  |
+| `N154A` | Commission Directive (EC) No 40/2003 | OCC |  |
+| `N208A` | Commission Recommendation No 196/2007 | OCC |  |
+| `N211A` | Commission Recommendation No 161/2010 | OCC |  |
+| `N252A` | Directive 2002/32/EC | OCC |  |
+| `N302A` | Commission Recommendation 2015/682 | OCC |  |
+| `N304A` | Commission Recommendation (EU) 2017/84 | OCC |  |
+| `N310A` | Commission Regulation (EU) 2017/2158 | OCC |  |
+| `N312A` | Commission Recommendation (EU) 2014/118 | OCC |  |
+| `N313A` | Commission Recommendation (EU) 2013/165 | OCC |  |
+| `N317A` | Commission Implementing Regulation (EU) 2019/1793 | PEST, OCC, ADD | Suspect or targeted border samples |
+| `N318A` | Commission Delegated Regulation (EU) 2016/127 and Regulation (EU) 2016/128 | PEST, OCC, ADD | Baby-food pesticide reporting |
+| `N319A` | Commission Recommendation 2006/576/EC | OCC |  |
+| `N320A` | Commission Recommendation 2013/711/EU amended | OCC |  |
+| `N323A` | Regulation (EU) No 2017/625 | OCC, ADD |  |
+| `N324A` | Commission Recommendation (EU) 2019/1888 | OCC |  |
+| `N371A` | Commission Implementing Regulation (EU) 2022/1646 and Commission Delegated Regulation (EU) 2022/1644 | VMPR | VMPR |
+| `N372A` | Commission Recommendation (EU) 2022/495 | OCC |  |
+| `N374A` | Commission Recommendation (EU) 2016/2115 | OCC |  |
+| `N375A` | Commission Delegated Regulation (EU) 2022/931 and Implementing Regulation (EU) 2022/932 | OCC | Contaminants, control plans |
+| `N376A` | Commission Recommendation (EU) 2022/553 | OCC |  |
+| `N377A` | Commission Recommendation (EU) 2022/561 | OCC |  |
+| `N379A` | Commission Regulation (EU) 2023/915 | OCC | Contaminants, maximum levels |
+| `N422A` | Commission Implementing Regulation (EU) 2022/1873 (sic; see note) | OCC, PEST, VMPR | Increased official controls on products of animal origin (new for 2026) |
+
+Notes:
+
+- `N422A`: Table 12 prints "2022/1873"; every other mention in the guidance (pp. 6, 11, 23-24 and CHEMON104 on p. 139) gives Regulation (EU) **2019/1873**, the regulation on intensified controls on products of animal origin. Treat 2022/1873 as a typo in Table 12.
+- Codes with several attributes (`N028A`, `N317A`, `N318A`, `N323A`, `N422A`) put the legislation in each of those domains; whether a result is flagged 1 or 3 then depends on whether its `paramCode` is in that domain's analysis hierarchy (pp. 148-149). See [[reporting-flags]].
+- Use the most specific code. `N129A` (Regulation (EC) No 178/2002) flags records `is_occ=1`, so they are used for exposure assessment but not necessarily in EU Annual Reports. (ChemMon 2026 p147)
 
 ### Worked examples
 
