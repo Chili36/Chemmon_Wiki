@@ -5,6 +5,13 @@ last_updated: "2026-11-10"
 
 # Log
 
+## [2026-11-10] ingest | Tables 11 and 12 transcribed (#65)
+
+- **Table 12** (31 LEGREF codes with domain attributes, p. 146) is now on [[ssd2-programme-legal-reference]], merged with the B.02 "canonical values". Table 12 prints N422A as 2022/1873; the rest of the guidance says 2019/1873, so it is noted as a source typo.
+- **Table 11** (all 29 catalogues and their hierarchies, pp. 144-145) is now on [[controlled-terminology-catalogues]], with the SSD2 elements for each catalogue from Table 7.
+- **[[pesticide-reporting]]** legal-reference table corrected: N028A/N318A were given as Regulation 2021/1355 (they are Directive 2006/125/EC and Regulations 2016/127 and 2016/128), and N112A/N113A were grouped with contaminant control plans.
+- The doctor now reports no source-table gaps: all 20 registered tables are transcribed, generated, rule-checked or deliberately summarised.
+
 ## [2026-11-10] correction and maintenance | Issue #63 fixes and wiki doctor (#64)
 
 - **Table 2 grid transcribed** on [[ssd2-programme-valid-combinations]] (pp. 23-24, cell by cell). The page had cited Table 2 since April but held only the plan flags and examples. Also corrected: other domains accept combinations outside Table 2 (p. 22); K018A MANCP condition (p. 26).

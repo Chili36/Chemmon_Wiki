@@ -19,7 +19,8 @@
     "2026-10-18: rd-bridge re-pinned b4e9020 -> d399cea (31 records gained or changed PARAM links: four matcher fixes and Sonnet 5.5 model links; no definition text changed). Cited residue_id 10, 210, 2058, 253, 7, 3050, 284 re-checked: codes and scopes unchanged; Source commits updated on the matrix and wording pages.",
     "2026-10-21: new generated ssd2-element-reference page and docs/ssd2-elements.json from ChemMon Table 7 pp. 80-84 and SSD2 2013 element table pp. 23-32. All 97 Table 7 rows checked for type, catalogue and status (93 by an independent row parse, the four evalInfo sub-elements by hand); element names cross-checked against the SSD2 2013 table (only ChemMon dotted sub-elements differ); every element-to-page link checked to name its element. No existing page changed.",
     "2026-10-24: rd-bridge re-pinned d399cea -> ad3e16f. Only manifest.json changed; residue_param_map.json, interpretation_guidance.json and DATA_SOURCES.md are byte-identical, so the cited residue_id 10, 210, 2058, 253, 7, 3050, 284 and the 11 interpretation rules are unchanged. Source commits updated on the matrix and wording pages; by-food page regenerated.",
-    "2026-11-10 (#63, #64): ChemMon Table 2 grid pp. 22-24 transcribed cell by cell from the rendered pages and cross-checked against the text layer (cell counts per row agree); plan-flag text pp. 25-26 and examples pp. 26-27 re-read. CHEMON58 Table 10 p. 127 against D.03 p. 31. Rule-ID spelling: inventory regenerated from the PDFs and byte-identical apart from the CHEMON spelling. Coverage status of all 13 ChemMon tables, FA/FF Tables 1-3 and SSD2 2013 Table 4 recorded in docs/source-tables.json; Table 8 rows not compared cell by cell."
+    "2026-11-10 (#63, #64): ChemMon Table 2 grid pp. 22-24 transcribed cell by cell from the rendered pages and cross-checked against the text layer (cell counts per row agree); plan-flag text pp. 25-26 and examples pp. 26-27 re-read. CHEMON58 Table 10 p. 127 against D.03 p. 31. Rule-ID spelling: inventory regenerated from the PDFs and byte-identical apart from the CHEMON spelling. Coverage status of all 13 ChemMon tables, FA/FF Tables 1-3 and SSD2 2013 Table 4 recorded in docs/source-tables.json; Table 8 rows not compared cell by cell.",
+    "2026-11-10 (#65): ChemMon Table 11 (29 catalogues, pp. 144-145) and Table 12 (31 LEGREF codes, p. 146) transcribed; Table 12 checked against the rendered page. SSD2 element column for Table 11 taken from docs/ssd2-elements.json (Table 7). Every N422A mention compared (pp. 6, 11, 23-24, 139, 146). pesticide-reporting legal-reference table compared with pp. 19, 23-27, 85, 146."
   ],
   "limitations": [
     "Not an exhaustive review of the four PDFs or all 76 topic pages.",
@@ -67,7 +68,7 @@
     "wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md": "46f87e07e4082bcf23355df12b799c6129d847d41e231fe8db9ecc36ca09f0d3",
     "wiki/chemmon-guidance/chemmon-single-ssd2-collection.md": "7392250684efbf21a78f0b40573318b7a8e1b4f3f8ce42cc56ab3640a286b7c6",
     "wiki/chemmon-guidance/contaminant-reporting.md": "a7fb170a0faae90cad3205343f85d16c7c4fd87ef4d0729dc4dd8275d636c625",
-    "wiki/chemmon-guidance/controlled-terminology-catalogues.md": "47a7290d6263fa643898b8f8959d8943dc1eb95a87994350761b0442bca0c8f0",
+    "wiki/chemmon-guidance/controlled-terminology-catalogues.md": "68df1b6b1a777976ba940bc4593c3dbc123c0fc7ba1b893954a2479764c97e40",
     "wiki/chemmon-guidance/data-validation-and-acceptance.md": "e32765ae854336eba6f85deaaea64898601319f486594e3521d34f6c17c87048",
     "wiki/chemmon-guidance/fa-ff-no-presence-data-model.md": "1b60600286ce2a371811c5b28ee08c7a06e5be57de0f6d8fccb57659b3185e2a",
     "wiki/chemmon-guidance/fa-ff-use-levels-data-model.md": "4aa00da078f542b390956d3940866df79047dbdb8186bae53bbe669955cff6b9",
@@ -79,7 +80,7 @@
     "wiki/chemmon-guidance/foodex2-facets.md": "4e503ce7ad06438d0b9c8f80ecc4496ee08a2dc33f5b5fd0050a8793e56b5130",
     "wiki/chemmon-guidance/foodex2-in-chemmon.md": "ae25e83fa92bc3be5824342d5eeccbbca23bd8b3959e3f5e3355c28b8cade08c",
     "wiki/chemmon-guidance/legal-limits-database.md": "d35d62e4dc69305bb6504c4a57094f409075174d7937e5828d1a2695c0c1707a",
-    "wiki/chemmon-guidance/pesticide-reporting.md": "aa6223a25c832d5b94da478f4a3429fbff16f0b39ac3c0ac56d66631c97dcbf1",
+    "wiki/chemmon-guidance/pesticide-reporting.md": "48e31fef03c3956b90b2474b3541800c9a58a7b7be48e973cc212083945a3b25",
     "wiki/chemmon-guidance/pesticide-residue-definition-by-matrix.md": "75995ce913505c174d32ea5c67f70a8a21c3786f4a3d382c8eba0278b25daf20",
     "wiki/chemmon-guidance/pesticide-residue-definition-wording.md": "9aee8f86a8ffb7a0cc78ee6314ab12060259c11de50cfd56f982d0f61508ffe0",
     "wiki/chemmon-guidance/pesticide-residue-definitions-by-food.md": "af58b5f0362cf0a20dd2ef1496d9eaf8b1a26ee1899201febdd4c429ac707cc9",
@@ -105,7 +106,7 @@
     "wiki/chemmon-guidance/ssd2-matrix-sampled-matrix.md": "d52741e876a1a8e5e6e1de1a8f0b33319012b84a0620843b4dbcd7a2b3bf8a2a",
     "wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md": "0781fe89f88b23781c7dfdaa3b0e9b27412ca34f658b517293bdeb4082dcd9f4",
     "wiki/chemmon-guidance/ssd2-programme-identification.md": "59143b07021b66b36ebb1e245d98075d24107f7fbba4183e8418606989c3b857",
-    "wiki/chemmon-guidance/ssd2-programme-legal-reference.md": "f9ec2c68dde3ff9d5d6ff442dcaae757536eea2f5159b70b95b10f4cf77b594f",
+    "wiki/chemmon-guidance/ssd2-programme-legal-reference.md": "12a3d726d27dd1a0a379c7fb09707bf220ba246af4d81879610b3fcadd474301",
     "wiki/chemmon-guidance/ssd2-programme-strategy-and-type.md": "e87ae8ba4e8f93e41edb2cc17573009bfbb127d98b29783236e09987b519e201",
     "wiki/chemmon-guidance/ssd2-programme-valid-combinations.md": "1a91c563c427f6ab5e4d1b3eb6e81582babfcd28d1bef39bd5aa9f1ddadb3138",
     "wiki/chemmon-guidance/ssd2-result-expression-basis.md": "4f8aeed0a1aa78898fb1b61060612346ee653e8892de56c155fb6b88de5055d8",
@@ -130,7 +131,7 @@
     "reports/source-review/2026-10-05-broader-review.json": "0e549c70a60b80e1f29fc2ba3b82d5a6004a1c7af0fa77f0fe0da92d783bae3f",
     "reports/source-review/2026-10-05-contextual-reassessment.json": "461e5a4b555eebce6c0ae7ab796100c1617547291c1faa8dffc660bbeaf598a0",
     "docs/ssd2-elements.json": "3cb073d85195718987caf3f0eef4ee6ae67c7f5e3bf38aef34a8f5b81366ae91",
-    "docs/source-tables.json": "9ad49e540c311146777489d9eec534eb2ab78994da9f5a3611495ffb72221d95"
+    "docs/source-tables.json": "d63de5dd443f2a1f43a60b7ccbe474e14550db79223457ca13e3e962335a6924"
   },
   "findings": [
     {
@@ -384,14 +385,28 @@
     },
     {
       "id": "SRC-019",
-      "status": "open",
+      "status": "resolved",
       "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
       "locator": "ChemMon pp. 144-149 (Tables 11-12)",
       "observation": "controlled-terminology-catalogues cites Tables 11-12 but transcribes 7 of 28 catalogues and none of the 34 LEGREF codes with domain attributes.",
       "action": "Transcribe Table 12 and the remaining Table 11 catalogues (#65).",
       "wiki_pages": [
         "controlled-terminology-catalogues.md"
-      ]
+      ],
+      "resolution": "Table 11 transcribed in full on controlled-terminology-catalogues (merged with the earlier 7-row usage table; SSD2 elements from Table 7). Table 12 transcribed on ssd2-programme-legal-reference (merged with the p. 19 'canonical values'). Both registered as transcribed with every row pinned (#65). Counts corrected: 29 catalogues and 31 codes."
+    },
+    {
+      "id": "SRC-020",
+      "status": "resolved",
+      "source": "chemmon_docs/EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "ChemMon pp. 19, 85, 146 (N028A/N318A); p. 146 (N112A/N113A); pp. 6, 11, 23-24, 139 (N422A)",
+      "observation": "pesticide-reporting listed N028A/N318A as Regulation 2021/1355, grouped N112A/N113A with contaminant control plans, and gave N422A no regulation number, citing pp. 26-28, which do not support these.",
+      "action": "Correct the table from Table 12 and B.02; record Table 12's N422A '2022/1873' as a source typo.",
+      "wiki_pages": [
+        "pesticide-reporting.md",
+        "ssd2-programme-legal-reference.md"
+      ],
+      "resolution": "Rows corrected with Table 12 domain attributes and locators; N112A/N113A left to the full list on ssd2-programme-legal-reference; N422A given as 2019/1873 with the Table 12 discrepancy noted there."
     }
   ]
 }
