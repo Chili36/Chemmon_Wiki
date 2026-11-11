@@ -3,7 +3,7 @@ title: "GBR: Percentages, Evaluation Limits and Decision Thresholds"
 select_when: "Generic SSD2 percentage ranges, fat/dry-weight conditions, evaluation-limit comparisons, positive LOD/LOQ/recovery/uncertainty, CCalpha/CCbeta and the V999A exception. Includes Warning rules GBR22 and GBR42; core BIN/unit rules are on business-rules-gbr."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -29,8 +29,10 @@ presence requirements and domain-specific conditions. A numeric constraint
 alone is not a complete specification of when a field must be supplied.
 
 Core result shape, units, LOD/LOQ presence and result uniqueness are in
-[[business-rules-gbr]]. These GBR rules concern SSD2, not the parallel PRE/USE
-data models.
+[[business-rules-gbr]]. Table 9 is written against SSD2 elements. The
+No-presence and Use-levels guides list only PRE/USE rules, and the guidance does
+not say whether GBRs are run on those submissions; see the scope notes in
+[[business-rules-gbr]].
 
 ## Percentages and expression basis
 

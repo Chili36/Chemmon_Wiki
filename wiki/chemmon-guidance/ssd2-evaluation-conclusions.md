@@ -46,7 +46,7 @@ related:
 
 ### Additives and flavourings
 
-For additives and flavourings, `evalInfo.conclusion` is strongly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the hierarchy `CONCLUS.fa_ff`; the parallel PRE/USE guides write `CONCLUS.faff`. The identical codes, labels and examples establish the same FA/FF concept family. Treat the underscore difference as a documentation naming discrepancy, not a different meaning for the submitted codes. Preserve each source’s spelling when discussing its hierarchy; a software catalogue lookup must use the configured identifier:
+For additives and flavourings, `evalInfo.conclusion` is highly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the hierarchy `CONCLUS.fa_ff`; the parallel PRE/USE guides write `CONCLUS.faff`. The identical codes, labels and examples establish the same FA/FF concept family. Treat the underscore difference as a documentation naming discrepancy, not a different meaning for the submitted codes. Preserve each source’s spelling when discussing its hierarchy; a software catalogue lookup must use the configured identifier:
 
 | Code | Meaning |
 | --- | --- |

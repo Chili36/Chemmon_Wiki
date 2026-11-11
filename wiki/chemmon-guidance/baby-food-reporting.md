@@ -69,7 +69,7 @@ For inclusion in the **Pesticides Annual Report**, `progLegalRef` must be one of
 | Code | Legislation |
 | --- | --- |
 | `N028A` | Directive 2006/125/EC (ChemMon 2026 pp. 19, 85) |
-| `N318A` | Regulation (EU) 2016/127 (ChemMon 2026 p19; CHEMON55, p. 127) |
+| `N318A` | Commission Delegated Regulation (EU) 2016/127 and Regulation (EU) 2016/128 (ChemMon 2026 Table 12, p. 146); p. 19 and CHEMON55 (p. 127) name only 2016/127 |
 | `N027A` | Regulation (EC) No 396/2005 (ChemMon 2026 pp. 12, 19) |
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 70, 85 -->

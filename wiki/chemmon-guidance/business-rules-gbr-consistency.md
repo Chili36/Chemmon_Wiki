@@ -3,7 +3,7 @@ title: "GBR: Identifier Consistency, Matrix Text and Size Units"
 select_when: "Generic SSD2 rules for shared sample portions, organisation/laboratory/method identifiers, processing country, Other matrix text, unclassifiable method text, sample-size units and analysed-sample ID. GBR5/7/10/11/14/15/16/18/24/25/26/103."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -22,8 +22,10 @@ related:
 
 <!-- Source: ChemMon 2026 Table 9, pp. 99-102, 112 -->
 
-These 12 rules are **Active, Error** in the 2026 source table. They apply to
-SSD2 fields; they are not PRE or USE rules for the parallel FA/FF collections.
+These 12 rules are **Active, Error** in the 2026 source table. Table 9 is
+written against SSD2 elements. The No-presence and Use-levels guides list only
+PRE/USE rules, and the guidance does not say whether GBRs are run on those
+submissions; see the scope notes in [[business-rules-gbr]].
 The broader GBR index, sample/event consistency rules and result uniqueness
 rule are in [[business-rules-gbr]].
 

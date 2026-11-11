@@ -31,7 +31,7 @@ last_updated: "2026-11-11"
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 23-25 -->
 ## Control Plan Types
 
-VMPR (Veterinary Medicinal Product Residues) is one of five [[chemmon-overview|ChemMon]] reporting domains. EFSA assigns each VMPR sample (`progLegalRef` `N371A`) one of four flags from `progType`, `sampStrategy` and, for Plan 3, `sampPoint`:
+VMPR (Veterinary Medicinal Product Residues) is one of five [[chemmon-overview|ChemMon]] reporting domains. EFSA assigns each VMPR sample (`progLegalRef` `N371A`) one of three plan flags from `progType`, `sampStrategy` and, for Plan 3, `sampPoint`; a sample that fits none gets no flag and is categorised as Other:
 
 | Flag | Meaning | Flag condition |
 | --- | --- | --- |

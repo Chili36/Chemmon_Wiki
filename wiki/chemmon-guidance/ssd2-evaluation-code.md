@@ -44,7 +44,7 @@ related:
 | --- | --- |
 | `J003A` | Above the level of concern: the quantified value is clearly above the legal limit taking into account the analytical measurement uncertainty, evaluated against the limit set under the relevant MRL/ML legislation |
 | `J002A` | Below or equal to the level of concern |
-| `J029A` | Not evaluated: the substance is only part of the full residue definition/group (`paramType` = `P002A`), **or** no legal limit applies to the substance or residue measured in the sample |
+| `J029A` | Not evaluated, "for example, when the substance is only part of the full residue definition/group" (`paramType` = `P002A`); also used when the residue was not evaluated because no legal limit applies to the substance or residue measured in the sample |
 | `J031A` | Above the limit but compliant when measurement uncertainty is taken into account |
 | `J041A` | Occurrence of an illegal/prohibited VMPR included in Group A (no MRL set for these substances), or detection of an unauthorised food additive |
 

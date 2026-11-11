@@ -7,7 +7,7 @@ sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "ChemMon 2026 p. 148 (Section 8); ChemMon 2026 p. 143 (Table 10, LL_04); Use-levels 2026 p. 18 (Section 4); Use-levels 2026 p. 28 (Table 3)"
+  - "ChemMon 2026 p. 148 (Section 8); ChemMon 2026 pp. 142-143 (Table 10, LL_01_FA_FF to LL_03_FA_FF, LL_04); Use-levels 2026 p. 18 (Section 4); Use-levels 2026 p. 28 (Table 3)"
 related:
   - "[[business-rules-legal-limits]]"
   - "[[ssd2-elements-result]]"
@@ -56,7 +56,7 @@ See [[business-rules-legal-limits]] for the validation rules that compare report
 
 ## FA/FF Maximum Permitted Levels — checked at the marketing date
 
-<!-- Source: Use-levels 2026 p18 (Section 4); Use-levels 2026 pp. 24-28 (Table 3) -->
+<!-- Source: Use-levels 2026 p18 (Section 4); Use-levels 2026 p28 (Table 3); ChemMon 2026 pp. 142-143 (Table 10) -->
 
 For the FA/FF **use-levels** data collection ([[fa-ff-use-levels-data-model]]), the LLDB also holds Maximum Permitted Levels (MPLs) established in:
 
@@ -73,4 +73,6 @@ Two LLDB-backed rules enforce this in the use-levels DM:
 - `USE_LLDB01` — the reported `paramCode` must be authorised for the reported legislative category × restriction combination per Reg. 1333/2008 / 1334/2008 at the marketing date.
 - `USE_LLDB02` — the reported `maxLevel` must be `≤` the MPL from LLDB valid at the marketing date.
 
-Both are **Error** severity. The in-record consistency check (`maxLevel ≤ maxPermittedLevel` as reported by the DP) is a separate rule (`USE27`); USE_LLDB02 is the authoritative cross-check against EFSA's centrally maintained MPL records.
+Both are **Error** severity. The in-record consistency check (`maxLevel ≤ maxPermittedLevel` as reported by the DP) is a separate rule (`USE27`, Error); `USE_LLDB02` is the check against the MPL held in the LLDB. (Use-levels 2026 p28)
+
+The SSD2 analytical path has its own FA/FF MPL rules, all Warnings: `LL_01_FA_FF` and `LL_02_FA_FF` check that `evalCode` is consistent with `resVal` against the MPL, and `LL_03_FA_FF` checks that the substance is authorised in the legislative category with the restriction/exception. `LL_03_FA_FF` and `USE_LLDB01` have the same rule description but different severity (Warning against Error). (ChemMon 2026 Table 10 pp. 142-143; Use-levels 2026 p28) See [[business-rules-legal-limits]].

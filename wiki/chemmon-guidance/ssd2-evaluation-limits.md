@@ -65,9 +65,9 @@ For VMPR, p. 74 lists six values that can be reported (W002A/W005A/W006A/W012A/W
 - `W008A` — target level (CHEMON35, Table 10 p. 120; additional to the VMPR prose list)
 - `W990A` — national or local limit (CHEMON35; additional to the VMPR prose list)
 
-For food additives and flavourings, the legal-limit rules LL_01_FA_FF and LL_02_FA_FF apply when `evalLimitType` is `W016A` (Maximum Permitted Level, MPL) or is not reported. (ChemMon 2026 p142)
+For food additives and flavourings, the legal-limit rules LL_01_FA_FF and LL_02_FA_FF (both Warning) apply when `resType` is `VAL` and `evalLimitType` is `W016A` (Maximum Permitted Level, MPL) or is not reported; they compare `evalCode` with `resVal` against the MPL. Full rows: [[business-rules-legal-limits]]. (ChemMon 2026 p142)
 
-Source discrepancy: `W016A` is named by LL_01_FA_FF/LL_02_FA_FF (p. 142) but is not in the CHEMON35 list of recommended codes (p. 120), so as written a record with `W016A` meets the FA/FF legal-limit rules and also falls outside the CHEMON35 recommended list (Warning). The guidance does not resolve this.
+Source discrepancy: `W016A` is named by LL_01_FA_FF/LL_02_FA_FF (p. 142) but is not in the CHEMON35 list of recommended codes (p. 120), so as written `W016A` is a condition that triggers the FA/FF legal-limit rules, yet reporting it also raises the CHEMON35 Warning for a code outside its recommended list. The guidance does not resolve this.
 
 Example (EU MRL in place): `<evalLowLimit>0.003</evalLowLimit>` with `<evalLimitType>W002A</evalLimitType>`. (ChemMon 2026 p74)
 

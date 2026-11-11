@@ -106,7 +106,7 @@ Table 8 topic: "Dioxins and dioxin-like PCBs, non-dioxin-like PCBs".
 
 (ChemMon 2026 pp. 86-88; see [[ssd2-analysis-context]] and [[ssd2-elements-result]])
 
-- CHEMON09 and CHEMON10 are Warnings whose descriptions say the congeners "should be reported". **Source discrepancy:** their error messages say the set is "not reported, though mandatory" (ChemMon 2026 p114), while Table 8 gives the status "Recommended" (ChemMon 2026 p88). Validation returns a Warning, not an Error.
+- CHEMON09 and CHEMON10 are Warnings whose descriptions say the congeners "should be reported". **Source discrepancy:** their error messages end "though mandatory" (CHEMON09: "is not reported, though mandatory"; CHEMON10: "are not all reported, though mandatory") (ChemMon 2026 p114), while Table 8 gives the status "Recommended" (ChemMon 2026 p88). Validation returns a Warning, not an Error.
 - CHEMON21 asks for `exprResPerc.fatPerc` for dioxins and PCBs regardless of whether the result is expressed on whole weight, fat weight or dry matter. (ChemMon 2026 p117)
 
 <!-- Source: ChemMon 2026 p89 (Table 8: mineral oils); p96 (Table 8: mineral oil hydrocarbons) -->
@@ -137,7 +137,7 @@ Table 8 topic: "Dioxins and dioxin-like PCBs, non-dioxin-like PCBs".
 - For acrylamide reporting under contaminants, explicit facet F33 Legislative classes must be reported. (ChemMon 2026 p42)
 - Table 4 describes F33 as required for samples analysed for acrylamide, to describe the acrylamide legislative classes in Commission Recommendation (EU) 2019/1888 and Commission Regulation (EU) 2017/2158. (ChemMon 2026 p51)
 - CHEMON12 (Error) fires when "sampMatCode.legis is not reported or does not contain a specific product code, though paramCode is acrylamide". The acrylamide `paramCode` is `RF-00000410-ORG`. (ChemMon 2026 p115)
-- F04 for rice-based and algae-based products is an arsenic row, not an acrylamide row: see Arsenic. Table 4 lists the F04 products for contaminants in one cell, including "compound products for infants and small children, including ready-made meals, diet supplements, herb mixes and spice mixes", without naming a substance for that last item. (ChemMon 2026 p44)
+- F04 for rice-based and algae-based products is an arsenic row, not an acrylamide row: see Arsenic. Table 4 lists the F04 products for contaminants in one cell and names no substance for any of them; the acrylamide and arsenic split comes from Table 8. The cell's last item, "compound products for infants and small children, including ready-made meals, diet supplements, herb mixes and spice mixes", has no Table 8 row. (ChemMon 2026 p44)
 
 <!-- Source: ChemMon 2026 pp. 52-53 (examples following Table 4) -->
 ### Acrylamide Worked Examples
@@ -163,7 +163,7 @@ Wiki note (not in the guidance): `A07MY` is one of three F17 values, not a defau
 | --- | --- | --- |
 | `anMatCode` (G.01) | Recommended | If the sample has been analysed "as consumed", it should be described in the analysed sample as consumed. Reference: Commission Recommendation 2007/196/EC. |
 | Additional information on the result (M.20) | Recommended | If the product is analysed as consumed, it is relevant to give the exact cooking preparation with time, temperature and handling information, using the `$` character to separate extra information. Example: `Heated in microwave$60°C$1.5min`. |
-| `sampMethod` (B.05) | Recommended | For monitoring furan, 2-methylfuran and 3-methylfuran in food, and to ensure the samples are representative, it is advised to follow the sampling procedures in part B of the Annex to Commission Regulation (EC) No 333/2007: `<sampMethod>N011A</sampMethod>`. Reference: Commission Recommendation (EU) 2022/495. See [[ssd2-sampling-method-and-point]]. |
+| `sampMethod` (B.05) | Recommended | For monitoring furan, 2-methylfuran and 3-methylfuran in food, and to ensure the samples are representative, it is advised to follow the sampling procedures in part B of the Annex to Commission Regulation (EC) No 333/2007: `<sampMethod>N011A</sampMethod>`. References: Commission Recommendation (EU) 2022/495 (printed "(EC) 2022/495" in Table 8; Table 12 has "(EU)") and Commission Regulation (EC) No 333/2007. See [[ssd2-sampling-method-and-point]]. |
 
 (ChemMon 2026 pp. 90-91)
 

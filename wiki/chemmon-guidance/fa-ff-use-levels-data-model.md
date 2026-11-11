@@ -3,11 +3,11 @@ title: "FA/FF Use-levels Data Model"
 select_when: "FA/FF use levels and aggregated product data: prodId/matCode, marketing date, min/typical/max levels, dilution, USE rules and USE23 error. Use for this collection, not SSD2 results."
 type: "reference"
 domain: "additives"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "pp. 4-30 (Sections 1-4, Tables 1-3)"
+  - "pp. 4-28 (Sections 1-4, Figure 1, Tables 1-3)"
 related:
   - "[[food-additives-reporting]]"
   - "[[fa-ff-no-presence-data-model]]"
@@ -26,8 +26,8 @@ related:
 
 The **use-levels DM** collects FA/FF use levels (minimum / typical / maximum concentrations) reported by industry or by MS aggregating industry data, at **food-category** level rather than sample level. Commission Recommendation (EU) 2023/965 accepts either analytical data (SSD2) or use levels as the primary FA/FF intake data source; this DM carries the latter. (Use-levels 2026 pp. 4-5)
 
-- Use levels may be reported as actual/exact (in which case `minLevel`, `typicalLevel`, and `maxLevel` all equal the same value) or as a range. If the substance is not used in the category, all three levels must be 0 (USE09). (Use-levels 2026 pp. 14-15)
-- Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893177), exported to XML. Validation and acceptance mirror [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. (Use-levels 2026 p17, Figure 1)
+- Use levels may be reported as actual/exact (in which case `minLevel`, `typicalLevel`, and `maxLevel` all equal the same value) or as a range. If the substance is not used in the category, all three levels must be 0 (USE09). (Use-levels 2026 pp. 13, 15-16; Table 3 p25)
+- Data is submitted via the EFSA DCF using the Excel reporting tool (Zenodo DOI 10.5281/zenodo.14893177), exported to XML. Validation and acceptance mirror [[data-validation-and-acceptance]]: ack → BR validation → submit to sDWH → accept/reject via MicroStrategy. The DCF dataset statuses, the Replace step and the delay before data appear in MicroStrategy are described on that page. (Use-levels 2026 p17; Figure 1 p18)
 
 ## Fast routing
 
@@ -40,7 +40,8 @@ The **use-levels DM** collects FA/FF use levels (minimum / typical / maximum con
 
 <!-- Source: Use-levels 2026 p5 -->
 
-- The use-levels DM is **not implemented in SSD2.** SSD2 is designed for sample-level analytical data; the use-levels DM collects category-level aggregates and introduces elements (e.g. `marketCountry`, `minLevel`/`typicalLevel`/`maxLevel`, `conversionOrDilutionFactor`, `maxPermittedLevel`) that have no SSD2 equivalent.
+- The use-levels DM is **not implemented in SSD2.** It collects data of food categories and the FA/FF use level in those categories, while SSD2 was devised to host sample-based data collections. (Use-levels 2026 p5) The DM is nonetheless **SSD2-derived**: the earlier SSD1-based use-levels model was translated to SSD2. (Use-levels 2026 p6)
+- Wiki note (not in the guidance): `weight`, `fatPerc`, `moistPerc` and `unit` parallel the SSD2 elements `exprResType`, `exprResPerc.fatPerc`, `exprResPerc.moistPerc` and `resUnit`. (ChemMon 2026 pp. 69-70, 83)
 - Terminology and controlled vocabularies are aligned with SSD2 where applicable (`LEGREF`, `PARAM`, `MTX`, `CONCLUS`, `ADDFOOD`, `EXPRRES`, `FUNC`, `UNIT`), so downstream joins with analytical data remain coherent.
 - The DM is piloted annually and the 2026 version reflects changes incorporated from 2025 pilot feedback.
 
@@ -52,7 +53,7 @@ The highest-signal constraints for retrieval are:
 - `presenceAdded` accepts `C19A`, `C20A`, and `C05A`, including meaningful combinations such as `C19A$C05A` and `C20A$C05A`. `C19A` and `C20A` cannot coexist. (`USE09`, `USE18`, `USE19`)
 - `F33` is always required on `matCode`; `F03` and `F23` become conditional requirements from the reported legislative category. (`USE03`, `USE16`, `USE17`, `USE23`, `USE24`)
 - `functionOf` is required only for additive-domain records (`progLegalRef=N112A`). (`USE10`)
-- `weight`, `fatPerc`, `moistPerc`, `unit`, `conversionOrDilutionFactor`, and the three level fields are the part of this DM that has no SSD2 equivalent. (`USE11`-`USE15`, `USE25`)
+- `weight`, `fatPerc`, `moistPerc`, `unit`, `conversionOrDilutionFactor`, and the three level fields carry the expression basis and the level values. (`USE11`-`USE15`, `USE25`)
 - LLDB checks here are driven by the **marketing date**, not sampling date. (`USE_LLDB01`, `USE_LLDB02`)
 
 ## Data elements
@@ -85,10 +86,11 @@ See [[foodex2-in-chemmon]] for catalogue provenance and the unresolved historica
 edition of the ChemMon example.
 
 - `matCode` (mandatory, `MTX`/FoodEx2) — FoodEx2 base term plus required facets; see [[foodex2-in-chemmon]] for base-term rules.
-  - **F33 (legislative class)** must always be present, implicitly or explicitly (USE16). **USE23 is an Error (not a Warning):** if F33 is implicit in the base term, do not add an explicit F33. (Use-levels 2026 pp. 7-8)
+  - **F33 (legislative class)** must always be present, implicitly or explicitly (USE16). **USE23 is an Error (not a Warning):** if F33 is implicit in the base term, do not add an explicit F33. The legislative category "All categories of foods" is not allowed to be reported. (Use-levels 2026 pp. 7-8, 27)
   - **F03 (physical state)** must be explicitly added if not implicit, for the same list of legislative categories as the no-presence DM (01.5, 01.6, 01.8, 01.9, 01.10, 06.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5, 17 excl. infants/young children). (USE17)
-  - **F23 (target consumer)** required when F33 = 13 (foods for particular nutritional uses, Reg. 2009/39/EC). (USE03)
+  - **F23 (target consumer)** required when F33 = 13 (foods intended for particular nutritional uses, Directive 2009/39/EC). (USE03) (Use-levels 2026 p24)
   - **Generic codes forbidden (USE24):** `A047N` ("Food colours"), `A047Q` ("Artificial food colour"), `A047R` ("Food additives other than flavours, colours and artificial sweeteners"), `A047A` ("Food flavourings"), `A047P` ("Natural food colour"), `A0F3T` ("Preparations for food flavouring") are too broad and cannot be used as `matCode` — pick a more specific product category. (Use-levels 2026 p27)
+  - **Other worked examples** (Use-levels 2026 pp. 9-10): `A03QH` infant formula, milk and soya-based, liquid (F33 FA-13.1.1, F03 and F23 implicit); `A03MX` wine, red (F33 FA-14.2.2 implicit); `A03YN#F33.A0C33` omelette, plain (explicit F33 FA-10.2 Processed eggs and egg products); `A04KK#F03.A0CEA` tea leaves (F33 14.1.5.2 implicit, explicit F03 Solid); `A03SL#F03.A1B1Y$F33.A0C15` vitamin only supplements (explicit F03 Syrup-type and explicit F33 FA-17.2).
 - `matText` (optional, ≤400 chars) — free-text description; defaults to the text associated with `matCode` if empty. (Use-levels 2026 p10)
 - `brandName`, `manufacturer` (both optional, ≤250 chars) — brand and manufacturer of the product. (Use-levels 2026 p11)
 
@@ -103,7 +105,7 @@ edition of the ChemMon example.
 
 ### Parameter
 
-- `paramCode` (mandatory, `PARAM`) — `addAnalysis` hierarchy when `progLegalRef=N112A` (USE21), `flavAnalysis` when `progLegalRef=N113A` (USE22); USE07 is the overall scope rule. Multiple substances for the same product category share `prodId` with different `recId`. (Use-levels 2026 p11)
+- `paramCode` (mandatory, `PARAM`) — `addAnalysis` hierarchy when `progLegalRef=N112A` (USE21), `flavAnalysis` when `progLegalRef=N113A` (USE22); USE07 is the overall scope rule. Multiple substances for the same product category share `prodId` with different `recId`. Examples: `RF-00000019-ADD` (acetic acid), `RF-00004837-PAR` (1-butanol). (Use-levels 2026 p11)
 - `paramText` (optional, ≤400 chars) — substance name; populated by EFSA from `paramCode` if empty. (Use-levels 2026 p12)
 
 ### Record identification
@@ -118,10 +120,19 @@ edition of the ChemMon example.
   - `C05A` — "Natural occurrence", used when the substance is naturally in the matrix.
   - Combinations such as `C19A$C05A` (added and also naturally present) or `C20A$C05A` (not added but naturally present) are allowed.
   - `C19A` and `C20A` cannot coexist on the same record (USE18 — same mutual-exclusion rule as PRE10 in the no-presence DM). (Use-levels 2026 pp. 12-13)
+  - **Added but not on the label:** if the FA is not reported on the label but it has been added for other purposes, report `C19A`, not `C20A`; in this case the DP must specify the FA function in `functionOf`. (Use-levels 2026 p13)
+  - Worked examples (Use-levels 2026 pp. 13-14):
+
+    | Case | `presenceAdded` | `typicalLevel` | `maxLevel` | `functionOf` |
+    |---|---|---|---|---|
+    | Food additive present on the label and added as preservative | `C19A` | 100 | 100 | `pre` |
+    | Food additive not present on the label, but added as nutrient | `C19A` | 20 | 20 | `nut` |
+    | Food flavouring not present on the label, but added | `C19A` | 20 | 20 | empty |
+    | Food flavouring not present on the label but added, while some part could come naturally | `C19A$C05A` | 20 | 20 | empty |
 
 ### Functional class
 
-- `functionOf` (dependent mandatory, `FUNC`) — **required when `progLegalRef=N112A` (additive domain)** (USE10). Same catalogue and semantics as the no-presence DM's `functionOf`. The full list of 28 functional classes plus 5 Annex III classes is in `FUNC` and reproduced verbatim in the source PDF Table 2 (pp. 22-23). Not required for the flavouring domain. (Use-levels 2026 p14)
+- `functionOf` (dependent mandatory, `FUNC`) — **required when `progLegalRef=N112A` (additive domain)** (USE10). Same catalogue and semantics as the no-presence DM's `functionOf`. The full list of 28 functional classes plus 5 Annex III classes is in `FUNC` and reproduced verbatim in the source PDF Table 2 (pp. 22-23). Not required for the flavouring domain. Example codes printed in the guidance: `emu` (emulsifiers), `pre` (preservatives), `nut` (nutrient). (Use-levels 2026 pp. 13-14)
 
 ### Expression basis (weight)
 
@@ -149,11 +160,13 @@ edition of the ChemMon example.
 
 Twenty-seven operational rules (`USE01`–`USE27`) plus two LLDB-backed rules (`USE_LLDB01`, `USE_LLDB02`). All are **Active** and **Error** severity.
 
+Source discrepancy: p. 17 says a dataset is "Valid with warnings" when it "triggers BRs that are warnings (Table 3)", but Table 3 contains no Warning row; all 29 rows are Error. (Use-levels 2026 pp. 17, 24-28)
+
 | Rule | Severity | What it enforces | Source page |
 |---|---|---|---|
 | USE01 | Error | `(matCode, repCountry, marketCountry, brandName, manufacturer, foodIndustry, widelyConsumed, marketYear, marketMonth, marketDay)` must be constant per `prodId` | 24 |
 | USE02 | Error | `repYear` = data collection year | 24 |
-| USE03 | Error | F23 mandatory if F33 = 13 (foods for specific groups) | 24 |
+| USE03 | Error | F23 mandatory if F33 = 13 (foods intended for particular nutritional uses, Directive 2009/39/EC) | 24 |
 | USE04 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or `ADD00881A`) | 24 |
 | USE05 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or `ADD00881A`) | 24 |
 | USE06 | Error | `foodIndustry` must be Y for a food-industry manufacturer or N for a food additive/flavouring producer | 25 |
@@ -205,11 +218,29 @@ were compared on 5 October 2026. The following distinctions matter:
   convention in §2.25 applies. Do not invent a zero for every omitted minimum.
 - **As consumed:** §§2.24–2.26 highly recommend reporting levels as consumed.
   §2.27 describes the conversion/dilution factor more broadly than USE13's
-  category-17 trigger. For the source's 100-at-1:4 example, the stated factor
-  is 0.25; its application gives 25 in the same unit. Do not silently apply
-  that factor again to values already expressed as consumed.
-- **F23:** §2.7 p. 8 discusses infants, but USE03 and Table 1 explicitly
-  require the facet for legislative category 13. Preserve the rule's scope.
+  category-17 trigger. The source's only example row is infant formula
+  diluted 1:4: `minLevel` 100, `typicalLevel` 100, `maxLevel` 100,
+  `conversionOrDilutionFactor` 0.25; the factor "must be indicated with the
+  value that needs to be applied to the minimum, typical and maximum values"
+  (Use-levels 2026 p16). Wiki note (not in the guidance): the guidance prints
+  no converted value and does not say whether the reported levels are before
+  or after the factor is applied.
+- **F23:** Source discrepancy: §2.7 (p. 8) says F23 "should be added" when
+  the product is formulated for infants (<12 months) in category 13; USE03
+  (p. 24) and Table 1 (p. 19) say F23 must be reported for legislative
+  category 13 without the infant condition. USE03 is an Error rule, so
+  validation enforces the category-13 scope. (Use-levels 2026 pp. 8, 19, 24)
+- **Category 13 name:** Source discrepancy: §2.7's F23 sentence (p. 8) and
+  USE03 (p. 24) call it "Foods intended for particular nutritional uses as
+  defined by Directive 2009/39/EC"; the F03 list (p. 8) and USE17 (p. 26) call
+  it "13 Foods intended for specific groups as defined by Regulation (EU) No
+  609/2013". (Use-levels 2026 pp. 8, 24, 26)
+- **Explicit facets:** Source discrepancy: Table 1's `matCode` note (p. 19)
+  says F33, F23 and F03 "must be included if not implicitly present in the
+  term extended code, or when a more detailed facet needs to be specified";
+  USE23 (p. 27) says that if F33 is implicit "an explicit F33 cannot be
+  reported". USE23 is an Error rule, so validation enforces it for F33.
+  (Use-levels 2026 pp. 19, 27)
 - **USE27 (p. 28):** its description states the failure (`maxLevel` exceeds
   the reported MPL); its error column states the passing condition, `≤`.
   USE_LLDB02 checks the separate MPL from the legal-limit database.

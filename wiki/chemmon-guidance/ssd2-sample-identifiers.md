@@ -58,8 +58,8 @@ parameter exception. These are distinct requirements.
 Source discrepancy: the D.01 text says "the same sampId must be used for all the
 results. Business rule, GBR2, applies to ensure that." (ChemMon 2026 p30). The
 `GBR2` row in Table 9 does not check `sampId` reuse: it requires the section A, B
-and C descriptors to be constant for records with the same `sampId` and/or
-`sampEventId` (ChemMon 2026 p98). Validation enforces the Table 9 rule.
+and C descriptors, except `progId` and `progLegalRef`, to be constant for records
+with the same `sampId` and/or `sampEventId` (ChemMon 2026 p98). Validation enforces the Table 9 rule.
 
 ## origSampId — Original sample identifier
 

@@ -9,7 +9,7 @@ source_pages:
   - "pp. 18-19 (Section 2, element B.02)"
   - "ChemMon 2026 pp. 146-147 (Table 12)"
   - "pp. 11, 20, 23-24 (N422A change note, ST30A example, Table 2 header and N317A column)"
-  - "pp. 138-139 (Table 10, CHEMON101, CHEMON104, CHEMON105)"
+  - "pp. 126, 138-139 (Table 10, CHEMON54, CHEMON101, CHEMON104, CHEMON105)"
 related:
   - "[[ssd2-elements-programme]]"
   - "[[ssd2-programme-valid-combinations]]"
@@ -102,7 +102,7 @@ Table 12 lists the `progLegalRef` codes in the `ChemMonLegRef` hierarchy and the
 Notes:
 
 - `N028A` / `N318A`: "Each paramCode reported will fall under its corresponding domain. If a given paramCode belongs to pesticide and contaminant domains, that result will be taken for the pesticide Annual Report output, as well as for contaminant covering baby food outputs." (ChemMon 2026 p19)
-- `N317A` — Source discrepancy: the B.02 example describes "Suspect or targeted samples" (ChemMon 2026 p19), but the B.03 example says `ST30A` (suspect sampling) "Must be used when reporting samples taken under Regulation (EU) 2019/1793 or Regulation (EU) 2019/1873" (ChemMon 2026 p20), and Table 2 lists only `ST30A` for `N317A` (ChemMon 2026 p24). Selective/targeted sampling (`ST20A`) is not a listed combination.
+- `N317A` — Source discrepancy: the B.02 example describes "Suspect or targeted samples" (ChemMon 2026 p19), but the B.03 example says `ST30A` (suspect sampling) "Must be used when reporting samples taken under Regulation (EU) 2019/1793 or Regulation (EU) 2019/1873" (ChemMon 2026 p20), and Table 2 lists only `ST30A` for `N317A` (ChemMon 2026 p24). Selective/targeted sampling (`ST20A`) is not a listed combination. Validation settles it: `CHEMON54` (Error) requires `progType` `K019A` and `sampStrategy` `ST30A` for `N317A` (ChemMon 2026 Table 10, p. 126).
 - `N371A`: "This is the only code to be selected (alone or in combination with other codes, e.g. in combination with code N027A for the pesticide residue monitoring activities) in order to flag that the sample was taken according to the three different plans" of Regulation (EU) 2022/1646. (ChemMon 2026 p19)
 - `N422A`: Table 12 prints "2022/1873"; every other mention in the guidance (pp. 6, 11, 23-24 and CHEMON104 on p. 139) gives Regulation (EU) **2019/1873**, the regulation on intensified controls on products of animal origin. Treat 2022/1873 as a typo in Table 12.
 - Source discrepancy: Table 1 says `N422A` "has been flagged for contaminants, pesticides, VMPR, food additives and food flavourings" (ChemMon 2026 p11), while Table 12 gives only `OCC, PEST, VMPR` (ChemMon 2026 p146). The guidance does not reconcile the two.
@@ -126,4 +126,5 @@ Notes:
 - `CHEMON68` — `progLegalRef` domain must match `paramCode`. See [[business-rules-cross-cutting]].
 - `CHEMON101` — for `N422A`, `progType` must be `K019A` and `sampStrategy` must be `ST30A`. See [[business-rules-cross-cutting]]. (ChemMon 2026 pp. 138-139)
 - `CHEMON104` — `N422A` is exclusive. See [[business-rules-cross-cutting]]. (ChemMon 2026 p139)
+- `CHEMON54` — for `N317A`, `progType` must be `K019A` and `sampStrategy` must be `ST30A` (Error). See [[business-rules-cross-cutting]]. (ChemMon 2026 p126)
 - `CHEMON105` — N317A is exclusive across applicable domains. See [[business-rules-cross-cutting]].

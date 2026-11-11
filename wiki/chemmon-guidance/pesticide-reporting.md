@@ -64,7 +64,7 @@ The full list of 31 codes is on [[ssd2-programme-legal-reference]]. (ChemMon 202
 (ChemMon 2026 p20)
 
 - Samples falling under the EU MACP should be reported with `ST10A` or `ST20A`. (ChemMon 2026 p20)
-- `progType`: EU MACP samples should use `K009A`; MANCP samples taken in the EU market `K005A`; `K018A` can be used if the same sample serves other domain programmes (and for a wider analytical scope than the EU MACP pesticide/crop combinations); at the border use `K019A` for the EU increased control programme under Regulation (EU) 2019/1793, otherwise `K038A`. (ChemMon 2026 p21) See [[ssd2-programme-strategy-and-type]].
+- `progType`: EU MACP samples should use `K009A`; MANCP samples taken in the EU market `K005A`; `K018A` is for samples that are part of both an EU MACP and a national programme, should also be used when the analytical scope is wider than the EU MACP pesticide/crop combinations, and can be used if the same sample serves other domain programmes "as long as the sample strategy is used in accordance with Table 2"; at the border use `K019A` for the EU increased control programme under Regulation (EU) 2019/1793, otherwise `K038A`. (ChemMon 2026 p21) See [[ssd2-programme-strategy-and-type]].
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 13, 41, 86, 135 -->
 ## Copper-Specific Requirements

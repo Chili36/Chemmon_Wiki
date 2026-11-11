@@ -5,6 +5,12 @@ last_updated: "2026-11-11"
 
 # Log
 
+## [2026-11-11] correction | Remaining pages audited; #68 fixes independently reviewed (#69)
+
+- **Pages #68 had skipped**: the four GBR pages, [[fa-ff-no-presence-data-model]], [[fa-ff-use-levels-data-model]] and the leftover sections were compared with the PDFs. The rule and field tables were all correct (83 GBR rows, 18 + 31 elements, 17 PRE + 29 USE rules). 35 problems in the prose were fixed, among them: GBRs apply to all DCF data (p. 97), so the claim that they are not run on PRE/USE submissions is now a labelled open point; `C19A` for an additive added but not on the label; the "All categories of foods" ban; `CHEMON86` covers all of dairy category 1 while `PRE09`/`USE17` list five subcategories; `LL_03_FA_FF` is a Warning where the identical `USE_LLDB01` is an Error; the FA/FF dataset statuses and Replace step are on [[data-validation-and-acceptance]].
+- **Independent review of yesterday's fixes**: seven reviewers that wrote none of the pages checked all 1,068 added lines against the source. No wrong code, rule ID, severity, page citation or table cell. 27 smaller problems fixed; the one that could cause wrong data was `GBR2` on two sampling pages, stated without the `progId`/`progLegalRef` exclusion (p. 98). Two more slips from yesterday's fix on [[chemmon-overview]] were also corrected (use levels are not in SSD2; a page citation).
+- Every hand-written page has now been compared with the PDFs. Still not done: checking quoted codes against the live EFSA catalogues.
+
 ## [2026-11-11] correction | Full source audit: 131 findings fixed (#68)
 
 After #63, every hand-written page except the GBR and FA/FF data-model pages was compared with the PDFs, page by page, by six reviewer agents; each finding quotes the wiki line and the PDF page. The same agents applied the fixes from the source and the lead session verified them.

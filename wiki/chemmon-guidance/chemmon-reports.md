@@ -6,7 +6,7 @@ last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "pp. 149-151 (Section 10; Table 13)"
+  - "p. 148 (Section 9, flags); pp. 149-151 (Section 10; Table 13)"
 related:
   - "[[reporting-flags]]"
   - "[[data-validation-and-acceptance]]"
