@@ -101,6 +101,7 @@ def run_doctor(root: Path | str = ".", *, check_external_links: bool = False,
     table_issues, table_summary = check_source_tables(root, pages)
     issues.extend(table_issues)
     issues.extend(check_rule_scope(pages))
+    issues.extend(check_content_review(root))
     issues.extend(check_log_chronology(store.log_path))
     issues.extend(check_markdown_links(store, pages))
     issues.extend(check_incoming_links(pages))
@@ -359,6 +360,16 @@ def check_rule_scope(pages: dict[str, Page]) -> Iterable[DoctorIssue]:
                 yield DoctorIssue("error", "rule_scope", f"{name}:{line + page.body_offset}",
                                   f"{rule} is described for {'/'.join(sorted(named))}, but {defining} scopes it to "
                                   f"{'/'.join(sorted(canon))}.")
+
+
+# --- content review ---------------------------------------------------------
+
+def check_content_review(root: Path) -> Iterable[DoctorIssue]:
+    """Every page must match the version an independent reader checked against the PDFs (#72)."""
+    from wiki_api.content_review import record_problems
+
+    for location, message in record_problems(root):
+        yield DoctorIssue("error", "content_review", location, message)
 
 
 # --- ported FoodEx2 checks --------------------------------------------------

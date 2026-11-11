@@ -5,6 +5,15 @@ last_updated: "2026-11-11"
 
 # Log
 
+## [2026-11-11] tooling | Independent content review automated (#72)
+
+- **New tool**: `python -m wiki_api.content_review --review` sends each changed page and its source PDFs to a fresh model call (`claude-opus-5-5`, effort `xhigh`; set `CONTENT_REVIEW_MODEL` / `CONTENT_REVIEW_EFFORT` to change). For every changed line the reviewer must quote the source passage and give a verdict; a review that skips a line, stops early or is refused records nothing.
+- **Enforced**: `docs/content-review.json` holds the hash of each page as reviewed. The wiki doctor (and so CI) fails while a page differs from its record. Findings the reviewer got wrong are waived with a recorded reason.
+- **Baseline**: the 75 hand-written pages are recorded as `adopted` from the 2026-11-11 audit (#68, #69), not from a model review by this tool.
+- **Measured, not assumed**: on five pages of the #68 fixes it flagged 4 of the 9 errors that the #69 reviewers had found on changed lines as blocking, 1 as a non-blocking note, and missed 4. A first version without per-line verdicts caught none of them. It also caught both errors injected into a test page. It is a second reader, not proof.
+- **Ingest flow**: [[INGEST_WORKFLOW]] now has Pass D (independent review), source-first writing rules and the rule that every report says what was not checked. [[MAINTENANCE_WORKFLOW]] has the same step.
+- Not covered: disagreement between two wiki pages, errors on unchanged lines, and codes against the live EFSA catalogues.
+
 ## [2026-11-11] correction | Remaining pages audited; #68 fixes independently reviewed (#69)
 
 - **Pages #68 had skipped**: the four GBR pages, [[fa-ff-no-presence-data-model]], [[fa-ff-use-levels-data-model]] and the leftover sections were compared with the PDFs. The rule and field tables were all correct (83 GBR rows, 18 + 31 elements, 17 PRE + 29 USE rules). 35 problems in the prose were fixed, among them: GBRs apply to all DCF data (p. 97), so the claim that they are not run on PRE/USE submissions is now a labelled open point; `C19A` for an additive added but not on the label; the "All categories of foods" ban; `CHEMON86` covers all of dairy category 1 while `PRE09`/`USE17` list five subcategories; `LL_03_FA_FF` is a Warning where the identical `USE_LLDB01` is an Error; the FA/FF dataset statuses and Replace step are on [[data-validation-and-acceptance]].

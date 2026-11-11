@@ -2,7 +2,7 @@
 title: "Ingest Workflow"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-13"
+last_updated: "2026-11-11"
 ---
 
 # Ingest Workflow
@@ -42,10 +42,11 @@ into these types (see `SCHEMA.md`): **overview**, **reference**,
 **domain-guide**, **rule-reference**, **hub**. Ask which of these the new
 source contributes to — usually several.
 
-## The three passes
+## The four passes
 
 Large-source ingest (annual guidance PDFs, major updates) uses three passes
-over the source. **Never skip directly to writing.**
+over the source and a fourth by a reader who did not write the text.
+**Never skip directly to writing, and never merge without Pass D.**
 
 ### Pass A — structure scan
 
@@ -80,6 +81,22 @@ extract only:
 re-statements of context, per-example anecdotes that don't generalize,
 document navigation prose.
 
+**Write from the source page, not from memory or another wiki page.** The
+2026-11-11 audit (#68, #69) found 166 errors, most on pages that restated
+other pages. For every claim:
+
+- Open the PDF page before writing and put its page number on the claim,
+  e.g. `(ChemMon 2026 p71)`.
+- For a table, render the page (`pdftoppm -r 110 -png -f N -l N`) and read
+  the image. `pdftotext -layout` misaligns columns.
+- Keep the source's requirement strength word for word: must / mandatory,
+  should, recommended, highly recommended, Error, Warning.
+- Keep the rest of the sentence or table row: "except", "only", "for
+  example", "unless" and row notes are where the errors were.
+- Where the source disagrees with itself, state both sides with their pages
+  under "Source discrepancy:". Do not pick a side silently.
+- Label your own inference "Wiki note (not in the guidance):".
+
 Write into target pages in **rule-first order**: the rule leads, then the
 qualifier (when it applies, exceptions, domain), then the example if the
 example teaches something reusable. Do not lead with context, overview, or
@@ -101,6 +118,56 @@ After writing, re-walk the wiki as a whole and check:
   for the human to resolve; do not silently pick a winner)
 
 Fix everything catchable before committing.
+
+### Pass D — independent content review
+
+The writer cannot check their own text: the agents that fixed the #68 audit
+findings introduced 27 new errors, which only fresh readers found. So every
+changed page is read against the PDFs by a reviewer that sees only the page
+and the PDFs.
+
+```bash
+python -m wiki_api.content_review            # which pages need a review (no model call)
+python -m wiki_api.content_review --review   # review them; needs ANTHROPIC_API_KEY
+```
+
+For each changed line the reviewer must quote the source passage and give a
+verdict. It reports findings with the wiki line, the source page and both
+quotes, and records each clean page in `docs/content-review.json`.
+
+- **Blocking finding** (confidence HIGH or MEDIUM): open the PDF page and
+  check it yourself. If the reviewer is right, fix the page and run
+  `--review` again. If it is wrong, record why:
+  `--waive PAGE --reason "..."`. The waived finding stays in the record.
+- **Notes** (confidence LOW, or removed text that may have moved to another
+  page): read each one. They do not block, but about one real error in ten
+  arrived as a note in testing.
+- **Front-matter-only changes** (`last_updated`, `related`, `select_when`)
+  are recorded without a model call. A change to `sources` or
+  `source_pages` is a claim and is reviewed.
+- **Generated pages** are exempt; the health check compares them with their
+  generator.
+
+The wiki doctor fails while any page differs from its record, so CI blocks
+a pull request with unreviewed content. `--adopt --reason "..."` records a
+page without a model review; use it only when the page was checked another
+way, and say how.
+
+**What this does not give you.** The reviewer is a second reader, not proof.
+Tested on the #68 fixes it caught about half of the errors that human-led
+reviewers had found on the same lines, and none of the errors on lines it
+was not asked to read. It cannot see other wiki pages, so it does not catch
+two pages that disagree. It checks against the PDFs, not against EFSA's
+live catalogues. For a new guidance edition or a rewrite of a whole page
+family, add a manual review by fresh reviewers as in #69.
+
+### Reporting what was done
+
+Every report of an ingest or audit, to the user and in `log.md`, states
+**what was not checked**: pages not read, source pages not opened, tables
+taken from text instead of the image, findings waived. Leaving pages out of
+scope is the user's decision. Ask before you narrow the scope; do not
+report "done" on a part.
 
 ## Dataset sources
 
@@ -259,11 +326,12 @@ Run:
 
 ```bash
 . .venv/bin/activate
-python -m wiki_api.doctor         # health check + source tables, rule scope, spelling, log, links
+python -m wiki_api.content_review --review   # Pass D: independent review of changed pages
+python -m wiki_api.doctor         # health check + source tables, rule scope, spelling, log, links, content review
 pytest -q                          # public API + store behavior
 ```
 
-Both must pass. The doctor runs the health check (broken cross-links, missing
+All must pass. The doctor runs the health check (broken cross-links, missing
 frontmatter fields, duplicate rule IDs) and adds the checks from #63/#64:
 
 - **Source tables.** If `source_pages` names a table ("Table 2"), register it in
@@ -274,6 +342,11 @@ frontmatter fields, duplicate rule IDs) and adds the checks from #63/#64:
 - **Rule scope.** A paragraph citing one rule must not name fewer domains than
   the rule's row on its business-rules page (CHEMON58 is pesticides **and** VMPR).
 - **Spelling.** Rule IDs are `CHEMON<n>`, as in the source.
+- **Content review.** Every page matches the version recorded in
+  `docs/content-review.json` (Pass D).
+
+A green doctor means the structure holds and the changed lines had a second
+reader. It does not mean the content is right.
 
 The test suite guards the store and API contract.
 
@@ -292,3 +365,6 @@ The test suite guards the store and API contract.
 - **Do not dump document-order prose.** Compress to rules. If you can't
   compress it to a rule, it probably doesn't belong in the wiki.
 - **Do not skip Pass A.** Structure scan is what prevents reactive ingests.
+- **Do not skip Pass D, and do not edit `docs/content-review.json` by hand.**
+  A hash without a review is the false green the record exists to prevent.
+- **Do not restate another wiki page.** Link to it, or write from the PDF.

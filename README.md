@@ -232,9 +232,13 @@ async def ask_agent(question: str) -> str:
 
 ## Maintenance and roadmap
 
-Run `python -m wiki_api.doctor` and `pytest -q` after changes. The doctor
+After changing a wiki page, run `python -m wiki_api.content_review --review`: a
+fresh model call checks every changed line against the source PDFs and records
+the clean pages in `docs/content-review.json`. Then run
+`python -m wiki_api.doctor` and `pytest -q`. The doctor
 includes the health check and adds source-table coverage (`docs/source-tables.json`),
-rule-scope consistency, rule-ID spelling, log order and link checks; see
+rule-scope consistency, rule-ID spelling, log order, link checks and a check
+that every page matches its content review; see
 [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md). A weekly run also checks external links. When rd-bridge
 publishes a new version, run `python tools/ingest_rd_bridge.py` and follow the
 dataset steps in [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md); a daily workflow
