@@ -133,3 +133,21 @@ def test_saving_the_record_drops_deleted_pages(tmp_path):
     record = {"version": 1, "pages": {"a.md": {"sha256": cr.sha256_text(OLD)}, "gone.md": {"sha256": "0" * 64}}}
     cr.save_record(root, record, prune=True)
     assert list(cr.load_record(root)["pages"]) == ["a.md"] and list(cr.record_problems(root)) == []
+
+
+def test_dataset_sources_are_sent_cut_down_to_the_cited_records(tmp_path):
+    root = _root(tmp_path, {})
+    folder = root / cr.DATASET_DIR / "datasets/rd"
+    folder.mkdir(parents=True)
+    records = [{"residue_id": i, "name": "x" * 700} for i in range(1, 121)]
+    (folder / "map.json").write_text(json.dumps(records))
+    (folder / "notes.md").write_text("Licence terms.")
+    page = OLD.replace('  - "guide.pdf"', '  - "datasets/rd/map.json"\n  - "datasets/rd/notes.md"') + \
+        "\n<!-- Source: datasets/rd/map.json @ abc, residue_id 7, 30 and 119 -->\n"
+    content = cr.build_request(root, cr.page_change("d.md", None, page), "m")["messages"][0]["content"]
+    assert [b["type"] for b in content] == ["text", "text", "text"]  # no PDF, two dataset files, the page
+    assert "only the 3 of 120 records" in content[0]["text"] and '"residue_id": 119' in content[0]["text"]
+    assert '"residue_id": 8,' not in content[0]["text"] and "Licence terms." in content[1]["text"]
+    missing = cr.page_change("e.md", None, OLD.replace('  - "guide.pdf"', '  - "datasets/rd/absent.json"'))
+    with pytest.raises(cr.ReviewError, match="not found"):
+        cr.build_request(root, missing, "m")

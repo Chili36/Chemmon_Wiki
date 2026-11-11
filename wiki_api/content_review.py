@@ -19,6 +19,7 @@ import difflib
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
@@ -32,6 +33,9 @@ RECORD_PATH = Path("docs/content-review.json")
 REGISTRY_PATH = Path("docs/source-tables.json")
 WIKI_DIR = Path("wiki/chemmon-guidance")
 REPORT_DIR = Path("reports/content-review")
+DATASET_DIR = Path("chemmon_docs")
+DATASET_WHOLE_FILE_BYTES = 60_000   # larger JSON lists are cut down to the records the page cites
+RESIDUE_ID_RE = re.compile(r"residue_id\s+(\d+(?:\s*(?:,|and)\s*\d+)*)")
 DEFAULT_MODEL = "claude-opus-5-5"
 MODEL_ENV = "CONTENT_REVIEW_MODEL"
 MAX_OUTPUT_TOKENS = 64000
@@ -83,6 +87,11 @@ Not findings: style, wording, correct paraphrase, formatting, length, structure.
 CHEMON, which is correct. A line labelled "Wiki note (not in the guidance):" is the wiki's own reading \
 and is allowed unless it contradicts the source. Wiki links like [[page-name]] point to other pages you \
 cannot see; do not report what they might say.
+
+Some pages also cite a dataset (rd-bridge, EU Annex I) with locators such as "residue_id 253". Those \
+files are attached as text. A large file is cut down to the records the page cites, so a dataset claim \
+whose record is not in the excerpt has a bad citation. Check dataset claims against the excerpt in the \
+same way; use source_page 0 for them.
 
 Quote the wiki text and the source text verbatim and briefly. Confidence: HIGH when you read both and \
 they plainly differ; MEDIUM when they differ but the source is ambiguous; LOW for a suspicion you could \
@@ -303,12 +312,36 @@ def source_documents(root: Path, frontmatter: dict) -> list[tuple[str, Path]]:
     return documents
 
 
+def dataset_excerpts(root: Path, change_text: str, frontmatter: dict) -> list[tuple[str, str]]:
+    """(label, text) for the dataset files in the page's `sources`."""
+    cited = {int(n) for group in RESIDUE_ID_RE.findall(change_text) for n in re.findall(r"\d+", group)}
+    excerpts = []
+    for source in frontmatter.get("sources", []) or []:
+        if not isinstance(source, str) or not source.startswith("datasets/"):
+            continue
+        path = root / DATASET_DIR / source
+        if not path.is_file():
+            raise ReviewError(f"dataset source not found: {source}")
+        text = path.read_text(encoding="utf-8")
+        label = source
+        if path.suffix == ".json" and len(text.encode("utf-8")) > DATASET_WHOLE_FILE_BYTES:
+            data = json.loads(text)
+            if not (isinstance(data, list) and all(isinstance(r, dict) and "residue_id" in r for r in data)):
+                raise ReviewError(f"{source} is too large to send whole and has no residue_id records to select")
+            records = [r for r in data if r["residue_id"] in cited]
+            text = json.dumps(records, indent=1, ensure_ascii=False)
+            label = f"{source} (only the {len(records)} of {len(data)} records whose residue_id the page cites)"
+        excerpts.append((label, text))
+    return excerpts
+
+
 def build_request(root: Path, change: PageChange, model: str, effort: str = DEFAULT_EFFORT) -> dict:
     frontmatter, _ = split_frontmatter(change.text)
     documents = source_documents(root, frontmatter)
-    if not documents:
-        raise ReviewError(f"{change.name}: no source PDF from docs/source-tables.json in its `sources`; "
-                          "nothing to review it against.")
+    datasets = dataset_excerpts(root, change.text, frontmatter)
+    if not documents and not datasets:
+        raise ReviewError(f"{change.name}: its `sources` name no PDF from docs/source-tables.json and no "
+                          "dataset file; nothing to review it against.")
     content: list[dict] = []
     for label, path in documents:
         content.append({
@@ -318,11 +351,13 @@ def build_request(root: Path, change: PageChange, model: str, effort: str = DEFA
         })
     # At most four cache breakpoints per request, and the system prompt uses one. The first PDF
     # is shared by nearly every page; the last closes the whole document prefix.
-    for block in {id(b): b for b in (content[0], content[-1])}.values():
+    for block in {id(b): b for b in content[:1] + content[-1:]}.values():
         block["cache_control"] = {"type": "ephemeral"}
+    for label, text in datasets:
+        content.append({"type": "text", "text": f"Dataset file: {label}\n\n{text}"})
     numbered = "\n".join(f"{i:>4}| {line}" for i, line in enumerate(change.text.splitlines(), 1))
     parts = [f"Wiki page: {change.name}",
-             "Attached sources: " + "; ".join(label for label, _ in documents),
+             "Attached sources: " + "; ".join(label for label, _ in documents + datasets),
              "The page with line numbers:", numbered,
              ("This page is new: every line is a changed line." if change.is_new
               else f"Changed lines to review: {_ranges(change.changed_lines)}")]
