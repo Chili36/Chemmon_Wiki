@@ -13,88 +13,102 @@ related:
   - "[[business-rules]]"
   - "[[foodex2-in-chemmon]]"
   - "[[ssd2-element-reference]]"
-last_updated: "2026-11-10"
+source_pages:
+  - "SSD2 2013 pp. 8-12 (Introduction; data elements, controlled terminologies, business rules)"
+  - "SSD2 2013 pp. 16-19 (Section 5, data structure, Figure 3)"
+  - "SSD2 2013 p. 22 (Table 4, list of elements)"
+  - "SSD2 2013 pp. 78-79 (controlled terminology maintenance and versioning)"
+  - "ChemMon 2026 pp. 80-84 (Table 7, mandatory/optional elements)"
+last_updated: "2026-11-11"
 ---
 
 # SSD2 Data Model
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p7-10 -->
+<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p8 -->
 ## Purpose
 
-- The Standard Sample Description version 2 (SSD2) is a harmonised data format for describing food and feed samples, the analytical methods applied to them, and the results obtained. (SSD2 p7-9)
-- SSD2 provides a common language across EU Member States so that data submitted to EFSA can be aggregated, compared, and analysed consistently regardless of the originating country or laboratory. (SSD2 p7)
-- All ChemMon reporting domains use SSD2 as the mandatory submission format through the Data Collection Framework. See [[chemmon-overview]] for how the domains are organised and [[chemmon-single-ssd2-collection]] for the consolidation rationale. (ChemMon 2026 p10-12)
+- The Standard Sample Description version 2 (SSD2) specifies the data elements and the data structure to describe several types of samples and results coming from laboratory analytical measurements. It extends the scope of SSD1 from food and feed samples to include samples of animal origin and environmental samples (for zoonoses, zoonotic agents and antimicrobial resistance). (SSD2 p8)
+- SSD2 defines a logical model that is independent of the file format; it is composed of data element definitions and structure, controlled terminologies, and business rules. (SSD2 pp. 8-9)
+- The ChemMon guidance tells data providers how to report the chemical monitoring domains using SSD2. See [[chemmon-overview]] for how the domains are organised and [[chemmon-single-ssd2-collection]] for the consolidation rationale.
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p10-18 -->
+<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf pp. 16-19 -->
 ## Main Entities
 
-The SSD2 model is organised around a chain of entities that describe the journey from sampling programme through to evaluated result:
+SSD2 takes into account the logical relationships between these key entities, each a section of the element list:
 
-| Entity | Role |
-| --- | --- |
-| Local Organisation | The reporting organisation responsible for the data. |
-| Sampling Programme | The monitoring or control programme under which samples are taken. |
-| Sampling Event | A specific sampling occasion: where, when, and how the sample was obtained. |
-| Sample Taken | The physical sample collected at the sampling event. |
-| Matrix Sampled | What was sampled, coded using FoodEx2 (`sampMatCode`). See [[foodex2-in-chemmon]]. |
-| Sample Analysed | The portion of the sample that was actually analysed (may differ from what was sampled). |
-| Matrix Analysed | What was analysed, again coded with FoodEx2 (`anMatCode`). |
-| Laboratory | The laboratory that performed the analysis. |
-| Parameter | The analyte or substance measured (`paramCode`). |
-| Analytical Method | The method and technique used for detection and quantification. |
-| Result | The measured or derived value (`resVal`), including units, LOD, and LOQ. |
-| Evaluation | The regulatory assessment of the result (`evalCode`): compliant, non-compliant, etc. |
+| Section | Entity | Role |
+| --- | --- | --- |
+| A | Local organisation | The organisation (local/regional/National Competent Authority) that initially requested or performed the sampling and is responsible for the implementation of the sampling programme. |
+| B | Sampling programme | The criteria, purpose, method or legislative reference used to generate a sampling event. |
+| C | Sampling event | The sampling unit extracted at a certain time from the sampled population (e.g. an animal, a flock/herd, a batch or lot of products sampled at a certain time). |
+| D | Sample taken | One or more samples taken from the sampling unit at a certain time. |
+| E | Matrix sampled | The item sampled and its relevant characteristics available before the analysis (`sampMatCode`). See [[foodex2-in-chemmon]]. |
+| F | Sample analysed | The sample as it is analysed by the laboratory; usually, but not always, identical to the sample taken. |
+| G | Matrix analysed | The matrix analysed and its relevant characteristics (`anMatCode`); often the same as the matrix sampled. |
+| H | Sample analysed portion | A replicate ("test portion") achieved by subdividing the sample analysed; only needed when a data collection domain explicitly requires replicate results. |
+| I | Isolate | A culture of a biological agent isolated from a specific sample taken. |
+| J | Laboratory | The laboratory in which the analysis was performed or that is responsible for the results. |
+| K | Parameter | The parameter (analyte) determined in the matrix analysed (`paramCode`). |
+| L | Analytical method | The laboratory method of analysis and diagnostic method used to generate the result. |
+| M | Result | The result of the laboratory tests, as a quantitative or qualitative outcome value, with accreditation procedure and limits of detection and quantification. |
+| N | Evaluation | Assessment of the result, evaluating its compliance with a defined limit (`evalCode`). |
 
-These entities are linked by foreign-key relationships: a sampling programme contains sampling events, each event produces samples taken, and so on down to individual results and their evaluations. (SSD2 p10-18)
+(SSD2 pp. 16-17)
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p19-22 -->
+Figure 3 shows the relationships between the entities, but the structure "is implemented in the SSD in denormalised format": one flat record per result, with the values of the upper-level entities (e.g. the sample taken identifier) repeated on each record. (SSD2 pp. 18-19)
+
+<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf pp. 9-11 -->
 ## Element Types
 
-SSD2 elements fall into three types:
+SSD2 supports three types of data elements:
 
-- **Simple elements**: single-value fields such as `sampId` (sample identifier) or `analysisY` (analysis year). Each carries one value per record. (SSD2 p19)
-- **Repeatable elements**: elements that may appear more than once within a record, such as multiple parameter codes for a screening result. (SSD2 p19-20)
-- **Compound elements**: elements composed of a base term plus optional facets, following FoodEx2 encoding conventions. `sampMatCode` and `anMatCode` are the primary compound elements. The base term identifies the food category; facets add detail such as processing state, source animal, or production method. For the ChemMon rationale behind compound-element flexibility, see [[chemmon-data-governance-and-transparency]]. (SSD2 p20-22)
+- **Simple elements**: can contain only one instance of an element value, which may be a text value, a numeric value or a catalogue value. These were the only type available in SSD1. (SSD2 p9)
+- **Repeatable elements**: may contain one or many instances of an element value. The source example is "Action taken" (N.05), e.g. `A$R` for "Administrative consequences" and "Rapid alert notification". (SSD2 p9)
+- **Compound elements**: may contain one or many simple elements, named "attributes"; both the attribute name and its value are included. Either all attributes are at the same level and independent (`element1=value1$element2=value2`), or one attribute is the default "base term" and the others are "facets" that further describe it (`baseTerm#facet1=value1$…`), as in "matrix analysed", which follows FoodEx2 (e.g. `A01TX#F01.A057E$F02.A069J`). (SSD2 p10) For the ChemMon rationale behind compound-element flexibility, see [[chemmon-data-governance-and-transparency]].
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p22-30; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p10-14 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 80-84 (Table 7) -->
 ## Key Mandatory Elements
 
-The following elements are mandatory in most ChemMon submissions:
+Mandatory/optional status for chemical monitoring is set by ChemMon Table 7 (full list on [[ssd2-element-reference]]). Examples of elements marked Mandatory there:
 
 | Element | Description |
 | --- | --- |
-| `sampId` | Unique sample identifier within the reporting country. |
-| `sampMatCode` | FoodEx2 code for the matrix sampled (compound element). |
-| `analysisY` | Year the analysis was performed. |
-| `paramCode` | SSD parameter code identifying the analyte measured. |
-| `resVal` | Result value -- the numeric analytical finding. |
-| `evalCode` | Evaluation code indicating the regulatory assessment of the result. |
+| `sampId` | Sample taken identification code (D.01); each sample must be identified by a unique sample identification reference (ChemMon 2026 p30). |
+| `sampMatCode` | Coded description of the matrix of the sample taken (E.02; FoodEx2 compound element). |
+| `analysisY` | Year of analysis (F.03). |
+| `paramCode` | Coded description of the parameter (K.02). |
+| `resType` | Type of result (M.16). |
+| `evalCode` | Evaluation of the result (N.04). |
 
-Additional elements become mandatory depending on the reporting domain and the specific business rules that apply. See [[business-rules]]. (SSD2 p22-30; ChemMon 2026 p10-14)
+(ChemMon 2026 Table 7 pp. 80-84)
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p19, 37-40 -->
+`resVal` (M.10) is **Optional** in Table 7 (p. 83): when `resType` is `LOQ`, `LOD` or `BIN`, `resVal` must be empty. (ChemMon 2026 p71) Additional elements become mandatory depending on the reporting domain and the specific business rules that apply. See [[business-rules]].
+
+<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf pp. 12, 78-79 -->
 ## Controlled Terminologies
 
-- Most categorical elements draw their allowed values from controlled terminologies: finite, enumerated sets of codes maintained by EFSA. (SSD2 p19, p37-40)
-- Codes are language-independent. A `paramCode` such as `RF-00000001-PAR` maps to a specific substance regardless of language or local naming. (SSD2 p37)
-- Controlled terminologies are versioned and updated annually alongside the ChemMon guidance. Data providers must use the terminology version specified in the current year's call for data. (SSD2 p38-40; ChemMon 2026 p10)
+- A controlled terminology is a finite and enumerated set of terms intended to convey information unambiguously; controlled terminologies have been applied extensively in the SSD. (SSD2 p12)
+- Controlled terminologies are language independent: only the code needs to be transmitted, since the description in any language can be linked to the code. (SSD2 p12)
+- For some elements an additional companion free-text element is included; the pair takes the suffixes `Code` and `Text`. (SSD2 p12)
+- Versioning: after a term is published its code cannot be changed; terms are deprecated (logically removed) rather than deleted. In validation, reported terms are checked against the controlled terminology active at the time of the data transmission ("Valid from" <= transmission date < "Valid to"). (SSD2 p78)
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p40-45 -->
+<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p12 -->
 ## Validation Levels
 
-SSD2 data undergoes three levels of validation:
+SSD2 business rules validate data at three levels (SSD2 p12):
 
-1. **Single-element validation**: checks that each element conforms to its type, format, and allowed-value constraints individually (e.g., `analysisY` is a four-digit year, `evalCode` is from the permitted list). (SSD2 p40-41)
-2. **Inter-dependent validation**: checks consistency between related elements (e.g., if `resType` indicates a quantified result then `resVal` must be present and greater than zero). (SSD2 p42-43)
-3. **Compound-element validation**: checks that FoodEx2 compound codes are structurally valid, that the base term belongs to the correct hierarchy, and that facets are permitted for that base term. (SSD2 p44-45)
+1. **Single data element validation**: checks on specific data elements, e.g. whether the code reported in a field constrained to a controlled terminology is correct, or whether the value is within an acceptance range.
+2. **Inter-dependent data element validation**: checks on two or more data elements, e.g. whether LOQ was supplied if the result was reported below LOQ.
+3. **Repeatable and compound data element validation**: checks on the whole element as well as on the individual elements of the list, e.g. for "analysed matrix", its consistency throughout the same sample and the presence/absence of required/deprecated facets or facet descriptors.
 
-The ChemMon business rules implement and extend these validation levels for the specific requirements of chemical monitoring. See [[business-rules]] for the rule families and source-derived inventory; rule numbering is not continuous.
+GDE2 addresses only the business rules applicable to all data collection domains; domain-specific rules are addressed in separate documents describing the data collections. (SSD2 p12) For chemical monitoring those are the ChemMon business rules. See [[business-rules]] for the rule families and source-derived inventory; rule numbering is not continuous.
 
-<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf p7 -->
+<!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf pp. 8, 12, 22 -->
 ## Relationship to GDE2
 
-- Detailed element-by-element specifications, including data types, cardinalities, and allowed-value catalogues, are maintained in the Generic Data Exchange (GDE2) documentation rather than in the SSD2 logical model itself. (SSD2 p7)
-- This page covers the logical model and high-level structure. For element-level details, refer to the GDE2 specifications and the annual ChemMon guidance annexes.
+- The supported file formats, the actual implementation of the logical model and a detailed definition of the business rules are left to a separate guidance, "Guidance on Data Exchange ver. 2.0" (GDE2); the syntax for repeatable and compound elements is also defined there. (SSD2 pp. 8-10)
+- The data elements themselves (code, name, label, data type, single/repeatable/compound) are listed in SSD2 Table 4 and defined in SSD2 section 6. (SSD2 p22)
+- This page covers the logical model and high-level structure. For element-level details in chemical monitoring, use the pages below.
 
 ## ChemMon-focused element reference pages (this wiki)
 

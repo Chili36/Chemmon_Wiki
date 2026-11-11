@@ -3,7 +3,7 @@ title: "SSD2 Evaluation: Action Taken"
 select_when: "Action taken after SSD2 results; distinguish CHEMON37 recommendations for contaminants/FA/FF from VMPR/pesticide CHEMON85 conditions."
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -32,7 +32,9 @@ related:
 
 ### Purpose
 
-Report the action taken when a non-conformity is identified or the measured substance is found above the level of concern. This is especially important for understanding market consequences in pesticide and VMPR reporting. (ChemMon 2026 p75)
+Action taken should be reported when a non-conformity is identified during the control activities or a measured substance is found above the level of concern. Multiple actions can be reported. For pesticide samples found non-compliant this shows whether the product was placed on the EU market and consumed, withdrawn without reaching the consumer, or destroyed. (ChemMon 2026 p75)
+
+Codes come from the `ACTION` catalogue. The guidance examples use `I` (follow-up investigation) and `R` (rapid alert notification in RASFF); see the worked examples on [[ssd2-evaluation-conclusions]]. (ChemMon 2026 pp. 76-77)
 
 ### Requirements and recommendations
 

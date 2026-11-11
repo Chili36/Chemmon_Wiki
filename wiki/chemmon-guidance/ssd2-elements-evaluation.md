@@ -2,11 +2,11 @@
 title: "SSD2 Elements: Evaluation, Action, Conclusion"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "pp. 73-76 (Section 2, elements N.01-N.06)"
+  - "pp. 73-79 (Section 2, elements N.01-N.06.4)"
 related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-result]]"
@@ -23,7 +23,7 @@ related:
 
 # SSD2 Elements: Evaluation, Action, Conclusion
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 73-76 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 73-79 -->
 
 ## Overview
 
@@ -36,7 +36,9 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 - `evalCode` is mandatory and is the primary result judgement field.
 - `evalLowLimit` / `evalLimitType` are usually only needed when the official EU limit is not already implied by EFSA's legal-limit logic or when a different limit must be declared.
 - `actTakenCode` becomes important when non-compliance or detection triggers enforcement or follow-up.
-- `evalInfo.conclusion` and `evalInfo.com` explain exceptions, follow-up investigations, additive/flavouring presence logic, and compliant outcomes despite elevated results.
+- `evalInfo.conclusion` (N.06.1) and `evalInfo.com` (N.06.2) explain exceptions, follow-up investigations, additive/flavouring presence logic, and compliant outcomes despite elevated results. (ChemMon 2026 p76)
+- `evalInfo.resAsses` (N.06.3, optional) carries the overall Compliant/Non-compliant assessment of a single result; see [[ssd2-evaluation-code]]. (ChemMon 2026 pp. 77-78)
+- `evalInfo.restrictionException` (N.06.4, optional) carries the `ADDFOOD` restriction/exception code for additives and flavourings; see [[food-additives-reporting]]. (ChemMon 2026 pp. 78-79)
 
 ## Relevant Business Rules
 
@@ -53,6 +55,7 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 ## Subpages
 
 - [[ssd2-evaluation-limits]] — `evalLowLimit` and `evalLimitType`.
-- [[ssd2-evaluation-code]] — `evalCode` meanings and allowed patterns.
+- [[ssd2-evaluation-code]] — `evalCode` meanings and allowed patterns, and `evalInfo.resAsses`.
 - [[ssd2-evaluation-actions]] — `actTakenCode` and mandatory action cases.
-- [[ssd2-evaluation-conclusions]] — `evalInfo.conclusion` and `evalInfo.com`.
+- [[ssd2-evaluation-conclusions]] — `evalInfo.conclusion` and `evalInfo.com`, with the pp. 76-78 worked examples.
+- [[food-additives-reporting]] — `evalInfo.restrictionException`.

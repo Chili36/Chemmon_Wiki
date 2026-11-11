@@ -2,11 +2,12 @@
 title: "SSD2 Evaluation: Legal Limit Value and Limit Type"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 73-74 (Section 2, elements N.01 and N.03)"
+  - "pp. 120, 142 (Table 10: CHEMON35, LL_01_FA_FF, LL_02_FA_FF)"
 related:
   - "[[ssd2-elements-evaluation]]"
   - "[[legal-limits-database]]"
@@ -53,16 +54,22 @@ For non-regulated processed products, the limit to report is the one applicable 
 
 For pesticides, the typical type is `W002A` (MRL). If `W990A` (national or local limit) is used, the result is disregarded from EU report analysis. (ChemMon 2026 p74)
 
-For VMPR, p. 74 lists six main values (W002A/W005A/W006A/W012A/W001A/W007A). The list below also includes W008A/W990A from the cross-domain CHEMON35 recommendation on p. 120:
+For VMPR, p. 74 lists six values that can be reported (W002A/W005A/W006A/W012A/W001A/W007A). The list below also includes W008A/W990A from the CHEMON35 recommendation on p. 120:
 
 - `W002A` — MRL
 - `W005A` — minimum required performance limit
 - `W006A` — reference point of action
 - `W012A` — presence
-- `W001A` — maximum limit
+- `W001A` — maximum limit; for VMPR "this applies only to coccidiostats, histomonostats and chemical elements" (ChemMon 2026 p74)
 - `W007A` — action level
 - `W008A` — target level (CHEMON35, Table 10 p. 120; additional to the VMPR prose list)
 - `W990A` — national or local limit (CHEMON35; additional to the VMPR prose list)
+
+For food additives and flavourings, the legal-limit rules LL_01_FA_FF and LL_02_FA_FF apply when `evalLimitType` is `W016A` (Maximum Permitted Level, MPL) or is not reported. (ChemMon 2026 p142)
+
+Source discrepancy: `W016A` is named by LL_01_FA_FF/LL_02_FA_FF (p. 142) but is not in the CHEMON35 list of recommended codes (p. 120), so as written a record with `W016A` meets the FA/FF legal-limit rules and also falls outside the CHEMON35 recommended list (Warning). The guidance does not resolve this.
+
+Example (EU MRL in place): `<evalLowLimit>0.003</evalLowLimit>` with `<evalLimitType>W002A</evalLimitType>`. (ChemMon 2026 p74)
 
 ## Related business rules
 
