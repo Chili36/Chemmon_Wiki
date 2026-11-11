@@ -2,7 +2,7 @@
 title: "SSD2 Sampling: Event and Unit"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -35,7 +35,7 @@ related:
 
 ### Purpose
 
-`sampEventId` is the unique identifier representing the sampling unit extracted at a certain time from the sampled population. It can be reported when multiple samples are taken from a single sampling unit at one timepoint. The sampling unit could be a batch, animal, flock, herd, or holding.
+`sampEventId` is the unique identifier representing the sampling unit extracted at a certain time from the sampled population. It can be reported when multiple samples are taken from a single sampling unit at one timepoint. The sampling unit could be a batch, animal, flock, herd, or holding. The sampling unit type can optionally be reported in C.02 `sampUnitType` and C.05 `sampUnitIds`. (ChemMon 2026 p29)
 
 ### Default behaviour
 
@@ -45,6 +45,15 @@ If no value is reported in `sampEventId`, EFSA automatically substitutes `sampId
 
 - **Pesticide residues**: this element is not used when counting the number of samples for report creation and can be left empty.
 - **VMPR**: if two samples are taken from a single pig at slaughter (for example kidney and muscle), the two samples should share the same `sampEventId` and count as one pig in the VMPR national sampling plan.
+
+### Example: two samples from one pig
+
+Two samples (two different `sampId`) from the same pig, correctly reported with the same `sampEventId`; both will be classified in the VMPR Product Category "Pigs". Column headers are as printed. (ChemMon 2026 p29)
+
+| sampEventId | sampId | sampMatCode | sampMatText | sampUnitType | sampUnitId | paramCode | resId | evalCode | evalInfo.com |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `CY2017X001` | `CY2021X1/K` | `A01YM` | Pig kidney | `G199A` (animal) | `IT123` | `RF-00000581-VET` | `CY2021R01` | `J002A` | Confirmatory test in kidney |
+| `CY2017X001` | `CY2021X1/M` | `A01RG` | Pig fresh meat | `G199A` (animal) | `IT123` | `RF-00000581-VET` | `CY2021R02` | `J002A` | Confirmatory test in muscle was below the MRL of 100 μg/kg |
 
 ### Consistency check
 
@@ -58,14 +67,16 @@ A business rule checks whether samples with different `sampId` values but the sa
 
 ### Purpose
 
-Describes the sampling unit defined in the sampling method and can be used to indicate whether the sample contains material from multiple individuals or lots.
+Describes the sampling unit defined in the sampling method and can be used to indicate whether the sample contains material from multiple individuals or lots. The C.01 example above uses it (`G199A`, animal) to indicate that the two samples were taken from one pig. (ChemMon 2026 p29)
 
 ### Examples
 
 | Description | XML |
 | --- | --- |
 | Milk samples taken before the dairy bulk tanker has discharged | `<sampUnitType>G202A</sampUnitType>` |
-| Single samples such as one animal or one fruit | `<sampUnitType>G203A</sampUnitType>` |
+| Single samples (e.g. one animal or one fruit) which are not representative of a lot/batch | `<sampUnitType>G203A</sampUnitType>` |
+
+(ChemMon 2026 p30)
 
 ## sampUnitSize and sampUnitSizeUnit — Sampling unit size
 

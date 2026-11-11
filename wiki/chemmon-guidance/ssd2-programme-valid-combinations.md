@@ -3,11 +3,12 @@ title: "SSD2 Programme: Valid Table 2 Combinations"
 select_when: "Which sampStrategy a progType allows for a progLegalRef (Table 2 grid, incl. baby food, contaminant codes, additives, N317A/N422A), and how VMPR, contaminant and pesticide plan flags are assigned."
 type: "reference"
 domain: "all"
-last_updated: "2026-11-10"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 22-27 (Table 2 grid pp. 23-24, plan flags pp. 25-26, worked examples pp. 26-27)"
+  - "p. 21 (B.04 K018A example, for the discrepancy note)"
 related:
   - "[[ssd2-elements-programme]]"
   - "[[ssd2-elements-sampling]]"
@@ -70,11 +71,11 @@ The source uses Table 2 to map programme metadata to reporting plans and report 
 - **Plan 1** — national risk-based control plan for production in Member States:
   - `progType in {K005A, K018A}`
   - `sampStrategy = ST20A`
-  - sample treated as unprocessed
+  - sample considered as unprocessed; "An exception in the processing has been included for insects" (ChemMon 2026 p25)
 - **Plan 2** — national randomised surveillance plan for production in Member States:
   - `progType in {K005A, K018A}`
   - `sampStrategy = ST10A`
-  - sample treated as unprocessed
+  - sample considered as unprocessed; the same exception for insects applies (ChemMon 2026 p25)
 - **Plan 3** — national risk-based control plan for third-country imports:
   - `progType = K038A`
   - `sampStrategy = ST20A`
@@ -92,6 +93,8 @@ The source uses Table 2 to map programme metadata to reporting plans and report 
   - `progType = K038A`
   - `sampStrategy = ST20A`
   - `sampPoint = E010A`
+
+Source discrepancy: the B.04 `progType` example says `K018A` "is the code to be used" for VMPR Plan 1 and Plan 2 results and "should also be used" for contaminant results of the control plan for food placed on the Union market (ChemMon 2026 p21), naming no `K005A`. The flag definitions above and Table 2 accept `K005A` or `K018A` (ChemMon 2026 pp. 23-25). The guidance does not reconcile them.
 
 ## Pesticide control-plan flags
 

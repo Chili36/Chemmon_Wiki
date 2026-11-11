@@ -2,14 +2,16 @@
 title: "SSD2 Sampling: Country of Sampling"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-10"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "p. 31 (Section 2, element D.03; Table 3)"
   - "p. 127 (Table 10, CHEMON58)"
+  - "p. 137 (Table 10, CHEMON95)"
 related:
   - "[[ssd2-elements-sampling]]"
+  - "[[business-rules-pesticide]]"
   - "[[ssd2-elements-matrix]]"
   - "[[pesticide-reporting]]"
   - "[[business-rules-cross-cutting]]"
@@ -23,7 +25,7 @@ related:
 
 - `sampCountry` is mandatory and uses ISO 3166-1 alpha-2 codes.
 - For pesticides **and VMPR**, `sampCountry` must match the reporting organisation country. (`CHEMON58`; Table 10 p. 127)
-- EFSA defines a small set of unspecific country codes (`AA`, `XC`, `XD`, `XE`, `XX`) for recoding in annual reports, but these cannot be used for non-compliant results.
+- EFSA defines a small set of unspecific country codes (`AA`, `XC`, `XD`, `XE`, `XX`) and shows how they are recoded for pesticide residues Annual Reports; the guidance text says these cannot be used for non-compliant results (ChemMon 2026 p31). That text is about country of origin; see the discrepancy note below.
 - For bulk samples where origin is unavailable, EFSA recommends also reporting the processing country.
 
 ## sampCountry — Country of sampling
@@ -46,9 +48,11 @@ For pesticides, the Annual Report will include records with `sampCountry` set to
 
 ### Reportable unspecific country codes
 
-EFSA provides the following recoding table for cases where the real country cannot be reported. In the case of non-compliant results, these codes cannot be used.
+The paragraph that introduces Table 3 sits under D.03 but is about **country of origin**: "Country of origin cannot be unknown due to EU legislation where traceability of goods placed on the market is a must." EFSA stresses the importance of collecting and submitting this information; if a data provider cannot, Table 3 "will be used to recode unspecific country codes". "In the case of non-compliant results, codes listed in Table 3 cannot be used." (ChemMon 2026 p31)
 
-| Code description | Code | `sampCountry` (Annual Reports) | `origCountry` (Annual Reports) |
+Table 3 is titled "Reportable unspecific country codes for sampCountry and origCountry"; its two right-hand columns are headed "Use for pesticide residues reporting (Annual Reports)". (ChemMon 2026 p31)
+
+| Code description | Code | `sampCountry` (pesticide residues Annual Reports) | `origCountry` (pesticide residues Annual Reports) |
 | --- | --- | --- | --- |
 | EEA (European Economic Area) | `AA` | Excluded | Unknown (`XX`) |
 | Non-EEA | `XC` | Excluded | Unknown (`XX`) |
@@ -56,9 +60,11 @@ EFSA provides the following recoding table for cases where the real country cann
 | Non-European Union | `XE` | Excluded | Unknown (`XX`) |
 | Unknown | `XX` | Excluded | Unknown (`XX`) |
 
+Source discrepancy: the p. 31 text bans the Table 3 codes for non-compliant results without naming a domain or an element. The only business rule on this is CHEMON95: if the result is reported for pesticides (`is_pest=1`) and `evalCode` is "greater than maximum permissible quantities" (`J003A`), then a country of origin different from `XX`, `AA`, `EU`, `XC`, `XD`, `XE` must be reported; it is a Warning ("It will remain a Warning in 2026") and its list also includes `EU`, which is not in Table 3 (ChemMon 2026 Table 10, p. 137). So validation checks `origCountry` for pesticides only, as a Warning; no rule applies the ban to `sampCountry`. See [[business-rules-pesticide]].
+
 ### Recommendation for bulk samples
 
-EFSA recommends reporting the country of processing when bulk samples are reported and the country of origin is not available.
+EFSA recommends that the country of processing of the sample taken (E.08) is provided when bulk samples are reported and the country of origin is not available. (ChemMon 2026 p31)
 
 ### Examples
 

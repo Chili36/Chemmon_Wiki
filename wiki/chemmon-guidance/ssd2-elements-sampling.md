@@ -2,11 +2,12 @@
 title: "SSD2 Elements: Sampling"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-10"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 27-32 (Section 2, sampling elements B.05-D.11)"
+  - "p. 98 (Table 9, GBR2)"
 related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-programme]]"
@@ -34,15 +35,16 @@ Use these as the fast path when debugging sampling-level records:
 
 - If `sampMethod` indicates a pooled sample (`N002A` or `N031A`), then `sampUnitSize` and `sampUnitSizeUnit` become mandatory, and pooled samples must use `G005A` as the unit code. See [[ssd2-sampling-event-and-unit]]. (`CHEMON77`)
 - `sampEventId` groups multiple samples from the same sampling unit/timepoint. If omitted, EFSA substitutes `sampId`. See [[ssd2-sampling-event-and-unit]].
-- `sampId` is the stable identifier for the physical sample and must be reused across all results from that sample. `origSampId` is only for tracing back to an original sample in follow-up or feed-to-animal investigations. See [[ssd2-sample-identifiers]]. (`GBR2`, `CHEMON22`)
-- `sampCountry` is mandatory and uses ISO alpha-2 codes. For pesticides and VMPR it must equal the reporting organisation country, and non-compliant results cannot use the unspecific country codes listed by EFSA. See [[ssd2-sampling-country]]. (`CHEMON58`)
+- `sampId` is the stable identifier for the physical sample and must be reused across all results from that sample (ChemMon 2026 p30). `origSampId` is only for tracing back to an original sample in follow-up or feed-to-animal investigations. See [[ssd2-sample-identifiers]], which also covers the `GBR2` source discrepancy and `CHEMON22`.
+- `sampCountry` is mandatory and uses ISO alpha-2 codes. For pesticides and VMPR it must equal the reporting organisation country. See [[ssd2-sampling-country]]. (`CHEMON58`)
+- The Table 3 unspecific country codes "cannot be used" for non-compliant results (ChemMon 2026 p31); that text is about country of origin, and validation checks it only through `origCountry`. See [[ssd2-sampling-country]].
 - The full sampling date (`sampY`, `sampM`, `sampD`) is mandatory because legal-limit applicability and annual-report inclusion both depend on when the sample was taken. See [[ssd2-sampling-date]]. (`CHEMON43`, `CHEMON43_b`)
 
 ## Relevant Business Rules
 
 The main constraints on this element group are:
 
-- `GBR2` — sampling-event consistency across rows sharing the same sample/event context.
+- `GBR2` — sampling-event, local-organisation and sampling-programme descriptors (sections A, B, C) must be constant for records with the same `sampId` / `sampEventId`. (ChemMon 2026 Table 9, p. 98)
 - `CHEMON22` — `origSampId` follow-up samples should use suspect sampling.
 - `CHEMON43` / `CHEMON43_b` — sampling-year reporting-window constraints.
 - `CHEMON58` — pesticide and VMPR sampling-country consistency.
