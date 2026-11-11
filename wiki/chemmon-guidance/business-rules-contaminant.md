@@ -3,7 +3,7 @@ title: "Contaminant-Specific Business Rules"
 select_when: "Named contaminant CHEMON rules: substance-specific matrix facets and result reporting, including acrylamide, dioxins, arsenic and mineral oils."
 type: "rule-reference"
 domain: "contaminant"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -20,7 +20,7 @@ related:
 
 ## Overview
 
-CHEMON rules for chemical contaminants, including rules triggered by named substances or matrices. Use each row’s scope rather than inferring a CONT flag requirement from this page title. These rules cover dioxin/PCB congener reporting, matrix-specific facet requirements (acrylamide, bisphenols, PAHs, mycotoxins, arsenic, chlorates, BFRs, fish origin, 3-MCPDs), expression-of-result defaults for feed, recovery correction reporting, and 2026 programme type restrictions.
+CHEMON rules for chemical contaminants, including rules triggered by named substances or matrices. Use each row’s scope rather than inferring a CONT flag requirement from this page title. These rules cover dioxin/PCB congener reporting, matrix-specific facet requirements (acrylamide, bisphenols, PAHs, mycotoxins, arsenic, chlorates, BFRs, fish origin, 3-MCPDs), expression-of-result defaults for feed, recovery correction reporting, and the N375A programme type restriction (CHEMON98, an Error from 2026).
 
 Rules that span contaminants *and* other domains (e.g. CHEMON37, CHEMON44, CHEMON79, CHEMON97) are in [[business-rules-cross-cutting]]. For contaminant reporting guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, and nitrates, see [[contaminant-reporting]].
 
@@ -39,8 +39,8 @@ Rules that span contaminants *and* other domains (e.g. CHEMON37, CHEMON44, CHEMO
 | CHEMON19 | Warning | If `paramCode.base` is Chlorates (RF-00000015-CHE), Perchlorate (RF-00001336-PAR), or Quaternary Ammonium Compounds (RF-1078-001-PPP) or a child thereof, report `sampMatCode.process` (F28), at least processed/unprocessed. | Chlorates/perchlorate/QACs | 116 |
 | CHEMON20 | Warning | If `sampMatCode.base` has ancestor A0BZ4 (Processed or preserved seafood) or A0BNJ (Fish, other aquatic animals and products derived thereof, feed), AND `paramCode.base` has ancestor RF-00000074-ORG (BFRs), RF-00000114-ORG (Dioxins and PCBs), or RF-00000169-CHE (Mercury and derivatives), report `origFishAreaCode`. | Specified matrix AND parameter ancestors | 117 |
 | CHEMON21 | Warning | If `paramCode.base` has ancestor RF-00000074-ORG (BFRs), RF-00000114-ORG (Dioxins and PCBs) or RF-00000376-ORG (3-MCPDs), report `exprResPerc.fatPerc` regardless of whole-weight, fat-weight or dry-matter expression. | BFRs/dioxins/PCBs/3-MCPDs | 117 |
-| CHEMON69 | Error | For contaminants in feed reported on whole weight basis, `moistPerc` is mandatory to allow dry-weight conversion. | CONT | 130 |
+| CHEMON69 | Error | For contaminants (`is_occ=1`) in feed, if `exprResType` is Whole weight (B001A), `moistPerc` must be reported. | CONT | 130 |
 | CHEMON71 | Error | For contaminants in feed, `exprResType` is mandatory. The basis of expression must be declared. | CONT | 131 |
 | CHEMON80 | Warning | For contaminants, `resValRecCorr` (recovery correction flag) should be reported to indicate whether the result was corrected for recovery. | CONT | 132 |
 | CHEMON84_b | Warning | For contaminants in **food**, `exprResType` is highly recommended. Contaminants in feed have the mandatory CHEMON71 requirement. | CONT food | 133 |
-| CHEMON98 | Error | For contaminants with N375A (contaminant regulation), valid `progType` values are K005A, K018A, or K038A. (New 2026) | CONT | 137-138 |
+| CHEMON98 | Error | For contaminants (`is_occ=1`) related to control plans, i.e. `progLegalRef` N375A (Delegated Regulation (EU) 2022/931 and Implementing Regulation (EU) 2022/932), `progType` can only be K005A, K018A or K038A. Introduced in 2025; becomes an Error in 2026. | CONT | 137-138 |
