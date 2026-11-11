@@ -1,9 +1,24 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-11-10"
+last_updated: "2026-11-11"
 ---
 
 # Log
+
+## [2026-11-11] correction | Full source audit: 131 findings fixed (#68)
+
+After #63, every hand-written page except the GBR and FA/FF data-model pages was compared with the PDFs, page by page, by six reviewer agents; each finding quotes the wiki line and the PDF page. The same agents applied the fixes from the source and the lead session verified them.
+
+- **Wrong facts corrected**: [[vmpr-reporting]] (programme types, plan flags, `CCB` not "CCD", processed products only under Plan 3), [[baby-food-reporting]] (`A16GS`, N027A, CHEMON63 vs CHEMON55), [[foodex2-in-chemmon]] (organic code `A07SE`; per-domain facet table rebuilt from Table 4), [[chemmon-overview]] (single SSD2 collection, VMPR legal basis, invented deadlines removed), [[ssd2-data-model]] (`resVal` optional, 14 entities), `progId` mandatory, `BIN` only NEG.
+- **Requirement strength** now follows the source word for word, mainly on [[contaminant-reporting]] and the analysis pages.
+- **Table 8** is on [[contaminant-reporting]] row by row (48 contaminant rows; the two FA/FF rows on [[food-additives-reporting]]); 9 rows had been missing and 8 wrong.
+- **Missing rules added**: VMPR Plan 3 origin not an EU country, `J003A` exclusions and `J029A`, `C08A`, `W001A` VMPR restriction, `W016A`, the `M99` fish-area fallback, paramType examples, the p. 149 flag example table, Table 13.
+- **Rule placement**: CHEMON101 and CHEMON104 (N422A) moved to [[business-rules-cross-cutting]]; CHEMON90_a/b no longer limited to pesticides.
+- **Source discrepancies** (about 20) are now marked "Source discrepancy:" with both pages instead of silently picking a side; unsourced statements removed or marked "Wiki note".
+- Page citations corrected on the five pages where nearly all were wrong.
+- Doctor: table numbers in `source_pages` are limited to two digits ("Table 1, 2026 changes" is Table 1).
+
+Not audited: GBR pages, the two FA/FF data-model pages, generated pages, and whether codes are valid in the live catalogues.
 
 ## [2026-11-10] ingest | Tables 11 and 12 transcribed (#65)
 
