@@ -91,7 +91,7 @@ related:
   - Pesticides: "should also be used" where the analytical scope is wider than the pesticide/crop combination listed in the EU MACP (i.e. more pesticides analysed in an EU MACP commodity).
   - VMPR: "is the code to be used" when reporting results under the national risk-based and randomised surveillance plans for production in the Member States (Plan 1 and Plan 2).
   - Contaminants: "should also be used" when reporting results related to the control plan for food placed on the Union market.
-- Source discrepancy: the B.04 example names only `K018A` for VMPR Plans 1 and 2 and for the contaminants control plan for food placed on the Union market (ChemMon 2026 p21), while the plan-flag text and Table 2 accept `K005A` or `K018A` for all three (ChemMon 2026 pp. 23-25). The guidance does not reconcile them. See [[ssd2-programme-valid-combinations]].
+- Source discrepancy (VMPR): the B.04 example names only `K018A` for VMPR Plans 1 and 2 (ChemMon 2026 p21), while the plan-flag text and Table 2 accept `K005A` or `K018A` (ChemMon 2026 pp. 23-25). The guidance does not reconcile them. For contaminants B.04 is consistent with Table 2: the `K005A` example names Regulation (EU) 2022/932 and `K018A` "should also be used" (ChemMon 2026 p21). See [[ssd2-programme-valid-combinations]].
 
 ## Related business rules
 

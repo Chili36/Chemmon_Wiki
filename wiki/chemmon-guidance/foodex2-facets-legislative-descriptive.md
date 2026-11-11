@@ -98,7 +98,7 @@ related:
 
 (ChemMon 2026 p51)
 
-Source discrepancy: Table 4 prints "Recommended" for flavourings (ChemMon 2026 p51), but the prose says that for additives and flavourings the F33 facet "must always be present" and that it is mandatory to report it (ChemMon 2026 p38, p42), and Table 8 gives the food flavourings F33 element the status "Mandatory" (ChemMon 2026 p96). Validation enforces the mandatory reading: the F33 rule for `is_add=1` or `is_flav=1` returns an Error (ChemMon 2026 p121).
+Source discrepancy: Table 4 prints "Recommended" for flavourings (ChemMon 2026 p51), but the prose says that for additives and flavourings the F33 facet "must always be present" and that it is mandatory to report it (ChemMon 2026 p38, p42), and Table 8 gives the food flavourings F33 element the status "Mandatory", although the same row says that if F33 is not implicitly assigned "it is recommended to add it" (the food additives row says "it is required to add it") (ChemMon 2026 pp. 95-96). Validation enforces the mandatory reading: the F33 rule for `is_add=1` or `is_flav=1` returns an Error (ChemMon 2026 p121).
 
 ## Related Business Rules
 

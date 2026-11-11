@@ -94,7 +94,7 @@ The source uses Table 2 to map programme metadata to reporting plans and report 
   - `sampStrategy = ST20A`
   - `sampPoint = E010A`
 
-Source discrepancy: the B.04 `progType` example says `K018A` "is the code to be used" for VMPR Plan 1 and Plan 2 results and "should also be used" for contaminant results of the control plan for food placed on the Union market (ChemMon 2026 p21), naming no `K005A`. The flag definitions above and Table 2 accept `K005A` or `K018A` (ChemMon 2026 pp. 23-25). The guidance does not reconcile them.
+Source discrepancy (VMPR): the B.04 `progType` example says `K018A` "is the code to be used" for VMPR Plan 1 and Plan 2 results (ChemMon 2026 p21), naming no `K005A`, while the flag definitions above and Table 2 accept `K005A` or `K018A` (ChemMon 2026 pp. 23-25). The guidance does not reconcile them. For contaminants there is no conflict: B.04 says `K018A` "should also be used" for the control plan for food placed on the Union market, and its `K005A` example names Regulation (EU) 2022/932 (ChemMon 2026 p21).
 
 ## Pesticide control-plan flags
 

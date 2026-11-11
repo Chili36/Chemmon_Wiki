@@ -161,7 +161,7 @@ In line with the European Commission (2015) document on pesticides, this element
 
 For the calculated sum of contaminants, there are currently no standard guidelines on how to sum LOQs of individual substances. The reporting country can decide to report the LOQ by summing up the LOQs of all the individual substances to which the sum refers or to indicate `resInfo.notSummed = Y` and `resLOQ = null`, if the results for the single substances and corresponding LOQs are reported. This approach is to avoid storing a false value of "99999" in `resLOQ` when the summed LOQ was not possible. Business rules apply to ensure that `resLOQ` can only be NULL where `resInfo.notSummed = Y`. No value such as "99999" or similar (e.g. "999", "9999", "999999") shall be reported. (ChemMon 2026 p73)
 
-**Source discrepancy:** p. 73 says `resLOQ` can only be NULL where `resInfo.notSummed = Y`, but the M.05 prose (p. 66) and the rule that enforces it (Table 10, p. 123) also allow a missing `resLOQ` for unvalidated methods, VMPR results and `resType` = BIN. Validation enforces the rule's wider list of exceptions.
+**Source discrepancy:** p. 73 says `resLOQ` can only be NULL where `resInfo.notSummed = Y`, but the M.05 prose (p. 66) also allows a missing `resLOQ` for unvalidated methods, for VMPR when `resLOD`, `CCbeta` or `CCalpha` is reported, and for `resType` = BIN. `CHEMON44` (Table 10, p. 123) goes further and exempts every VMPR result (`is_vet=1`). Validation enforces `CHEMON44`'s list of exceptions.
 
 ### Related business rule
 

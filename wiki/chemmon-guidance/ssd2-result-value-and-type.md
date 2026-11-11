@@ -110,7 +110,7 @@ The `resType` indicates the type of analytical result obtained for a substance i
 | `CCA` | The residue can be quantified but is below the reported value for CCalpha | VMPR confirmatory below decision limit |
 | `LOQ` | The residue is below the LOQ | Below quantification threshold |
 | `LOD` | The residue is below the LOD and `resLOD` is reported | Below detection threshold |
-| `BIN` | The result of a qualitative screening test | Negative qualitative screening result (`resQualValue` = `NEG`); positive screening results are not reported as `BIN` |
+| `BIN` | The result of a qualitative screening test | Negative qualitative screening result (`resQualValue` = `NEG`). `CHEMON24` (Error) accepts only `NEG`, except for `paramCode` `RF-00011484-PAR` (MOAHs 3 to 7 ring) (ChemMon 2026 p118) |
 | `CCB` | The residue cannot be detected and CCbeta is reported | Below detection capability |
 | `AWR` | **Above the working range** — exceptional; only for VMPR in rare cases | Environmental sample above calibrated range |
 

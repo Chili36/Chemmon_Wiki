@@ -56,7 +56,7 @@ BaseTermCode#FacetHeader.FacetCode$FacetHeader.FacetCode
 
 - Many base terms carry **implicit facets** -- attributes already encoded in the term itself. For example, `A01YM` (pig kidney) implicitly carries F01.A057 (source = pigs) and F02.A069N (part-nature = kidney). (ChemMon 2026 p52)
 - If the implicit facets are enough to characterise the matrix, only the base term needs to be reported. Where the base term has implicit facets, explicit facets should only be additional ones not already covered by the implicit facets. (ChemMon 2026 p33)
-- The guidance has one validation rule on a duplicated facet: if `sampMatCode` already contains an implicit FA/FF legislative category (F33), the explicit F33 is not needed, and reporting it returns a Warning. See [[business-rules-additives]]. (ChemMon 2026 p141)
+- The ChemMon guidance has one validation rule on a duplicated facet (the FA/FF parallel guides have their own, `PRE15` and `USE23`; see the cheese section below): if `sampMatCode` already contains an implicit FA/FF legislative category (F33), the explicit F33 is not needed, and reporting it returns a Warning. See [[business-rules-additives]]. (ChemMon 2026 p141)
 - For acrylamide, the explicit facet F33 Legislative classes must be reported; the corresponding rule requires `sampMatCode.legis` to be reported and returns an Error. See [[contaminant-reporting]] and [[business-rules-contaminant]]. (ChemMon 2026 p42, p115)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p43-51 (Table 4), with prose from p33, p38-39 -->

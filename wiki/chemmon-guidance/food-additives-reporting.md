@@ -68,10 +68,10 @@ Some rule families are shared in concept but not in severity or exact field plac
 
 | Topic | SSD2 analytical | No-presence DM | Use-levels DM |
 | --- | --- | --- | --- |
-| Presence / conclusion field | `evalInfo.conclusion` is recommended (`CHEMON87`) and uses the FA/FF CONCLUS codes (source spelling `fa_ff`; see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
+| Presence / conclusion field | `evalInfo.conclusion` is highly recommended, Warning (`CHEMON87`) and uses the FA/FF CONCLUS codes (source spelling `fa_ff`; see [[ssd2-evaluation-conclusions]]) | `presenceAdded` is mandatory and fixed to `C20A` only (`PRE06`, `PRE10`) | `presenceAdded` is mandatory and accepts `C19A`, `C20A`, `C05A`, plus valid combinations (`USE09`, `USE18`, `USE19`) |
 | Legislative class (`F33`) | Mandatory for FA/FF (`CHEMON39`) | Mandatory if not implicit (`PRE08`); explicit duplicate F33 only warns (`PRE15`) | Mandatory if not implicit (`USE16`); explicit duplicate F33 is an Error (`USE23`) |
 | Physical state (`F03`) | Highly recommended, Warning (`CHEMON86`), for the ChemMon list, which names all of category 1 "Dairy products and analogues" | Required, Error (`PRE09`), for a narrower list: see below | Required, Error (`USE17`), for the same narrower list as `PRE09` |
-| Target consumer (`F23`) | Recommended for category 13 / infant-targeted cases (`CHEMON89`) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
+| Target consumer (`F23`) | Highly recommended, Warning (`CHEMON89`), for category 13; "should be added" for infants (<12 months) (p. 39) | Required when F33 = 13 (`PRE02`) | Required when F33 = 13 (`USE03`) |
 | Limit comparison date | Analytical legal-limit checks use the sampling date (ChemMon 2026 p32) | No separate LLDB layer in this DM | LLDB checks use the marketing date (`USE_LLDB01`, `USE_LLDB02`; Use-levels 2026 pp. 7, 18) |
 | Authorisation of the substance in the category with the restriction/exception | Warning (`LL_03_FA_FF`) | No rule | Error (`USE_LLDB01`); the rule description is worded the same as `LL_03_FA_FF` |
 | Value against the MPL | Warnings on the consistency of `evalCode` with `resVal` against the MPL (`LL_01_FA_FF`, `LL_02_FA_FF`); a `resVal` above the MPL is not itself rejected | No rule | Errors when the maximum use level is greater than the MPL: the MPL reported by the data provider (`USE27`) and the MPL from the LLDB (`USE_LLDB02`) |
@@ -96,12 +96,12 @@ Use [[controlled-terminology-catalogues]] for the shared catalogue layer, [[lega
 - **F33 (Legislative classes)**: "For food additives and flavourings, it is mandatory to report the legislative class facet code (F33)"; if it is not implicitly assigned it must be added. See [[foodex2-facets-legislative-descriptive]]. (ChemMon 2026 pp. 38, 42)
 - Source discrepancy (F33 for flavourings): pp. 38 and 42 say mandatory for both domains, and CHEMON39 is an Error for food additives and food flavourings (Table 10 p. 121). Table 4 says "Required" for additives but "Recommended" for flavourings (p. 51). Table 8 gives the flavourings status as "Mandatory" yet says that if F33 is not implicitly assigned "it is recommended to add it" (p. 96). Validation enforces the Error.
 - **F03 (Physical state)**: highly recommended, if not implicitly assigned, for the legislative categories listed below (CHEMON86, Warning). See [[foodex2-facets-state-process]]. (ChemMon 2026 pp. 38-39; Table 10 p. 133)
-- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[foodex2-facets-packaging-consumer]] and [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026 p39; CHEMON89, Warning, Table 10 p. 135)
+- **F23 (Target consumer)**: highly recommended when the sample refers to food category 13 (CHEMON89, Warning); if the sample is formulated for infants (<12 months), F23 "should be added" if it is not implicitly assigned. See [[foodex2-facets-packaging-consumer]] and [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026 p39; CHEMON89, Warning, Table 10 p. 135)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39 -->
 ### F33 legislative class: implicit vs explicit
 
-For additives and flavourings, the **legislative food category facet (F33) must always be present**. In many cases, F33 is already implicitly assigned in the reporting hierarchy of the FoodEx2 browser; if it is not implicitly assigned, it must be added explicitly. (ChemMon 2026 p38)
+For additives and flavourings, the **legislative food category facet (F33) must always be present**. "In some cases" F33 is already pre-assigned in the reporting hierarchy of the FoodEx2 browser (p. 38; p. 42 says "in most of the cases"); if it is not implicitly assigned, it must be added explicitly. (ChemMon 2026 pp. 38, 42)
 
 The legislative category **"All categories of foods" is not allowed** to be reported for additives/flavourings. (ChemMon 2026 p38)
 
@@ -126,7 +126,7 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 12, 61, 70 -->
 ## Expression Type
 
-- `exprResType` should be reported for food additives and food flavourings, "as it became mandatory in 2025 and 2026 respectively"; if not reported, the system returns an error message (CHEMON84_a, from Warning to Error in 2026). (ChemMon 2026 pp. 12, 70)
+- `exprResType` should be reported for food additives and food flavourings, "as it became mandatory in 2025 and 2026 respectively"; if not reported, the system returns an error message (CHEMON84_a, Error). Source discrepancy: Table 1 says "From warning to error message in 2026" for additives and flavourings together (p. 12), while Table 10 says "It becomes an Error for food flavourings in 2026" (p. 133) and p. 70 says it became mandatory in 2025 for additives and 2026 for flavourings. (ChemMon 2026 pp. 12, 70, 133)
 - For food additives, the analytical result for the individual substances must be reported expressed as specified in Regulation (EC) No 1333/2008, e.g. sorbic acid-sorbates expressed as the free acid. (ChemMon 2026 p61)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 61, 63, 66, 140 -->
@@ -143,7 +143,7 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 | Rule | Description | Status |
 | --- | --- | --- |
 | CHEMON39 | `sampMatCode.legis` (F33) must carry the food category code under Regulations (EC) No 1333/2008 and 1334/2008 (Error, p. 121) | Merged 2026 |
-| CHEMON84_a | `exprResType` (expression of result type) must be reported (Error, p. 12) | Amended 2026: Warning to Error |
+| CHEMON84_a | `exprResType` (expression of result type) must be reported (Error, p. 133) | Amended 2026: becomes an Error for food flavourings (Table 10 p. 133); additives since 2025 (p. 70) |
 | CHEMON86 | Physical-state facet (F03) highly recommended for the listed categories (Warning, p. 133) | Amended 2026 |
 | CHEMON106 | Potassium sorbate `paramText` recommendation (Warning) | New 2026 |
 | CHEMON107 | LOD recommendation for six named parameters with BIN/NEG | New 2026 |

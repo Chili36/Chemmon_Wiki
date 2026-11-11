@@ -55,7 +55,7 @@ SSD2 takes into account the logical relationships between these key entities, ea
 
 (SSD2 pp. 16-17)
 
-Figure 3 shows the relationships between the entities, but the structure "is implemented in the SSD in denormalised format": one flat record per result, with the values of the upper-level entities (e.g. the sample taken identifier) repeated on each record. (SSD2 pp. 18-19)
+Figure 3 shows the relationships between the entities, but the structure "is implemented in the SSD in denormalised format": "no nested elements are included", the structure is similar to a spreadsheet table, and the values of the upper-level entities (e.g. the sample taken identifier) are repeated. (SSD2 pp. 18-19)
 
 <!-- Source: EFSA Journal - 2013 -  - Standard Sample Description ver  2 0 (2).pdf pp. 9-11 -->
 ## Element Types

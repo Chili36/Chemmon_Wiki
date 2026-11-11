@@ -42,4 +42,4 @@ Rules that apply to PPP *and* other domains (e.g. CHEMON27, CHEMON43, CHEMON44, 
 | CHEMON90_b | Error | For copper (`paramCode` RF-0102-001-PPP), `resValUncert` is mandatory when `resType` = VAL. | `paramCode` RF-0102-001-PPP trigger; no domain condition | 135 |
 | CHEMON95 | Warning | For PPP with `evalCode` = J003A (non-compliant), `origCountry` must be reported and must not be XX, AA, EU, XC, XD, or XE. Non-compliant results require a specific country of origin. (Amended 2026) | PPP | 137 |
 
-The two copper rules are triggered by the `paramCode` alone; neither names a domain flag (ChemMon 2026 p135). Table 8, "Specific reporting requirements for certain contaminants, food additives and food flavourings", also lists copper with CHEMON90_a (ChemMon 2026 p86).
+The two copper rules are triggered by the `paramCode` alone; neither names a domain flag (ChemMon 2026 p135). Table 8, "Specific reporting requirements for certain contaminants, food additives and food flavourings", also lists copper with CHEMON90_a (F20 and/or F28) and CHEMON90_b (`resValUncert`) (ChemMon 2026 p86).

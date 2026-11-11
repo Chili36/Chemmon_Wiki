@@ -7,7 +7,7 @@ sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 17-26 (Section 2, elements B.01-B.04)"
-  - "pp. 138-139 (Table 10, CHEMON101, CHEMON104, CHEMON105)"
+  - "pp. 126, 138-139 (Table 10, CHEMON54, CHEMON101, CHEMON104, CHEMON105)"
 related:
   - "[[ssd2-data-model]]"
   - "[[controlled-terminology-catalogues]]"
@@ -42,7 +42,7 @@ Use these as the fast path when coding or debugging programme metadata:
 
 - `progLegalRef` is the primary legal-routing element. It is mandatory, repeatable, and must match the domain of `paramCode`.
 - `progType` and `sampStrategy` are not free-form choices; valid combinations are constrained by `progLegalRef` and, in some cases, by `sampPoint` and sample state.
-- Border-control references are special cases: `N317A` and `N422A` have strict exclusivity/combination rules, and `N422A` requires `progType=K019A` plus `sampStrategy=ST30A`.
+- Border-control references are special cases: `N317A` and `N422A` have strict exclusivity/combination rules, and both require `progType=K019A` plus `sampStrategy=ST30A` (`CHEMON54` for `N317A`, `CHEMON101` for `N422A`).
 - VMPR plan flags are derived from the combination of `progType`, `sampStrategy`, and sometimes `sampPoint` or whether the sample is unprocessed.
 - `progId` is mandatory (ChemMon 2026 p17). It is useful for national traceability and validation drill-down, but it does not drive EFSA annual reporting; a country that does not use programme IDs can provide a default value for all records.
 
@@ -54,6 +54,7 @@ The most load-bearing rules for this group are:
 - `CHEMON50`, `CHEMON51` — pesticides `progType` / `sampStrategy` constraints with `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
 - `CHEMON96`, `CHEMON97` — valid strategy combinations for VMPR and other domains with `K005A`. See [[business-rules-cross-cutting]].
 - `CHEMON101` — `N422A` requires `progType=K019A` and `sampStrategy=ST30A`. See [[business-rules-cross-cutting]]. (ChemMon 2026 pp. 138-139)
+- `CHEMON54` — `N317A` requires `progType=K019A` and `sampStrategy=ST30A`. See [[business-rules-cross-cutting]]. (ChemMon 2026 p126)
 - `CHEMON104`, `CHEMON105` — exclusivity for N422A and N317A. See [[business-rules-cross-cutting]]. (ChemMon 2026 p139)
 
 ## Relevant Policy
