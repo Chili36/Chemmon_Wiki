@@ -1,0 +1,606 @@
+{
+  "version": 1,
+  "purpose": "The hash of each wiki page as last checked against the source PDFs by an independent reader (python -m wiki_api.content_review). The wiki doctor fails when a page differs from its entry. Methods: model (a fresh model call reviewed the changed lines; waived findings are listed with the reason), metadata-only (only front matter that makes no source claim changed), adopted (recorded without a model review; reason required). A review is a second reader, not proof that the page is right.",
+  "pages": {
+    "baby-food-reporting.md": {
+      "sha256": "46918287a5d40ebfc47511ffb86d130c23a543614e60b06fe9f0195a3053958d",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-2026-changes.md": {
+      "sha256": "d7fd27bbe3ea1079e76d4956da6fa1ff215a95fe3b801ed474ce695aca8f1b88",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-additives.md": {
+      "sha256": "3467eb18fc541002279439a52efc6a41cd60b34523cd09e6787e19eb27ed29cd",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-baby-food.md": {
+      "sha256": "ecf86677459cd27d7dd597bb76bdb4ff9101c042c9ddf5725e0b985968927f24",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-contaminant.md": {
+      "sha256": "c4627e5c4ecb24c933b686b8b3cf9d3a6a6a6fca581015f37b53ffb189bb69a7",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-cross-cutting.md": {
+      "sha256": "f9c158fdce8a8c845fec539989813ea2a31b67881cb5aa05653ab628bd6bd99e",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-gbr-consistency.md": {
+      "sha256": "47e206cdaf372c4773fe0a05e83c530009cbf93fe21790499ae11264221d30d2",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-gbr-dates.md": {
+      "sha256": "1cf558ea3524473a738264a572357e06c09850f1de8a6916f5094c086f8240dd",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-gbr-results.md": {
+      "sha256": "2c136a1c8b904085dd7d147d84669f5d6123c46034dc2edb054e335936185fe0",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-gbr.md": {
+      "sha256": "932408ca4837f4743d6ffd96324831eb01e930c9f5a705b336d9d85d871f0e65",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-legal-limits.md": {
+      "sha256": "53c1d98e03d453289b1a2507d8c12ec0bb2cbd0360540accd4b9eb38aa9ad6bd",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-pesticide.md": {
+      "sha256": "1521b52a6fa7c48e62ba24e6a624fc07a008f37b5b8873b54ccb809e68c57017",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules-vmpr.md": {
+      "sha256": "934b712913942d590854124cfcb59f7ff7f17ab1ee4e1d9949573c14331471e2",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "business-rules.md": {
+      "sha256": "02d3cb4aa837381353029323846a660eeaf05a50cf0c4ff54537c416ba58203c",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-background.md": {
+      "sha256": "f84d2a1e083480aaec5bb4a346253a388bbd7b532c0cf0650c48367dd6b04470",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-change-management.md": {
+      "sha256": "e5f3c66c29eaa6be056ee57b54d1495f5324cdcc4d71c75ccfdc0624079d23b2",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-data-governance-and-transparency.md": {
+      "sha256": "a82eca5c19d400e21af51d7ad539461ab49e774f70b4180fdb7b84a4f79c0ade",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-matrix-classification-algorithms.md": {
+      "sha256": "c3d6eef201b0cbacd9c2f3873e7c817a7c6fcd618f64faa13f5ad6815e744a8d",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-overview.md": {
+      "sha256": "85fa0c3b789797b8e369ff29b32def78e27d7e3f3aa5e70fd2c8c6eb69620c32",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-reports.md": {
+      "sha256": "1ff154b75fe3912c6720f06b1e7a1cf01dfeb79c6a0ed8bf409d99934d3da413",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-scope-and-legal-basis.md": {
+      "sha256": "8178044cfd84001bd8a7f0c02306c1181579c3f5d7602c8f185a0d17af8b6cf9",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "chemmon-single-ssd2-collection.md": {
+      "sha256": "7392250684efbf21a78f0b40573318b7a8e1b4f3f8ce42cc56ab3640a286b7c6",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "contaminant-reporting.md": {
+      "sha256": "71422676696ea40b9f5ce9aa6af3f6e398e6ffa860b17e61b1e2110232a4da0f",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "controlled-terminology-catalogues.md": {
+      "sha256": "e7b107d5fd15e61622d4e6d44984eec35c2ee7fa279b530e515be94f9e4c4a13",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "data-validation-and-acceptance.md": {
+      "sha256": "15781f861b3d6e173b0dca9b7beef45615914d3293fa00b9dea608f761abd3d1",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "fa-ff-no-presence-data-model.md": {
+      "sha256": "ddd5f804a126e441c42d9d0651b25aa1dfba9e96d2815580330e33dbb5279daa",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "fa-ff-use-levels-data-model.md": {
+      "sha256": "06970148c24b73926a80112b52b2f422e091964995a432e6cdee68f4741911af",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "food-additives-reporting.md": {
+      "sha256": "b4d3d341d8c4f000905168975fb23c92764f602cd0c81cc3d7c8d9c4fa867493",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "foodex2-facets-legislative-descriptive.md": {
+      "sha256": "e0b8419ee76d93a70f66eb6fae0404732dc1a9599038c681c60fc0e41e84e148",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "foodex2-facets-packaging-consumer.md": {
+      "sha256": "90dd682c7d30127c6fc019f3d34c8ee36747b778002dff980eedca647aa05552",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "foodex2-facets-source-origin.md": {
+      "sha256": "1d93343e59fe9ca214d37919f6e74fc87c4146a3aa78ccc65ea6ad9d9b4ceef9",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "foodex2-facets-state-process.md": {
+      "sha256": "5f3cbdbfbbd3c18abcfa341e4df223d8e59e288fc910d3cabbc720fc6dab498c",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "foodex2-facets.md": {
+      "sha256": "827b3872a8c6537d8f04ac7f8255e91d653579183ba3fe6f87cedb5dee549fa3",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "foodex2-in-chemmon.md": {
+      "sha256": "79a2169ff1332f8f50c4081a2cd1d2403f8394e1759a40675917ee4493a9fbf4",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "legal-limits-database.md": {
+      "sha256": "a23de3046599bcdd207b6fe4e53f6b73f540445da7cf9d020fc783cb24ab3869",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "pesticide-reporting.md": {
+      "sha256": "b85da6204abe4cf0aa5df427b810e9065898ee6a8388930e67a623e55d933c4c",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "pesticide-residue-definition-by-matrix.md": {
+      "sha256": "75995ce913505c174d32ea5c67f70a8a21c3786f4a3d382c8eba0278b25daf20",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "pesticide-residue-definition-wording.md": {
+      "sha256": "9aee8f86a8ffb7a0cc78ee6314ab12060259c11de50cfd56f982d0f61508ffe0",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "reporting-flags.md": {
+      "sha256": "b66c41887049609a59d59af336dfea0dbbd404f8a16b785d600ad760554d3cb5",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-analysis-context.md": {
+      "sha256": "4889cee12c75455fe517bb25a0a953e13217e535028ce96177801c859f4be37f",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-analysis-laboratory.md": {
+      "sha256": "19ef43e886c887acaec8576dd6edd0ba018ab7a80bbe91e42e65a784594305e9",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-analysis-methods.md": {
+      "sha256": "141db0b33cb9ecfc217ebc36a8b4424d95ab9d26265e80d3439bf6f0f042e42f",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-analysis-parameter-coding.md": {
+      "sha256": "d5899eeb9e35da08a31a575df426a78f79d40fd58f86532626f79b40e89dc6cc",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-data-model.md": {
+      "sha256": "4a7f6c06ad365d9bed206dd9d1876b0cfce0215425b1579ac0164d9df50cbf9b",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-elements-analysis.md": {
+      "sha256": "a9ac2d3052ebec957458f1d66b7612fcda0a6d6e4b9afddf9574ca0e1254fdda",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-elements-evaluation.md": {
+      "sha256": "24df0f956175e3c40a2d86e21c4eeebfb0d3954a08d8f6665668ee0b5b18442b",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-elements-matrix.md": {
+      "sha256": "9cbab7bf90f7c44667888a816ef80c9a01579b71ecf107485f234dd673bb0c54",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-elements-programme.md": {
+      "sha256": "9cdd12692ea7bbbf33b407c4fbae19146e94f6cc326755a245c378dec34fd837",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-elements-result.md": {
+      "sha256": "bccc59ecfa59282d128c65d1259db8a7a1ae8472bd76c9a0e83015d189110b6a",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-elements-sampling.md": {
+      "sha256": "cc356fabf867622a4353f823a8022bb0933ea38db1143e8906e5a8b1055b6e88",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-evaluation-actions.md": {
+      "sha256": "ab3a2d07121c20731a614b993874f9fdddfe1c4d1e79fdad9ad8a722d7f928e1",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-evaluation-code.md": {
+      "sha256": "c18686ddedaece019bdda963578f118d25c07d0e8162bce34034185e120cc08d",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-evaluation-conclusions.md": {
+      "sha256": "e00ebbe8d3c48006f177c3c989432c46e76753cfd64e310b881a3c2010f281bb",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-evaluation-limits.md": {
+      "sha256": "198d6c340017a7770ad8a36c3ff7679287ce9e447001152f0a8686dbe9267176",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-matrix-analysed-sample.md": {
+      "sha256": "8806a45a83b46c14dcb9319c664c4d67cfbe6c50c5a5be1695a16d0cac72b1f5",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-matrix-origin.md": {
+      "sha256": "c95730fdbf18b3d05b00785b1798d8d38da53966aad3f55b140b3c9e65c32fb2",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-matrix-sampled-matrix.md": {
+      "sha256": "d52741e876a1a8e5e6e1de1a8f0b33319012b84a0620843b4dbcd7a2b3bf8a2a",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-matrix-vmpr-coding.md": {
+      "sha256": "b97b2513fa63f94e1cea41481f0d5aae4e81020b86b9a15c744fcce0e3264687",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-programme-identification.md": {
+      "sha256": "f14c342eb297c948585cb89ab81c38b68779b7b8c9bdca9db01081cc987571ea",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-programme-legal-reference.md": {
+      "sha256": "8b1cf568128cdb86759f860fa3857cd3291556502f908f9a314f2521a78dcf1e",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-programme-strategy-and-type.md": {
+      "sha256": "b7b6331d5ce538cf27391097eec2417f7313dcf08bb4d8795eddd31a902d8967",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-programme-valid-combinations.md": {
+      "sha256": "241d521d847ddd909666152dcfd804506e69eb2d2e0480bc6adf5b3a920c90ec",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-expression-basis.md": {
+      "sha256": "9fa6b42ff140cb8453698cce057e653a25bf1fb283269b05153ea0931fa28247",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-identification.md": {
+      "sha256": "68320337b37acd101d773eaa620d8342c0359e1818bb8100ab6acef59ec85e0b",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-method-accreditation.md": {
+      "sha256": "5581abafe5e3f443902f2408670c6b961db8f3ede8afd134bdb0780acf2a6ab3",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-recovery-correction.md": {
+      "sha256": "34e9c98b0e8593448814b13e86f93d331a0f8e9ba5d6c0d61c6ef1c5b0b47eae",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-uncertainty.md": {
+      "sha256": "e74edc97fa92c6e9fd3434aaff98420a58116b17a777b87dda261b1422d88ef4",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-units-and-limits.md": {
+      "sha256": "38bb9c5e636b87b5d2007886ac6b6b8d05dbe85c26842396800d456b78e69327",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-result-value-and-type.md": {
+      "sha256": "77d77e9f024400a4bfbf9ceef8d41486673a8771f50892bf79c259d50cebec60",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-sample-identifiers.md": {
+      "sha256": "05bf81913cdfd607dd52ffdcfd58ce3cca5e3721ae2614cc741b919200fb07eb",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-sampling-country.md": {
+      "sha256": "4a432b1d647b54375ca849063e81cf930e6de086abba2396c15f8e3af81affbe",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-sampling-date.md": {
+      "sha256": "918c7150c3c46ebebd96f8aa3bd3bf739e6edda8ad8f4ec9412381900828e324",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-sampling-event-and-unit.md": {
+      "sha256": "0ad0e5437aadc14f970c2c4c9c6b74cc3fc41a682f0c1b4c708b9fff2f782c91",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "ssd2-sampling-method-and-point.md": {
+      "sha256": "c857999ec52e939ecd3b4601aed5d30af22700496b46a57d72a9e13c07b03f11",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    },
+    "vmpr-reporting.md": {
+      "sha256": "73e889416eeed140924422cd5368016b7ea240c393bc8c716f10b18d1fbd46ec",
+      "reviewed_at": "2026-11-11",
+      "reviewer": "none",
+      "method": "adopted",
+      "lines_reviewed": 0,
+      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+    }
+  }
+}
