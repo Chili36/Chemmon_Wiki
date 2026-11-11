@@ -3,7 +3,7 @@ title: "Cross-Cutting CHEMON Business Rules"
 select_when: "Named cross-domain CHEMON rules: analytical methods, result shape, sample/programme consistency, action-taken warnings, domain routing. Select when their conditions are relevant."
 type: "rule-reference"
 domain: "cross-cutting"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -71,11 +71,12 @@ Rules are grouped here by topic; the source definitions are in Table 10, pp. 113
 | CHEMON50 | Error | If `progType` is K018A (Official National and EU) or K009A (Official EU), AND `progLegalRef` contains N027A (Regulation 396/2005), `sampStrategy` can only be ST10A (Objective) or ST20A (Selective). | N027A | 125 |
 | CHEMON51 | Error | If `progLegalRef` contains N027A (Regulation 396/2005), `sampStrategy` can only be ST10A (Objective), ST20A (Selective) or ST30A (Suspect). CHEMON50 further narrows K018A/K009A cases. | N027A | 125 |
 | CHEMON54 | Error | If `progLegalRef` is N317A (Regulation (EU) 2019/1793), `progType` must be K019A (EU increased control programme on imported food) AND `sampStrategy` must be ST30A (Suspect). | N317A; no contaminant-only restriction | 126 |
-| CHEMON58 | Error | For pesticides/VMPR, `sampCountry` must equal `reportingOrgCountry`. This compares sampling and reporting countries; it does not require the product origin to match. | PPP/VMPR | 127 |
+| CHEMON101 | Error | If `progLegalRef` is N422A (Regulation (EU) 2019/1873), `progType` must be K019A (EU increased control programme on imported food) AND `sampStrategy` must be ST30A (Suspect). | N422A; no domain condition | 138-139 |
+| CHEMON58 | Error | For pesticides/VMPR, `sampCountry` must equal the country of the reporting organisation (the rule names no data element for it). This compares sampling and reporting countries; it does not require the product origin to match. | PPP/VMPR | 127 |
 | CHEMON68 | Error | `progLegalRef` domain must match `paramCode` domain. The legal reference must correspond to the substance domain being reported. | All | 130 |
 | CHEMON77 | Error | For pooled samples (`sampMethod` N002A/N031A), `sampUnitSizeUnit` must be G005A and `sampUnitSize` must equal the number of units pooled. | All | 131 |
 | CHEMON94 | Error | For K038A (import control), `sampPoint` can only be E010A (Border Control Posts). Import samples must be taken at the border. (Amended 2026) | All | 136-137 |
-| CHEMON97 | Error | For PPP/CONT/ADD/FLAV with K005A, valid sampling strategies are ST10A, ST20A, or ST30A. (New 2026) | PPP/CONT/FA/FF | 137 |
+| CHEMON97 | Error | For PPP/CONT/ADD/FLAV with K005A, valid sampling strategies are ST10A, ST20A, or ST30A. (Introduced 2025; Error from 2026) | PPP/CONT/FA/FF | 137 |
 | CHEMON99 | Warning | If `progType` is K038A or K019A OR `sampPoint` is E010A, `origCountry` must differ from `sampCountry`. K019A is EU increased control on imported food, not general monitoring. | Import-control triggers | 138 |
 
 ## Matrix & Facet Rules (cross-domain)
@@ -111,12 +112,15 @@ Rules are grouped here by topic; the source definitions are in Table 10, pp. 113
 
 ## Import-control matrix and origin
 
-<!-- Source: ChemMon 2026 Table 10, p. 129 -->
+<!-- Source: ChemMon 2026 Table 10, pp. 129, 139 -->
 
 | Rule ID | Severity | Condition and requirement | Scope | Source page |
 | --- | --- | --- | --- | --- |
 | CHEMON64 | Error | For samples under Regulation (EU) 2019/1793 (`progLegalRef` N317A), `origCountry` and `sampMatCode` must be values listed in that regulation. | N317A | 129 |
 | CHEMON105 | Error | If `progLegalRef` is N317A (Regulation (EU) 2019/1793), no other `progLegalRef` can be used on that record. | N317A; no contaminant-only restriction | 139 |
+| CHEMON104 | Error | If `progLegalRef` is N422A (Regulation (EU) 2019/1873), no other `progLegalRef` can be concatenated. | N422A; no domain condition | 139 |
+
+CHEMON101 and CHEMON104 state their condition on `progLegalRef` N422A only and name no domain flag (ChemMon 2026 pp. 138-139). Source discrepancy: Table 12 gives N422A the domain attributes OCC, PEST, VMPR (ChemMon 2026 p146), while Table 1 says it is flagged for contaminants, pesticides, VMPR, food additives and food flavourings (ChemMon 2026 p11).
 
 ## Source wording and inactive rows
 

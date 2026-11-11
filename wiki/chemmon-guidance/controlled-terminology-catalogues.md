@@ -2,13 +2,13 @@
 title: "Controlled Terminology Catalogues"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-10"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "ChemMon 2026 pp. 144-147 (Section 7; Table 11; Table 12 guidance text p. 147); No-presence 2026 Table 1 pp. 15-16; Use-levels 2026 Table 1 pp. 19-21"
+  - "ChemMon 2026 pp. 144-147 (Section 7; Table 11; Table 12 guidance text p. 147); ChemMon 2026 pp. 78-79 (N.06.4); No-presence 2026 Table 1 pp. 15-16; No-presence 2026 Table 3 pp. 19-20; Use-levels 2026 Table 1 pp. 19-21; Use-levels 2026 Table 3 pp. 24-25"
 related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[chemmon-change-management]]"
@@ -50,7 +50,7 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 | Catalogue | Reporting hierarchy\* | Analysis hierarchies\*\* | SSD2 elements (Table 7) | Notes |
 | --- | --- | --- | --- | --- |
 | `ACTION` | Master hierarchy | Not applicable | `actTakenCode` |  |
-| `ADDFOOD` | Master hierarchy | `FARestExc` and `FFRestExc` | `evalInfo.restrictionException` | `FARestExc` with `progLegalRef=N112A`; `FFRestExc` with `progLegalRef=N113A`. Report `ADD00881A` ("No restriction/exception to report") when nothing applies. |
+| `ADDFOOD` | Master hierarchy | `FARestExc` and `FFRestExc` | `evalInfo.restrictionException` | ChemMon: the element is optional and codes are selected from ADDFOOD; `ADD00881A` is the example for "No restrictions/exceptions to be reported" (ChemMon 2026 pp. 78-79). FA/FF parallel DMs: `FARestExc` must be used with `progLegalRef=N112A` and `FFRestExc` with `progLegalRef=N113A`, and `ADD00881A` must be selected when nothing applies (No-presence 2026 p19, PRE03/PRE04; Use-levels 2026 p24, USE04/USE05). |
 | `ANLYMD` | Master hierarchy | Not applicable | `anMethCode` |  |
 | `ANLYREFMD` | Master hierarchy | Not applicable | `anMethRefCode` |  |
 | `ANLYTYP` | Master hierarchy | Not applicable | `anMethType` |  |
@@ -88,7 +88,7 @@ The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] make so
 | Catalogue | Where it shows up | Hierarchy / usage |
 | --- | --- | --- |
 | `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | PRE/USE hierarchy spelling: **`faff`**; ChemMon p. 76 prints **`fa_ff`**. The matching codes/labels establish the same concept family; this is a documentation naming discrepancy, not proof that software accepts both hierarchy identifiers. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings use the same named conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
-| `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. Required when `progLegalRef=N112A` in the parallel DMs. |
+| `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. `functionOf` must be reported when `progLegalRef=N112A` in the parallel DMs (No-presence 2026 p20, PRE07; Use-levels 2026 p25, USE10). |
 | `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. |
 | `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Two-value catalogue: `Y` / `N`. |
 

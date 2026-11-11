@@ -2,7 +2,7 @@
 title: "ChemMon Data Governance and Transparency"
 type: "overview"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -49,11 +49,11 @@ EFSA provides a catalogue browser application linked to the latest catalogue ver
 
 EFSA has moved toward an Open by Default approach for data in the Scientific Data Warehouse. This supports transparency and reuse, but it also requires protection of sensitive information such as personal data and commercially sensitive data. (ChemMon 2026 pp. 9-10)
 
-For that reason, the use of free-text fields in ChemMon submissions has been reduced. Only free-text fields where the expected content is clearly specified remain. Geographical identifiers below country level and unique identifiers for business partners should be linked to public registers and used only where needed for risk assessment. (ChemMon 2026 p10)
+For that reason, the use of free-text fields in ChemMon submissions has been reduced. Only free-text fields where the expected content is clearly specified remain. Geographical identifiers below country level, and unique identifiers which can be linked to public registers of food business operators, are required only when necessary to support risk assessment. (ChemMon 2026 p10)
 
-The Transparency Regulation (EU) 2019/1381 introduced provisions on publication of data and information supporting requests from the Commission for scientific outputs. These apply to ChemMon data collected from 27 March 2021. (ChemMon 2026 p10)
+The Transparency Regulation (EU) 2019/1381, which became applicable on 27/03/2021, introduced provisions on publication of data and information supporting requests from the Commission for a scientific output. The guidance says these "may also apply" to data collected under the ChemMon data collections. (ChemMon 2026 p10)
 
-Under Article 38(1)(c) of Regulation (EC) No 178/2002, proactive transparency applies to documents, studies, and data submitted to EFSA to support application dossiers or mandates received from 27 March 2021. Under Article 38(1)(a), Member States submit data on behalf of natural or legal persons and may submit confidentiality requests under Articles 39-39e. (ChemMon 2026 p10)
+Under Article 38(1)(c) of Regulation (EC) No 178/2002, proactive transparency applies to documents, studies, and data submitted to EFSA to support application dossiers or mandates for scientific output received on or after 27/03/2021. Under Article 38(1)(d), information on which EFSA's outputs are based is made proactively available at the time the output is published. Member States who submit data on behalf of natural or legal persons (such as industry) in relation to a post-Transparency-Regulation mandate have the right to submit confidentiality requests for certain data under Articles 39-39e of Regulation (EC) No 178/2002. (ChemMon 2026 p10)
 
 ## Machine-Readable Resources
 

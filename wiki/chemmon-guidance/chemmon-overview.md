@@ -19,7 +19,9 @@ related:
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
+source_pages:
+  - "pp. 1, 5-10 (abstract; Section 1.1 Background); p. 32 (sampling date); p. 97 (Section 6); pp. 144, 152 (Sections 7 and 11)"
 ---
 
 # ChemMon Overview
@@ -46,39 +48,37 @@ ChemMon covers five distinct reporting domains, each with its own regulatory bas
 | Domain | Scope |
 | --- | --- |
 | Pesticide residues | Monitoring and enforcement samples under Regulation (EC) No 396/2005. See [[pesticide-reporting]]. |
-| Veterinary medicinal product residues (VMPR) | National residue monitoring plans under Directive 96/23/EC and Regulation (EU) 2017/625. See [[vmpr-reporting]]. |
+| Veterinary medicinal product residues (VMPR) | Official controls of VMPR in live animals and animal products under Regulations (EU) 2022/1644 and 2022/1646, which repealed Council Directive 96/23/EC (ChemMon 2026 p6, p8). See [[vmpr-reporting]]. |
 | Chemical contaminants | Occurrence data for contaminants such as heavy metals, mycotoxins, and process contaminants. See [[contaminant-reporting]]. |
-| Food additives | Occurrence data on permitted food additives for re-evaluation exposure assessments. See [[food-additives-reporting]]. |
-| Food flavourings | Occurrence data on flavouring substances used in or on food. See [[food-additives-reporting]]. |
+| Food additives | Occurrence data (use levels and analytical results) on food additives under Regulation (EC) No 1333/2008 (ChemMon 2026 p7). See [[food-additives-reporting]]. |
+| Food flavourings | Occurrence data (use levels and analytical results) on food flavourings under Regulation (EC) No 1334/2008 (ChemMon 2026 p7). See [[food-additives-reporting]]. |
 
-Each domain routes to a dedicated Data Collection Framework (DCF) dataset. Not every parameter belongs in every domain, and routing rules determine the correct destination for each submission. The rationale for the single SSD2 collection and overlapping-domain handling is in [[chemmon-single-ssd2-collection]]. (ChemMon 2026 p7-10)
+All five domains are reported to **one single SSD2 data collection**; there is no separate dataset per domain. The results that go into each National and Annual Report are selected with analysis hierarchies on the PARAM and MTX catalogues and with the programme legal reference (ChemMon 2026 p8-9), and EFSA stores a flag per domain on every result ([[reporting-flags]]; ChemMon 2026 p148). The rationale for the single SSD2 collection and overlapping-domain handling is in [[chemmon-single-ssd2-collection]].
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p10-14 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p8, p32-33, p144, p152 -->
 ## Data Submission
 
-- Data is submitted electronically through EFSA's Data Collection Framework (DCF) in the Standard Sample Description version 2 (SSD2) format. See [[ssd2-data-model]] for the logical structure. (ChemMon 2026 p10-12)
-- Each submission is an XML file containing sample, analytical, and result records structured according to SSD2 element definitions. (ChemMon 2026 p10)
-- Sample matrices are classified using FoodEx2 codes in the `sampMatCode` element, drawn from the MTX reporting hierarchy. See [[foodex2-in-chemmon]] for domain-specific coding rules. (ChemMon 2026 p33-36)
+- Data is submitted electronically through EFSA's Data Collection Framework (DCF) in the Standard Sample Description version 2 (SSD2) format. See [[ssd2-data-model]] for the logical structure. (ChemMon 2026 p8, p152)
+- Submissions are structured according to the SSD2 element definitions; the guidance shows its element examples as XML, e.g. `<sampY>2019</sampY>`. (ChemMon 2026 p32)
+- Sample matrices are classified using FoodEx2 codes in the `sampMatCode` element, drawn from the reporting hierarchy of the MTX catalogue. See [[foodex2-in-chemmon]] for domain-specific coding rules. (ChemMon 2026 p33, p144)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p6-8 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p5, p32, p152 -->
 ## Annual Cycle
 
 1. **Sampling**: Member States collect food and feed samples during the calendar year according to national monitoring and control plans.
-2. **Submission**: Data providers prepare SSD2-formatted files and upload them to the appropriate DCF dataset, typically by 31 August of the following year for pesticide residues and by 30 June for VMPR.
-3. **Validation**: EFSA runs automated business rules against the submitted data. Failing records are flagged for correction. See [[business-rules]].
-4. **Publication**: Validated data is used in EFSA's annual scientific reports and supporting publications.
+2. **Submission**: Data providers prepare SSD2-formatted files and transmit them to the DCF. Samples taken in any year can be transmitted when the data are ready, but the EU VMPR and pesticide reports only include samples taken in the specific calendar year and "submitted within agreed deadlines"; the guidance does not state the deadline dates. (ChemMon 2026 p5, p32)
+3. **Validation**: The DCF returns the results of the business-rule validation; data providers correct and re-transmit. See [[business-rules]] and [[data-validation-and-acceptance]]. (ChemMon 2026 p152)
+4. **Use**: Accepted data are used for EFSA scientific assessments and for the reports in [[chemmon-reports]]. (ChemMon 2026 p149)
 
-(ChemMon 2026 p6-8)
-
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p14-16 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p97, p152 -->
 ## Business Rules
 
-- Submissions are validated by business rules that check element presence, allowed values, inter-element consistency, and domain-specific constraints. (ChemMon 2026 p14-16) Rule numbering has gaps; use the source-derived inventory in [[business-rules]] instead of inferring IDs from a numeric range.
-- Rules are classified by severity: errors block acceptance, warnings flag potential issues but allow submission. (ChemMon 2026 p14)
+- Business rules are provided to ensure the data submitted through the DCF are fit for purpose for EFSA's scientific assessments. There are three groups: general business rules (GBR), chemical monitoring rules (CHEMON), and specific rules for a subset of the data (pesticides, VMPR, food additives, food flavourings or specific contaminants). (ChemMon 2026 p97) Rule numbering has gaps; use the source-derived inventory in [[business-rules]] instead of inferring IDs from a numeric range.
+- Each rule is an Error or a Warning. A dataset can be submitted to the sDWH once it has reached 'Valid' or 'Valid with Warning' status. (ChemMon 2026 p152) Wiki note (not in the guidance): the guidance does not say in so many words that an Error blocks submission; that follows from the two statuses.
 - The full rule catalogue is maintained in [[business-rules]].
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p8 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p10 -->
 ## Transparency Regulation
 
-- Regulation (EU) 2019/1381 on the transparency and sustainability of EU risk assessment in the food chain governs how ChemMon data is made available. (ChemMon 2026 p8)
-- Under the Transparency Regulation, EFSA proactively publishes submitted data while protecting confidential business information and personal data in accordance with the regulation's provisions. See [[chemmon-data-governance-and-transparency]] for the background on Open Data and free-text reduction. (ChemMon 2026 p8)
+- Regulation (EU) 2019/1381 on the transparency and sustainability of the EU risk assessment in the food chain became applicable on 27/03/2021; its provisions on publishing data and information that support requests for a scientific output "may also apply" to ChemMon data. (ChemMon 2026 p10)
+- EFSA has moved to an Open by Default approach for data in the Scientific Data Warehouse, which requires that sensitive information (personal data, commercially sensitive data) is protected. See [[chemmon-data-governance-and-transparency]] for the background on Open Data, confidentiality requests and free-text reduction. (ChemMon 2026 p9-10)

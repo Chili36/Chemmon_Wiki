@@ -3,7 +3,7 @@ title: "Legal Limit Business Rules"
 select_when: "LL rules: numeric result and unprocessed-sample prerequisites, MRL/MPL evaluation comparisons, legal parameter/matrix combinations and part-of-sum exception."
 type: "rule-reference"
 domain: "cross-cutting"
-last_updated: "2026-10-13"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -24,7 +24,7 @@ related:
 
 ## Overview
 
-Legal limit rules compare reported result values against regulatory thresholds (MRLs, MLs, MPLs). They ensure that evaluation codes are consistent with the numeric comparison between result values and applicable limits, and that parameter/matrix combinations match the legal limits database.
+Legal limit rules compare reported result values against regulatory thresholds: MRLs for VMPR and pesticides, MPLs for food additives and flavourings (ChemMon 2026 pp. 141-142). They ensure that evaluation codes are consistent with the numeric comparison between result values and applicable limits, and that parameter/matrix combinations match the legal limits database.
 
 Apply each rule only within its stated domain and conditions; see [[business-rules-vmpr]], [[business-rules-pesticide]], and [[business-rules-additives]] for the underlying CHEMON rules they interact with.
 
@@ -49,7 +49,7 @@ Apply each rule only within its stated domain and conditions; see [[business-rul
 
 | Rule ID | Severity | Description | Domain |
 | --- | --- | --- | --- |
-| LL_03 | Error | `paramType` must be reported for multi-component or sum parameters. The parameter type (individual, sum, complex) must be declared to enable correct limit comparison. | All |
+| LL_03 | Error | `paramType` must be reported for multicomponent/sum, "to indicate if the full analysis has been performed as indicated by paramCode" (p. 143). | All |
 | LL_03_b | Warning | `paramType` should equal the pre-assigned `paramType` (p. 143). | All |
 | LL_04 | Error | For pesticides, where `paramCode` is in the legal limits database, the sampled matrix and `paramCode.base` must match a plausible legal combination (`PlausibleCombinationPPP=1`), unless the result is a part of sum. The source groups LL_04/LL_04_b in one row. | PPP |
 | LL_04_b | Error | Same grouped source definition and part-of-sum exception as LL_04. Table 10 does not define a separate `anMatCode` condition for this ID. | PPP |

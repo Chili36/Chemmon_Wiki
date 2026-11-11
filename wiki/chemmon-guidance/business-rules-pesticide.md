@@ -1,13 +1,13 @@
 ---
 title: "Pesticide-Specific Business Rules"
-select_when: "Named pesticide CHEMON rules and their field conditions, including copper uncertainty and programme constraints. Use only when the question concerns pesticide reporting."
+select_when: "Named pesticide CHEMON rules and their field conditions, including copper facets and uncertainty and N027A programme types. Use only when the question concerns pesticide reporting."
 type: "rule-reference"
 domain: "pesticide"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Table 10, pp. 113-143"
+  - "Table 10, pp. 126-137 (CHEMON52-CHEMON95); Table 8, p. 86 (copper)"
 related:
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
@@ -21,9 +21,9 @@ related:
 
 ## Overview
 
-CHEMON rules that apply exclusively to the pesticide residues (PPP) reporting domain. These rules cover country-of-sampling requirements, sampling year validation, programme type restrictions, result type and expression constraints, measurement uncertainty, copper-specific facet requirements, non-compliant origin country validation, and 2026 programme reference exclusivity rules.
+CHEMON rules whose condition is the pesticide flag (`is_pest=1`), the pesticide legal reference N027A, or the copper `paramCode`. These rules cover programme type restrictions, result type and expression constraints, evaluation codes and limit types, measurement uncertainty, copper-specific facet requirements, and non-compliant origin country validation. The Scope cell gives each rule's own trigger.
 
-Rules that apply to PPP *and* other domains (e.g. CHEMON27, CHEMON43, CHEMON44, CHEMON58, CHEMON85, CHEMON94, CHEMON97) are in [[business-rules-cross-cutting]]. Legal limit rules for pesticides are in [[business-rules-legal-limits]]. For pesticide reporting guidance, sampling strategies, copper facet coding, and worked examples, see [[pesticide-reporting]].
+Rules that apply to PPP *and* other domains (e.g. CHEMON27, CHEMON43, CHEMON44, CHEMON58, CHEMON85, CHEMON94, CHEMON97) are in [[business-rules-cross-cutting]], as are the N027A sampling-strategy rules (CHEMON50, CHEMON51) and the N422A rules (CHEMON101, CHEMON104), which name no domain flag (ChemMon 2026 pp. 125, 138-139). Legal limit rules for pesticides are in [[business-rules-legal-limits]]. For pesticide reporting guidance, sampling strategies, copper facet coding, and worked examples, see [[pesticide-reporting]].
 
 > **Source review (5 October 2026):** Table 10 contains CHEMON03 once, for the analytical method. The former country-consistency duplicate was a wiki attribution error and has been removed. The complete Table 10 rows, continuations, severity and comments were compared on 5 October 2026; source wording ambiguities are retained explicitly. This is an assistant review, not independent human sign-off.
 
@@ -38,8 +38,8 @@ Rules that apply to PPP *and* other domains (e.g. CHEMON27, CHEMON43, CHEMON44, 
 | CHEMON61 | Error | For pesticides, `resType` can only be LOD, LOQ, BIN, or VAL. No other result types are accepted. | PPP | 128 |
 | CHEMON70 | Error | For pesticides in egg/milk matrices, `exprResType` must be B001A (whole weight). Fat-weight or dry-weight expression is not accepted for these matrices. | PPP | 131 |
 | CHEMON72 | Warning | For pesticides, `resValUncert` (measurement uncertainty) should be reported when `resType` = VAL. | PPP | 131 |
-| CHEMON90_a | Warning | For copper (`paramCode` RF-0102-001-PPP), the use of facet F20 (part-consumed-analysed) and/or facet F28 (process) is needed to describe sample preparation. | PPP | 135 |
-| CHEMON90_b | Error | For copper (`paramCode` RF-0102-001-PPP), `resValUncert` is mandatory when `resType` = VAL. | PPP | 135 |
+| CHEMON90_a | Warning | For copper (`paramCode` RF-0102-001-PPP), the use of facet F20 (part-consumed-analysed) and/or facet F28 (process) is needed to describe sample preparation. | `paramCode` RF-0102-001-PPP trigger; no domain condition | 135 |
+| CHEMON90_b | Error | For copper (`paramCode` RF-0102-001-PPP), `resValUncert` is mandatory when `resType` = VAL. | `paramCode` RF-0102-001-PPP trigger; no domain condition | 135 |
 | CHEMON95 | Warning | For PPP with `evalCode` = J003A (non-compliant), `origCountry` must be reported and must not be XX, AA, EU, XC, XD, or XE. Non-compliant results require a specific country of origin. (Amended 2026) | PPP | 137 |
-| CHEMON101 | Error | If `progLegalRef` is N422A (Regulation (EU) 2019/1873), `progType` must be K019A (EU increased control programme on imported food) AND `sampStrategy` must be ST30A (Suspect). | N422A | 138-139 |
-| CHEMON104 | Error | If `progLegalRef` is N422A (Regulation (EU) 2019/1873), no other `progLegalRef` can be concatenated. | N422A | 139 |
+
+The two copper rules are triggered by the `paramCode` alone; neither names a domain flag (ChemMon 2026 p135). Table 8, "Specific reporting requirements for certain contaminants, food additives and food flavourings", also lists copper with CHEMON90_a (ChemMon 2026 p86).
