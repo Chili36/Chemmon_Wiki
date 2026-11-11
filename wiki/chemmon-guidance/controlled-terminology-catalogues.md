@@ -8,7 +8,7 @@ sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "ChemMon 2026 pp. 144-147 (Section 7; Table 11; Table 12 guidance text p. 147); ChemMon 2026 pp. 78-79 (N.06.4); No-presence 2026 Table 1 pp. 15-16; No-presence 2026 Table 3 pp. 19-20; Use-levels 2026 Table 1 pp. 19-21; Use-levels 2026 Table 3 pp. 24-25"
+  - "ChemMon 2026 pp. 144-147 (Section 7; Table 11; Table 12 guidance text p. 147); ChemMon 2026 pp. 78-79 (N.06.4); No-presence 2026 p. 11 (presenceAdded); No-presence 2026 Table 1 pp. 15-16; No-presence 2026 Table 2 pp. 17-18; No-presence 2026 Table 3 pp. 19-20; Use-levels 2026 pp. 13-14 (presenceAdded, weight); Use-levels 2026 Table 1 pp. 19-21; Use-levels 2026 Table 2 pp. 22-23; Use-levels 2026 Table 3 pp. 24-25"
 related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[chemmon-change-management]]"
@@ -81,15 +81,15 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 
 ## Catalogue usages surfaced by the FA/FF parallel data models
 
-<!-- Source: No-presence 2026 Table 1 pp. 15-16; Use-levels 2026 Table 1 pp. 19-21 -->
+<!-- Source: No-presence 2026 p11, Table 1 pp. 15-16, Table 2 pp. 17-18; Use-levels 2026 pp. 13-14, Table 1 pp. 19-21, Table 2 pp. 22-23; ChemMon 2026 pp. 76, 144 -->
 
 The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] make some catalogue usages more explicit than the ordinary SSD2 analytical path. Some are shared with SSD2 analytical reporting, while others are specific to the parallel FA/FF data models:
 
 | Catalogue | Where it shows up | Hierarchy / usage |
 | --- | --- | --- |
-| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | PRE/USE hierarchy spelling: **`faff`**; ChemMon p. 76 prints **`fa_ff`**. The matching codes/labels establish the same concept family; this is a documentation naming discrepancy, not proof that software accepts both hierarchy identifiers. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings use the same named conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
-| `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the additive per Reg. 1333/2008 Annex I — 28 classes (sweeteners, colours, preservatives, antioxidants, carriers, acids, …) plus 5 Annex III classes. `functionOf` must be reported when `progLegalRef=N112A` in the parallel DMs (No-presence 2026 p20, PRE07; Use-levels 2026 p25, USE10). |
-| `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. |
+| `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | Source discrepancy (hierarchy spelling): both parallel guides print **`faff`** (No-presence p11; Use-levels p13, Table 1 p20) and so does ChemMon Table 11 (p. 144); only ChemMon p. 76 prints **`fa_ff`**. The matching codes/labels establish the same concept family; this is a documentation naming discrepancy, not proof that software accepts both hierarchy identifiers. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings use the same named conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
+| `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the food additive. Table 2 of each guide lists 33 classes: 27 with a description (1 sweeteners, 2 colours, 3 preservatives, 4 antioxidants, 5 carriers, 6 acids, … 27 contrast enhancers), 28 "nutrient" (no description), and five "Annex III" classes (29-33). (No-presence 2026 pp. 17-18; Use-levels 2026 pp. 22-23) `functionOf` must be reported when `progLegalRef=N112A` in the parallel DMs (No-presence 2026 p20, PRE07; Use-levels 2026 p25, USE10). |
+| `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. (Use-levels 2026 pp. 14-15, 20) |
 | `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Two-value catalogue: `Y` / `N`. |
 
 The FA/FF parallel DMs have their own field types, catalogue restrictions and `PRE…` / `USE…` / `USE_LLDB…` rules. Some field constraints have no separate rule ID; the rule-ID list does not replace Table 1 or the field sections. See the DM pages for the rule tables.

@@ -163,5 +163,7 @@ The query, returned term attributes, catalogue metadata and database hash are
 recorded in `reports/source-review/2026-10-05-cheese-catalogue-check.json`;
 see [[SOURCE_REVIEW]]. This is a checked local snapshot, not a latest-catalogue
 claim. Its date is later than the PDFs, so it does not establish which historical
-catalogue release the ChemMon example intended. Check the catalogue used by the
+catalogue release the ChemMon example intended. It checked term labels, implicit
+facets and reportability, not every validation condition for a complete record.
+Check the catalogue used by the
 receiving collection before reusing an example from another edition.

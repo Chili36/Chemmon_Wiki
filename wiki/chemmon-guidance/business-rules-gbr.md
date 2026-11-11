@@ -3,11 +3,17 @@ title: "General Business Rules (GBR)"
 select_when: "Core generic SSD2 rules: sample/event consistency, sampling/origin geography, GBR27-29 units/BIN, result shape and GBR101 uniqueness. Links to separate date, descriptor-consistency and numeric-threshold GBR pages."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "pp. 98-112, Table 9"
+  - "ChemMon 2026 p. 97 (GBR scope)"
+  - "ChemMon 2026 pp. 98-112 (Table 9)"
+  - "ChemMon 2026 pp. 80-81 (element table, sections C and D)"
+  - "No-presence 2026 p. 19 (Table 3)"
+  - "Use-levels 2026 p. 24 (Table 3)"
 related:
   - "[[business-rules]]"
   - "[[business-rules-gbr-consistency]]"
@@ -23,7 +29,9 @@ related:
 
 ## Overview
 
-General Business Rules (GBR) validate SSD2 data-model consistency. Table 9 of the
+General business rules (GBR) "apply to all data submitted to EFSA through the
+DCF, including microbiological data as well as chemical" (ChemMon 2026 p97).
+Table 9 is written against SSD2 data elements. Table 9 of the
 2026 ChemMon guidance lists 92 IDs: 83 active rules not marked biological-only,
 seven biological-only rules, and two inactive rules. The 83 applicable active
 definitions are covered once each across this page and three focused references:
@@ -37,7 +45,13 @@ definitions are covered once each across this page and three focused references:
 
 This covers Table 9's applicable active GBR definitions, not every rule needed
 for a valid ChemMon submission. CHEMON/LL rules, field specifications and
-collection-specific conditions still apply; PRE and USE are separate data models.
+collection-specific conditions still apply.
+
+The No-presence and Use-levels guides list only PRE and USE rules in their
+Table 3, "List of the business rules applicable" (No-presence p19; Use-levels
+p24), and no GBR. The guidance does not say whether GBRs are run on those
+submissions. Wiki note (not in the guidance): PRE and USE use their own data
+models, so Table 9's SSD2 element names do not map directly onto them.
 
 See [[business-rules]] for the hub and [[business-rules-cross-cutting]] for CHEMON rules spanning multiple domains; check each row's applicability.
 
@@ -64,6 +78,13 @@ The descriptor lists in the source are:
 These section letters refer to the 2013 SSD2 model, as Table 9 footnote 75
 states. Preserve the named identifiers as well as the descriptor fields.
 
+**Source discrepancy:** GBR3's list of "data elements in the sections D and E"
+(ChemMon 2026 pp. 98-99) does not match the element table. It includes
+`sampUnitSize`, which is element C.03 and is already in GBR2's list (ChemMon
+2026 p80), and it omits two Section D elements, `repYear` (D.05, p80) and
+`sampSizeUnit` (D.10, p81). The guidance does not say which list validation
+uses; the list above is Table 9's, unchanged.
+
 ## Geographic Validation
 
 | Rule ID | Severity | Description |
@@ -80,7 +101,7 @@ states. Preserve the named identifiers as well as the descriptor fields.
 | GBR29 | Error | `resUnit` must be reported if any of `resLOD`, `resLOQ`, `resLLWR`, `resULWR`, `CCalpha`, `CCbeta`, `resVal`, `resValUncert`, `resValUncertSD`, `evalLowLimit` or `evalHighLimit` is reported (p. 103). |
 | GBR36 | Error | If `resType` = LOD, then `resLOD` must be reported. |
 | GBR37 | Error | `resLOD` must be less than or equal to `resLOQ`. |
-| GBR39 | Error | If `resType` = LOQ and `notSummed` is not 'Y', then `resLOQ` must be reported. |
+| GBR39 | Error | If `resType` = LOQ and `resInfo.notSummed` is not 'Y', then `resLOQ` must be reported. |
 | GBR46 | Error | If `resType` = VAL, then `resVal` must be reported. |
 | GBR47 | Error | If `resType` = LOD, then `resVal` must be empty. |
 | GBR48 | Error | `resVal` must be greater than 0 when reported. |

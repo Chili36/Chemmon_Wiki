@@ -596,7 +596,7 @@ def test_context_pack_preserves_exact_source_locators():
     app_module.selector_runner = RulesSelector()
     result = request('POST', '/wiki/context-pack', json={'question': 'GBR28', 'max_pages': 2}).json()
     page = result['pages'][1]
-    assert page['source_pages'] == ['pp. 98-112, Table 9']
+    assert 'ChemMon 2026 pp. 98-112 (Table 9)' in page['source_pages']
     assert 'Source:' in page['content']
     assert 'p. 103' in page['content']
 
