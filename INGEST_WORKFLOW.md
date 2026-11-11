@@ -147,6 +147,8 @@ quotes, and records each clean page in `docs/content-review.json`.
   `source_pages` is a claim and is reviewed.
 - **Generated pages** are exempt; the health check compares them with their
   generator.
+- **Deleted or renamed pages** drop out of the record on the next
+  `--review`; the new name is reviewed as a new page.
 
 The wiki doctor fails while any page differs from its record, so CI blocks
 a pull request with unreviewed content. `--adopt --reason "..."` records a

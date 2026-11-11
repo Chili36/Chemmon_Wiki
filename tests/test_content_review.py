@@ -85,6 +85,9 @@ def test_request_sends_the_pages_pdfs_and_marks_changed_lines(tmp_path):
     request = cr.build_request(root, change, "model-x", "high")
     content = request["messages"][0]["content"]
     assert [b["title"] for b in content if b["type"] == "document"] == ["ChemMon (chemmon)"]
+    both = cr.page_change("r.md", None, OLD.replace('  - "guide.pdf"', '  - "guide.pdf"\n  - "other.pdf"'))
+    blocks = cr.build_request(root, both, "model-x")["messages"][0]["content"]
+    assert sum("cache_control" in b for b in blocks) == 2  # plus the system prompt: within the limit of four
     assert "Changed lines to review: 10" in content[-1]["text"] and "  10| CHEMON58" in content[-1]["text"]
     assert request["output_config"]["effort"] == "high"
     no_source = cr.page_change("q.md", None, "# No sources\n")
@@ -113,9 +116,20 @@ def test_a_review_that_skips_lines_or_stops_early_records_nothing(tmp_path):
     change = cr.page_change("p.md", OLD, OLD.replace("pesticides.", "pesticides and VMPR."))
     with pytest.raises(cr.ReviewError, match="no verdict for line"):
         cr.review_page(root, change, "m", FakeClient({"checks": [], "findings": [], "not_checked": "nothing"}))
+    silent = {"checks": [{"line": 10, "source_page": 0, "source_quote": "", "verdict": "not_found"}],
+              "findings": [], "not_checked": "nothing"}
+    with pytest.raises(cr.ReviewError, match="reported no finding"):
+        cr.review_page(root, change, "m", FakeClient(silent))
     with pytest.raises(cr.ReviewError, match="refusal"):
         cr.review_page(root, change, "m", FakeClient({}, stop_reason="refusal"))
 
 
 def test_repository_pages_all_match_their_content_review():
     assert list(cr.record_problems(Path(__file__).resolve().parent.parent)) == []
+
+
+def test_saving_the_record_drops_deleted_pages(tmp_path):
+    root = _root(tmp_path, {"a.md": OLD})
+    record = {"version": 1, "pages": {"a.md": {"sha256": cr.sha256_text(OLD)}, "gone.md": {"sha256": "0" * 64}}}
+    cr.save_record(root, record, prune=True)
+    assert list(cr.load_record(root)["pages"]) == ["a.md"] and list(cr.record_problems(root)) == []

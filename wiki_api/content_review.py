@@ -192,7 +192,13 @@ def load_record(root: Path) -> dict:
     return record
 
 
-def save_record(root: Path, record: dict) -> None:
+def save_record(root: Path, record: dict, *, prune: bool = False) -> None:
+    """Write the record. With prune, drop entries for pages that were deleted or renamed."""
+    if prune:
+        current = page_texts(root)
+        for name in sorted(set(record["pages"]) - set(current)):
+            print(f"{name}: no longer a wiki page, removed from the record")
+            del record["pages"][name]
     record["pages"] = dict(sorted(record["pages"].items()))
     (root / RECORD_PATH).write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -309,8 +315,11 @@ def build_request(root: Path, change: PageChange, model: str, effort: str = DEFA
             "type": "document", "title": label,
             "source": {"type": "base64", "media_type": "application/pdf",
                        "data": base64.standard_b64encode(path.read_bytes()).decode("ascii")},
-            "cache_control": {"type": "ephemeral"},
         })
+    # At most four cache breakpoints per request, and the system prompt uses one. The first PDF
+    # is shared by nearly every page; the last closes the whole document prefix.
+    for block in {id(b): b for b in (content[0], content[-1])}.values():
+        block["cache_control"] = {"type": "ephemeral"}
     numbered = "\n".join(f"{i:>4}| {line}" for i, line in enumerate(change.text.splitlines(), 1))
     parts = [f"Wiki page: {change.name}",
              "Attached sources: " + "; ".join(label for label, _ in documents),
@@ -359,9 +368,15 @@ def review_page(root: Path, change: PageChange, model: str, client: Any = None,
                 effort: str = DEFAULT_EFFORT) -> PageResult:
     answer, usage = call_model(build_request(root, change, model, effort), client)
     lines = change.text.splitlines()
-    skipped = unchecked_lines(change, answer.get("checks", []))
+    checks = answer.get("checks", [])
+    skipped = unchecked_lines(change, checks)
     if skipped:
         raise ReviewError(f"reviewer gave no verdict for line(s) {_ranges(skipped)}; no result recorded")
+    reported = {f.get("line") for f in answer.get("findings", [])}
+    silent = sorted({c.get("line") for c in checks if c.get("verdict") in {"finding", "not_found"}} - reported)
+    if silent:
+        raise ReviewError(f"reviewer marked line(s) {_ranges(silent)} as wrong or unsourced but reported "
+                          "no finding for them; no result recorded")
     findings = []
     for finding in answer.get("findings", []):
         quote = " ".join(str(finding.get("wiki_quote", "")).split())
@@ -438,7 +453,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         result = PageResult(args.waive, last["sha256"], last["lines_reviewed"], last["findings"], last.get("not_checked", ""))
         record["pages"][args.waive] = record_entry(result, last["reviewer"], "model", result.blocking, args.reason)
-        save_record(root, record)
+        save_record(root, record, prune=True)
         print(f"Recorded {args.waive} with {len(result.blocking)} waived finding(s).")
         return 0
 
@@ -457,11 +472,16 @@ def main(argv: list[str] | None = None) -> int:
         for name in names:
             result = PageResult(name, sha256_text(texts[name]), 0)
             record["pages"][name] = record_entry(result, "none", "adopted", reason=args.reason)
-        save_record(root, record)
+        save_record(root, record, prune=True)
         print(f"Adopted {len(names)} page(s) without a model review.")
         return 0
 
     if not args.review:
+        gone = sorted(set(record["pages"]) - set(texts))
+        for name in gone:
+            print(f"{name}: recorded but no longer a wiki page; --review removes the entry")
+        if gone and not stale:
+            return 1
         for name in names:
             print(f"{name}: {stale.get(name, 'reviewed')}")
         print(f"{len(stale)} page(s) need a content review." if stale else "Every page matches its content review.")
@@ -506,7 +526,7 @@ def main(argv: list[str] | None = None) -> int:
             if not args.head:
                 record["pages"][name] = record_entry(result, args.model, "model")
     if not args.head:
-        save_record(root, record)
+        save_record(root, record, prune=True)
         _report_path(root).parent.mkdir(parents=True, exist_ok=True)
         _report_path(root).write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     if totals:
