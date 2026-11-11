@@ -110,3 +110,9 @@ def test_every_page_needs_an_incoming_link():
     a = Page("a.md", {"related": ["[[b]]"]}, "")
     b = Page("b.md", {}, "See [[b]] itself.")
     assert [i.location for i in doctor.check_incoming_links({"a.md": a, "b.md": b})] == ["a.md"]
+
+
+def test_table_numbers_ignore_years_and_page_numbers():
+    assert doctor.table_numbers("pp. 11-15 (Table 1, 2026 changes)") == [1]
+    assert doctor.table_numbers("Tables 9/10 and Table 3, pp. 113-143") == [9, 10, 3]
+    assert doctor.table_numbers("Tables 11-12, 144") == [11, 12]
