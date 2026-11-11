@@ -3,13 +3,14 @@ title: "SSD2 Result: Units and Reporting Limits (resUnit, resLOD, resLOQ, resInf
 select_when: "SSD2 measurement units, LOD/LOQ, numeric limits, BIN unit conditions, notSummed and VMPR sensitivity exceptions; distinguish result units from qualitative-value requirements."
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 65-67 (Section 2, elements M.03-M.05)"
   - "pp. 72-73 (Section 2, element M.20)"
-  - "pp. 102-103 (Table 9, GBR27-29)"
+  - "pp. 102-104 (Table 9, GBR27-29, GBR36-37, GBR39)"
+  - "pp. 123-124, 128, 132 (Table 10, CHEMON44, CHEMON45, CHEMON62, CHEMON78, CHEMON82)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-result-method-accreditation]]"
@@ -137,6 +138,7 @@ The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `r
 
 ### Related business rules
 
+- **GBR39** (Error) — If `resType` = LOQ, `resLOQ` must be reported, except if `resInfo.notSummed` = Y (Table 9, p104). The rule has no exception for the other cases listed above.
 - **CHEMON44** — `resLOQ` must be reported unless method is unvalidated, `notSummed = Y`, domain is VMPR, or `resType` = BIN.
 - **CHEMON45** — If the method is not unvalidated and `resInfo.notSummed` is not Y, report at least one of `resLOQ`, `resLOD`, `CCbeta`, or `CCalpha` (Table 10, pp. 123-124).
 - **CHEMON78** — If `resType` = BIN, `resLOQ` must be empty.
@@ -153,11 +155,13 @@ The field prose p. 67 says veterinary monitoring must report one of `resLOD`, `r
 In line with the European Commission (2015) document on pesticides, this element describes provisions for reporting `resLOQ` according to the residue definition type:
 
 - For multicomponent pesticide residue definitions, EFSA requests that the individual LOQ for each component quantified is reported separately from that residue definition and a summed LOQ, which is calculated by the reporting country.
-- If the reporting country does not report the summed LOQ, then `resLOQ` can be null for a given `paramCode` set with `paramType` equal to `P005A` or `P004A` and `resInfo.notSummed` equal to "Y". Thus, the `paramCode` of the multicomponent and the `resInfo.notSummed` set to Y must be reported. In this case, upon submission the individual component LOQs (for `paramType P002A` substances) will be calculated by EFSA based on the LOQs reported for the individual components associated with `paramType P002A`. For this reason, the individual component `resLOQ` associated to `paramType P002A` is mandatory. If no individual `resLOQ` is reported for at least one component for a given `paramCode` with `paramType` P005A/P004A, no "sum of LOQ" calculation will be done by EFSA. (ChemMon 2026 p73)
+- If the reporting country does not report the summed LOQ, then `resLOQ` can be null for a given `paramCode` set with `paramType` equal to `P005A` or `P004A` and `resInfo.notSummed` equal to "Y". Thus, the `paramCode` of the multicomponent and the `resInfo.notSummed` set to Y must be reported. In this case the sum of LOQ will be calculated by EFSA based on the LOQs reported for the individual components associated with `paramType P002A`. (The source sentence is garbled: "upon submission of the individual component LOQ (for paramType P002A substances) will be calculated by EFSA based on the LOQs reported for the individual components"; the closing sentence of the bullet names the calculation as the "sum of LOQ".) For this reason, the individual component `resLOQ` associated to `paramType P002A` is mandatory. If no individual `resLOQ` is reported for at least one component for a given `paramCode` with `paramType` P005A/P004A, no "sum of LOQ" calculation will be done by EFSA. (ChemMon 2026 p73)
 
 ### Contaminant sum LOQ handling
 
-For the calculated sum of contaminants, there are currently no standard guidelines on how to sum LOQs of individual substances. The reporting country can decide to report the LOQ by summing up the LOQs of all the individual substances to which the sum refers or to indicate `resInfo.notSummed = Y` and `resLOQ = null`, if the results for the single substances and corresponding LOQs are reported. This approach is to avoid storing a false value of "99999" in `resLOQ` when the summed LOQ was not possible. **Business rules apply to ensure that `resLOQ` can only be NULL where `resInfo.notSummed = Y`.** No value such as "99999" or similar (e.g. "999", "9999", "999999") shall be reported. (ChemMon 2026 p73)
+For the calculated sum of contaminants, there are currently no standard guidelines on how to sum LOQs of individual substances. The reporting country can decide to report the LOQ by summing up the LOQs of all the individual substances to which the sum refers or to indicate `resInfo.notSummed = Y` and `resLOQ = null`, if the results for the single substances and corresponding LOQs are reported. This approach is to avoid storing a false value of "99999" in `resLOQ` when the summed LOQ was not possible. Business rules apply to ensure that `resLOQ` can only be NULL where `resInfo.notSummed = Y`. No value such as "99999" or similar (e.g. "999", "9999", "999999") shall be reported. (ChemMon 2026 p73)
+
+**Source discrepancy:** p. 73 says `resLOQ` can only be NULL where `resInfo.notSummed = Y`, but the M.05 prose (p. 66) and the rule that enforces it (Table 10, p. 123) also allow a missing `resLOQ` for unvalidated methods, VMPR results and `resType` = BIN. Validation enforces the rule's wider list of exceptions.
 
 ### Related business rule
 

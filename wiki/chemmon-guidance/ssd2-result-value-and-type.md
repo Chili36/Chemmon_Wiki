@@ -3,12 +3,14 @@ title: "SSD2 Result: Reported Value and Result Type (resVal, resQualValue, resTy
 select_when: "SSD2 resVal, resQualValue and resType (VAL, BIN, LOD, LOQ, AWR), uniqueness and processed-sample reporting. Use alongside units/limits when those fields are asked about."
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "p. 68 (Section 2, element M.10)"
   - "pp. 71-72 (Section 2, elements M.15-M.16)"
+  - "pp. 105-106, 112 (Table 9, GBR46, GBR48, GBR101)"
+  - "pp. 114, 118, 122, 128 (Table 10, CHEMON08, CHEMON24, CHEMON40, CHEMON41, CHEMON61)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-result-units-and-limits]]"
@@ -108,7 +110,7 @@ The `resType` indicates the type of analytical result obtained for a substance i
 | `CCA` | The residue can be quantified but is below the reported value for CCalpha | VMPR confirmatory below decision limit |
 | `LOQ` | The residue is below the LOQ | Below quantification threshold |
 | `LOD` | The residue is below the LOD and `resLOD` is reported | Below detection threshold |
-| `BIN` | The result of a qualitative screening test | Screening negative/positive |
+| `BIN` | The result of a qualitative screening test | Negative qualitative screening result (`resQualValue` = `NEG`); positive screening results are not reported as `BIN` |
 | `CCB` | The residue cannot be detected and CCbeta is reported | Below detection capability |
 | `AWR` | **Above the working range** — exceptional; only for VMPR in rare cases | Environmental sample above calibrated range |
 
@@ -117,7 +119,7 @@ The `resType` indicates the type of analytical result obtained for a substance i
 ### Important rules
 
 - In order to refine exposure assessments consistently across chemical domains, when `resType = LOQ`, `LOD` or `BIN`, `resVal` must be empty. The system will return an Error message. (ChemMon 2026 p71)
-- When `resType = VAL`, then `resLOQ` must be numerically lower than `resVal`. For multicomponent `paramCode`s, `resInfo.notSummed = Y` can be reported to avoid a summed-LOQ mismatch. (ChemMon 2026 p71)
+- When `resType = VAL`, then `resLOQ` must be numerically lower than `resVal`. For multicomponent `paramCode`s, `resInfo.notSummed = Y` can be reported to avoid a summed-LOQ mismatch. (ChemMon 2026 p71) **Source discrepancy:** this prose requires `resLOQ` strictly lower than `resVal`, but CHEMON08 (Error, p. 114) says numeric results equal to the reported LOQ should have `resType` = VAL, and CHEMON41 (p. 122) is only a Warning when `resLOQ` is greater than `resVal`. Validation therefore accepts `resVal` = `resLOQ` with VAL.
 - For test results where the residue can be quantified at a validated level, `resType` must be `VAL` and `resVal` must be greater than 0; in that case it is expected that `anMethType = confirmation`. (ChemMon 2026 p71)
 - VMPR specifics: if the residue cannot be quantified and `CCalpha` is reported then `resType = CCA` must be reported. If `resLOQ` is reported and it is below CCalpha, then `resType = LOQ` should be reported if the result is below `resLOQ`. For qualitative screening results, the expected values for `resType` are `BIN` (with `resQualValue = NEG` and `resVal` blank) with detection capability reported in `CCbeta`, or alternatively the LOD reported in `resLOD`. Positive screening results should be followed by confirmatory quantitative results rather than binary positive screening results. (ChemMon 2026 p71)
 - Quantitative screening method results can be reported similarly to confirmatory results (with `CCbeta` reported in place of `CCalpha`). (ChemMon 2026 p72)
@@ -132,10 +134,12 @@ In exceptional cases, for the veterinary medicinal products domain, the code `AW
 
 If `resType = AWR` is selected, a numerical value for `CCalpha` (or `resLOQ`) and `resVal` must be reported. EFSA considers `resType = AWR` as corresponding to `resType = VAL` for some downstream counting (e.g. counting "positive" detections). (ChemMon 2026 p72)
 
+`AWR` is expected only for "non-standard" samples whose results are relevant at national level for risk management, for example an "environmental" sample consisting of a contaminated syringe clearly containing a prohibited substance whose presence and identity could be confirmed, but whose concentration was well above the calibrated concentration curve. Such results can have sufficient information for risk management but will not be useful for risk assessment. (ChemMon 2026 p72)
+
 ### Related business rules
 
-- **CHEMON08** — If `resVal = resLOQ`, `resType` must be VAL.
+- **CHEMON08** (Error) — If `resVal = resLOQ`, `resType` must be VAL (Table 10, p114).
 - **CHEMON40** — For qualitative results (`resType` = BIN/LOQ/LOD), `resVal` must be empty.
-- **CHEMON41** — `resLOQ` should not exceed `resVal` for positive detections.
+- **CHEMON41** (Warning) — If `resType` = VAL, `resLOQ` should not be greater than `resVal` (Table 10, p122).
 - **CHEMON61** — For pesticides, `resType` can only be LOD, LOQ, BIN, or VAL.
 

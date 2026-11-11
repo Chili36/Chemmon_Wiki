@@ -2,11 +2,13 @@
 title: "SSD2 Result: Measurement Uncertainty (resValUncert)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-15"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "p. 72 (Section 2, element M.17)"
+  - "p. 69 (Section 2, element M.11, erucic acid reference)"
+  - "pp. 131, 135 (Table 10, CHEMON72, CHEMON90_b)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-result-value-and-type]]"
@@ -48,6 +50,8 @@ For pesticide residue monitoring, it is recommended to populate this field espec
 ### Scope of use
 
 According to Regulation (EU) 2023/2782 (on mycotoxins), Regulation (EC) No 705/2015 (on erucic acid), Regulation (EC) No 333/2007, and Regulation (EC) No 644/2017, the condition for acceptance of a lot should also take into consideration measurement uncertainty. (ChemMon 2026 p72)
+
+**Source discrepancy:** for erucic acid, M.17 (p. 72) cites "Regulation (EC) No 705/2015", while M.11 (p. 69) cites Commission Regulation (EU) 2023/2783 (see [[ssd2-result-recovery-correction]]). The guidance does not explain the difference; both are quoted as printed.
 
 ### Note on below-LOQ values
 

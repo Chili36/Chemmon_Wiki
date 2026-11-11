@@ -2,7 +2,7 @@
 title: "SSD2 Result: Result Identification (resId)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-15"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -38,7 +38,7 @@ It is recommended that **certain prefixes or suffixes are included** to ensure t
 
 | Description | XML |
 | --- | --- |
-| Result reported by an Estonian veterinary laboratory in 2017 | `<resId>EEVetLab2017_0009435634</resId>` |
+| Result reported by an Estonian veterinary laboratory in 2017 | `<resId>EEVetLab2017_0009845634</resId>` |
 | Result reported by the Italian pesticides national reference laboratory in 2017 | `<resId>ITNRL2017_ADE0000456792</resId>` |
 | Result reported by a Danish food testing laboratory in 2017 | `<resId>DKDTU2017_K0000034597X</resId>` |
 

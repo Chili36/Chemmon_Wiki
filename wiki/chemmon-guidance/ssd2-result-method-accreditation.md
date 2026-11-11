@@ -2,12 +2,14 @@
 title: "SSD2 Result: Method Accreditation and Decision Thresholds (accredProc, CCalpha, CCbeta)"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "p. 65 (Section 2, element M.02)"
   - "pp. 67-68 (Section 2, elements M.08-M.09)"
+  - "p. 105 (Table 9, GBR41, GBR42, GBR44)"
+  - "p. 119 (Table 10, CHEMON31, CHEMON32)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-elements-analysis]]"
@@ -33,8 +35,11 @@ related:
 
 - **CHEMON31** — If `accredProc=V007A`, `anMethType=AT08A` and `paramType` is not P002A, CCalpha is mandatory.
 - **CHEMON32** — If `accredProc` = V007A and method is Screening, CCbeta is mandatory.
+- **GBR41** (Error) — If `resType` = `CCA` and `accredProc` is not `V999A` (Not Validated), `CCalpha` must be reported (Table 9, p105).
+- **GBR42** (Warning) — `CCalpha` must be less than `CCbeta` (Table 9, p105).
+- **GBR44** (Error) — If `resType` = `CCB` and `accredProc` is not `V999A` (Not Validated), `CCbeta` must be reported (Table 9, p105).
 
-See [[business-rules-vmpr]].
+See [[business-rules-vmpr]] and [[business-rules-gbr]].
 
 ## accredProc — Accreditation procedure for the analytical method
 
