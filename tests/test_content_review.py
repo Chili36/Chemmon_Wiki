@@ -151,3 +151,36 @@ def test_dataset_sources_are_sent_cut_down_to_the_cited_records(tmp_path):
     missing = cr.page_change("e.md", None, OLD.replace('  - "guide.pdf"', '  - "datasets/rd/absent.json"'))
     with pytest.raises(cr.ReviewError, match="not found"):
         cr.build_request(root, missing, "m")
+
+
+def test_linked_pages_are_context_outgoing_first_and_size_limited(monkeypatch):
+    texts = {"a.md": "See [[b]] and [[missing]].", "b.md": "B " * 50, "c.md": "Links to [[a]]. " * 10, "d.md": "x"}
+    assert cr.linked_pages("a.md", texts["a.md"], texts) == (["b.md", "c.md"], [])
+    monkeypatch.setattr(cr, "CONTEXT_PAGE_CHARS", 120)
+    assert cr.linked_pages("a.md", texts["a.md"], texts) == (["b.md"], ["c.md"])
+
+
+def test_review_sends_linked_pages_and_names_the_ones_left_out(tmp_path, monkeypatch):
+    root = _root(tmp_path, {})
+    page = OLD + "\nSee [[other]] and [[huge]].\n"
+    texts = {"p.md": page, "other.md": "CHEMON58 is an Error.", "huge.md": "y" * 500}
+    monkeypatch.setattr(cr, "CONTEXT_PAGE_CHARS", 100)
+    answer = {"checks": [{"line": n, "source_page": 1, "source_quote": "q", "verdict": "supported"}
+                         for n in range(1, len(page.splitlines()) + 1)], "findings": [], "not_checked": "nothing"}
+    client = FakeClient(answer)
+    result = cr.review_page(root, cr.page_change("p.md", None, page), "m", client, texts=texts)
+    sent = [b["text"] for b in client.requests[0]["messages"][0]["content"] if b["type"] == "text"]
+    assert sent[0].startswith("Other wiki page (context, not under review): other.md")
+    assert "Linked pages NOT given (too large to fit): huge.md" in sent[-1]
+    assert result.context_pages == ["other.md"] and result.context_omitted == ["huge.md"] and result.full
+    entry = cr.record_entry(result, "m", "model")
+    assert entry["context_not_sent"] == ["huge.md"] and entry["full_review"]["reviewer"] == "m"
+
+
+def test_a_later_partial_review_keeps_the_date_of_the_full_review():
+    previous = {"full_review": {"date": "2026-11-12", "reviewer": "m"}}
+    partial = cr.PageResult("p.md", "0" * 64, 3)
+    assert cr.record_entry(partial, "m2", "model", previous=previous)["full_review"] == previous["full_review"]
+    assert "full_review" not in cr.record_entry(partial, "m2", "model")
+    adopted = cr.PageResult("p.md", "0" * 64, 0, full=True)
+    assert "full_review" not in cr.record_entry(adopted, "none", "adopted")

@@ -5,11 +5,12 @@ it with the source. This module makes that step repeatable and enforceable:
 
   python -m wiki_api.content_review              list the pages that need a review (no model call)
   python -m wiki_api.content_review --review     review them; record the clean ones
+  python -m wiki_api.content_review --review --full [PAGE ...]    review every line, not only changes
   python -m wiki_api.content_review --waive PAGE --reason "..."   accept the last findings for a page
 
 `docs/content-review.json` records the hash of each page as reviewed. The wiki doctor fails when a
-page differs from its record, so unreviewed content cannot pass CI. The reviewer sees only the page
-and the PDFs, never the writer's notes. It is a second reader, not proof: it can miss errors.
+page differs from its record, so unreviewed content cannot pass CI. The reviewer sees the page, the
+PDFs and the wiki pages linked to or from it (to catch two pages that disagree), never the writer's notes. It is a second reader, not proof: it can miss errors.
 """
 from __future__ import annotations
 
@@ -22,6 +23,7 @@ import os
 import re
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -35,6 +37,8 @@ WIKI_DIR = Path("wiki/chemmon-guidance")
 REPORT_DIR = Path("reports/content-review")
 DATASET_DIR = Path("chemmon_docs")
 DATASET_WHOLE_FILE_BYTES = 60_000   # larger JSON lists are cut down to the records the page cites
+CONTEXT_PAGE_CHARS = 240_000       # linked pages sent as context; the rest are named as left out
+WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
 RESIDUE_ID_RE = re.compile(r"residue_id\s+(\d+(?:\s*(?:,|and)\s*\d+)*)")
 DEFAULT_MODEL = "claude-opus-5-5"
 MODEL_ENV = "CONTENT_REVIEW_MODEL"
@@ -45,7 +49,7 @@ EFFORT_ENV = "CONTENT_REVIEW_EFFORT"
 METADATA_KEYS = {"last_updated", "related", "select_when", "title", "type", "domain"}
 BLOCKING_CONFIDENCE = {"HIGH", "MEDIUM"}
 FINDING_TYPES = ["wrong", "narrowed_or_widened", "unsourced", "misquote", "bad_citation",
-                 "contradiction", "discrepancy_note", "lost_knowledge"]
+                 "contradiction", "cross_page", "discrepancy_note", "lost_knowledge"]
 # Removed text may have moved to another page, which the reviewer cannot see, so it never blocks.
 NON_BLOCKING_TYPES = {"lost_knowledge"}
 
@@ -80,13 +84,21 @@ Report a finding when a changed line:
 - contradiction: contradicts another statement on the same page.
 - discrepancy_note: is a "Source discrepancy:" note that misstates either side or resolves the conflict \
 in a way the source does not support.
-- lost_knowledge: (removed lines only) a statement the source supports was removed and the page no longer carries it.
+- cross_page: disagrees with a statement on one of the other wiki pages given as context (a different \
+code, severity, strength, domain, condition, number or page for the same rule, field or requirement). \
+Put that page's file name in `other_page` and its statement in the problem, then read the source and \
+say which page it supports. Report it even when the changed line is the correct one: the other page then \
+needs the fix. A page that says less than another is not a disagreement.
+- lost_knowledge: (removed lines only) a statement the source supports was removed and neither this \
+page nor a context page carries it.
 
 Unchanged lines are context. Report one only if a changed line contradicts it.
 Not findings: style, wording, correct paraphrase, formatting, length, structure. Rule IDs are spelled \
 CHEMON, which is correct. A line labelled "Wiki note (not in the guidance):" is the wiki's own reading \
-and is allowed unless it contradicts the source. Wiki links like [[page-name]] point to other pages you \
-cannot see; do not report what they might say.
+and is allowed unless it contradicts the source. The other wiki pages are context only: do not review \
+their lines against the source, apart from settling a cross_page finding. Wiki links like [[page-name]] \
+may point to pages that were not given; do not report what those might say. For findings that involve \
+no other page, leave `other_page` empty.
 
 Some pages also cite a dataset (rd-bridge, EU Annex I) with locators such as "residue_id 253". Those \
 files are attached as text. A large file is cut down to the records the page cites, so a dataset claim \
@@ -123,7 +135,7 @@ FINDINGS_SCHEMA: dict[str, Any] = {
             "items": {
                 "type": "object",
                 "additionalProperties": False,
-                "required": ["line", "type", "confidence", "severity", "wiki_quote", "source",
+                "required": ["line", "type", "confidence", "severity", "wiki_quote", "other_page", "source",
                              "source_page", "source_quote", "problem", "suggested_fix"],
                 "properties": {
                     "line": {"type": "integer"},
@@ -131,6 +143,7 @@ FINDINGS_SCHEMA: dict[str, Any] = {
                     "confidence": {"type": "string", "enum": ["HIGH", "MEDIUM", "LOW"]},
                     "severity": {"type": "string", "enum": ["wrong data", "misleading", "minor"]},
                     "wiki_quote": {"type": "string"},
+                    "other_page": {"type": "string"},
                     "source": {"type": "string"},
                     "source_page": {"type": "integer"},
                     "source_quote": {"type": "string"},
@@ -166,6 +179,9 @@ class PageResult:
     findings: list[dict] = field(default_factory=list)
     not_checked: str = ""
     usage: dict = field(default_factory=dict)
+    context_pages: list[str] = field(default_factory=list)
+    context_omitted: list[str] = field(default_factory=list)
+    full: bool = False
 
     @property
     def blocking(self) -> list[dict]:
@@ -256,6 +272,15 @@ def git_show(root: Path, rev: str, path: Path) -> str | None:
     return result.stdout if result.returncode == 0 else None
 
 
+def texts_at(root: Path, rev: str) -> dict[str, str]:
+    """The reviewable pages as of a git revision."""
+    listing = subprocess.run(["git", "ls-tree", "--name-only", rev, WIKI_DIR.as_posix() + "/"],
+                             cwd=root, capture_output=True, text=True, check=True).stdout.split("\n")
+    skip = generated_pages(root)
+    names = [Path(line).name for line in listing if line.endswith(".md") and Path(line).name not in skip]
+    return {name: text for name in names if (text := git_show(root, rev, WIKI_DIR / name)) is not None}
+
+
 def default_base(root: Path) -> str:
     for ref in ("origin/main", "main"):
         result = subprocess.run(["git", "merge-base", "HEAD", ref], cwd=root, capture_output=True, text=True)
@@ -312,6 +337,27 @@ def source_documents(root: Path, frontmatter: dict) -> list[tuple[str, Path]]:
     return documents
 
 
+def linked_pages(name: str, text: str, texts: dict[str, str]) -> tuple[list[str], list[str]]:
+    """Pages to send as context: those this page links to, then those that link to it.
+
+    Returns (included, omitted); pages are left out, by name, once the size limit is reached.
+    """
+    def links(source: str) -> set[str]:
+        return {f"{target}.md" for target in WIKI_LINK_RE.findall(source)}
+
+    outgoing = sorted(n for n in links(text) if n in texts and n != name)
+    incoming = sorted(n for n, other in texts.items()
+                      if n != name and n not in outgoing and name in links(other))
+    included, omitted, used = [], [], 0
+    for candidate in outgoing + incoming:
+        if used + len(texts[candidate]) > CONTEXT_PAGE_CHARS:
+            omitted.append(candidate)
+            continue
+        included.append(candidate)
+        used += len(texts[candidate])
+    return included, omitted
+
+
 def dataset_excerpts(root: Path, change_text: str, frontmatter: dict) -> list[tuple[str, str]]:
     """(label, text) for the dataset files in the page's `sources`."""
     cited = {int(n) for group in RESIDUE_ID_RE.findall(change_text) for n in re.findall(r"\d+", group)}
@@ -335,7 +381,8 @@ def dataset_excerpts(root: Path, change_text: str, frontmatter: dict) -> list[tu
     return excerpts
 
 
-def build_request(root: Path, change: PageChange, model: str, effort: str = DEFAULT_EFFORT) -> dict:
+def build_request(root: Path, change: PageChange, model: str, effort: str = DEFAULT_EFFORT,
+                  context: dict[str, str] | None = None, omitted: list[str] | None = None) -> dict:
     frontmatter, _ = split_frontmatter(change.text)
     documents = source_documents(root, frontmatter)
     datasets = dataset_excerpts(root, change.text, frontmatter)
@@ -355,12 +402,18 @@ def build_request(root: Path, change: PageChange, model: str, effort: str = DEFA
         block["cache_control"] = {"type": "ephemeral"}
     for label, text in datasets:
         content.append({"type": "text", "text": f"Dataset file: {label}\n\n{text}"})
+    for other, text in (context or {}).items():
+        content.append({"type": "text", "text": f"Other wiki page (context, not under review): {other}\n\n{text}"})
     numbered = "\n".join(f"{i:>4}| {line}" for i, line in enumerate(change.text.splitlines(), 1))
-    parts = [f"Wiki page: {change.name}",
+    parts = [f"Wiki page under review: {change.name}",
              "Attached sources: " + "; ".join(label for label, _ in documents + datasets),
              "The page with line numbers:", numbered,
              ("This page is new: every line is a changed line." if change.is_new
               else f"Changed lines to review: {_ranges(change.changed_lines)}")]
+    if context:
+        parts.append("Context pages given above: " + ", ".join(context))
+    if omitted:
+        parts.append("Linked pages NOT given (too large to fit): " + ", ".join(omitted))
     if change.removed_lines:
         parts.append("Lines removed by this change:\n" + "\n".join(f"- {line}" for line in change.removed_lines))
     content.append({"type": "text", "text": "\n\n".join(parts)})
@@ -400,8 +453,11 @@ def unchecked_lines(change: PageChange, checks: list[dict]) -> list[int]:
 
 
 def review_page(root: Path, change: PageChange, model: str, client: Any = None,
-                effort: str = DEFAULT_EFFORT) -> PageResult:
-    answer, usage = call_model(build_request(root, change, model, effort), client)
+                effort: str = DEFAULT_EFFORT, texts: dict[str, str] | None = None) -> PageResult:
+    """Review one page. `texts` holds the other wiki pages; linked ones are sent as context."""
+    included, omitted = linked_pages(change.name, change.text, texts or {})
+    context = {name: texts[name] for name in included} if texts else {}
+    answer, usage = call_model(build_request(root, change, model, effort, context, omitted), client)
     lines = change.text.splitlines()
     checks = answer.get("checks", [])
     skipped = unchecked_lines(change, checks)
@@ -419,18 +475,25 @@ def review_page(root: Path, change: PageChange, model: str, client: Any = None,
         finding["quote_on_page"] = bool(quote) and quote in " ".join(" ".join(lines).split())
         findings.append(finding)
     return PageResult(change.name, change.sha256, len(change.changed_lines), findings,
-                      str(answer.get("not_checked", "")), usage)
+                      str(answer.get("not_checked", "")), usage, included, omitted, change.is_new)
 
 
 def record_entry(result: PageResult, reviewer: str, method: str, waived: list[dict] | None = None,
-                 reason: str | None = None) -> dict:
+                 reason: str | None = None, previous: dict | None = None) -> dict:
+    """The record for a page. `full_review` (when every line was last reviewed) survives later entries."""
     entry = {"sha256": result.sha256, "reviewed_at": date.today().isoformat(), "reviewer": reviewer,
              "method": method, "lines_reviewed": result.lines_reviewed}
+    if result.full and method == "model":
+        entry["full_review"] = {"date": entry["reviewed_at"], "reviewer": reviewer}
+    elif previous and previous.get("full_review"):
+        entry["full_review"] = previous["full_review"]
+    if result.context_omitted:
+        entry["context_not_sent"] = result.context_omitted
     if result.not_checked and result.not_checked.strip().lower().rstrip(".") != "nothing":
         entry["not_checked"] = result.not_checked
     if waived:
         entry["waived"] = [{"line": f.get("line"), "type": f.get("type"), "wiki_quote": f.get("wiki_quote"),
-                            "problem": f.get("problem")} for f in waived]
+                            "other_page": f.get("other_page", ""), "problem": f.get("problem")} for f in waived]
     if reason:
         entry["reason"] = reason
     return entry
@@ -450,7 +513,8 @@ def _load_report(root: Path) -> dict:
 def _print_findings(result: PageResult) -> None:
     for f in result.findings:
         mark = "BLOCKING" if is_blocking(f) else "note"
-        print(f"  [{mark}] {result.name}:{f.get('line')} {f.get('type')} "
+        other = f" vs {f['other_page']}" if f.get("other_page") else ""
+        print(f"  [{mark}] {result.name}:{f.get('line')} {f.get('type')}{other} "
               f"({f.get('confidence')}, {f.get('severity')})")
         print(f"      wiki:   {f.get('wiki_quote')}" + ("" if f.get("quote_on_page") else "  [quote not found on page]"))
         print(f"      source: {f.get('source')} p{f.get('source_page')}: {f.get('source_quote')}")
@@ -469,6 +533,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--head", help="review the pages as of this revision instead of the working tree; records nothing")
     parser.add_argument("--model", default=os.environ.get(MODEL_ENV, DEFAULT_MODEL))
     parser.add_argument("--effort", default=os.environ.get(EFFORT_ENV, DEFAULT_EFFORT))
+    parser.add_argument("--full", action="store_true",
+                        help="with --review: review every line of the named pages (default: all pages), not only changes")
+    parser.add_argument("--jobs", type=int, default=4, help="pages reviewed at the same time (default 4)")
     parser.add_argument("--waive", metavar="PAGE", help="record PAGE, accepting the findings of its last review")
     parser.add_argument("--adopt", action="store_true",
                         help="record pages as they are, without a model review (needs --reason); "
@@ -486,8 +553,11 @@ def main(argv: list[str] | None = None) -> int:
         if args.waive not in texts or not last or last["sha256"] != sha256_text(texts[args.waive]):
             print(f"No review of the current {args.waive} in {REPORT_DIR}/latest.json; run --review first.")
             return 2
-        result = PageResult(args.waive, last["sha256"], last["lines_reviewed"], last["findings"], last.get("not_checked", ""))
-        record["pages"][args.waive] = record_entry(result, last["reviewer"], "model", result.blocking, args.reason)
+        result = PageResult(args.waive, last["sha256"], last["lines_reviewed"], last["findings"],
+                            last.get("not_checked", ""), context_omitted=last.get("context_omitted", []),
+                            full=last.get("full", False))
+        record["pages"][args.waive] = record_entry(result, last["reviewer"], "model", result.blocking, args.reason,
+                                                   previous=record["pages"].get(args.waive))
         save_record(root, record, prune=True)
         print(f"Recorded {args.waive} with {len(result.blocking)} waived finding(s).")
         return 0
@@ -499,14 +569,15 @@ def main(argv: list[str] | None = None) -> int:
         unknown = [p for p in args.pages if p not in texts]
         if unknown:
             parser.error(f"not a reviewable wiki page: {', '.join(unknown)}")
-        names = args.pages or sorted(stale)
+        names = args.pages or (sorted(texts) if args.full else sorted(stale))
 
     if args.adopt:
         if not args.reason:
             parser.error("--adopt needs --reason")
         for name in names:
             result = PageResult(name, sha256_text(texts[name]), 0)
-            record["pages"][name] = record_entry(result, "none", "adopted", reason=args.reason)
+            record["pages"][name] = record_entry(result, "none", "adopted", reason=args.reason,
+                                                 previous=record["pages"].get(name))
         save_record(root, record, prune=True)
         print(f"Adopted {len(names)} page(s) without a model review.")
         return 0
@@ -522,14 +593,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{len(stale)} page(s) need a content review." if stale else "Every page matches its content review.")
         return 1 if stale else 0
 
-    base = args.base or default_base(root)
+    base = None if args.full else (args.base or default_base(root))
     report = _load_report(root) if not args.head else {"pages": {}}
-    exit_code, totals = 0, {}
+    context_texts = texts_at(root, args.head) if args.head else texts
+    exit_code, totals, jobs = 0, {}, []
     for name in names:
-        new = git_show(root, args.head, WIKI_DIR / name) if args.head else texts[name]
+        new = context_texts.get(name)
         if new is None:
             continue
-        change = page_change(name, git_show(root, base, WIKI_DIR / name), new)
+        previous = record["pages"].get(name)
+        change = page_change(name, None if args.full else git_show(root, base, WIKI_DIR / name), new)
         if not change.changed_lines and not change.removed_lines:
             if args.head or name not in stale:
                 continue
@@ -537,33 +610,64 @@ def main(argv: list[str] | None = None) -> int:
         if change.metadata_only:
             print(f"{name}: metadata only, no model review needed")
             if not args.head:
-                record["pages"][name] = record_entry(PageResult(name, change.sha256, 0), "none", "metadata-only")
+                record["pages"][name] = record_entry(PageResult(name, change.sha256, 0), "none",
+                                                     "metadata-only", previous=previous)
             continue
-        print(f"{name}: reviewing {len(change.changed_lines)} changed line(s) with {args.model} ...", flush=True)
-        try:
-            result = review_page(root, change, args.model, effort=args.effort)
-        except ReviewError as exc:
-            print(f"  REVIEW FAILED: {exc}")
-            exit_code = 2
-            continue
-        for key, value in result.usage.items():
-            totals[key] = totals.get(key, 0) + value
-        _print_findings(result)
-        report["pages"][name] = {"sha256": result.sha256, "reviewer": args.model, "base": base,
-                                 "lines_reviewed": result.lines_reviewed, "findings": result.findings,
-                                 "not_checked": result.not_checked}
-        if result.blocking:
-            print(f"  {len(result.blocking)} blocking finding(s): fix the page and review again, or "
-                  f"`--waive {name} --reason ...` if the reviewer is wrong.")
-            exit_code = exit_code or 1
-        else:
-            print("  clean")
-            if not args.head:
-                record["pages"][name] = record_entry(result, args.model, "model")
-    if not args.head:
+        jobs.append(change)
+
+    def save() -> None:
+        if args.head:
+            return
         save_record(root, record, prune=True)
         _report_path(root).parent.mkdir(parents=True, exist_ok=True)
         _report_path(root).write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    def run(change: PageChange) -> PageResult | ReviewError:
+        try:
+            return review_page(root, change, args.model, effort=args.effort, texts=context_texts)
+        except ReviewError as exc:
+            return exc
+        except Exception as exc:  # an API failure on one page must not lose the others
+            return ReviewError(f"{type(exc).__name__}: {exc}")
+
+    def finish(change: PageChange, result: PageResult | ReviewError) -> int:
+        what = "every line" if change.is_new else f"{len(change.changed_lines)} changed line(s)"
+        print(f"{change.name}: reviewed {what} with {args.model}", flush=True)
+        if isinstance(result, ReviewError):
+            print(f"  REVIEW FAILED: {result}")
+            return 2
+        for key, value in result.usage.items():
+            totals[key] = totals.get(key, 0) + value
+        if result.context_omitted:
+            print(f"  linked pages not sent (size limit): {', '.join(result.context_omitted)}")
+        _print_findings(result)
+        report["pages"][change.name] = {
+            "sha256": result.sha256, "reviewer": args.model, "base": base or "full",
+            "lines_reviewed": result.lines_reviewed, "full": result.full, "findings": result.findings,
+            "not_checked": result.not_checked, "context_pages": result.context_pages,
+            "context_omitted": result.context_omitted}
+        code = 0
+        if result.blocking:
+            print(f"  {len(result.blocking)} blocking finding(s): fix the page and review again, or "
+                  f"`--waive {change.name} --reason ...` if the reviewer is wrong.")
+            code = 1
+        else:
+            print("  clean")
+            if not args.head:
+                record["pages"][change.name] = record_entry(result, args.model, "model",
+                                                            previous=record["pages"].get(change.name))
+        save()  # after every page, so a long run that dies keeps what it finished
+        return code
+
+    if jobs:
+        print(f"Reviewing {len(jobs)} page(s) with {args.model}, {args.jobs} at a time ...", flush=True)
+        codes = [finish(jobs[0], run(jobs[0]))]  # alone first, so the rest read the PDFs from the cache
+        with ThreadPoolExecutor(max_workers=max(1, args.jobs)) as pool:
+            futures = {pool.submit(run, change): change for change in jobs[1:]}
+            for future in as_completed(futures):
+                codes.append(finish(futures[future], future.result()))
+        exit_code = max(codes)
+    save()
     if totals:
         print("tokens: " + ", ".join(f"{k}={v}" for k, v in totals.items()))
     return exit_code
