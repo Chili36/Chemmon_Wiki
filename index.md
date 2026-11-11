@@ -29,7 +29,7 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 
 - [chemmon-overview.md](wiki/chemmon-guidance/chemmon-overview.md): High-level explanation of ChemMon purpose, reporting domains, data submission cycle, and the role of business rules.
 - [chemmon-background.md](wiki/chemmon-guidance/chemmon-background.md): Background hub — routing map for legal basis, single SSD2 collection rationale, data governance, and change management.
-- [chemmon-scope-and-legal-basis.md](wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md): ChemMon purpose, audience, covered domains, legal framework, and annual-report inclusion window.
+- [chemmon-scope-and-legal-basis.md](wiki/chemmon-guidance/chemmon-scope-and-legal-basis.md): ChemMon purpose, audience, covered domains, the full legal framework list, border-control-post results (TRACES and SSD2), and the annual-report inclusion window.
 - [chemmon-single-ssd2-collection.md](wiki/chemmon-guidance/chemmon-single-ssd2-collection.md): Why ChemMon uses one SSD2 collection, how overlapping domains are routed, and why FCM is excluded from 2026 guidance.
 - [chemmon-data-governance-and-transparency.md](wiki/chemmon-guidance/chemmon-data-governance-and-transparency.md): Compound elements, catalogue conversion, Open Data, free-text reduction, Knowledge Junction resources, and the broad "residue" concept.
 - [chemmon-change-management.md](wiki/chemmon-guidance/chemmon-change-management.md): Revision cadence, X+2 implementation timing, urgent legal exceptions, and 2026 change categories.
@@ -42,10 +42,10 @@ This is the content-oriented catalog for the ChemMon reporting guidance wiki lay
 - [foodex2-facets-packaging-consumer.md](wiki/chemmon-guidance/foodex2-facets-packaging-consumer.md): Packaging, part-consumed/analysed, and target-consumer facets — `F18`, `F19`, `F20`, `F23`.
 - [foodex2-facets-legislative-descriptive.md](wiki/chemmon-guidance/foodex2-facets-legislative-descriptive.md): Legislative and descriptive facets — `F06`, `F07`, `F10`, `F11`, `F31`, `F32`, `F33`.
 - [controlled-terminology-catalogues.md](wiki/chemmon-guidance/controlled-terminology-catalogues.md): Which EFSA catalogues/hierarchies ChemMon uses (LEGREF, PARAM, MTX, UNIT, etc.) and how they drive validation and domain routing.
-- [reporting-flags.md](wiki/chemmon-guidance/reporting-flags.md): How EFSA sets the five domain flags (0-3 values) from `progLegalRef` and `paramCode`, and how flags drive business-rule applicability and reports.
+- [reporting-flags.md](wiki/chemmon-guidance/reporting-flags.md): How EFSA sets the five domain flags (0-3 values) from `progLegalRef` and `paramCode`, with the p. 149 worked example table, and how flags drive business-rule applicability and reports.
 - [legal-limits-database.md](wiki/chemmon-guidance/legal-limits-database.md): EFSA Legal Limits Database for MRL evaluation: what it covers, sampling-date applicability, and relationship to legal-limit rules.
 - [chemmon-matrix-classification-algorithms.md](wiki/chemmon-guidance/chemmon-matrix-classification-algorithms.md): Where EFSA’s VMPR/pesticide matrix-classification algorithms live and how FoodEx2 `sampMatCode` is grouped for reporting.
-- [chemmon-reports.md](wiki/chemmon-guidance/chemmon-reports.md): Which validation dashboards, national reports, EU annual reports, and AROC extracts are produced, and which domain flags are included.
+- [chemmon-reports.md](wiki/chemmon-guidance/chemmon-reports.md): Table 13: which validation dashboards, national reports, EU annual reports, and AROC extracts are produced, for whom, and which domain flags are included.
 - [data-validation-and-acceptance.md](wiki/chemmon-guidance/data-validation-and-acceptance.md): DCF lifecycle: ack/ack-details, business-rule validation statuses, submit/accept/reject, and post-acceptance update procedure.
 
 ### SSD2 Element Reference
@@ -65,13 +65,13 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-sampling-date.md](wiki/chemmon-guidance/ssd2-sampling-date.md): Sampling date — `sampY`, `sampM`, `sampD`, legal-limit timing, reporting windows.
 - [ssd2-elements-matrix.md](wiki/chemmon-guidance/ssd2-elements-matrix.md): Matrix group hub — fast-path rules + links to narrower matrix pages.
 - [ssd2-matrix-sampled-matrix.md](wiki/chemmon-guidance/ssd2-matrix-sampled-matrix.md): Sampled matrix coding — `sampMatCode`, `sampMatText`, FoodEx2 detail level, and the drinking-water case.
-- [ssd2-matrix-vmpr-coding.md](wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md): VMPR-specific matrix coding — derivatives, wild game, feed, water, non-food matrices, insects, and edible casings.
-- [ssd2-matrix-origin.md](wiki/chemmon-guidance/ssd2-matrix-origin.md): Country of origin — `origCountry` and the main origin-country restrictions.
+- [ssd2-matrix-vmpr-coding.md](wiki/chemmon-guidance/ssd2-matrix-vmpr-coding.md): VMPR-specific matrix coding — derivatives, wild game, feed (categories, sheep/goat codes), water, non-food matrices, insects, edible casings, and Plan 3 processed products with F33.
+- [ssd2-matrix-origin.md](wiki/chemmon-guidance/ssd2-matrix-origin.md): Country of origin — `origCountry`, unspecific codes and their grouping as unknown, overseas territories, and the VMPR Plan 3 rule that origin must not be an EU country.
 - [ssd2-matrix-analysed-sample.md](wiki/chemmon-guidance/ssd2-matrix-analysed-sample.md): Analysed sample / analysed matrix — `sampAnId`, `anMatCode`, `anMatText`, and inheritance from sampled-matrix fields.
 - [ssd2-elements-analysis.md](wiki/chemmon-guidance/ssd2-elements-analysis.md): Analysis group hub — fast-path rules + links to narrower analysis pages.
 - [ssd2-analysis-context.md](wiki/chemmon-guidance/ssd2-analysis-context.md): Analysis context — `origFishAreaCode`, `analysisY`, and `anPortSeq`.
 - [ssd2-analysis-laboratory.md](wiki/chemmon-guidance/ssd2-analysis-laboratory.md): Laboratory identity — `labId`, `labAccred`, and `labCountry`.
-- [ssd2-analysis-parameter-coding.md](wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md): Parameter typing and routing — `paramType`, `paramCode`, and `paramText`.
+- [ssd2-analysis-parameter-coding.md](wiki/chemmon-guidance/ssd2-analysis-parameter-coding.md): Parameter typing and routing — `paramType` (pre-assignment criteria and worked examples), `paramCode`, and `paramText`.
 - [ssd2-analysis-methods.md](wiki/chemmon-guidance/ssd2-analysis-methods.md): Analytical methods — `anMethRefId`, `anMethType`, and `anMethCode`.
 - [ssd2-elements-result.md](wiki/chemmon-guidance/ssd2-elements-result.md): Result group hub — fast-path rules + links to narrower per-topic pages.
 - [ssd2-result-identification.md](wiki/chemmon-guidance/ssd2-result-identification.md): Result identifier — `resId` uniqueness and naming guidance.
@@ -83,9 +83,9 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [ssd2-result-uncertainty.md](wiki/chemmon-guidance/ssd2-result-uncertainty.md): Measurement uncertainty — `resValUncert` (recommended vs mandatory by domain).
 - [ssd2-elements-evaluation.md](wiki/chemmon-guidance/ssd2-elements-evaluation.md): Evaluation group hub — fast-path rules + links to narrower evaluation pages.
 - [ssd2-evaluation-limits.md](wiki/chemmon-guidance/ssd2-evaluation-limits.md): Evaluation limits — `evalLowLimit` and `evalLimitType`.
-- [ssd2-evaluation-code.md](wiki/chemmon-guidance/ssd2-evaluation-code.md): Result evaluation — `evalCode` meanings and domain-specific restrictions.
+- [ssd2-evaluation-code.md](wiki/chemmon-guidance/ssd2-evaluation-code.md): Result evaluation — `evalCode` meanings, when `J003A` must not be used, `J029A` when no legal limit applies, and domain-specific restrictions.
 - [ssd2-evaluation-actions.md](wiki/chemmon-guidance/ssd2-evaluation-actions.md): Follow-up and enforcement — `actTakenCode`.
-- [ssd2-evaluation-conclusions.md](wiki/chemmon-guidance/ssd2-evaluation-conclusions.md): Conclusions and comments — `evalInfo.conclusion` and `evalInfo.com`.
+- [ssd2-evaluation-conclusions.md](wiki/chemmon-guidance/ssd2-evaluation-conclusions.md): Conclusions and comments — `evalInfo.conclusion` (incl. long shelf-life `C08A`) and `evalInfo.com`, with worked examples and both syntaxes.
 
 ### Domain Guides
 
@@ -94,7 +94,7 @@ Per-element reference pages covering the ~88 SSD2 elements required for ChemMon 
 - [pesticide-residue-definition-by-matrix.md](wiki/chemmon-guidance/pesticide-residue-definition-by-matrix.md): Choosing a pesticide `paramCode` by sampled matrix — residue definitions that differ by Annex I commodity, LL_04, worked acetamiprid/2-phenylphenol/thiabendazole codes from a pinned rd-bridge snapshot.
 - [pesticide-residue-definition-wording.md](wiki/chemmon-guidance/pesticide-residue-definition-wording.md): Reading residue-definition wording — "expressed as" is the calculation basis, not an extra analyte; sums, salts/esters/conjugates, isomers, common moieties, "where only" clauses; chloridazon worked example; P005A/P004A/P002A.
 - [pesticide-residue-definitions-by-food.md](wiki/chemmon-guidance/pesticide-residue-definitions-by-food.md): Generated list of every pesticide whose EU residue definition differs by food, with Annex I scopes and whole-residue PARAM codes; a pesticide not listed has one definition for all foods.
-- [contaminant-reporting.md](wiki/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules and Table 8 metadata guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, furan/alkylfurans, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, nitrates, and metals (cadmium/lead/mercury).
+- [contaminant-reporting.md](wiki/chemmon-guidance/contaminant-reporting.md): Contaminant reporting rules and every Table 8 row (element, status, requirement) for BFRs, copper, dioxins/PCBs, mineral oils, acrylamide, furan/alkylfurans, PAHs, 3-MCPDs, mycotoxins, arsenic, metals (cadmium/lead/mercury), nitrates, chlorates and bisphenol.
 - [food-additives-reporting.md](wiki/chemmon-guidance/food-additives-reporting.md): Food additives and flavourings reporting rules — three parallel data-collection paths (SSD2 analytical, no-presence, use-levels), mandatory F33, expression types, result reporting, restrictions/exceptions, conclusion reporting, and 2026 legal limit rules.
 - [fa-ff-no-presence-data-model.md](wiki/chemmon-guidance/fa-ff-no-presence-data-model.md): Separate DM for FA/FF not on label/not added — 18 fields in 16 sections, 17 PRE rules, C20A-only scope and mandatory sampling date. Sample-level, SSD2-derived but separate.
 - [fa-ff-use-levels-data-model.md](wiki/chemmon-guidance/fa-ff-use-levels-data-model.md): Separate category-level FA/FF use-levels DM — 31 fields in 29 sections, USE/USE_LLDB rules, marketing date, optional minimum, dilution and defined-MPL versus Quantum satis. USE19 has an explicit, source-supported at-least-one-positive interpretation.

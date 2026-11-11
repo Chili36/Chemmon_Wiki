@@ -2,11 +2,12 @@
 title: "SSD2 Result: Expression Basis (exprResType, exprResPerc)"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 69-70 (Section 2, elements M.13-M.14)"
+  - "pp. 113, 117, 127, 130-131, 133 (Table 10, CHEMON06, CHEMON07, CHEMON21, CHEMON56, CHEMON69-71, CHEMON84_a, CHEMON84_b)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-result-value-and-type]]"
@@ -64,14 +65,14 @@ For animal-origin products concerning meat, MRLs apply to the muscle or to the f
 
 ### Feed contaminants — dry-matter basis
 
-Directive (EC) 2002/32 describes maximum levels of undesirable substances in mg/kg in feedstuffs with a moisture content of 12% (88% dry matter); to check compliance and derive exposure-assessment-usable concentrations it is recommended to report feed contaminants expressed on **88% dry matter** (code `B004A`). The `exprResType` has to be reported for feed; if analysis was performed on whole weight this should be indicated with `exprResType = B001A` and the moisture percentage of the sample in `exprResPerc.moistPerc` must be reported. If moisture percentage is not available but dry matter is, EFSA recommends calculating moisture as `100 − dry matter`. (ChemMon 2026 p70)
+Directive (EC) 2002/32 describes maximum levels of undesirable substances in mg/kg in feedstuffs with a moisture content of 12% (88% dry matter); to check compliance and derive exposure-assessment-usable concentrations it is recommended to report feed contaminants expressed on **88% dry matter** (code `B004A`). The `exprResType` has to be reported for feed; if analysis was performed on whole weight this should be indicated with `exprResType = B001A` and the moisture percentage of the sample in `exprResPerc.moistPerc` must be reported. The system will return an Error message if this business rule is not followed. If moisture percentage is not available but dry matter is, EFSA recommends calculating moisture as `100 − dry matter`. (ChemMon 2026 p70)
 
 ### Examples
 
 | Description | XML |
 | --- | --- |
 | Fat-soluble pesticide in butter expressed on fat-weight basis | `<exprResPerc>fatPerc=80</exprResPerc><exprResType>B003A</exprResType>` or `<exprResPerc.fatPerc>80</exprResPerc.fatPerc><exprResType>B003A</exprResType>` |
-| Moisture percentage for heavy metals in seaweed expressed on whole-weight basis | `<exprResPerc>moistPerc=40</exprResPerc><exprResType>B001A</exprResType>` |
+| Moisture percentage for heavy metals in seaweed expressed on whole-weight basis | `<exprResPerc>moistPerc=40</exprResPerc><exprResType>B001A</exprResType>` or `<exprResPerc.moistPerc>40</exprResPerc.moistPerc><exprResType>B001A</exprResType>` |
 | Moisture and fat percentages for heavy metals in seaweed (whole weight) | `<exprResPerc>moistPerc=40$fatPerc=5</exprResPerc><exprResType>B001A</exprResType>` |
 
 (ChemMon 2026 p70)
@@ -79,8 +80,11 @@ Directive (EC) 2002/32 describes maximum levels of undesirable substances in mg/
 ### Related business rules
 
 - **CHEMON56** — For pesticides, `exprResType` can only be B001A, B003A, or B007A. See [[business-rules-pesticide]].
-- **CHEMON70** — For pesticides in egg/milk matrices, `exprResType` must be B001A.
+- **CHEMON70** (Error) — For pesticides in egg or milk, `exprResType` "whole weight" (`B001A`) must be reported (Table 10, p131). **Source discrepancy:** the M.14 prose (p. 69) says to report whether the result is expressed as whole weight (`B001A`) or fat weight (`B003A`), while the rule description names only `B001A`; the rule's error message reads "exprResType is missing, though the MRL is compliant with a whole weight commodity". The guidance does not say whether `B003A` passes this rule.
+- **CHEMON69** (Error) — For contaminants in feed, if `exprResType` is whole weight (`B001A`), the percentage of moisture (`moistPerc`) must be reported (Table 10, p130). See [[business-rules-contaminant]].
 - **CHEMON71** — For contaminants in feed, `exprResType` is mandatory. See [[business-rules-contaminant]].
 - **CHEMON84_a** — `exprResType` is mandatory for food additives and flavourings. See [[business-rules-additives]].
 - **CHEMON84_b** — `exprResType` is highly recommended for contaminants **in food**; feed is governed by CHEMON71.
+- **CHEMON21** (Warning) — If `paramCode` has as ancestor brominated flame retardants, dioxins and PCBs, or 3-MCPDs, `exprResPerc.fatPerc` should be reported, regardless of whether the result is expressed on whole weight, fat weight or dry matter (Table 10, p117). See [[business-rules-contaminant]].
+- **CHEMON06** and **CHEMON07** (Warning) — `exprResPerc.fatPerc` and `exprResPerc.moistPerc` should each be greater than or equal to 1, e.g. for 85% the value 85 should be reported (Table 10, p113).
 

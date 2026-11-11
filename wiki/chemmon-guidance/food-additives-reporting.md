@@ -23,7 +23,17 @@ related:
   - "[[data-validation-and-acceptance]]"
   - "[[contaminant-reporting]]"
   - "[[baby-food-reporting]]"
-last_updated: "2026-10-05"
+source_pages:
+  - "ChemMon 2026 pp. 12-16 (main changes introduced for the 2026 collection)"
+  - "ChemMon 2026 pp. 38-40, 42 (FA/FF sample coding and examples)"
+  - "ChemMon 2026 p. 51 (Table 4, F33)"
+  - "ChemMon 2026 pp. 61, 63, 66, 70 (sums, paramText, LOD, exprResType)"
+  - "ChemMon 2026 pp. 76, 78-79 (evalInfo.conclusion, evalInfo.restrictionException)"
+  - "ChemMon 2026 p. 96 (Table 8, FA/FF occurrence)"
+  - "ChemMon 2026 pp. 121, 133-135, 140-143 (Table 10)"
+  - "No-presence 2026 pp. 4, 9, 19-21"
+  - "Use-levels 2026 pp. 4, 9, 24-28"
+last_updated: "2026-11-11"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -42,7 +52,7 @@ FA/FF intake monitoring uses **three parallel data-collection paths**, all submi
 
 Key framing rules across the three paths:
 
-- Positive presence with a measured concentration → SSD2 analytical (this page). The no-presence DM explicitly rejects `C19A` (PRE06).
+- Positive presence with a measured concentration → SSD2 analytical (this page). The no-presence DM rejects a positive presence, `C19A` or `C05A` (PRE06, Error; No-presence 2026 p19).
 - Category-level use levels reported by industry → use-levels DM. SSD2 cannot represent category-level aggregates, so use-levels is a parallel schema, not an SSD2 extension.
 - Sample-level "FA/FF not used here" without an analytical measurement → no-presence DM. SSD2 cannot carry standalone negatives, so the no-presence DM was added to close that gap.
 - The three paths share FA/FF catalogue families (`LEGREF`, `PARAM`, `ADDFOOD`, `CONCLUS`, `FUNC`). Preserve each collection’s hierarchy restrictions. For CONCLUS, ChemMon p. 76 prints `fa_ff`, whereas PRE/USE print `faff`; the matching C19A/C20A/C05A codes and examples establish the same concept family. Retain the spelling difference as a source note; do not infer software aliases from it.
@@ -63,32 +73,33 @@ Some rule families are shared in concept but not in severity or exact field plac
 
 Use [[controlled-terminology-catalogues]] for the shared catalogue layer, [[legal-limits-database]] for the date-driven limit logic, and [[data-validation-and-acceptance]] for the common DCF submission flow.
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 73, 148 -->
 ## Scope
 
-- Food additives and flavourings form two of the five [[chemmon-overview|ChemMon]] reporting domains. (ChemMon 2026)
-- Food additives are regulated under Regulation (EC) No 1333/2008. (ChemMon 2026)
-- Food flavourings are regulated under Regulation (EC) No 1334/2008. (ChemMon 2026)
+- Food additives and flavourings form two of the five [[chemmon-overview|ChemMon]] reporting domains. (ChemMon 2026 p148)
+- Food additives are regulated under Regulation (EC) No 1333/2008. (ChemMon 2026 p73)
+- Food flavourings are regulated under Regulation (EC) No 1334/2008. (ChemMon 2026 p73)
 - Matrix coding follows [[foodex2-in-chemmon]] rules. Validation is enforced by [[business-rules-additives]] and [[business-rules-cross-cutting]]. Some substances overlap with [[contaminant-reporting]] (e.g., naturally occurring substances with dual classification).
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39, 42, 51, 96 -->
 ## Analytical (SSD2) path: matrix expectations
 
-- **F33 (Legislative classes)**: MANDATORY for both food additive and flavouring samples. See [[foodex2-facets-legislative-descriptive]]. (ChemMon 2026)
-- **F03 (Physical state)**: recommended for dairy products, cereals, soups, sauces, infant foods, juices, and food supplements. See [[foodex2-facets-state-process]]. (ChemMon 2026)
-- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[foodex2-facets-packaging-consumer]] and [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026)
+- **F33 (Legislative classes)**: "For food additives and flavourings, it is mandatory to report the legislative class facet code (F33)"; if it is not implicitly assigned it must be added. See [[foodex2-facets-legislative-descriptive]]. (ChemMon 2026 pp. 38, 42)
+- Source discrepancy (F33 for flavourings): pp. 38 and 42 say mandatory for both domains, and CHEMON39 is an Error for food additives and food flavourings (Table 10 p. 121). Table 4 says "Required" for additives but "Recommended" for flavourings (p. 51). Table 8 gives the flavourings status as "Mandatory" yet says that if F33 is not implicitly assigned "it is recommended to add it" (p. 96). Validation enforces the Error.
+- **F03 (Physical state)**: highly recommended, if not implicitly assigned, for the legislative categories listed below (CHEMON86, Warning). See [[foodex2-facets-state-process]]. (ChemMon 2026 pp. 38-39; Table 10 p. 133)
+- **F23 (Target consumer)**: recommended when the reported product sits in legislative category 13 or is otherwise explicitly infant-targeted. See [[foodex2-facets-packaging-consumer]] and [[baby-food-reporting]] for baby food classification and domain routing. (ChemMon 2026 p39; CHEMON89, Warning, Table 10 p. 135)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 38-39 -->
 ### F33 legislative class: implicit vs explicit
 
-For additives and flavourings, the **legislative food category facet (F33) must always be present**. In many cases, F33 is already implicitly assigned in the reporting hierarchy of the FoodEx2 browser; if it is not implicitly assigned, it must be added explicitly. (ChemMon 2026 p38-39)
+For additives and flavourings, the **legislative food category facet (F33) must always be present**. In many cases, F33 is already implicitly assigned in the reporting hierarchy of the FoodEx2 browser; if it is not implicitly assigned, it must be added explicitly. (ChemMon 2026 p38)
 
 The legislative category **"All categories of foods" is not allowed** to be reported for additives/flavourings. (ChemMon 2026 p38)
 
-<!-- Source: ChemMon 2026 p39 -->
+<!-- Source: ChemMon 2026 pp. 38-39 -->
 ### F03 physical state: where it matters for additives/flavourings
 
-If F03 is not implicitly assigned, it is highly recommended to add it for samples in these legislative food categories/subcategories:
+If F03 is not implicitly assigned, it is highly recommended to add it (p. 39) for samples in these legislative food categories/subcategories (list on p. 38):
 
 - 1 — Dairy products and analogues
 - 6.3 — Breakfast cereals
@@ -103,42 +114,45 @@ If F03 is not implicitly assigned, it is highly recommended to add it for sample
 
 If the sample is formulated for **infants (<12 months)**, the target-consumer facet (F23) should be added if it is not implicitly assigned. (ChemMon 2026 p39)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 12, 61, 70 -->
 ## Expression Type
 
-- The `exprResType` element is mandatory for food additives and flavourings (amended 2026). (ChemMon 2026)
-- Individual substances must be expressed as specified in the legislation, e.g. sorbic acid-sorbates expressed as free acid. (ChemMon 2026)
+- `exprResType` should be reported for food additives and food flavourings, "as it became mandatory in 2025 and 2026 respectively"; if not reported, the system returns an error message (CHEMON84_a, from Warning to Error in 2026). (ChemMon 2026 pp. 12, 70)
+- For food additives, the analytical result for the individual substances must be reported expressed as specified in Regulation (EC) No 1333/2008, e.g. sorbic acid-sorbates expressed as the free acid. (ChemMon 2026 p61)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 61, 63, 66, 140 -->
 ## Result Reporting
 
-- For potassium sorbate (RF-00000248-ADD), CHEMON106 recommends that `paramText` state “Expressed as free acid” or “Expressed as salt” (Warning, Table 10 p. 140). This rule does not impose that text on every grouped additive; see [[ssd2-analysis-parameter-coding]].
+- For food additives, `paramText` must be filled in as “Expressed as free acid” or “Expressed as salt” when the food additives are regulated as groups (e.g. sorbic acid and sorbates). If the information is not provided, the analytical value will be considered expressed as free acid. (ChemMon 2026 p63)
+- CHEMON106 (Warning, Table 10 p. 140) checks this only for potassium sorbate (`RF-00000248-ADD`): `paramText` should specify “Expressed as free acid” or “Expressed as salt”. No rule checks the other grouped additives; see [[ssd2-analysis-parameter-coding]].
 - The field prose p. 66 recommends LOD for FA/FF binary negative results generally. CHEMON107 (Table 10 p. 140) specifically warns for six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`; see [[business-rules-additives]] for the complete list.
-- Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level. (ChemMon 2026)
+- Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level for the reported legislative category. (ChemMon 2026 p61)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 11-16, 121, 133, 140-141 -->
 ## Key Business Rules
 
 | Rule | Description | Status |
 | --- | --- | --- |
-| CHEMON39 | Legislative class validation | Merged 2026 |
-| CHEMON84_a | Result type validation | Amended 2026 |
-| CHEMON86 | Physical-state facet recommendation | Amended 2026 |
+| CHEMON39 | `sampMatCode.legis` (F33) must carry the food category code under Regulations (EC) No 1333/2008 and 1334/2008 (Error, p. 121) | Merged 2026 |
+| CHEMON84_a | `exprResType` (expression of result type) must be reported (Error, p. 12) | Amended 2026: Warning to Error |
+| CHEMON86 | Physical-state facet (F03) highly recommended for the listed categories (Warning, p. 133) | Amended 2026 |
 | CHEMON106 | Potassium sorbate `paramText` recommendation (Warning) | New 2026 |
 | CHEMON107 | LOD recommendation for six named parameters with BIN/NEG | New 2026 |
-| CHEMON108 | Food colour/additive classification codes | New 2026 |
-| CHEMON109 | Implicit additive/flavouring legislative category | New 2026 |
+| CHEMON108 | `A047N`, `A047Q`, `A047R`, `A047A`, `A047P` and `A0F3T` (the additive/colour/flavouring terms themselves) cannot be reported as `sampMatCode` (Warning, p. 140) | New 2026 |
+| CHEMON109 | If `sampMatCode` has an implicit additive/flavouring F33, the explicit F33 is not needed (Warning, p. 141) | New 2026 |
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 16, 142-143 -->
 ## Legal Limit Rules (New 2026)
 
 | Rule | Purpose |
 | --- | --- |
-| LL_01_FA_FF | Maximum Permitted Level comparison |
-| LL_02_FA_FF | MPL threshold evaluation |
-| LL_03_FA_FF | Legislative category substance authorization |
+| LL_01_FA_FF | If `resType` is `VAL`, `evalLimitType` is `W016A` (MPL) or not reported, and `resVal` is greater than the MPL, `evalCode` should be different from `J002A` or `J037A` |
+| LL_02_FA_FF | Same conditions with `resVal` less than or equal to the MPL: `evalCode` should be different from `J003A` and `J038A` |
+| LL_03_FA_FF | The substance (`paramCode`) should be authorised in this legislative category with this restriction/exception according to Regulations 1333/2008 and 1334/2008 |
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+All three are Warnings. (ChemMon 2026 Table 10 pp. 142-143)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 39-40 -->
 ## Worked Examples
 
 | Product | FoodEx2 Code | Notes |
@@ -155,17 +169,17 @@ the locally checked MTX 17.2 snapshot; [[foodex2-in-chemmon]] records the
 discrepancy, query provenance and limits. Other rows reproduce the supplied
 2026 guidance examples and are not a validation against every catalogue release.
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 78-79 -->
 ## Restriction/Exception
 
-- `evalInfo.restrictionException` provides restrictions and exceptions per Regulation 1333/2008. (ChemMon 2026)
-- Codes are drawn from the ADDFOOD catalogue; the most detailed code should be chosen. (ChemMon 2026)
-- The same substance can be authorised at different MPLs depending on the restriction/exception. (ChemMon 2026)
-- Examples: `ADD00197A` (mozzarella for lactic acid), `ADD00386A` (milk chocolate for citric acid). (ChemMon 2026)
+- `evalInfo.restrictionException` (N.06.4, optional) should be used to provide the restrictions/exceptions described in Regulation (EC) No 1333/2008 for each authorised food additive; it can also be used for food flavourings in line with Regulation (EC) No 1334/2008. (ChemMon 2026 p78)
+- Codes need to be selected from the `ADDFOOD` catalogue; the most detailed code that defines the restriction/exception should be chosen. (ChemMon 2026 p78)
+- The same substance can be authorised for the same legislative category at different MPLs depending on the restriction/exception, so the element helps identify the correct MPL. A warning is raised when the reported combination (substance, category, restriction/exception) is not authorised. (ChemMon 2026 p79)
+- Examples: `ADD00197A` (mozzarella cheese analysed for lactic acid), `ADD00386A` (milk chocolate analysed for citric acid), `ADD00622A` (processed fish analysed for ascorbic acid), `ADD00881A` (no restrictions/exceptions to be reported). (ChemMon 2026 p79)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p. 76 -->
 ## Conclusion Reporting
 
-- `evalInfo.conclusion` is highly recommended. (CHEMON87)
-- Indicates whether the food additive was on the label (`C19A`) or not (`C20A`), or is of natural occurrence (`C05A`). (ChemMon 2026)
-- Multiple conclusions may apply; for example, ascorbic acid added as a food additive and also naturally occurring: `C19A$C05A`. (ChemMon 2026)
+- `evalInfo.conclusion` is highly recommended. (CHEMON87, Warning; ChemMon 2026 p76, Table 10 p. 134)
+- Indicates whether the food additive or flavouring was on the label/added (`C19A`) or not (`C20A`), or is of natural occurrence (`C05A`). (ChemMon 2026 p76)
+- Multiple conclusions may apply; for example, ascorbic acid added as a food additive and also naturally occurring: `C19A$C05A`. More examples are on [[ssd2-evaluation-conclusions]]. (ChemMon 2026 p76)

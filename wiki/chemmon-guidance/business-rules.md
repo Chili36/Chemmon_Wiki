@@ -2,7 +2,7 @@
 title: "ChemMon Business Rules"
 type: "hub"
 domain: "all"
-last_updated: "2026-11-10"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
@@ -34,7 +34,7 @@ related:
 ## Overview
 
 - Business rules validate [[ssd2-data-model|SSD2]] submissions before acceptance into the EFSA data warehouse as part of the [[chemmon-overview|ChemMon]] data collection.
-- Two severity levels: **Error** (blocks submission) and **Warning** (flags for review but does not block).
+- Two severity levels: **Error** and **Warning**. A dataset can be submitted to the sDWH once it has reached 'Valid' or 'Valid with Warning' status (ChemMon 2026 p152). Wiki note (not in the guidance): the guidance does not say in so many words that an Error blocks submission; that follows from the two statuses.
 - Per the guidance, there are three groups of business rules: **GBR** (all DCF submissions), **CHEMON** (ChemMon-wide rules), and **subset-specific rules** (e.g. pesticides, VMPR, additives/flavourings, or specific contaminants). (ChemMon 2026 p97)
 - **Where a rule and the prose disagree, the rule shows what DCF validation enforces.** This is the wiki's reading; the guidance does not state a precedence order. Example: D.03 (p. 31) names only pesticides for CHEMON58, while the rule (p. 127) also covers VMPR.
 - Matrix coding rules reference [[foodex2-in-chemmon]] for FoodEx2 usage.
@@ -53,13 +53,13 @@ The source guidance also provides troubleshooting tips alongside the GBR and CHE
 - **[[business-rules-gbr-consistency]]** — 12 GBR definitions: shared identifiers, processing geography, matrix/method text and sample-size units.
 - **[[business-rules-gbr-results]]** — 20 GBR definitions: percentages, evaluation limits, decision thresholds, recovery and uncertainty, including Warning rules GBR22/42.
 - **[[business-rules-gbr-dates]]** — 35 GBR definitions: calendar validity, day/month ranges, current date/year and chronological order.
-- **[[business-rules-cross-cutting]]** — CHEMON rules marked "All" or applying to multiple domains: analytical method, result value & type, sampling & programme, cross-domain matrix rules, evaluation & action, FoodEx2 validation.
-- **[[business-rules-legal-limits]]** — Legal Limit rules comparing reported values to MRLs/MLs/MPLs across VMPR, pesticide, and food additive domains.
+- **[[business-rules-cross-cutting]]** — CHEMON rules marked "All" or applying to multiple domains: analytical method, result value & type, sampling & programme (including the N317A and N422A border-control rules), cross-domain matrix rules, evaluation & action, FoodEx2 validation.
+- **[[business-rules-legal-limits]]** — Legal Limit rules comparing reported values to MRLs (VMPR, pesticides) and MPLs (food additives and flavourings), plus `paramType` and pesticide parameter/matrix checks (ChemMon 2026 pp. 141-143).
 
 ### By reporting domain
 
 - **[[business-rules-vmpr]]** — VMPR-specific rules: accreditation, feed/water facets, species/breed consistency, VMPR evaluation codes, 2026 geographic consistency.
-- **[[business-rules-pesticide]]** — Pesticide-specific rules: country of sampling, expression of results, copper facets, non-compliant origin, 2026 N422A exclusivity.
+- **[[business-rules-pesticide]]** — Pesticide-specific rules: N027A programme types, expression of results, evaluation codes, copper facets and uncertainty, non-compliant origin.
 - **[[business-rules-contaminant]]** — Contaminant-specific rules: dioxin/PCB congeners, matrix facets (acrylamide, bisphenol, PAHs, arsenic, BFRs, mycotoxins), feed expression, 2026 programme restrictions.
 - **[[business-rules-additives]]** — Food additives & flavourings rules: F33 legislative classes, expression type, physical state, 2026 substance-specific `paramText` and matrix restrictions.
 - **[[business-rules-baby-food]]** — Baby food exclusion rules (CHEMON55, CHEMON63): matrix coding consistency for baby food programmes and VMPR legal framework exclusion. See [[baby-food-reporting]].

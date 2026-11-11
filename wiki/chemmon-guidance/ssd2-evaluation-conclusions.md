@@ -2,11 +2,11 @@
 title: "SSD2 Evaluation: Conclusions and Comments"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "p. 76 (Section 2, element N.06)"
+  - "pp. 75-78 (Section 2, elements N.05, N.06.1, N.06.2; N.06.3 example)"
 related:
   - "[[ssd2-elements-evaluation]]"
   - "[[controlled-terminology-catalogues]]"
@@ -17,7 +17,7 @@ related:
 
 # SSD2 Evaluation: Conclusions and Comments
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p76 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 75-78 -->
 
 ## Rule Summary (Rule-First)
 
@@ -39,7 +39,7 @@ related:
 ### Typical uses
 
 - explain compliant outcomes despite elevated results, such as natural occurrence or environmental contamination
-- flag long shelf-life products where the applicable MRL at time of marketing differed from the current one
+- report a long shelf-life product with `C08A` ("Long shelf-life product", `CONCLUS` catalogue) when the MRL in place at the time of placing it on the market differed from the MRL applicable in the current data collection for that pesticide/crop combination; "The BRs checking against the MRLs will not be applicable"
 - record additive/flavouring label-presence and natural-occurrence interpretations
 
 (ChemMon 2026 p76)
@@ -55,6 +55,32 @@ For additives and flavourings, `evalInfo.conclusion` is strongly recommended to 
 | `C05A` | Natural occurrence |
 
 Combinations such as `C20A$C05A` are valid when the substance is not declared/added but occurs naturally. (ChemMon 2026 p76)
+
+Additive/flavouring examples (ChemMon 2026 p76):
+
+| Case | `evalInfo.conclusion` | `evalInfo.com` |
+| --- | --- | --- |
+| Ascorbic acid added as FA and naturally occurring | `C19A$C05A` | |
+| Ascorbic acid added as ingredient and naturally occurring | `C19A$C05A` | "Ascorbic acid added as ingredient" |
+| Substance added as carry-over, and not as FA | `C19A` | "Carry-over" |
+| Caffeine added as flavouring and declared on the label | `C19A` | |
+| "Flavourings" declared on the label, without specifying "ethyl vanillate" | `C20A` | |
+
+### Worked examples: action, conclusion, comment
+
+| Case | Coding |
+| --- | --- |
+| Follow-up investigation indicates illegal treatment and additional sampling is planned | `actTakenCode` = `I`; `evalInfo.conclusion` = `C04A`; `evalInfo.com` = "increased testing for this product in aquaculture is planned" |
+| Non-compliant result with a rapid alert notification in RASFF | `evalCode` = `J003A`; `actTakenCode` = `R`; `evalInfo.com` = "Reference number 2018.1567" |
+| Result considered compliant because investigations indicate the exceedance may be due to natural occurrence | `evalCode` = `J002A`; `actTakenCode` = `I`; `evalInfo.conclusion` = `C05A`; `evalInfo.com` gives the reason |
+| Compliant, food additive present on the label and naturally occurring in the food | `evalCode` = `J002A`; `evalInfo.conclusion` = `C19A$C05A` |
+| Non-compliant, food additive not present on the label while found in the food | `evalCode` = `J003A`; `evalInfo.conclusion` = `C20A` |
+
+(ChemMon 2026 p77)
+
+The guidance shows two equivalent syntaxes: one compound element, e.g. `<evalInfo>conclusion=C04A$com=increased testing for this product in aquaculture is planned</evalInfo>`, or separate elements `<evalInfo.conclusion>C04A</evalInfo.conclusion>` and `<evalInfo.com>…</evalInfo.com>`. (ChemMon 2026 p77)
+
+With `evalInfo.resAsses`: `<evalInfo>resAsses=J037A$conclusion=C05A$com=Result is within a physiological range for this sample to be a naturally occurring hormone</evalInfo>`. Where `evalInfo.resAsses` is reported and differs from `evalCode`, the reason must be reported in `evalInfo.conclusion`. (ChemMon 2026 p78)
 
 ## Related business rules
 

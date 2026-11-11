@@ -2,7 +2,7 @@
 title: "SSD2 Elements: Result Values (resId through resInfo)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-15"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -53,7 +53,7 @@ This page is constrained by business rules; the most load-bearing ones:
 
 ## Relevant Policy
 
-- If prose guidance and business rules conflict on mandatory/optional status, follow the business rule (and the current-year ChemMon guidance) for what passes DCF validation.
+- Wiki note (not in the guidance): where a rule and the prose disagree, the rule shows what DCF validation enforces. This is the wiki's reading; the guidance does not state a precedence order.
 - Prefer encoding context via the appropriate elements/facets (e.g. expression basis, sample-preparation facets) rather than altering numeric results to "fit" a downstream interpretation.
 
 ## Subpages

@@ -136,8 +136,12 @@ def test_reviewed_chemon_pre_use_severities_match_independent_source_evidence():
         if source['status'] == 'inactive':
             assert key not in definitions
             continue
-        assert definitions[key] == [source['canonical_page']]
-        text = (ROOT/'wiki/chemmon-guidance'/source['canonical_page']).read_text()
+        # Moved after the 5 October report (#68): the N422A rules name no domain, so they
+        # sit with the N317A rules on the cross-cutting page.
+        page = {'CHEMON101': 'business-rules-cross-cutting.md',
+                'CHEMON104': 'business-rules-cross-cutting.md'}.get(key, source['canonical_page'])
+        assert definitions[key] == [page]
+        text = (ROOT/'wiki/chemmon-guidance'/page).read_text()
         row = next(line for line in text.splitlines()
                    if re.match(r'^\|\s*' + re.escape(key) + r'\s*\|', line))
         cells = [cell.strip() for cell in row.split('|')[1:-1]]

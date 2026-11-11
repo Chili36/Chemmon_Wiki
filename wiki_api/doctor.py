@@ -39,7 +39,9 @@ FENCED_CODE_RE = re.compile(r"(^|\n)(```|~~~).*?(?=\n\2|\Z)(?:\n\2)?", re.DOTALL
 INLINE_CODE_RE = re.compile(r"`[^`\n]*`")
 HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
 LOG_DATE_RE = re.compile(r"^## (?:\[(\d{4}-\d{2}-\d{2})\]|(\d{4}-\d{2}-\d{2}))", re.MULTILINE)
-TABLE_REF_RE = re.compile(r"\bTables?\s+(\d+(?:\s*(?:[-–/,]|and)\s*\d+)*)")
+# Table numbers have one or two digits; "Table 1, 2026 changes" cites Table 1 only.
+_TABLE_NO = r"\d{1,2}(?!\d)"
+TABLE_REF_RE = re.compile(rf"\bTables?\s+({_TABLE_NO}(?:\s*(?:[-–/,]|and)\s*{_TABLE_NO})*)")
 MISSPELT_RULE_RE = re.compile(r"\bCHEMMON\d")
 # Matches both spellings so the scope check works independently of the spelling check.
 RULE_ID_RE = re.compile(r"\bCHEMM?ON\d+(?:_[a-z])?\b")

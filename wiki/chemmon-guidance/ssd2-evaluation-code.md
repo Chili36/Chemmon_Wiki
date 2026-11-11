@@ -2,7 +2,7 @@
 title: "SSD2 Evaluation: Result Evaluation Code"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -42,13 +42,15 @@ related:
 
 | Code | Meaning |
 | --- | --- |
-| `J003A` | Above the level of concern |
+| `J003A` | Above the level of concern: the quantified value is clearly above the legal limit taking into account the analytical measurement uncertainty, evaluated against the limit set under the relevant MRL/ML legislation |
 | `J002A` | Below or equal to the level of concern |
-| `J029A` | Not evaluated |
+| `J029A` | Not evaluated: the substance is only part of the full residue definition/group (`paramType` = `P002A`), **or** no legal limit applies to the substance or residue measured in the sample |
 | `J031A` | Above the limit but compliant when measurement uncertainty is taken into account |
-| `J041A` | Detected illegal/prohibited VMPR or unauthorised food additive |
+| `J041A` | Occurrence of an illegal/prohibited VMPR included in Group A (no MRL set for these substances), or detection of an unauthorised food additive |
 
 (ChemMon 2026 p75)
+
+`J003A` must not be used to indicate that a residue measured in samples produced in the EU is not approved at EU level under Regulation (EC) No 1107/2009, nor to assess the presence of a pesticide residue (within a legal limit) in organic products that is not permitted in organic farming. (ChemMon 2026 p75)
 
 ### Multicomponent handling
 
@@ -56,7 +58,7 @@ For individual components of a multicomponent residue definition or contaminant 
 
 ### VMPR detected case
 
-For VMPR, `J041A` together with `evalLimitType = W012A` ("Presence") can be used and is counted as non-compliant, although the guidance notes that `J003A` could also be used. (ChemMon 2026 p74)
+For VMPR, `J041A` together with `evalLimitType = W012A` ("Presence") can be reported and is counted as a non-compliant result, "although it is not recommended since the code J003A could be used". (ChemMon 2026 p74)
 
 ## Overall result assessment
 

@@ -2,11 +2,12 @@
 title: "FoodEx2 Facets: State, Cooking, Production Method, and Process"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 44-45, 47-50 (Table 4: F03, F17, F21, F28)"
+  - "pp. 86, 135 (copper: Table 8 and CHEMON90_a)"
 related:
   - "[[foodex2-facets]]"
   - "[[foodex2-in-chemmon]]"
@@ -57,7 +58,7 @@ related:
 | Domain | Usage |
 | --- | --- |
 | **VMPR** | `A07RY` should be used to identify wild game. Classification of samples as wild game is based on this facet. |
-| **Pesticides** | Required for analysis of organic food compared with conventionally produced food. Use `A07SE` for organic production. If known to be non-organic, use `A0C6Y` (conventional non-organic production). If unknown, do not report this facet. `A07RY` also identifies wild/gathered/hunted game. |
+| **Pesticides** | Required for analysis of organic food compared with conventionally produced food. Use `A07SE` for organic production. If known to be non-organic, use `A0C6Y` (conventional non-organic production). Where the production method is unknown, this facet must not be reported; for reporting, "non-organic" and no F21 value reported are grouped as non-organic production. Intensity of production, when known, can also be reported with `A0C6Q` (intensive production) or `A18FG` (extensive (non-intensive) production). `A07RY` should be used to identify wild game, e.g. to distinguish farmed wild boar from wild. |
 | **Contaminants** | Recommended. Required for analysis of the mycotoxin situation in organic food compared with non-organic food. |
 | other domains | Not described as a domain-specific Table 4 requirement. |
 
@@ -68,7 +69,7 @@ related:
 | Domain | Usage |
 | --- | --- |
 | **VMPR** | Required to distinguish processed food samples. |
-| **Pesticides** | Required to distinguish processed food samples, because MRL compliance is checked against results expressed for unprocessed samples. For processed products derived from raw agricultural products, select the most specific processing code. For copper results, the process applied to the analysed sample may need to be reported, e.g. roasting. |
+| **Pesticides** | Required to distinguish processed food samples, because MRL compliance is checked against results expressed for unprocessed samples. For processed products derived from raw agricultural products, select the most specific processing code. When reporting copper results, the processing applied to the analysed sample needs to be reported, e.g. `F28.A07GY` roasting. |
 | **Contaminants** | Required to distinguish processed food samples. Use a more detailed classification where possible. |
 | **Additives** | Required to distinguish processed food samples. |
 | **Flavourings** | Required to distinguish processed food samples. |
@@ -81,11 +82,11 @@ related:
 - `CHEMON18`: for arsenic in rice, `F28` should specify processed or unprocessed state. See [[business-rules-contaminant]].
 - `CHEMON19`: for chlorates/perchlorates/QACs, `F28` should be reported. See [[business-rules-contaminant]].
 - `CHEMON86`: `F03` is recommended for specified FA/FF categories where physical state affects legal limits. See [[business-rules-additives]].
-- `CHEMON90_a`: for pesticide copper, `F20` and/or `F28` are needed to describe sample preparation. See [[business-rules-pesticide]].
+- `CHEMON90_a`: when copper (`paramCode` RF-0102-001-PPP) is reported, the use of `F20` and/or `F28` is needed (Warning). The rule is triggered by the parameter code, with no domain condition; Table 8 gives the copper `F20` and/or `F28` requirement the status "Highly Recommended". See [[business-rules-pesticide]]. (ChemMon 2026 p86, p135)
 - `CHEMON103`: organic and conventional production facets must not be reported together. See [[business-rules-cross-cutting]].
 
 ## Navigation
 
 - For VMPR wild game and processed-product examples, continue to [[ssd2-matrix-vmpr-coding]].
-- For pesticide copper preparation cases, continue to [[pesticide-reporting]].
+- For copper sample-preparation cases (pesticide-style and contaminant-style), continue to [[pesticide-reporting]].
 - For contaminant substance-specific process expectations, continue to [[contaminant-reporting]].

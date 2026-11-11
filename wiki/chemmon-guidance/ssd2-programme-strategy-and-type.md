@@ -2,13 +2,16 @@
 title: "SSD2 Programme: Sampling Strategy and Programme Type"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 20-21 (Section 2, elements B.03-B.04)"
+  - "pp. 23-25 (Table 2 and plan flags, for the K018A discrepancy note)"
+  - "pp. 138-139 (Table 10, CHEMON101)"
 related:
   - "[[ssd2-elements-programme]]"
+  - "[[ssd2-programme-valid-combinations]]"
   - "[[ssd2-elements-sampling]]"
   - "[[business-rules-cross-cutting]]"
   - "[[business-rules-pesticide]]"
@@ -52,6 +55,9 @@ related:
 
 - VMPR annual reporting uses `Objective`, `Target sampling`, and `Suspect sampling` for the formal plans; `Other` is for VMPR records outside those plans. (ChemMon 2026 p20)
 - In pesticides, EU MACP samples use `ST10A` or `ST20A`. (ChemMon 2026 p20)
+- `ST10A` covers surveillance samples for the VMPR national randomised surveillance plan for production in the Member States (Plan 2). (ChemMon 2026 p20)
+- `ST20A` "is the code to be used" for samples taken under national programmes under Regulation (EU) 2021/1355 for pesticide residues; it is "typically used" for the VMPR national risk-based control plans for production in the Member States and for third-country imports (Plan 1 and Plan 3); and it "shall be used also for the official controls as regards contaminants in foods". (ChemMon 2026 p20)
+- `ST30A` samples "are not considered in the EFSA exposure assessments". (ChemMon 2026 p20)
 - For samples taken under Regulations (EU) 2019/1793 or 2019/1873, `ST30A` is the required suspect-sampling route. (ChemMon 2026 p20)
 
 ## progType — Programme type
@@ -81,9 +87,14 @@ related:
 
 - Pesticides: EU MACP samples use `K009A`; MANCP samples on the EU market use `K005A`; `K018A` is also valid in the mixed-use cases defined in Table 2. (ChemMon 2026 p21)
 - Border samples use `K019A` only for the EU increased control programme on imported food; otherwise use `K038A` for national import-control pathways. (ChemMon 2026 p21)
+- `K018A`, besides samples that are part of both an EU MACP and a national programme (ChemMon 2026 p21):
+  - Pesticides: "should also be used" where the analytical scope is wider than the pesticide/crop combination listed in the EU MACP (i.e. more pesticides analysed in an EU MACP commodity).
+  - VMPR: "is the code to be used" when reporting results under the national risk-based and randomised surveillance plans for production in the Member States (Plan 1 and Plan 2).
+  - Contaminants: "should also be used" when reporting results related to the control plan for food placed on the Union market.
+- Source discrepancy: the B.04 example names only `K018A` for VMPR Plans 1 and 2 and for the contaminants control plan for food placed on the Union market (ChemMon 2026 p21), while the plan-flag text and Table 2 accept `K005A` or `K018A` for all three (ChemMon 2026 pp. 23-25). The guidance does not reconcile them. See [[ssd2-programme-valid-combinations]].
 
 ## Related business rules
 
 - `CHEMON50`, `CHEMON51` — valid pesticide combinations for `N027A`. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
 - `CHEMON96`, `CHEMON97` — valid strategy combinations for `K005A`. See [[business-rules-cross-cutting]].
-- `CHEMON101` — `N422A` requires `K019A` plus `ST30A`. See [[business-rules-pesticide]].
+- `CHEMON101` — `N422A` requires `K019A` plus `ST30A`. See [[business-rules-cross-cutting]]. (ChemMon 2026 pp. 138-139)

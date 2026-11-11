@@ -2,11 +2,11 @@
 title: "SSD2 Sampling: Method, Sampler, and Point"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-23"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "pp. 27-28 (Section 2, elements B.05-B.07)"
+  - "pp. 27-29 (Section 2, elements B.05-B.07; online-sales sentence on p. 29)"
 related:
   - "[[ssd2-elements-sampling]]"
   - "[[ssd2-elements-programme]]"
@@ -65,8 +65,10 @@ Identifies the person or persons responsible for taking the sample.
 
 | Code | Meaning |
 | --- | --- |
-| `CX02A` | Samples taken in the context of an official control |
+| `CX02A` | Samples taken in the context of an official control; "this is the case for the samples taken in the context of Regulation 396/2005 and Regulation (EU) 2022/1646 for pesticides and VMPR residues or feed additives, respectively" |
 | `CX01A` | Samples taken by food business operators (FBOs) |
+
+(ChemMon 2026 p28)
 
 ## sampPoint — Sampling point
 
@@ -85,8 +87,10 @@ Describes the point in the food chain where the sample was taken. The catalogue 
 | Primary production | Milk samples taken at a farm | `<sampPoint>E100A</sampPoint>` |
 | Manufacturing | Milk samples taken at the dairy before the bulk tanker has discharged | `<sampPoint>E301A</sampPoint>` |
 | Distribution | Samples taken at wholesale and retail sale | `<sampPoint>E520A</sampPoint>` |
-| Packaging | Eggs taken in collection/packing centres | `<sampPoint>E600A</sampPoint>` |
-| Border Control Posts | Import samples for VMPR Plan 3 and contaminants monitoring | `<sampPoint>E010A</sampPoint>` |
+| Packaging | Eggs taken in the collection/packing centres (if it is possible to identify the source farm) | `<sampPoint>E600A</sampPoint>` |
+| Border Control Posts | Samples classed as import samples; this code shall be selected for reporting import sampling for VMPR Plan 3 and contaminants monitoring | `<sampPoint>E010A</sampPoint>` |
+
+(ChemMon 2026 p28)
 
 ### VMPR-specific hierarchy
 

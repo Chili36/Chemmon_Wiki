@@ -3,7 +3,7 @@ title: "Food Additives & Flavourings Business Rules"
 select_when: "SSD2 FA/FF CHEMON rule severity, implicit F33, F03/F23 recommendations and 2026 changes. PRE and USE belong to separate data-model pages."
 type: "rule-reference"
 domain: "additives"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -35,12 +35,12 @@ FA/FF reporting also has **two parallel data models** outside SSD2, each with it
 | --- | --- | --- | --- | --- |
 | CHEMON39 | Error | For FA/FF (`is_add=1` or `is_flav=1`), `sampMatCode.legis` (F33) must provide the applicable food category under Regulations 1333/2008 and 1334/2008. An implicit F33 satisfies this; add it explicitly only if missing. | FA/FF | 121-122 |
 | CHEMON43_b | Warning | For FA/FF, `sampY` should be less than or equal to submission year minus 1. The source announces Error severity and merging with CHEMON43 in 2027; the 2026 severity is Warning. | FA/FF | 123 |
-| CHEMON84_a | Error | `exprResType` (expression of result type) is mandatory for food additives and flavourings. (Amended 2026) | FA/FF | 133 |
-| CHEMON86 | Warning | For FA/FF, if F03 is not implicit, report it for legislative categories 1, 6.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5 and 17. These are the SSD2 categories; do not substitute the narrower PRE/USE dairy list. | FA/FF | 133-134 |
+| CHEMON84_a | Error | `exprResType` (expression of result type) must be reported for food additives and flavourings. Table 1 records the 2026 amendment as "From warning to error message in 2026" (p12); the Table 10 comment says it becomes an Error for food flavourings in 2026. | FA/FF | 133 |
+| CHEMON86 | Warning | For FA/FF, if F03 is not implicit, report it for legislative categories 1, 6.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5 and 17. These are the SSD2 categories; do not substitute the narrower PRE/USE dairy list. Introduced in 2025 and modified in 2026; the source announces Error severity in 2027 for categories 12.5, 13, 14.1.4, 14.1.5 and 17. | FA/FF | 133-134 |
 | CHEMON87 | Warning | `evalInfo.conclusion` is highly recommended for food additives and flavourings. Evaluation conclusions aid data interpretation. | FA/FF | 134 |
 | CHEMON88 | Warning | For FA/FF, `evalInfo.restrictionException` is highly recommended. The source says it **might** become an Error in 2027 depending on the pilot; that is not the 2026 severity. | FA/FF | 134-135 |
-| CHEMON89 | Warning | For food category 13 (food for specific groups), F23 (target consumer) facet is recommended. | FA/FF | 135 |
+| CHEMON89 | Warning | For FA/FF, the target consumer facet (F23) is highly recommended to be reported when the sample refers to food category 13 (printed in this rule as "Foods intended for particular nutritional uses as defined by Directive 2009/39/EC"). Introduced in 2025. | FA/FF | 135 |
 | CHEMON106 | Warning | For Potassium sorbate (RF-00000248-ADD), `paramText` should state “Expressed as free acid” or “Expressed as salt”. This row does not impose that text on all grouped additives. | Potassium sorbate | 140 |
 | CHEMON107 | Warning | For Sorbic acid (RF-00000304-ADD), Potassium sorbate (RF-00000248-ADD), BHT (RF-00000062-ADD), Coumarin (RF-00000370-TOX), Hydrocyanic acid (RF-00000333-TOX) or Theobromine (RF-00000334-TOX), **when `resType` is BIN AND `resQualValue` is NEG**, report `resLOD` (highly recommended). | Six named parameters; BIN + NEG | 140 |
-| CHEMON108 | Warning | For FA/FF, `sampMatCode` cannot use A047N (Food colours), A047Q (Artificial food colour), A047R (Food additives other than flavours, colours and artificial sweeteners), A047A (Food flavourings), A047P (Natural food colour) or A0F3T (Preparations for food flavouring). Severity remains Warning in 2026. | FA/FF | 140 |
-| CHEMON109 | Warning | If an implicit F33 (legislative class) facet is present via the `sampMatCode`, an explicit F33 is not needed for food additives/flavourings. Avoids duplication. (New 2026) | FA/FF | 141 |
+| CHEMON108 | Warning | For FA/FF, `sampMatCode` cannot use A047N (Food colours), A047Q (Artificial food colour), A047R (Food additives other than flavours, colours and artificial sweeteners), A047A (Food flavourings), A047P (Natural food colour) or A0F3T (Preparations for food flavouring). New in 2026 as a Warning; the source says it might become an Error in 2027. | FA/FF | 140 |
+| CHEMON109 | Warning | If an implicit F33 (legislative class) facet is present via the `sampMatCode`, an explicit F33 is not needed for food additives/flavourings. New in 2026; the source says it might become an Error in 2027. | FA/FF | 141 |

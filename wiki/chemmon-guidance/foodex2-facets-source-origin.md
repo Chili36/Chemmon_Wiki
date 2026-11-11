@@ -2,7 +2,7 @@
 title: "FoodEx2 Facets: Source, Part, Ingredient, and Origin"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -61,7 +61,7 @@ related:
 | --- | --- |
 | **VMPR** | Not described as a domain-specific Table 4 requirement. |
 | **Pesticides** | Ingredients of composite food samples. |
-| **Contaminants** | Used for products where ingredient detail affects classification, including potato crisps, pre-cooked French fries / potato products for home cooking, breakfast cereals excluding muesli and porridge, substitute coffee dry, baby foods other than processed cereal-based foods, rice-based products, algae-based foods for special nutritional uses, and compound products for infants and small children. |
+| **Contaminants** | Recommended for the following products: potato crisps; pre-cooked French fries, potato products for home cooking; breakfast cereals (excluding muesli and porridge); substitute coffee (dry); baby foods other than processed cereal-based foods; rice-based products; algae-based foods for special nutritional uses; compound products for infants and small children, including ready-made meals, diet supplements, herb mixes and spice mixes. |
 | **Additives** | Repeatable facet used to characterise composite foods. |
 | **Flavourings** | Repeatable facet used to characterise composite foods. |
 

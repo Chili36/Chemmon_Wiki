@@ -2,7 +2,7 @@
 title: "SSD2 Elements: Analysis, Laboratory, Parameter, Method"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -33,8 +33,8 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 ## Rule Summary (Rule-First)
 
 - `analysisY` is mandatory for every result.
-- `origFishAreaCode` matters only for the fish/seafood cases where origin at FAO-area level is analytically or legally relevant.
-- `anPortSeq` is a narrow exception for repeated analysis of the same sample under repeatable conditions; do not use it for ordinary legal-limit evaluation.
+- `origFishAreaCode` is optional; for fish, seafood and other marine products the FAO fishing area should be reported. (ChemMon 2026 p57)
+- `anPortSeq` should only be used for repeated analysis of the same sample with the same method and only when legally required; it must not be used when reporting results subject to assessment against a legal limit (see the source discrepancy in [[ssd2-analysis-context]]). (ChemMon 2026 p58)
 - `labId`, `labAccred`, and `labCountry` identify the analysing laboratory and its accreditation context.
 - `paramCode` is the domain-routing analyte code; `paramType` matters most for multicomponent or summed parameters.
 - `anMethRefId` ties records back to the same laboratory method; `anMethType` distinguishes screening from confirmation; `anMethCode` should be specific rather than generic.

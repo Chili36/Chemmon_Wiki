@@ -2,11 +2,13 @@
 title: "FoodEx2 Facets: Packaging, Part Consumed, and Target Consumer"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "pp. 45-48 (Table 4: F18, F19, F20, F23)"
+  - "pp. 45-49 (Table 4: F18, F19, F20, F23)"
+  - "p. 41 (coding of copper samples)"
+  - "p. 135 (Table 10: CHEMON90_a)"
 related:
   - "[[foodex2-facets]]"
   - "[[foodex2-in-chemmon]]"
@@ -56,10 +58,10 @@ related:
 | Domain | Usage |
 | --- | --- |
 | **Pesticides** | Recommended for meat or meat sub-codes to indicate visible fat status: `A0F4V` excluding visible fat or `A0F4T` including visible fat. For muscle samples under Regulation (EC) No 396/2005, use `A0F4V` because MRLs for muscle apply to meat after removal of trimmable fat. |
-| **Pesticides - copper** | For copper (`paramCode` RF-0102-001-PPP), EFSA expects `F20` and/or `F28` to reflect sample preparation. Some commodities differ depending on whether the result is treated as pesticide-residue-style vs contaminant-style, such as banana with peel versus without peel. |
+| **Copper** (printed in the Pesticides column of Table 4) | When reporting copper results, the part to which the sample preparation applies needs to be reported. Example: banana without peel is `A01LC#F20.A07QF`; banana with peel is `A01LC#F20.A07QE`. Data providers are requested to include any facet that describes sample preparation, i.e. whether done in accordance with the contaminant or the pesticide domain (ChemMon 2026 p41). |
 | other domains | Not described as a domain-specific Table 4 requirement. |
 
-(ChemMon 2026 pp. 46-47)
+(ChemMon 2026 p41, pp. 46-47)
 
 ## F23 Target Consumer
 
@@ -71,7 +73,7 @@ related:
 | **Additives** | Same as contaminants. |
 | **Flavourings** | Same as contaminants. |
 
-(ChemMon 2026 p48)
+(ChemMon 2026 pp. 48-49)
 
 ## Related Business Rules
 
@@ -80,7 +82,7 @@ related:
 - `CHEMON73`: for VMPR feed/water matrices, `F23` should be reported. See [[business-rules-vmpr]].
 - `CHEMON83`: if `sampMatCode` **contains facet** F10.A18PX, do not report F19 (packaging material) or F18 (packaging format); Warning. See [[business-rules-cross-cutting]].
 - `CHEMON89`: for FA/FF category 13, `F23` target consumer is recommended. See [[business-rules-additives]].
-- `CHEMON90_a`: for pesticide copper, `F20` and/or `F28` are needed. See [[business-rules-pesticide]].
+- `CHEMON90_a`: when copper (`paramCode` RF-0102-001-PPP) is reported, the use of `F20` and/or `F28` is needed (Warning); the rule has no domain condition. See [[business-rules-pesticide]]. (ChemMon 2026 p135)
 
 ## Navigation
 
