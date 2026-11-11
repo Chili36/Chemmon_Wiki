@@ -2,11 +2,13 @@
 title: "SSD2 Matrix: Country of Origin (origCountry)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "p. 56 (Section 2, element E.04)"
+  - "pp. 56-57 (Section 2, element E.04)"
+  - "p. 31 (Table 3: unspecific country codes)"
+  - "pp. 101, 137-138 (Tables 9-10: GBR13, CHEMON95, CHEMON99)"
 related:
   - "[[ssd2-elements-matrix]]"
   - "[[ssd2-elements-sampling]]"
@@ -17,7 +19,7 @@ related:
 
 # SSD2 Matrix: Country of Origin (origCountry)
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p56 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 31, 56-57 -->
 
 ## Rule Summary (Rule-First)
 
@@ -28,7 +30,7 @@ related:
 
 ## origCountry — Country of origin on the sample taken
 
-<!-- Source: ChemMon 2026 p56 -->
+<!-- Source: ChemMon 2026 pp. 56-57 -->
 
 **Element code:** E.04 · **Name:** `origCountry` · **Catalogue:** `COUNTRY` · **Status:** mandatory
 
@@ -38,11 +40,21 @@ related:
 
 ### Multi-country supply chains
 
-When more than one country is involved in production, origin is assigned to the country where the product underwent its last substantial, economically justified processing. (ChemMon 2026 p56)
+When more than one country is involved in production, origin is assigned to the country where the product underwent its last substantial, economically justified processing. A single country of origin must be reported, as described in the labelling requirements of Regulation (EU) No 1169/2011. Example: rice from Thailand packed in Iceland is `origCountry` = `TH`. (ChemMon 2026 p56-57)
 
 ### Unspecific country codes
 
-The guidance allows unspecific codes such as `AA`, `XC`, `XD`, `XE`, and `XX` when the true origin is unknown. However, these are not acceptable in every case; see the business rules below for the most important exceptions. (ChemMon 2026 p56)
+When the exact country of origin is unknown but some information is available, the unspecific country codes of Table 3 (`AA`, `XC`, `XD`, `XE`, `XX`; the same as for `sampCountry`) can be used. In the case of non-compliant results, the Table 3 codes cannot be used. (ChemMon 2026 p31, p57)
+
+Records with `origCountry` reported as an unspecific code (`XX`, `AA`, `EU`, `XC`, `XD`, `XE`) will be grouped as unknown (`XX`) for statutory reporting, e.g. the pesticides Annual Report. (ChemMon 2026 p57)
+
+### Overseas territories (pesticide residues)
+
+For pesticide residue annual reporting, samples taken in the overseas territories of EU countries must continue to be reported with their true `origCountry`; EFSA may reclassify them as domestic samples of the EU country for the Annual Report using the `moperRecodedCountry` attribute of the COUNTRY catalogue. (ChemMon 2026 p57)
+
+### VMPR Plan 3
+
+For VMPR Plan 3, the country of origin should not be equal to an EU country, including the country of the reporting organisation. Plan 3 results with an EU country as origin will be rejected from the report. (ChemMon 2026 p57)
 
 ## Related business rules
 

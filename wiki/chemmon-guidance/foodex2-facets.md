@@ -2,7 +2,7 @@
 title: "FoodEx2 Facet Reference (F01-F33)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -52,7 +52,7 @@ This page is now a hub for Table 4. Use [[foodex2-in-chemmon]] for code syntax, 
 
 - `F33` legislative class is mandatory for acrylamide and FA/FF analytical records in specific ways. See [[foodex2-facets-legislative-descriptive]], [[business-rules-contaminant]], and [[business-rules-additives]].
 - `F19` packaging material is mandatory for bisphenol compounds and recommended for PAHs. See [[foodex2-facets-packaging-consumer]] and [[business-rules-contaminant]].
-- `F20` and/or `F28` are needed for pesticide copper sample-preparation detail. See [[foodex2-facets-packaging-consumer]], [[foodex2-facets-state-process]], and [[business-rules-pesticide]].
+- `F20` and/or `F28` are needed for copper sample-preparation detail (the rule is triggered by the copper `paramCode`, not by domain; ChemMon 2026 p135). See [[foodex2-facets-packaging-consumer]], [[foodex2-facets-state-process]], and [[business-rules-pesticide]].
 - `F23` is central for VMPR feed/water classification and FA/FF category 13 targeting. See [[foodex2-facets-packaging-consumer]], [[business-rules-vmpr]], and [[business-rules-additives]].
 - `F21` organic/conventional and wild-game markers are domain-sensitive. See [[foodex2-facets-state-process]] and [[business-rules-cross-cutting]].
 

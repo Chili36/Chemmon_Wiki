@@ -2,11 +2,14 @@
 title: "FoodEx2 Facets: Legislative and Descriptive Facets"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-11"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 44-45, 50-51 (Table 4: F06, F07, F10, F11, F31, F32, F33)"
+  - "pp. 38, 42 (F33 for additives and flavourings)"
+  - "p. 96 (Table 8: food flavourings F33)"
+  - "p. 121 (Table 10: CHEMON39)"
 related:
   - "[[foodex2-facets]]"
   - "[[foodex2-in-chemmon]]"
@@ -91,9 +94,11 @@ related:
 | **Pesticides** | Not described as a domain-specific Table 4 requirement. |
 | **Contaminants** | Required for samples analysed for acrylamide to describe acrylamide legislative classes in Commission Recommendation 2019/1888/EU and Commission Regulation (EU) 2017/2158. |
 | **Additives** | Required to describe the sample legislative food category according to Regulation (EC) No 1333/2008. |
-| **Flavourings** | Required to describe the sample legislative food category according to Regulation (EC) No 1334/2008. |
+| **Flavourings** | Recommended to describe the sample legislative food category according to Regulation (EC) No 1334/2008. See the Source discrepancy note below. |
 
 (ChemMon 2026 p51)
+
+Source discrepancy: Table 4 prints "Recommended" for flavourings (ChemMon 2026 p51), but the prose says that for additives and flavourings the F33 facet "must always be present" and that it is mandatory to report it (ChemMon 2026 p38, p42), and Table 8 gives the food flavourings F33 element the status "Mandatory" (ChemMon 2026 p96). Validation enforces the mandatory reading: the F33 rule for `is_add=1` or `is_flav=1` returns an Error (ChemMon 2026 p121).
 
 ## Related Business Rules
 
