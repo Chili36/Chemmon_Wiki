@@ -621,8 +621,16 @@ def main(argv: list[str] | None = None) -> int:
         result = PageResult(args.waive, last["sha256"], last["lines_reviewed"], last["findings"],
                             last.get("not_checked", ""), context_omitted=last.get("context_omitted", []),
                             full=last.get("full", False))
+        earlier = record["pages"].get(args.waive)
         record["pages"][args.waive] = record_entry(result, last["reviewer"], "model", result.blocking, args.reason,
-                                                   previous=record["pages"].get(args.waive))
+                                                   previous=earlier)
+        # A waiver covers the findings of the last review only; older unresolved ones stay.
+        waived = {_squash(str(f.get("wiki_quote", ""))) for f in result.blocking}
+        kept = [f for f in still_unresolved(earlier, texts[args.waive])
+                if _squash(str(f.get("wiki_quote", ""))) not in waived]
+        if kept:
+            record["pages"][args.waive]["unresolved"] = kept
+            print(f"{len(kept)} earlier finding(s) were not part of that review and stay unresolved.")
         save_record(root, record, prune=True)
         print(f"Recorded {args.waive} with {len(result.blocking)} waived finding(s).")
         return 0
@@ -728,8 +736,9 @@ def main(argv: list[str] | None = None) -> int:
                   f"`--waive {change.name} --reason ...` if the reviewer is wrong.")
             code = 1
             entry = record["pages"].get(change.name)
-            if entry and entry.get("sha256") == result.sha256 and not args.head:
-                # The recorded version itself is in question; the doctor fails until it is fixed or waived.
+            if entry and not args.head:
+                # Kept on the entry even when the page has changed since it was recorded, so that a
+                # later metadata-only or partial review carries the findings forward.
                 found = [{"line": f.get("line"), "type": f.get("type"), "wiki_quote": f.get("wiki_quote"),
                           "quote_on_page": f.get("quote_on_page", False), "problem": f.get("problem")}
                          for f in result.blocking]
