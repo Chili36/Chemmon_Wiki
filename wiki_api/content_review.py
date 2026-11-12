@@ -625,9 +625,11 @@ def main(argv: list[str] | None = None) -> int:
         record["pages"][args.waive] = record_entry(result, last["reviewer"], "model", result.blocking, args.reason,
                                                    previous=earlier)
         # A waiver covers the findings of the last review only; older unresolved ones stay.
-        waived = {_squash(str(f.get("wiki_quote", ""))) for f in result.blocking}
-        kept = [f for f in still_unresolved(earlier, texts[args.waive])
-                if _squash(str(f.get("wiki_quote", ""))) not in waived]
+        def key(f: dict) -> tuple[str, str]:
+            return _squash(str(f.get("wiki_quote", ""))), _squash(str(f.get("problem", "")))
+
+        waived = {key(f) for f in result.blocking}
+        kept = [f for f in still_unresolved(earlier, texts[args.waive]) if key(f) not in waived]
         if kept:
             record["pages"][args.waive]["unresolved"] = kept
             print(f"{len(kept)} earlier finding(s) were not part of that review and stay unresolved.")
