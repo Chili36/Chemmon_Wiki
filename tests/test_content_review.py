@@ -195,3 +195,16 @@ def test_verdicts_are_required_for_claims_and_source_citations_only():
                       "CHEMON58 applies to pesticides. (ChemMon 2026 p127)", "Unchanged line."]
     swapped = cr.page_change("p.md", OLD, OLD.replace("guide.pdf", "other.pdf"))
     assert not swapped.metadata_only and cr.lines_needing_verdict(swapped) == [5]
+
+
+def test_blocking_findings_on_a_recorded_page_fail_the_doctor_until_fixed_or_waived(tmp_path):
+    root = _root(tmp_path, {"a.md": OLD})
+    entry = {"sha256": cr.sha256_text(OLD), "reviewed_at": "2026-11-11",
+             "unresolved": [{"line": 10, "type": "wrong", "problem": "x"}]}
+    cr.save_record(root, {"version": 1, "pages": {"a.md": dict(entry)}})
+    problems = dict(cr.record_problems(root))
+    assert "1 blocking problem(s) on line(s) 10" in problems["a.md"]
+    waived = cr.record_entry(cr.PageResult("a.md", entry["sha256"], 4), "m", "model", reason="reviewer misread p. 127",
+                             waived=[{"line": 10, "type": "wrong", "wiki_quote": "q", "problem": "x"}], previous=entry)
+    cr.save_record(root, {"version": 1, "pages": {"a.md": waived}})
+    assert "unresolved" not in waived and list(cr.record_problems(root)) == []

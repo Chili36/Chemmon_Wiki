@@ -144,6 +144,9 @@ quotes, and records each clean page in `docs/content-review.json`.
   check it yourself. If the reviewer is right, fix the page and run
   `--review` again. If it is wrong, record why:
   `--waive PAGE --reason "..."`. The waived finding stays in the record.
+- **A blocking finding on a page you did not change** (from `--full`): the
+  record marks the page unresolved and the doctor fails until you fix the
+  page or waive the finding.
 - **`cross_page` finding**: the changed line disagrees with another wiki
   page. The finding names that page and says which one the source supports;
   the fix may belong on the other page. Review that page too.

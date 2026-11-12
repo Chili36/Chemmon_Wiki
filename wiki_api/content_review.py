@@ -247,6 +247,14 @@ def stale_pages(root: Path, record: dict | None = None) -> dict[str, str]:
     return stale
 
 
+def unresolved_pages(root: Path, record: dict | None = None) -> dict[str, list[dict]]:
+    """Pages whose recorded version has blocking findings that were neither fixed nor waived."""
+    record = load_record(root) if record is None else record
+    texts = page_texts(root)
+    return {name: entry["unresolved"] for name, entry in record["pages"].items()
+            if entry.get("unresolved") and name in texts and entry.get("sha256") == sha256_text(texts[name])}
+
+
 def record_problems(root: Path) -> Iterable[tuple[str, str]]:
     """(location, message) pairs for the wiki doctor."""
     try:
@@ -261,6 +269,10 @@ def record_problems(root: Path) -> Iterable[tuple[str, str]]:
     for name, why in sorted(stale_pages(root, record).items()):
         yield name, (f"Page {why}. Run `python -m wiki_api.content_review --review {name}` "
                      "so a fresh reader checks the changed lines against the source PDFs.")
+    for name, findings in sorted(unresolved_pages(root, record).items()):
+        lines = ", ".join(str(f.get("line")) for f in findings)
+        yield name, (f"The last content review found {len(findings)} blocking problem(s) on line(s) {lines}. "
+                     f"Fix the page, or run `python -m wiki_api.content_review --waive {name} --reason ...`.")
     for name in sorted(set(record["pages"]) - set(texts)):
         yield RECORD_PATH.as_posix(), f"Record lists {name}, which is not a reviewable wiki page."
 
@@ -621,10 +633,13 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{name}: recorded but no longer a wiki page; --review removes the entry")
         if gone and not stale:
             return 1
+        unresolved = unresolved_pages(root, record)
         for name in names:
             print(f"{name}: {stale.get(name, 'reviewed')}")
+        for name, findings in sorted(unresolved.items()):
+            print(f"{name}: {len(findings)} unresolved finding(s) from its last review; fix the page or --waive")
         print(f"{len(stale)} page(s) need a content review." if stale else "Every page matches its content review.")
-        return 1 if stale else 0
+        return 1 if stale or unresolved else 0
 
     base = None if args.full else (args.base or default_base(root))
     report = _load_report(root) if not args.head else {"pages": {}}
@@ -687,6 +702,11 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  {len(result.blocking)} blocking finding(s): fix the page and review again, or "
                   f"`--waive {change.name} --reason ...` if the reviewer is wrong.")
             code = 1
+            entry = record["pages"].get(change.name)
+            if entry and entry.get("sha256") == result.sha256 and not args.head:
+                # The recorded version itself is in question; the doctor fails until it is fixed or waived.
+                entry["unresolved"] = [{"line": f.get("line"), "type": f.get("type"), "problem": f.get("problem")}
+                                       for f in result.blocking]
         else:
             print("  clean")
             if not args.head:
