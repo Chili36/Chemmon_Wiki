@@ -255,6 +255,26 @@ def unresolved_pages(root: Path, record: dict | None = None) -> dict[str, list[d
             if entry.get("unresolved") and name in texts and entry.get("sha256") == sha256_text(texts[name])}
 
 
+def _squash(text: str) -> str:
+    return " ".join(text.split())
+
+
+def still_unresolved(previous: dict | None, text: str) -> list[dict]:
+    """Earlier blocking findings that a later partial review has not dealt with.
+
+    A finding is dealt with when its quoted wiki text is no longer on the page: the line was changed,
+    so it was reviewed again. A finding whose quote cannot be found (the reviewer misquoted) stays
+    until a full review or a waiver.
+    """
+    page = _squash(text)
+    kept = []
+    for finding in (previous or {}).get("unresolved", []):
+        quote = _squash(str(finding.get("wiki_quote", "")))
+        if not finding.get("quote_on_page") or quote in page:
+            kept.append(finding)
+    return kept
+
+
 def record_problems(root: Path) -> Iterable[tuple[str, str]]:
     """(location, message) pairs for the wiki doctor."""
     try:
@@ -638,7 +658,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{name}: {stale.get(name, 'reviewed')}")
         for name, findings in sorted(unresolved.items()):
             print(f"{name}: {len(findings)} unresolved finding(s) from its last review; fix the page or --waive")
-        print(f"{len(stale)} page(s) need a content review." if stale else "Every page matches its content review.")
+        if stale or unresolved:
+            print(f"{len(stale)} page(s) need a content review; {len(unresolved)} have unresolved findings.")
+        else:
+            print("Every page matches its content review.")
         return 1 if stale or unresolved else 0
 
     base = None if args.full else (args.base or default_base(root))
@@ -660,6 +683,8 @@ def main(argv: list[str] | None = None) -> int:
             if not args.head:
                 record["pages"][name] = record_entry(PageResult(name, change.sha256, 0), "none",
                                                      "metadata-only", previous=previous)
+                if kept := still_unresolved(previous, new):
+                    record["pages"][name]["unresolved"] = kept
             continue
         jobs.append(change)
 
@@ -705,13 +730,19 @@ def main(argv: list[str] | None = None) -> int:
             entry = record["pages"].get(change.name)
             if entry and entry.get("sha256") == result.sha256 and not args.head:
                 # The recorded version itself is in question; the doctor fails until it is fixed or waived.
-                entry["unresolved"] = [{"line": f.get("line"), "type": f.get("type"), "problem": f.get("problem")}
-                                       for f in result.blocking]
+                entry["unresolved"] = [
+                    {"line": f.get("line"), "type": f.get("type"), "wiki_quote": f.get("wiki_quote"),
+                     "quote_on_page": f.get("quote_on_page", False), "problem": f.get("problem")}
+                    for f in result.blocking]
         else:
             print("  clean")
             if not args.head:
-                record["pages"][change.name] = record_entry(result, args.model, "model",
-                                                            previous=record["pages"].get(change.name))
+                earlier = record["pages"].get(change.name)
+                record["pages"][change.name] = record_entry(result, args.model, "model", previous=earlier)
+                if not result.full and (kept := still_unresolved(earlier, change.text)):
+                    record["pages"][change.name]["unresolved"] = kept
+                    print(f"  {len(kept)} earlier finding(s) on unchanged text are still unresolved")
+                    code = 1
         save()  # after every page, so a long run that dies keeps what it finished
         return code
 

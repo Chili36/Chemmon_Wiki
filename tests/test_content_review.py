@@ -208,3 +208,14 @@ def test_blocking_findings_on_a_recorded_page_fail_the_doctor_until_fixed_or_wai
                              waived=[{"line": 10, "type": "wrong", "wiki_quote": "q", "problem": "x"}], previous=entry)
     cr.save_record(root, {"version": 1, "pages": {"a.md": waived}})
     assert "unresolved" not in waived and list(cr.record_problems(root)) == []
+
+
+def test_unresolved_findings_survive_until_their_text_changes():
+    quote = "CHEMON58 applies to pesticides."
+    previous = {"unresolved": [{"line": 10, "wiki_quote": quote, "quote_on_page": True, "problem": "x"},
+                               {"line": 12, "wiki_quote": "misquoted", "quote_on_page": False, "problem": "y"}]}
+    date_only = OLD.replace("2026-01-01", "2026-11-12")
+    assert [f["line"] for f in cr.still_unresolved(previous, date_only)] == [10, 12]
+    fixed = OLD.replace(quote, "CHEMON58 applies to pesticides and VMPR.")
+    assert [f["line"] for f in cr.still_unresolved(previous, fixed)] == [12]
+    assert cr.still_unresolved(None, OLD) == [] and cr.still_unresolved({}, OLD) == []
