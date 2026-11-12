@@ -730,10 +730,14 @@ def main(argv: list[str] | None = None) -> int:
             entry = record["pages"].get(change.name)
             if entry and entry.get("sha256") == result.sha256 and not args.head:
                 # The recorded version itself is in question; the doctor fails until it is fixed or waived.
-                entry["unresolved"] = [
-                    {"line": f.get("line"), "type": f.get("type"), "wiki_quote": f.get("wiki_quote"),
-                     "quote_on_page": f.get("quote_on_page", False), "problem": f.get("problem")}
-                    for f in result.blocking]
+                found = [{"line": f.get("line"), "type": f.get("type"), "wiki_quote": f.get("wiki_quote"),
+                          "quote_on_page": f.get("quote_on_page", False), "problem": f.get("problem")}
+                         for f in result.blocking]
+                # Only a full review replaces the list; a partial one did not re-read the earlier lines.
+                earlier = [] if result.full else still_unresolved(entry, change.text)
+                known = {(f.get("wiki_quote"), f.get("problem")) for f in found}
+                entry["unresolved"] = found + [f for f in earlier
+                                               if (f.get("wiki_quote"), f.get("problem")) not in known]
         else:
             print("  clean")
             if not args.head:
