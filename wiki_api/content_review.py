@@ -772,6 +772,10 @@ def main(argv: list[str] | None = None) -> int:
     save()
     if totals:
         print("tokens: " + ", ".join(f"{k}={v}" for k, v in totals.items()))
+    if not args.head:
+        for name, findings in sorted(unresolved_pages(root, record).items()):
+            print(f"{name}: {len(findings)} unresolved finding(s) from an earlier review; fix the page or --waive")
+            exit_code = exit_code or 1
     return exit_code
 
 
