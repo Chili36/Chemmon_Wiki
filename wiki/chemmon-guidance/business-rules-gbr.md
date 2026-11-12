@@ -3,7 +3,7 @@ title: "General Business Rules (GBR)"
 select_when: "Core generic SSD2 rules: sample/event consistency, sampling/origin geography, GBR27-29 units/BIN, result shape and GBR101 uniqueness. Links to separate date, descriptor-consistency and numeric-threshold GBR pages."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
@@ -12,8 +12,8 @@ source_pages:
   - "ChemMon 2026 p. 97 (GBR scope)"
   - "ChemMon 2026 pp. 98-112 (Table 9)"
   - "ChemMon 2026 pp. 80-81 (element table, sections C and D)"
-  - "No-presence 2026 p. 19 (Table 3)"
-  - "Use-levels 2026 p. 24 (Table 3)"
+  - "No-presence 2026 p. 13 (DCF upload), pp. 19-21 (Table 3)"
+  - "Use-levels 2026 p. 17 (DCF upload), pp. 24-28 (Table 3)"
 related:
   - "[[business-rules]]"
   - "[[business-rules-gbr-consistency]]"
@@ -48,8 +48,11 @@ for a valid ChemMon submission. CHEMON/LL rules, field specifications and
 collection-specific conditions still apply.
 
 The No-presence and Use-levels guides list only PRE and USE rules in their
-Table 3, "List of the business rules applicable" (No-presence p19; Use-levels
-p24), and no GBR. The guidance does not say whether GBRs are run on those
+Table 3, "List of the business rules applicable" (No-presence pp. 19-21;
+Use-levels pp. 24-28), and no GBR. Source discrepancy: ChemMon says GBRs "apply
+to all data submitted to EFSA through the DCF" (ChemMon 2026 p97), and both
+guides have their XML file uploaded in the DCF (No-presence p13; Use-levels
+p17), yet their Table 3 lists no GBR. No source says which holds for those
 submissions. Wiki note (not in the guidance): PRE and USE use their own data
 models, so Table 9's SSD2 element names do not map directly onto them.
 

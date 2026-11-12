@@ -3,7 +3,7 @@ title: "SSD2 Matrix: VMPR-Specific Matrix Coding"
 select_when: "VMPR matrix coding: F01/F02 exceptions for feed/water and processed/composite food, feed F23, sheep/goat coding, F33 groups and worked matrix examples."
 type: "reference"
 domain: "vmpr"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -27,7 +27,7 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- In VMPR, `F01` source and `F02` part-nature must generally be present on the final matrix code, except in the feed/water and processed-composite cases described below. For the facet definitions, see [[foodex2-facets-source-origin]].
+- In VMPR, `F01` source and `F02` part-nature "must always be present" (ChemMon 2026 p33) on the final matrix code, except in the feed/water and processed-composite cases described below. For the facet definitions, see [[foodex2-facets-source-origin]].
 - For derivative or processed terms that do not carry an implicit `F01`, add `F01` explicitly.
 - Wild game requires explicit `F21.A07RY`; see [[foodex2-facets-state-process]].
 - Feed and water samples hinge on `F23` target-consumer coding; conflicting `F23` species (explicit or implicit) put the record into VMPR category "Other". See [[foodex2-facets-packaging-consumer]].
@@ -38,7 +38,7 @@ related:
 
 <!-- Source: ChemMon 2026 p33 -->
 
-For VMPR monitoring, `F01` and `F02` are expected to be present in the final FoodEx2 matrix description. In many reporting-hierarchy terms they are already implicit, but raw-primary-commodity derivatives and processed products often do not carry an implicit `F01`. In those cases the `F01` should be added by the data provider: for example, with `A031X` (Hen egg mixed whole, dried) or `A02PJ` (Milk powder) an `F01` code shall be reported, e.g. `F01.A057Z` (Gallus (chicken) (as animal)) or `F01.A057E` (Cattle (as animal)). (ChemMon 2026 p33)
+For VMPR monitoring, `F01` and `F02` must always be present in the final FoodEx2 matrix description (except for the special case of feed and water samples and processed-composite food). In most cases they are already pre-assigned as implicit facets in the reporting-hierarchy codes, but the `F01` is not implicitly pre-assigned in the codes for raw-primary-commodity (RPC) derivatives or 'Processed' products. In those cases the `F01` should be added by the data provider: for example, with `A031X` (Hen egg mixed whole, dried) or `A02PJ` (Milk powder) an `F01` code shall be reported, e.g. `F01.A057Z` (Gallus (chicken) (as animal)) or `F01.A057E` (Cattle (as animal)). (ChemMon 2026 p33)
 
 If reported, an explicit facet supersedes the implicit facet already pre-assigned in the selected code when EFSA categorises the matrix according to the VMPR legislation for the national and annual EU reports. Non-food base terms are an example where `F01`/`F02` are not pre-assigned. (ChemMon 2026 p33)
 

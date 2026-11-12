@@ -2,7 +2,7 @@
 title: "SSD2 Result: Measurement Uncertainty (resValUncert)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -24,12 +24,12 @@ related:
 - `resValUncert` is the expanded measurement uncertainty (typically 95% confidence interval) in the same unit as `resUnit`.
 - `resValUncert` is requested only when `resType = VAL`.
 - For results below LOQ, do not report MU.
-- Some domains/rules escalate MU from "recommended" to "mandatory" (notably copper in pesticides).
+- Some rules escalate MU from "recommended" to "mandatory" (notably copper, `paramCode` `RF-0102-001-PPP`: `CHEMON90_b` is triggered by the `paramCode` and names no domain flag; ChemMon 2026 p135).
 
 ## Relevant Business Rules
 
 - **CHEMON72** — For pesticides, `resValUncert` should be reported when `resType = VAL`.
-- **CHEMON90_b** — For copper parameters, `resValUncert` is mandatory when `resType = VAL`.
+- **CHEMON90_b** (Error) — If `paramCode` `RF-0102-001-PPP` (Copper) is reported, `resValUncert` must be reported if `resType = VAL` (Table 10, p135).
 
 See [[business-rules-pesticide]].
 

@@ -2,13 +2,13 @@
 title: "Controlled Terminology Catalogues"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "ChemMon 2026 pp. 144-147 (Section 7; Table 11; Table 12 guidance text p. 147); ChemMon 2026 pp. 78-79 (N.06.4); No-presence 2026 p. 11 (presenceAdded); No-presence 2026 Table 1 pp. 15-16; No-presence 2026 Table 2 pp. 17-18; No-presence 2026 Table 3 pp. 19-20; Use-levels 2026 pp. 13-14 (presenceAdded, weight); Use-levels 2026 Table 1 pp. 19-21; Use-levels 2026 Table 2 pp. 22-23; Use-levels 2026 Table 3 pp. 24-25"
+  - "ChemMon 2026 pp. 144-147 (Section 7; Table 11; Table 12 guidance text p. 147); ChemMon 2026 pp. 78-79 (N.06.4); ChemMon 2026 pp. 80-84 (Table 7); ChemMon 2026 p. 71 (M.16); Use-levels 2026 pp. 11-12, 16 (YESNO fields); No-presence 2026 p. 11 (presenceAdded); No-presence 2026 Table 1 pp. 15-16; No-presence 2026 Table 2 pp. 17-18; No-presence 2026 Table 3 pp. 19-20; Use-levels 2026 pp. 13-14 (presenceAdded, weight); Use-levels 2026 Table 1 pp. 19-21; Use-levels 2026 Table 2 pp. 22-23; Use-levels 2026 Table 3 pp. 24-25"
 related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[chemmon-change-management]]"
@@ -45,7 +45,7 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 
 <!-- Source: ChemMon 2026 pp. 144-145 (Table 11); SSD2 elements from Table 7 (docs/ssd2-elements.json) -->
 
-\*, \*\*, \*\*\*: the three validation notes above (reporting hierarchy, analysis hierarchies, MTX-derived catalogues). The SSD2 elements column comes from Table 7. (ChemMon 2026 pp. 144-145)
+\*, \*\*, \*\*\*: the three validation notes above (reporting hierarchy, analysis hierarchies, MTX-derived catalogues) (ChemMon 2026 pp. 144-145). The SSD2 elements column comes from Table 7 (ChemMon 2026 pp. 80-84).
 
 | Catalogue | Reporting hierarchy\* | Analysis hierarchies\*\* | SSD2 elements (Table 7) | Notes |
 | --- | --- | --- | --- | --- |
@@ -76,7 +76,7 @@ ChemMon submissions use EFSA **controlled terminologies** (catalogues): code lis
 | `SAMPSTR` | `chemSampStr` | Not applicable | `sampStrategy` | See [[ssd2-programme-strategy-and-type]]. |
 | `SAMPUNTYP` | Master hierarchy | Not applicable | `sampUnitType` |  |
 | `UNIT` | `chemUnit` | Not applicable | `sampUnitSizeUnit`, `sampSizeUnit`, `anPortSizeUnit`, `resUnit` | Also `unit` in the use-levels DM. |
-| `VALTYP` | `chemValTyp` | Not applicable | `resType` | Validation-type concepts. |
+| `VALTYP` | `chemValTyp` | Not applicable | `resType` | "The resType indicates the type of analytical result obtained for a substance in a product", e.g. `VAL` (M.16, ChemMon 2026 p71). |
 | `YESNO` | Master hierarchy | Not applicable | `resValRecCorr` |  |
 
 ## Catalogue usages surfaced by the FA/FF parallel data models
@@ -90,7 +90,7 @@ The [[fa-ff-no-presence-data-model]] and [[fa-ff-use-levels-data-model]] make so
 | `CONCLUS` | `presenceAdded` (both FA/FF DMs); `evalInfo.conclusion` on SSD2 analytical submissions | Source discrepancy (hierarchy spelling): both parallel guides print **`faff`** (No-presence p11; Use-levels p13, Table 1 p20) and so does ChemMon Table 11 (p. 144); only ChemMon p. 76 prints **`fa_ff`**. The matching codes/labels establish the same concept family; this is a documentation naming discrepancy, not proof that software accepts both hierarchy identifiers. Codes: `C19A` (Yes, present on label/added), `C20A` (No, not present on label/not added), `C05A` (Natural occurrence). No-presence DM accepts `C20A` only; use-levels DM accepts all three plus combinations like `C19A$C05A`; SSD2 analytical additives/flavourings use the same named conclusion codes in `evalInfo.conclusion`. See [[ssd2-evaluation-conclusions]]. |
 | `FUNC` | `functionOf` (both FA/FF DMs) | Functional class of the food additive. Table 2 of each guide lists 33 classes: 27 with a description (1 sweeteners, 2 colours, 3 preservatives, 4 antioxidants, 5 carriers, 6 acids, … 27 contrast enhancers), 28 "nutrient" (no description), and five "Annex III" classes (29-33). (No-presence 2026 pp. 17-18; Use-levels 2026 pp. 22-23) `functionOf` must be reported when `progLegalRef=N112A` in the parallel DMs (No-presence 2026 p20, PRE07; Use-levels 2026 p25, USE10). |
 | `EXPRRES` | `weight` (use-levels DM only) | Hierarchy: **`WDFat`** — whole weight / dry matter / fat weight. Drives whether `fatPerc` or `moistPerc` must also be reported. (Use-levels 2026 pp. 14-15, 20) |
-| `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Two-value catalogue: `Y` / `N`. |
+| `YESNO` | `foodIndustry`, `widelyConsumed`, `maxPermittedLevelDefined` (use-levels DM) | Codes `Y` / `N`. For `maxPermittedLevelDefined`, "The only codes that can be used are ‘Y’ or ‘N’" (Use-levels 2026 p16; USE14, p25). `widelyConsumed`: `Y` for widely consumed products, `N` otherwise (Use-levels 2026 p12). `foodIndustry`: Yes = food industry, No = food additive/flavouring producer (Use-levels 2026 p11). The guidance does not list the catalogue's full content. |
 
 The FA/FF parallel DMs have their own field types, catalogue restrictions and `PRE…` / `USE…` / `USE_LLDB…` rules. Some field constraints have no separate rule ID; the rule-ID list does not replace Table 1 or the field sections. See the DM pages for the rule tables.
 
@@ -100,4 +100,4 @@ The FA/FF parallel DMs have their own field types, catalogue restrictions and `P
 
 - Use the **most specific** LEGREF term available, to ensure correct inclusion in the intended reports and downstream reuse.
 - Reporting the generic term `N129A` (Regulation (EC) No 178/2002) will still flag records for occurrence-style reuse (see [[reporting-flags]]), but may not align with inclusion criteria for the statutory EU Annual Reports. (ChemMon 2026 p147)
-- If a needed piece of legislation is missing from `LEGREF` / `ChemMonLegRef`, contact EFSA with a suggested term during the major release consultation period (typically October–November), or earlier if there is an urgent need. (ChemMon 2026 p147)
+- If a needed piece of legislation is missing from `LEGREF` / `ChemMonLegRef`, data providers should contact EFSA with a suggested new term "during the major release consultation period in October–November each year or, if there is an urgent unpredicted need, at any other time". (ChemMon 2026 p147)

@@ -2,10 +2,11 @@
 title: "Pesticide Residue Definition and paramCode by Matrix"
 type: "domain-guide"
 domain: "pesticide"
-last_updated: "2026-10-24"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "datasets/rd-bridge/residue_param_map.json"
+  - "datasets/eu-annex-i/products.json"
 source_pages:
   - "ChemMon 2026 pp. 59-60 (K.01 paramType), p. 143 (LL_04/LL_04_b), p. 148 (Section 8)"
   - "rd-bridge residue_param_map.json @ ad3e16f, residue_id 10, 210, 2058"
@@ -29,7 +30,7 @@ select_when: "Choosing which pesticide paramCode or residue definition to report
 
 - For a pesticide result, report the `paramCode` of the **residue definition that applies to the sampled matrix**. Some pesticides have one EU residue definition for most foods and a different one for specific commodities, so the same pesticide can need a different `paramCode` in different foods.
 - MRL compliance requires analysing the **full** residue definition in Regulation (EC) No 396/2005, as reflected in the corresponding `paramCode`. EFSA states that the current valid residue definitions and paramCodes are also available in the EFSA Legal Limits database. (ChemMon 2026 p60)
-- EFSA enforces the matrix match with **LL_04/LL_04_b (Error)**: for pesticide records (`is_pest=1`) whose `paramCode` is in the legal limits database, the sampled matrix and `paramCode.base` must be a plausible legal combination (`PlausibleCombinationPPP=1`), **unless the result is reported for a part of a sum**. Error message: "The selected paramCode does not refer to the correct legal Residue Definition for the sample analysed. Please correct the paramCode". (ChemMon 2026 p143)
+- EFSA enforces the matrix match with **LL_04/LL_04_b (Error)**: for pesticide records (`is_pest=1`) whose `paramCode` is in the legal limits database, the sampled matrix and `paramCode.base` "should match with the plausible legal combinations as reflected in the legal limits database" (`PlausibleCombinationPPP=1`; the wording is "should", the severity is Error), **unless the result is reported for a part of a sum**. Error message: "The selected paramCode does not refer to the correct legal Residue Definition for the sample analysed. Please correct the paramCode". (ChemMon 2026 p143)
 - `paramType` follows the existing rules in [[ssd2-analysis-parameter-coding]]: the whole residue definition is `P005A` when all parts were analysed (`P004A` when only a subset was), and individual components are `P002A`. LL_04 exempts part-of-sum results, so components reported as `P002A` are not checked against the matrix. (ChemMon 2026 pp. 60, 143)
 - The legislation is the official source. EFSA's Legal Limits database is what validation uses; it holds history with dates of applicability ([[legal-limits-database]]). (ChemMon 2026 p148)
 
@@ -41,7 +42,7 @@ select_when: "Choosing which pesticide paramCode or residue definition to report
 2. **Check whether the pesticide has commodity-specific definitions.** In the EU Pesticides Database these definitions carry an `(R)` marker and a footnote naming the commodity codes. If there is none, one definition and one whole-residue `paramCode` apply in every food.
 3. **Pick the scope that contains the commodity.** Use a commodity-specific definition when the commodity falls inside its scope and outside its exclusions; otherwise use the default definition.
 4. **Report the whole-residue `paramCode`** of that definition with `P005A`/`P004A`, and any analysed components with `P002A`. Which substances count as components depends on the wording; see [[pesticide-residue-definition-wording]].
-5. **For samples from earlier years**, confirm the definition that applied on the sampling date. Residue definitions change over time; the Legal Limits database keeps limits with dates of applicability, and EFSA applies the limit valid at the sampling date. (ChemMon 2026 p148)
+5. **For samples from earlier years**, confirm the definition that applied on the sampling date. Residue definitions change over time; the Legal Limits database keeps limits with dates of applicability, and EFSA applies the limit valid at the sampling date; the legal limit applied "will only cover raw, unprocessed samples". (ChemMon 2026 p148)
 
 ## Examples: one pesticide, different codes by food
 
@@ -59,7 +60,7 @@ Snapshot: rd-bridge commit `ad3e16f`, residue map last changed 2026-10-17, deriv
 | Thiabendazole | `1000000` animal products, except `1020000` milk and `1040000` honey | Sum of thiabendazole and 5-hydroxythiabendazole, expressed as thiabendazole | `RF-00007629-PAR` |
 | Thiabendazole | `1020000` milk | Sum of thiabendazole, 5-hydroxythiabendazole and its sulfate conjugate, expressed as thiabendazole | `RF-00007630-PAR` |
 
-Annex I names: `1000000` products of animal origin (terrestrial animals), `1020000` milk, `1040000` honey and other apiculture products.
+The rd-bridge data gives the Annex I codes only. Their names in the EU Pesticides Database (snapshot `datasets/eu-annex-i/products.json`, retrieved 2026-10-13): `1000000` "PRODUCTS OF ANIMAL ORIGIN -TERRESTRIAL ANIMALS", `1020000` "Milk", `1040000` "Honey and other apiculture products (7)".
 
 What the examples teach:
 
@@ -86,7 +87,7 @@ What the examples teach:
 
 | Rule | How it constrains this topic |
 |---|---|
-| `LL_04` / `LL_04_b` (Error) | Sampled matrix and whole-residue `paramCode.base` must be a plausible legal combination in the Legal Limits database; part-of-sum results are exempt. |
+| `LL_04` / `LL_04_b` (Error) | Sampled matrix and whole-residue `paramCode.base` should match a plausible legal combination in the Legal Limits database (Error); part-of-sum results are exempt. |
 | `LL_03` (Error) | `paramType` must be reported for multicomponent/sum parameters. |
 | `LL_03_b` (Warning) | `paramType` should equal EFSA's pre-assigned value. |
 

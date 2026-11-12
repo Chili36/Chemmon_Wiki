@@ -2,15 +2,18 @@
 title: "Data Validation and Acceptance (DCF Workflow)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
   - "ChemMon 2026 pp. 152-153 (Section 11)"
+  - "ChemMon 2026 p. 144 (Table 11)"
   - "No-presence 2026 p. 13 (Section 3), p. 14 (Figure 1), pp. 19-21 (Table 3)"
+  - "No-presence 2026 pp. 6, 9-11 (catalogue hierarchies)"
   - "Use-levels 2026 p. 17 (Section 3), p. 18 (Figure 1), pp. 24-28 (Table 3)"
+  - "Use-levels 2026 pp. 6, 10-11, 13 (catalogue hierarchies)"
 related:
   - "[[chemmon-data-governance-and-transparency]]"
   - "[[business-rules]]"
@@ -30,7 +33,7 @@ related:
 <!-- Source: ChemMon 2026 pp. 152-153 -->
 
 1. **Transmit dataset to DCF**: the system sends an automatic acknowledgement ("ack") message.
-2. **Receive validation output**: the data provider receives an "ack details" message (downloadable as XML) listing errors found, followed by business-rule validation results.
+2. **Receive validation output**: the data provider receives the ack message followed by the business-rule validation results; the "ack details" message can be downloaded as an XML file containing the list of errors found by the system. (ChemMon 2026 p152)
 3. **Fix and re-transmit as needed**: data providers use the troubleshooting suggestions in the GBR and CHEMON tables (Tables 9 and 10) to resolve errors/warnings, plus network FAQ resources; if needed, contact EFSA via `data.collection@efsa.europa.eu`. (ChemMon 2026 p152)
 4. **Submit when valid**: once datasets reach **Valid** or **Valid with Warning** status, the data provider can **Submit** them to the EFSA scientific data warehouse (sDWH) in DCF.
 5. **Review in MicroStrategy**: submitted data become visible via validation reports in MicroStrategy for both data providers and validators.
@@ -42,7 +45,7 @@ The guidance points to the DCF user manual for the detailed process steps and UI
 
 <!-- Source: ChemMon 2026 p153 -->
 
-Once data are **Accepted** in the sDWH, the guidance notes they can only be corrected via the record **Update procedure** described in the GDE2 Guidance (Amendment Operations). EFSA therefore encourages thorough validation before acceptance. This fits the broader Open Data and transparency rationale in [[chemmon-data-governance-and-transparency]]. (ChemMon 2026 p153)
+Once data are **Accepted** in the sDWH, the guidance notes they can only be corrected via the record **Update procedure** described in the GDE2 Guidance (Amendment Operations). EFSA encourages data providers to ensure a thorough validation of data transmitted before acceptance. (ChemMon 2026 p153) Wiki note (not in the guidance): for the Open Data and transparency background, see [[chemmon-data-governance-and-transparency]].
 
 ## FA/FF parallel data collections — same DCF flow, different rule namespaces
 
@@ -78,4 +81,4 @@ What else differs from the SSD2 ChemMon collection:
 
 - **Reporting tool**: each DM has its own Excel reporting tool, cited by DOI. No-presence: `10.5281/zenodo.14893698` (No-presence 2026 p13). Use-levels: `10.5281/zenodo.14893177` (Use-levels 2026 p17).
 - **Rule namespace**: validation uses `PRE…` codes for no-presence submissions and `USE…`/`USE_LLDB…` codes for use-levels submissions, instead of the `GBR…`/`CHEMON…`/`LL_…` codes used for SSD2 ChemMon.
-- **Catalogues**: both DMs use the `faff` sub-hierarchies of the same EFSA catalogues (`LEGREF.faff`, `PARAM.addAnalysis`/`flavAnalysis`, `CONCLUS.faff`, `ADDFOOD.FARestExc`/`FFRestExc`). See [[controlled-terminology-catalogues]].
+- **Catalogues**: both DMs take codes from named hierarchies of the same EFSA catalogues: LEGREF `faff` (No-presence 2026 p6; Use-levels 2026 p6), PARAM `addAnalysis`/`flavAnalysis` (No-presence 2026 p10; Use-levels 2026 p11), CONCLUS `faff` (No-presence 2026 p11; Use-levels 2026 p13) and ADDFOOD `FARestExc`/`FFRestExc` (No-presence 2026 p9; Use-levels 2026 p10). ChemMon Table 11 lists the same PARAM, CONCLUS and ADDFOOD hierarchies, so these three are not a difference; for LEGREF it lists `ChemMonLegref` (ChemMon 2026 p144). See [[controlled-terminology-catalogues]].

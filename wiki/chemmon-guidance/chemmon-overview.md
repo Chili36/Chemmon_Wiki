@@ -21,9 +21,9 @@ related:
   - "[[pesticide-reporting]]"
   - "[[contaminant-reporting]]"
   - "[[food-additives-reporting]]"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 source_pages:
-  - "ChemMon 2026 pp. 1, 5-10 (abstract; Section 1.1 Background); p. 32 (sampling date; E.02 sampMatCode); p. 97 (Section 6); p. 144 (Section 7); p. 148 (Section 9); pp. 149-151 (Section 10; Table 13); p. 152 (Section 11)"
+  - "ChemMon 2026 pp. 1, 5-10 (abstract; Section 1.1 Background); p. 32 (sampling date; E.02 sampMatCode); p. 97 (Section 6); p. 113 (Table 10, DOMAIN VALIDATION); p. 123 (Table 10, CHEMON43); p. 144 (Section 7); p. 148 (Section 9); pp. 149-151 (Section 10; Table 13); p. 152 (Section 11)"
   - "No-presence 2026 p. 4; Use-levels 2026 p. 5 (data that are not reported in SSD2)"
 ---
 
@@ -72,15 +72,15 @@ The analytical results of all five domains are reported to **one single SSD2 dat
 ## Annual Cycle
 
 1. **Sampling**: Samples are taken in a calendar year, "which runs from January to December"; the complete sampling date is mandatory and is used to select results for the Annual Reports. (ChemMon 2026 p32)
-2. **Submission**: Data providers prepare SSD2-formatted files and transmit them to the DCF. Samples taken in any year can be transmitted when the data are ready, but the EU VMPR and pesticide reports only include samples taken in the specific calendar year and "submitted within agreed deadlines"; the guidance does not state the deadline dates. For contaminants, food additives and food flavourings, samples from previous years can be included, but "only samples in the specific calendar year (equal to the submission year minus 1) will be considered on the food additives/food flavourings report". (ChemMon 2026 p5, p32)
+2. **Submission**: Data providers prepare SSD2-formatted files and transmit them to the DCF. Samples taken in any year can be transmitted when the data are ready, but the EU VMPR and pesticide reports only include samples taken in the specific calendar year and "submitted within agreed deadlines" (ChemMon 2026 p32); the guidance does not state the deadline dates. Source discrepancy: p. 5 allows any-year transmission "Except for the statutory EU Annual Report domain (pesticide residues and VMPR)" (ChemMon 2026 p5), while p. 32 states it without that exception and limits only what the reports include (ChemMon 2026 p32). Validation does not settle it: CHEMON43 (Error, pesticides and VMPR) only requires `sampY` to be lower than or equal to the submission year minus 1 (ChemMon 2026 p123). For contaminants, food additives and food flavourings, samples from previous years can be included, but "only samples in the specific calendar year (equal to the submission year minus 1) will be considered on the food additives/food flavourings report". (ChemMon 2026 p32)
 3. **Validation**: The DCF returns the results of the business-rule validation; data providers correct and re-transmit. See [[business-rules]] and [[data-validation-and-acceptance]]. (ChemMon 2026 p152)
-4. **Use**: Accepted data are used for EFSA scientific assessments and for the reports in [[chemmon-reports]]. (ChemMon 2026 p149)
+4. **Use**: Data submitted through ChemMon are used for EFSA scientific assessments and for the reports in [[chemmon-reports]]. (ChemMon 2026 p149) 'Submitted' data are visible in the validation reports before acceptance; the data validator's 'Accept' "ensures that data are in the EFSA sDWH and ready for use". (ChemMon 2026 p152)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p97, p152 -->
 ## Business Rules
 
 - Business rules are provided to ensure the data submitted through the DCF are fit for purpose for EFSA's scientific assessments. There are three groups: general business rules (GBR), chemical monitoring rules (CHEMON), and specific rules for a subset of the data (pesticides, VMPR, food additives, food flavourings or specific contaminants). (ChemMon 2026 p97) Rule numbering has gaps; use the source-derived inventory in [[business-rules]] instead of inferring IDs from a numeric range.
-- Each rule is an Error or a Warning. A dataset can be submitted to the sDWH once it has reached 'Valid' or 'Valid with Warning' status. (ChemMon 2026 p152) Wiki note (not in the guidance): the guidance does not say in so many words that an Error blocks submission; that follows from the two statuses.
+- Rules that return a message are an Error or a Warning; the DOMAIN VALIDATION entry in Table 10 has type of error 'Not Applicable' and "does not generate any messages". (ChemMon 2026 p113) A dataset can be submitted to the sDWH once it has reached 'Valid' or 'Valid with Warning' status. (ChemMon 2026 p152) Wiki note (not in the guidance): the guidance does not say in so many words that an Error blocks submission; that follows from the two statuses.
 - The full rule catalogue is maintained in [[business-rules]].
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p10 -->

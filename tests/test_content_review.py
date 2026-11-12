@@ -151,3 +151,71 @@ def test_dataset_sources_are_sent_cut_down_to_the_cited_records(tmp_path):
     missing = cr.page_change("e.md", None, OLD.replace('  - "guide.pdf"', '  - "datasets/rd/absent.json"'))
     with pytest.raises(cr.ReviewError, match="not found"):
         cr.build_request(root, missing, "m")
+
+
+def test_linked_pages_are_context_outgoing_first_and_size_limited(monkeypatch):
+    texts = {"a.md": "See [[b]] and [[missing]].", "b.md": "B " * 50, "c.md": "Links to [[a]]. " * 10, "d.md": "x"}
+    assert cr.linked_pages("a.md", texts["a.md"], texts) == (["b.md", "c.md"], [])
+    monkeypatch.setattr(cr, "CONTEXT_PAGE_CHARS", 120)
+    assert cr.linked_pages("a.md", texts["a.md"], texts) == (["b.md"], ["c.md"])
+
+
+def test_review_sends_linked_pages_and_names_the_ones_left_out(tmp_path, monkeypatch):
+    root = _root(tmp_path, {})
+    page = OLD + "\nSee [[other]] and [[huge]].\n"
+    texts = {"p.md": page, "other.md": "CHEMON58 is an Error.", "huge.md": "y" * 500}
+    monkeypatch.setattr(cr, "CONTEXT_PAGE_CHARS", 100)
+    answer = {"checks": [{"line": n, "source_page": 1, "source_quote": "q", "verdict": "supported"}
+                         for n in range(1, len(page.splitlines()) + 1)], "findings": [], "not_checked": "nothing"}
+    client = FakeClient(answer)
+    result = cr.review_page(root, cr.page_change("p.md", None, page), "m", client, texts=texts)
+    sent = [b["text"] for b in client.requests[0]["messages"][0]["content"] if b["type"] == "text"]
+    assert sent[0].startswith("Other wiki page (context, not under review): other.md")
+    assert "Linked pages NOT given (too large to fit): huge.md" in sent[-1]
+    assert result.context_pages == ["other.md"] and result.context_omitted == ["huge.md"] and result.full
+    entry = cr.record_entry(result, "m", "model")
+    assert entry["context_not_sent"] == ["huge.md"] and entry["full_review"]["reviewer"] == "m"
+
+
+def test_a_later_partial_review_keeps_the_date_of_the_full_review():
+    previous = {"full_review": {"date": "2026-11-12", "reviewer": "m"}}
+    partial = cr.PageResult("p.md", "0" * 64, 3)
+    assert cr.record_entry(partial, "m2", "model", previous=previous)["full_review"] == previous["full_review"]
+    assert "full_review" not in cr.record_entry(partial, "m2", "model")
+    adopted = cr.PageResult("p.md", "0" * 64, 0, full=True)
+    assert "full_review" not in cr.record_entry(adopted, "none", "adopted")
+
+
+def test_verdicts_are_required_for_claims_and_source_citations_only():
+    page = OLD.replace('sources:', 'source_pages:\n  - "p. 127 (Table 10)"\nsources:') + "\n## Related\n\n- [[other]]\n"
+    change = cr.page_change("p.md", None, page)
+    lines = page.splitlines()
+    needed = [lines[n - 1] for n in cr.lines_needing_verdict(change)]
+    assert needed == ['  - "p. 127 (Table 10)"', '  - "guide.pdf"',
+                      "CHEMON58 applies to pesticides. (ChemMon 2026 p127)", "Unchanged line."]
+    swapped = cr.page_change("p.md", OLD, OLD.replace("guide.pdf", "other.pdf"))
+    assert not swapped.metadata_only and cr.lines_needing_verdict(swapped) == [5]
+
+
+def test_blocking_findings_on_a_recorded_page_fail_the_doctor_until_fixed_or_waived(tmp_path):
+    root = _root(tmp_path, {"a.md": OLD})
+    entry = {"sha256": cr.sha256_text(OLD), "reviewed_at": "2026-11-11",
+             "unresolved": [{"line": 10, "type": "wrong", "problem": "x"}]}
+    cr.save_record(root, {"version": 1, "pages": {"a.md": dict(entry)}})
+    problems = dict(cr.record_problems(root))
+    assert "1 blocking problem(s) on line(s) 10" in problems["a.md"]
+    waived = cr.record_entry(cr.PageResult("a.md", entry["sha256"], 4), "m", "model", reason="reviewer misread p. 127",
+                             waived=[{"line": 10, "type": "wrong", "wiki_quote": "q", "problem": "x"}], previous=entry)
+    cr.save_record(root, {"version": 1, "pages": {"a.md": waived}})
+    assert "unresolved" not in waived and list(cr.record_problems(root)) == []
+
+
+def test_unresolved_findings_survive_until_their_text_changes():
+    quote = "CHEMON58 applies to pesticides."
+    previous = {"unresolved": [{"line": 10, "wiki_quote": quote, "quote_on_page": True, "problem": "x"},
+                               {"line": 12, "wiki_quote": "misquoted", "quote_on_page": False, "problem": "y"}]}
+    date_only = OLD.replace("2026-01-01", "2026-11-12")
+    assert [f["line"] for f in cr.still_unresolved(previous, date_only)] == [10, 12]
+    fixed = OLD.replace(quote, "CHEMON58 applies to pesticides and VMPR.")
+    assert [f["line"] for f in cr.still_unresolved(previous, fixed)] == [12]
+    assert cr.still_unresolved(None, OLD) == [] and cr.still_unresolved({}, OLD) == []

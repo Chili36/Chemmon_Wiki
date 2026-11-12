@@ -4,603 +4,870 @@
   "pages": {
     "baby-food-reporting.md": {
       "sha256": "46918287a5d40ebfc47511ffb86d130c23a543614e60b06fe9f0195a3053958d",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 38,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-2026-changes.md": {
-      "sha256": "d7fd27bbe3ea1079e76d4956da6fa1ff215a95fe3b801ed474ce695aca8f1b88",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "e8316e31f0e829c288bacd9eb14d6d39fecc594558725cb2cc9354ebd020d542",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "nothing. Line 6 is last_updated front-matter metadata, not a claim. The removed CHEMON84_a line is fully carried by the new line 38, so no knowledge is lost."
     },
     "business-rules-additives.md": {
-      "sha256": "3467eb18fc541002279439a52efc6a41cd60b34523cd09e6787e19eb27ed29cd",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "9be1e3b5fe5beacc0f441284b6341ee2707b5d12c61106eec87d24976d0b1152",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 6,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-baby-food.md": {
-      "sha256": "ecf86677459cd27d7dd597bb76bdb4ff9101c042c9ddf5725e0b985968927f24",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "15e80c0dcd676ea999764e72588496d7d5018d74c8fd2c39891d870fd7d52db8",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-contaminant.md": {
-      "sha256": "c4627e5c4ecb24c933b686b8b3cf9d3a6a6a6fca581015f37b53ffb189bb69a7",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "4d6c587224ddf69d3e10e95431dd79450288f160b2c5199d17753db625ec01b7",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-cross-cutting.md": {
       "sha256": "f9c158fdce8a8c845fec539989813ea2a31b67881cb5aa05653ab628bd6bd99e",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 99,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "context_not_sent": [
+        "ssd2-programme-strategy-and-type.md",
+        "ssd2-programme-valid-combinations.md",
+        "ssd2-result-units-and-limits.md",
+        "ssd2-result-value-and-type.md",
+        "ssd2-sample-identifiers.md",
+        "ssd2-sampling-country.md",
+        "ssd2-sampling-date.md",
+        "ssd2-sampling-event-and-unit.md",
+        "ssd2-sampling-method-and-point.md"
+      ],
+      "not_checked": "The parenthesized readings of CHEMON66_a, CHEMON85 and CHEMON93 (lines 101, 104, 127-148) resolve wording that is genuinely ambiguous in Table 10 (e.g. whether 'results assessment is empty' attaches to J041A as well as J003A in CHEMON85; the p133 error message omits the 'empty' condition). The page labels these as contextual interpretations; I could not verify EFSA's actual implementation from the PDF. Wiki-internal claims (source-review dates, inventory counts, 'annual-change notes') cannot be checked against the source."
     },
     "business-rules-gbr-consistency.md": {
-      "sha256": "47e206cdaf372c4773fe0a05e83c530009cbf93fe21790499ae11264221d30d2",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "3aa369d51b5163c3bd1374e3c5477406b519276bad8663a5803390a9fc16b919",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 10,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-gbr-dates.md": {
       "sha256": "1cf558ea3524473a738264a572357e06c09850f1de8a6916f5094c086f8240dd",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 73,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 24's reference to separate PRE sampling-date and USE marketing-date rules could not be verified because the No-presence and Use-levels guidance documents are not attached; only the SSD2 part of the line was checked against ChemMon. Lines 32-34 are the wiki's own advisory reading about field optionality and incomplete dates and were treated as non-claims; they do not contradict p32 ('The complete date on when the sample was taken is mandatory') or Table 7."
     },
     "business-rules-gbr-results.md": {
-      "sha256": "2c136a1c8b904085dd7d147d84669f5d6123c46034dc2edb054e335936185fe0",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "dd3a204f4db2f2b61560360891b315a6cc6ff171a7c84db102f569036cb64d74",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 54,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-gbr.md": {
-      "sha256": "932408ca4837f4743d6ffd96324831eb01e930c9f5a705b336d9d85d871f0e65",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "fa19b1941c8241d0f8c0b517b3dcde9865625fe8b983a6c2ebcb11774ff1ab12",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 7,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-legal-limits.md": {
-      "sha256": "53c1d98e03d453289b1a2507d8c12ec0bb2cbd0360540accd4b9eb38aa9ad6bd",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "ed67c548eaaf97ac22a1f08421ed6713a011e39575fcbde90375ccbbeb95be32",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules-pesticide.md": {
-      "sha256": "1521b52a6fa7c48e62ba24e6a624fc07a008f37b5b8873b54ccb809e68c57017",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "a5ef12792fa9468c42e2f106183d990fc4059ba64cf797d75f99b3d4a12d3772",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 6 (last_updated) is metadata and makes no claim about the source. For line 10, the other ranges were also checked against the source: CHEMON52 is on p126, CHEMON95 on p137 and the Table 8 copper rows on p86. The CHEMON70 source discrepancy note on line 39 states both sides correctly and does not resolve the conflict, so it is not a finding. The removed claim that fat-weight expression is not accepted was contradicted by p69, so its removal loses no supported knowledge. Nothing else was left unchecked."
     },
     "business-rules-vmpr.md": {
       "sha256": "934b712913942d590854124cfcb59f7ff7f17ab1ee4e1d9949573c14331471e2",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 15,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "business-rules.md": {
-      "sha256": "02d3cb4aa837381353029323846a660eeaf05a50cf0c4ff54537c416ba58203c",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "2173404fb12f7139ae5dd0d510fea29d416443cd4d2050df0d1739b0dd647e54",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 4,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "context_not_sent": [
+        "reporting-flags.md",
+        "vmpr-reporting.md"
+      ],
+      "not_checked": "Line 91 and the phrase 'CHEMON grouping is explicit' on line 92 describe the wiki's own review process (which findings were settled or documented); they are not statements about the guidance and cannot be checked against the PDFs. Every other changed claim was checked."
     },
     "chemmon-background.md": {
-      "sha256": "f84d2a1e083480aaec5bb4a346253a388bbd7b532c0cf0650c48367dd6b04470",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "df6dc163e3f6c2bde9a4b15d0107701eaa0632ad2fab8b06f084bdaa7929daa8",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "chemmon-change-management.md": {
-      "sha256": "e5f3c66c29eaa6be056ee57b54d1495f5324cdcc4d71c75ccfdc0624079d23b2",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "222a08587b08fd2c8096239344c0011275c97e809666ea7d5b25eb309fda61a0",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "chemmon-data-governance-and-transparency.md": {
-      "sha256": "a82eca5c19d400e21af51d7ad539461ab49e774f70b4180fdb7b84a4f79c0ade",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "a919082909493d830b2ba71b7d7b7f857b2e1c7704eac4cdd01300198b8e9914",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 3,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "chemmon-matrix-classification-algorithms.md": {
-      "sha256": "c3d6eef201b0cbacd9c2f3873e7c817a7c6fcd618f64faa13f5ad6815e744a8d",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "3d196afb443620df7920bdc391781cb587733594a4593f52e6a80ad6dbc511aa",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 3,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "chemmon-overview.md": {
-      "sha256": "85fa0c3b789797b8e369ff29b32def78e27d7e3f3aa5e70fd2c8c6eb69620c32",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "9f70f04fee4eb02fa062e9d571a204076b9af70bf1d2629a0da2518d1acb7fd1",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 4,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 24 (last_updated date) is metadata with no source claim and was not checked against the PDFs."
     },
     "chemmon-reports.md": {
       "sha256": "1ff154b75fe3912c6720f06b1e7a1cf01dfeb79c6a0ed8bf409d99934d3da413",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 36,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "chemmon-scope-and-legal-basis.md": {
-      "sha256": "8178044cfd84001bd8a7f0c02306c1181579c3f5d7602c8f185a0d17af8b6cf9",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "220e3dcfe0e1a7ab30e40cbdcda7ddb4ffa34af2aea2be735c19a0dfbd71c296",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 5 is the last_updated metadata date; it makes no claim about the guidance and was not checked. On line 9, the new p. 32 and p. 123 (CHEMON43) citations were compared with the source. On line 45, the p. 5 sentence was compared with p. 5: \"Except for the statutory EU Annual Report domain (pesticide residues and VMPR) samples taken in any year can be transmitted ... Only samples taken in the specific calendar year will be included in each year's national and Annual Report\". The CHEMON43 statement was compared with Table 10 on p. 123 (Error; pesticides/VMPR; sampY \"should be lower than or equal to the submission year minus 1\"); \"requires\" is a fair reading of a rule of Error type. Both checks found no discrepancy."
     },
     "chemmon-single-ssd2-collection.md": {
-      "sha256": "7392250684efbf21a78f0b40573318b7a8e1b4f3f8ce42cc56ab3640a286b7c6",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "9042273f12764f81c94a708e11d31afe0339d24897c372ce4a29bd1504d3c7ff",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 7,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "contaminant-reporting.md": {
       "sha256": "71422676696ea40b9f5ce9aa6af3f6e398e6ffa860b17e61b1e2110232a4da0f",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 121,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "controlled-terminology-catalogues.md": {
-      "sha256": "e7b107d5fd15e61622d4e6d44984eec35c2ee7fa279b530e515be94f9e4c4a13",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "124b5910530b96f50786dfdb0e09b200b4a7b19f97a64dc17cd1edfac10500fa",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 5,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "data-validation-and-acceptance.md": {
-      "sha256": "15781f861b3d6e173b0dca9b7beef45615914d3293fa00b9dea608f761abd3d1",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "c83b13b5518e5d4eb2b901ee422478be65aec8f98739faa512a753d30856a13b",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 6,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "fa-ff-no-presence-data-model.md": {
-      "sha256": "ddd5f804a126e441c42d9d0651b25aa1dfba9e96d2815580330e33dbb5279daa",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "4f4802f2734419ee61dfbfe5f9f5081398b9828b0526308b896a8b14024913ef",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 6,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 159's statements that the local MTX 17.2 snapshot gives facet code F33.A0C5F and that ChemMon p. 39 prints an explicit F33 could not be checked against the attached sources: the ChemMon 2026 PDF and the catalogue snapshot are not attached. The facet code A0C5F does not appear in the no-presence guidance, which only prints the label 'FA-01.7.2 Ripened cheese'. Line 159 attributes the code to the snapshot, not to the guidance, which is consistent with foodex2-in-chemmon.md. The audit dates on line 137 are process metadata and cannot be verified; only the page range pp. 1–23 was checked."
     },
     "fa-ff-use-levels-data-model.md": {
-      "sha256": "06970148c24b73926a80112b52b2f422e091964995a432e6cdee68f4741911af",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "fae6f5036724390c3e034e9375d5095f1dca6934411735b1f7ac4ab8a10e20ab",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 27,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Lines 83-84: the claim that the local MTX 17.2 snapshot carries implicit F33.A0C5F for A02RH cannot be verified; the facet code A0C5F does not appear in the use-levels PDF (the line attributes it to the snapshot, consistent with foodex2-in-chemmon.md). Line 45: the wiki note that LEGREF, PARAM, MTX, CONCLUS, ADDFOOD, EXPRRES and UNIT are also used in the ChemMon SSD2 guidance and FUNC is not could only be compared with the context page controlled-terminology-catalogues.md, because the ChemMon 2026 PDF is not attached. Everything else in the changed lines was checked."
     },
     "food-additives-reporting.md": {
-      "sha256": "b4d3d341d8c4f000905168975fb23c92764f602cd0c81cc3d7c8d9c4fa867493",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "c529ccb4ce94d662e6bf87666a082088e8a29672da6e5cdf3417b5e0e9ba1668",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 169's statement that F33.A0C5F is implicit for A02RH in a 'locally checked MTX 17.2 snapshot' cannot be verified from the attached PDFs; it is labelled as a wiki note and is consistent with the parallel guides (No-presence p9 and Use-levels p9 list F33 'FA-01.7.2 Ripened cheese' as an implicit facet of A02RH), but the catalogue snapshot itself was not available. The facet code A0C5F appears only in ChemMon p39; the parallel guides give the label, not the code."
     },
     "foodex2-facets-legislative-descriptive.md": {
       "sha256": "e0b8419ee76d93a70f66eb6fae0404732dc1a9599038c681c60fc0e41e84e148",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 47,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "foodex2-facets-packaging-consumer.md": {
-      "sha256": "90dd682c7d30127c6fc019f3d34c8ee36747b778002dff980eedca647aa05552",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "fe906389f6997dbbef5e3081b0bdd19ba87eda2c3d64696e49d0ced1c58dba6b",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "foodex2-facets-source-origin.md": {
-      "sha256": "1d93343e59fe9ca214d37919f6e74fc87c4146a3aa78ccc65ea6ad9d9b4ceef9",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "490ff7107516e82ee8803c0f683f83e9545162d44542e655662e042babdeb5f7",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "foodex2-facets-state-process.md": {
-      "sha256": "5f3cbdbfbbd3c18abcfa341e4df223d8e59e288fc910d3cabbc720fc6dab498c",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "f261d31b3f97858c5e4d40529d9067d8dbfc16a4962d7cf7add212e6aed97d9e",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 4,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "foodex2-facets.md": {
       "sha256": "827b3872a8c6537d8f04ac7f8255e91d653579183ba3fe6f87cedb5dee549fa3",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 19,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "foodex2-in-chemmon.md": {
       "sha256": "79a2169ff1332f8f50c4081a2cd1d2403f8394e1759a40675917ee4493a9fbf4",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 90,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Lines 149-150 and 162-169 describe a read-only check of a local MTX catalogue 17.2 snapshot (valid-from date 14 July 2026, query record in reports/source-review/2026-10-05-cheese-catalogue-check.json). That catalogue and the JSON report are not among the attached documents, so the catalogue metadata and query details could not be verified; these lines are not presented as guidance content, so no unsourced finding was raised. FoodEx2 codes and labels were checked only against the examples printed in the guidance PDFs, not against any MTX catalogue release."
     },
     "legal-limits-database.md": {
-      "sha256": "a23de3046599bcdd207b6fe4e53f6b73f540445da7cf9d020fc783cb24ab3869",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "68360605c15c1afb20b1ada4c452639ffc48bcbf666fbcf2957af511440f0946",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "pesticide-reporting.md": {
-      "sha256": "b85da6204abe4cf0aa5df427b810e9065898ee6a8388930e67a623e55d933c4c",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "b8455157a083d4f5e3f05965a11102491d272daeafdcecc83b14a9a7659cc4bd",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 4,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 35 also relies on p148 ('five chemical monitoring domains: VMPR, pesticides, contaminants, food additives, and food flavourings') and p5, both read and matching. Line 69's other side was checked against Table 2 p24 (N422A column: K019A with ST30A only) and CHEMON101 pp. 138-139 (Error; K019A and ST30A required for N422A); both match. The first clause of line 38 (residue definitions differing by commodity) is not stated in those words in ChemMon; it is supported only implicitly by the LL_04 error message on p143. Removed lines: their content is still carried by lines 35 and 38, so no lost knowledge."
     },
     "pesticide-residue-definition-by-matrix.md": {
-      "sha256": "75995ce913505c174d32ea5c67f70a8a21c3786f4a3d382c8eba0278b25daf20",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "f3e8a441e11e14cc2dadd3ded244cbe9797d236d0cc24579081fbd9724ec386e",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 4,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 63: the retrieval date (2026-10-13) of the products.json snapshot and its origin in the EU Pesticides Database are not stated in the attached dataset excerpt, so they could not be verified; the three product names were checked against the excerpt. Line 5 (last_updated) and line 9 (sources list) are metadata."
     },
     "pesticide-residue-definition-wording.md": {
-      "sha256": "9aee8f86a8ffb7a0cc78ee6314ab12060259c11de50cfd56f982d0f61508ffe0",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "1e54fa14d60adc99506d4aa887fcc65e0db7c7b29de27d904224bbb17be69c8e",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 5,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 58's claim that the chloridazon animal-product exception is 'the one case so far' with parts_from legal_guidance concerns all 684 rd-bridge records; the excerpt holds only 4, so only those 4 could be checked, and within them it holds. Line 89 says the wiki cites model readings only where it flags them. Whether that holds for the context page pesticide-residue-definition-by-matrix.md could not be settled. That page cites rd-bridge component splits for acetamiprid (residue_id 10) without stating their parts_from status, and that record is not in the excerpt. Line 65's statement that the guided_model split 'has not been checked against the legal act' is the wiki's inference from the parts_from value; the dataset does not state it explicitly."
     },
     "reporting-flags.md": {
       "sha256": "b66c41887049609a59d59af336dfea0dbbd404f8a16b785d600ad760554d3cb5",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 35,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-analysis-context.md": {
       "sha256": "4889cee12c75455fe517bb25a0a953e13217e535028ce96177801c859f4be37f",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 22,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-analysis-laboratory.md": {
-      "sha256": "19ef43e886c887acaec8576dd6edd0ba018ab7a80bbe91e42e65a784594305e9",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "ad02855d335dabc6ab322991094d3a714e0bc99a875cc5ca7b183cbd31eedec5",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 5 is a last_updated metadata change and makes no claim, so it was not checked against the source. The removed line ('labId is the national identifier ... must stay stable enough to support validation and reporting') is not lost knowledge. The source has no stability requirement for labId. Its source-backed content is the update-on-request duty on p59, which line 36 still carries."
     },
     "ssd2-analysis-methods.md": {
-      "sha256": "141db0b33cb9ecfc217ebc36a8b4424d95ab9d26265e80d3439bf6f0f042e42f",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "7ca96e325127502b61ab17bbac332e61e78bfdfa0f152ffc928e3b2d71d67596",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 5,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-analysis-parameter-coding.md": {
       "sha256": "d5899eeb9e35da08a31a575df426a78f79d40fd58f86532626f79b40e89dc6cc",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 63,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 91's closing sentence that some pesticides have different residue definitions and paramCodes for different commodities is not stated in those words in the ChemMon guidance; it was checked only for consistency with LL_04/LL_04_b (p. 143) and the linked context pages, whose rd-bridge dataset was not attached. Everything else was checked."
     },
     "ssd2-data-model.md": {
       "sha256": "4a7f6c06ad365d9bed206dd9d1876b0cfce0215425b1579ac0164d9df50cbf9b",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 60,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "nothing; the linked page ssd2-element-reference was not supplied, so its content was not compared."
     },
     "ssd2-elements-analysis.md": {
-      "sha256": "a9ac2d3052ebec957458f1d66b7612fcda0a6d6e4b9afddf9574ca0e1254fdda",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "354523be2a07a49cdb8a8573a7235f792446fc2f1cfb3998740abcc17f5bae39",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 5 is a last_updated metadata date with no source claim to verify. The removed CHEMON20 line is replaced by the more detailed line 45, so no knowledge was lost."
     },
     "ssd2-elements-evaluation.md": {
-      "sha256": "24df0f956175e3c40a2d86e21c4eeebfb0d3954a08d8f6665668ee0b5b18442b",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "c3fea0a78bc9b12bb3856bdb675f55b91b40c2c73a2f81859a6be540f3b1606b",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-elements-matrix.md": {
-      "sha256": "9cbab7bf90f7c44667888a816ef80c9a01579b71ecf107485f234dd673bb0c54",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "c107216b463070f639f406813ebe7fcca8c37c04a97446793df9aa7685258760",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 3,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 5 is a last_updated metadata date, which the source cannot confirm; all other changed lines were checked against the source."
     },
     "ssd2-elements-programme.md": {
       "sha256": "9cdd12692ea7bbbf33b407c4fbae19146e94f6cc326755a245c378dec34fd837",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 24,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-elements-result.md": {
-      "sha256": "bccc59ecfa59282d128c65d1259db8a7a1ae8472bd76c9a0e83015d189110b6a",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "a13cf8b29520724ac2adb0b23dac68c586e607398d1f786503f15e3f228925a7",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 3,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-elements-sampling.md": {
       "sha256": "cc356fabf867622a4353f823a8022bb0933ea38db1143e8906e5a8b1055b6e88",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 22,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-evaluation-actions.md": {
       "sha256": "ab3a2d07121c20731a614b993874f9fdddfe1c4d1e79fdad9ad8a722d7f928e1",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 12,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-evaluation-code.md": {
       "sha256": "c18686ddedaece019bdda963578f118d25c07d0e8162bce34034185e120cc08d",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 38,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-evaluation-conclusions.md": {
-      "sha256": "e00ebbe8d3c48006f177c3c989432c46e76753cfd64e310b881a3c2010f281bb",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "d5d693a04fca765c4f894deef3a6c70acaded09d86e254ac7a6f3963cf7adfb8",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 50's statement that the parallel PRE/USE guides write `faff` could not be verified: those guides (No-presence and Use-levels 2026) are not among the attached documents. The ChemMon parts of line 50 (p. 76 `fa_ff`, Table 11 p. 144 `faff`, 'highly recommended') were verified. Line 5 is a metadata date."
     },
     "ssd2-evaluation-limits.md": {
       "sha256": "198d6c340017a7770ad8a36c3ff7679287ce9e447001152f0a8686dbe9267176",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 31,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "nothing; line 45 ('standard automatic legal-limit lookup is not sufficient') is an inferential paraphrase, judged supported by the p. 73 processed-product note and the database's unprocessed-only scope rather than by an explicit statement."
     },
     "ssd2-matrix-analysed-sample.md": {
-      "sha256": "8806a45a83b46c14dcb9319c664c4d67cfbe6c50c5a5be1695a16d0cac72b1f5",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "4a9c8d1384be115e6cc2c8d2eba477ef8ee9b307ff1feeab7c744587c5098fc4",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 5,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-matrix-origin.md": {
-      "sha256": "c95730fdbf18b3d05b00785b1798d8d38da53966aad3f55b140b3c9e65c32fb2",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "26c288c7ce0f795a76c1f133e01d9fc9dd3cdd9098faba639a818bda8f2223e4",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "nothing (line 5 is a last_updated metadata date, not a factual claim)"
     },
     "ssd2-matrix-sampled-matrix.md": {
-      "sha256": "d52741e876a1a8e5e6e1de1a8f0b33319012b84a0620843b4dbcd7a2b3bf8a2a",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "778f48a878c51b7e31a4a201c067a5d5f85b1be2178651860ca7d7866282853b",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 5,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 5 (last_updated metadata) is not a factual claim against the source and was not given a check entry. Everything else checked; removed lines were superseded by corrected wording on this page, so no lost knowledge."
     },
     "ssd2-matrix-vmpr-coding.md": {
-      "sha256": "b97b2513fa63f94e1cea41481f0d5aae4e81020b86b9a15c744fcce0e3264687",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "41fab9aec6483cd562ce46e4cd575efe17f957256de87e72453d12874827cfa6",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-programme-identification.md": {
       "sha256": "f14c342eb297c948585cb89ab81c38b68779b7b8c9bdca9db01081cc987571ea",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 14,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-programme-legal-reference.md": {
-      "sha256": "8b1cf568128cdb86759f860fa3857cd3291556502f908f9a314f2521a78dcf1e",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "487af39d086b5e8d43a8751b5bad9557af09d357c837f3fbe1109fe3749a8054",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-programme-strategy-and-type.md": {
-      "sha256": "b7b6331d5ce538cf27391097eec2417f7313dcf08bb4d8795eddd31a902d8967",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "a04a2316dc0e91a660a5f2151138028668d7c4e1a22f89b7c812533dab727cc5",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Table 2 cell positions on pp. 23-24 were read from the page image layout, since the extracted text loses column alignment; otherwise nothing."
     },
     "ssd2-programme-valid-combinations.md": {
       "sha256": "241d521d847ddd909666152dcfd804506e69eb2d2e0480bc6adf5b3a920c90ec",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 70,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Table 2 (pp. 23-24) loses its column alignment in the text extraction. The cell positions were therefore read from the rendered page images and cross-checked against the per-row code counts in the extracted text. The counts matched for every progType row. Nothing else was left unverified."
     },
     "ssd2-result-expression-basis.md": {
-      "sha256": "9fa6b42ff140cb8453698cce057e653a25bf1fb283269b05153ea0931fa28247",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "d807cc55ab4e89e87b1b7ffb810c77b69f9ce9b723a02151a7aed6572ead6315",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-result-identification.md": {
-      "sha256": "68320337b37acd101d773eaa620d8342c0359e1818bb8100ab6acef59ec85e0b",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "248a90f07aed587f981fd445290c1c81146e9e5bdb6ed3c7568fac3356bb1f8c",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-result-method-accreditation.md": {
       "sha256": "5581abafe5e3f443902f2408670c6b961db8f3ede8afd134bdb0780acf2a6ab3",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 30,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-result-recovery-correction.md": {
-      "sha256": "34e9c98b0e8593448814b13e86f93d331a0f8e9ba5d6c0d61c6ef1c5b0b47eae",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "206863d48443076835a685a72e134ecb31ddb700f9fbc94e5761d24cd3cdccd1",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 5,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-result-uncertainty.md": {
-      "sha256": "e74edc97fa92c6e9fd3434aaff98420a58116b17a777b87dda261b1422d88ef4",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "a210401e17a96c416201024590dff3c6b0bb90e92428f6f20c2fdd9a6dfdcd62",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 2,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "Line 5 is front-matter metadata (last_updated date) and makes no claim checkable against the guidance; all other changed lines were checked."
     },
     "ssd2-result-units-and-limits.md": {
-      "sha256": "38bb9c5e636b87b5d2007886ac6b6b8d05dbe85c26842396800d456b78e69327",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "a4520a3ce5c3ef05ab565334ee01356b3829c36ec4fb2d1f09b0250bfe39a95d",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-result-value-and-type.md": {
-      "sha256": "77d77e9f024400a4bfbf9ceef8d41486673a8771f50892bf79c259d50cebec60",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "8b1e086dbade585dbe46573f043b9d2436c426ef80d08197a8836ebe6c95d835",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-sample-identifiers.md": {
-      "sha256": "05bf81913cdfd607dd52ffdcfd58ce3cca5e3721ae2614cc741b919200fb07eb",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "d01b5cb453f9b62916f15e4527b0d834a24dfb9ce5b5ef49b91f4a8141480fa4",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-sampling-country.md": {
       "sha256": "4a432b1d647b54375ca849063e81cf930e6de086abba2396c15f8e3af81affbe",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 25,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-sampling-date.md": {
       "sha256": "918c7150c3c46ebebd96f8aa3bd3bf739e6edda8ad8f4ec9412381900828e324",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 13,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-sampling-event-and-unit.md": {
-      "sha256": "0ad0e5437aadc14f970c2c4c9c6b74cc3fc41a682f0c1b4c708b9fff2f782c91",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "15760a773fc9a2ad483ece4a693e7a1f410e00325f33be9f05d4aa1f245767fb",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "ssd2-sampling-method-and-point.md": {
-      "sha256": "c857999ec52e939ecd3b4601aed5d30af22700496b46a57d72a9e13c07b03f11",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "sha256": "6f0bc5c5d5ed893fb9053c0d7e9a4327165337cbd8411a40155f3622f9c73f5b",
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 1,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      }
     },
     "vmpr-reporting.md": {
       "sha256": "73e889416eeed140924422cd5368016b7ea240c393bc8c716f10b18d1fbd46ec",
-      "reviewed_at": "2026-11-11",
-      "reviewer": "none",
-      "method": "adopted",
-      "lines_reviewed": 0,
-      "reason": "Baseline: every page was audited against the source PDFs on 2026-11-11 (#68, #69; PRs #70, #71), partly with independent review. Not a model review by this tool."
+      "reviewed_at": "2026-11-12",
+      "reviewer": "claude-opus-5-5",
+      "method": "model",
+      "lines_reviewed": 93,
+      "full_review": {
+        "date": "2026-11-12",
+        "reviewer": "claude-opus-5-5"
+      },
+      "not_checked": "The correct goat-feed code behind the p. 36 A18EX duplication (line 96) cannot be settled because the MTX catalogue is not attached; the page correctly flags it as a source discrepancy. Front-matter source_pages lines were treated as metadata, though their page ranges were spot-checked and match."
     }
   }
 }

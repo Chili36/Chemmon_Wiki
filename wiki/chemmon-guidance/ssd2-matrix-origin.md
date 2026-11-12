@@ -2,7 +2,7 @@
 title: "SSD2 Matrix: Country of Origin (origCountry)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -26,7 +26,7 @@ related:
 - `origCountry` is mandatory and must be reported in ISO 3166-1 alpha-2 format.
 - Use the country where the product underwent its last substantial, economically justified processing if the supply chain spans multiple countries.
 - Unspecific country codes may be used when the true origin is unknown, but not in all reporting situations.
-- For pesticide non-compliance and import-control cases, origin-country precision becomes stricter.
+- For non-compliant results (ChemMon 2026 p31, no domain named; validation checks this only for pesticides, `CHEMON95`, p137) and import-control cases (`CHEMON99`, p138), origin-country precision becomes stricter.
 
 ## origCountry — Country of origin on the sample taken
 

@@ -233,7 +233,7 @@ async def ask_agent(question: str) -> str:
 ## Maintenance and roadmap
 
 After changing a wiki page, run `python -m wiki_api.content_review --review`: a
-fresh model call checks every changed line against the source PDFs and records
+fresh model call checks every changed line against the source PDFs and the linked wiki pages, and records
 the clean pages in `docs/content-review.json`. Then run
 `python -m wiki_api.doctor` and `pytest -q`. The doctor
 includes the health check and adds source-table coverage (`docs/source-tables.json`),

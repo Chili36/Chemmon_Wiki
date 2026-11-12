@@ -2,7 +2,7 @@
 title: "SSD2 Sampling: Event and Unit"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -22,7 +22,7 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- `sampEventId` represents the sampling unit at a point in time. Multiple samples taken from the same unit should share it.
+- `sampEventId` represents the sampling unit at a point in time. It can be reported when multiple samples are taken from a single sampling unit; for VMPR, e.g. two samples taken from a single pig at slaughter should be reported with the same `sampEventId`. (ChemMon 2026 p29)
 - If `sampEventId` is omitted, EFSA substitutes `sampId`.
 - `sampUnitType` describes what that sampling unit is (batch, individual sample, tanker, etc.).
 - `sampUnitSize` and `sampUnitSizeUnit` are normally optional, but become mandatory for pooled samples. In pooled cases, `sampUnitSizeUnit` must be `G005A` and `sampUnitSize` must be the number of pooled single samples. (`CHEMON77`)

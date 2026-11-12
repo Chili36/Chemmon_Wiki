@@ -2,11 +2,12 @@
 title: "SSD2 Evaluation: Conclusions and Comments"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 75-78 (Section 2, elements N.05, N.06.1, N.06.2; N.06.3 example)"
+  - "p. 144 (Table 11, CONCLUS hierarchy)"
 related:
   - "[[ssd2-elements-evaluation]]"
   - "[[controlled-terminology-catalogues]]"
@@ -46,7 +47,7 @@ related:
 
 ### Additives and flavourings
 
-For additives and flavourings, `evalInfo.conclusion` is highly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the hierarchy `CONCLUS.fa_ff`; the parallel PRE/USE guides write `CONCLUS.faff`. The identical codes, labels and examples establish the same FA/FF concept family. Treat the underscore difference as a documentation naming discrepancy, not a different meaning for the submitted codes. Preserve each source’s spelling when discussing its hierarchy; a software catalogue lookup must use the configured identifier:
+For additives and flavourings, `evalInfo.conclusion` is highly recommended to indicate whether the substance was present on the label, added, or naturally occurring. ChemMon p. 76 names the `CONCLUS` hierarchy `fa_ff`, whereas ChemMon Table 11 (p. 144) and the parallel PRE/USE guides write `faff`. The identical codes, labels and examples establish the same FA/FF concept family. Treat the underscore difference as a documentation naming discrepancy, not a different meaning for the submitted codes. Preserve each source’s spelling when discussing its hierarchy; a software catalogue lookup must use the configured identifier:
 
 | Code | Meaning |
 | --- | --- |

@@ -2,7 +2,7 @@
 title: "SSD2 Result: Result Identification (resId)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -20,7 +20,7 @@ related:
 
 - `resId` is mandatory for every record.
 - `resId` must be unique for an analytical result reported for a sample across all data collections from the same data provider.
-- Use a naming convention (prefix/suffix) that guarantees uniqueness within a country; include stable context like lab/year/sequence if helpful.
+- It is recommended that certain prefixes or suffixes are included to ensure `resId` is unique within the country. (ChemMon 2026 p65)
 
 ## resId — Result identification code
 
