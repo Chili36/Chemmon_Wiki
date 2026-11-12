@@ -408,8 +408,10 @@ def build_request(root: Path, change: PageChange, model: str, effort: str = DEFA
     parts = [f"Wiki page under review: {change.name}",
              "Attached sources: " + "; ".join(label for label, _ in documents + datasets),
              "The page with line numbers:", numbered,
-             ("This page is new: every line is a changed line." if change.is_new
-              else f"Changed lines to review: {_ranges(change.changed_lines)}")]
+             ("Review every line of this page." if change.is_new
+              else f"Changed lines to review: {_ranges(change.changed_lines)}"),
+             "`checks` must hold one entry for each of these lines, with no line left out or merged "
+             f"with another: {_ranges(lines_needing_verdict(change))}"]
     if context:
         parts.append("Context pages given above: " + ", ".join(context))
     if omitted:
@@ -445,11 +447,32 @@ def call_model(request: dict, client: Any = None) -> tuple[dict, dict]:
     return answer, usage
 
 
-def unchecked_lines(change: PageChange, checks: list[dict]) -> list[int]:
-    """Changed lines with text that the reviewer gave no verdict for."""
+STRUCTURAL_LINE_RE = re.compile(
+    r"^\s*(?:#{1,6}\s.*|-{3,}|\|?[\s:|-]+\||<!--.*-->|```.*|(?:[-*]\s+)?\[\[[^\]]+\]\][\s.,;]*)?\s*$")
+
+
+def lines_needing_verdict(change: PageChange) -> list[int]:
+    """Changed lines that can carry a claim about the source.
+
+    Left out: blank lines, headings, rules, table separators, comment-only and link-only lines, and
+    front matter other than `source_pages` entries (a citation is a claim; a title or date is not).
+    """
     lines = change.text.splitlines()
+    end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), 0) if lines[:1] == ["---"] else 0
+    in_source_pages, cited = False, set()
+    for i in range(1, end):
+        if re.match(r"^\S", lines[i]):
+            in_source_pages = lines[i].startswith("source_pages:")
+        elif in_source_pages:
+            cited.add(i + 1)
+    return [n for n in change.changed_lines
+            if (n in cited if n <= end + 1 else not STRUCTURAL_LINE_RE.match(lines[n - 1]))]
+
+
+def unchecked_lines(change: PageChange, checks: list[dict]) -> list[int]:
+    """Claim-bearing changed lines that the reviewer gave no verdict for."""
     seen = {c.get("line") for c in checks}
-    return [n for n in change.changed_lines if lines[n - 1].strip() and n not in seen]
+    return [n for n in lines_needing_verdict(change) if n not in seen]
 
 
 def review_page(root: Path, change: PageChange, model: str, client: Any = None,
@@ -461,6 +484,15 @@ def review_page(root: Path, change: PageChange, model: str, client: Any = None,
     lines = change.text.splitlines()
     checks = answer.get("checks", [])
     skipped = unchecked_lines(change, checks)
+    if skipped:  # ask once more for just those lines; the PDFs are read from the cache
+        rest = PageChange(change.name, change.text, change.sha256, skipped, [], False, False)
+        more, more_usage = call_model(build_request(root, rest, model, effort, context, omitted), client)
+        checks = checks + more.get("checks", [])
+        answer["findings"] = answer.get("findings", []) + more.get("findings", [])
+        notes = [str(a.get("not_checked", "")) for a in (answer, more)]
+        answer["not_checked"] = "; ".join(n for n in notes if n.strip().lower().rstrip(".") != "nothing") or "nothing"
+        usage = {k: usage.get(k, 0) + more_usage.get(k, 0) for k in usage}
+        skipped = unchecked_lines(change, checks)
     if skipped:
         raise ReviewError(f"reviewer gave no verdict for line(s) {_ranges(skipped)}; no result recorded")
     reported = {f.get("line") for f in answer.get("findings", [])}
@@ -474,7 +506,7 @@ def review_page(root: Path, change: PageChange, model: str, client: Any = None,
         # A quote that is not on the page means the reviewer misread it; keep the finding but say so.
         finding["quote_on_page"] = bool(quote) and quote in " ".join(" ".join(lines).split())
         findings.append(finding)
-    return PageResult(change.name, change.sha256, len(change.changed_lines), findings,
+    return PageResult(change.name, change.sha256, len(lines_needing_verdict(change)), findings,
                       str(answer.get("not_checked", "")), usage, included, omitted, change.is_new)
 
 
