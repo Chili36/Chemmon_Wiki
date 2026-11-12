@@ -184,3 +184,14 @@ def test_a_later_partial_review_keeps_the_date_of_the_full_review():
     assert "full_review" not in cr.record_entry(partial, "m2", "model")
     adopted = cr.PageResult("p.md", "0" * 64, 0, full=True)
     assert "full_review" not in cr.record_entry(adopted, "none", "adopted")
+
+
+def test_verdicts_are_required_for_claims_and_source_citations_only():
+    page = OLD.replace('sources:', 'source_pages:\n  - "p. 127 (Table 10)"\nsources:') + "\n## Related\n\n- [[other]]\n"
+    change = cr.page_change("p.md", None, page)
+    lines = page.splitlines()
+    needed = [lines[n - 1] for n in cr.lines_needing_verdict(change)]
+    assert needed == ['  - "p. 127 (Table 10)"', '  - "guide.pdf"',
+                      "CHEMON58 applies to pesticides. (ChemMon 2026 p127)", "Unchanged line."]
+    swapped = cr.page_change("p.md", OLD, OLD.replace("guide.pdf", "other.pdf"))
+    assert not swapped.metadata_only and cr.lines_needing_verdict(swapped) == [5]

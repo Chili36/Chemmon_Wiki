@@ -455,14 +455,15 @@ def lines_needing_verdict(change: PageChange) -> list[int]:
     """Changed lines that can carry a claim about the source.
 
     Left out: blank lines, headings, rules, table separators, comment-only and link-only lines, and
-    front matter other than `source_pages` entries (a citation is a claim; a title or date is not).
+    front matter other than `sources` and `source_pages` entries (naming a source document or its
+    pages is a claim; a title or date is not).
     """
     lines = change.text.splitlines()
     end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), 0) if lines[:1] == ["---"] else 0
     in_source_pages, cited = False, set()
     for i in range(1, end):
         if re.match(r"^\S", lines[i]):
-            in_source_pages = lines[i].startswith("source_pages:")
+            in_source_pages = lines[i].startswith(("source_pages:", "sources:"))
         elif in_source_pages:
             cited.add(i + 1)
     return [n for n in change.changed_lines
