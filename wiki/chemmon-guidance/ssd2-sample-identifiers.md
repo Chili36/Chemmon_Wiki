@@ -2,7 +2,7 @@
 title: "SSD2 Sampling: Sample Identifiers"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -59,7 +59,7 @@ Source discrepancy: the D.01 text says "the same sampId must be used for all the
 results. Business rule, GBR2, applies to ensure that." (ChemMon 2026 p30). The
 `GBR2` row in Table 9 does not check `sampId` reuse: it requires the section A, B
 and C descriptors, except `progId` and `progLegalRef`, to be constant for records
-with the same `sampId` and/or `sampEventId` (ChemMon 2026 p98). Validation enforces the Table 9 rule.
+with the same `sampId` and/or `sampEventId` (ChemMon 2026 p98). The guidance does not say how the D.01 statement relates to the Table 9 row.
 
 ## origSampId — Original sample identifier
 

@@ -3,11 +3,16 @@ title: "GBR: Percentages, Evaluation Limits and Decision Thresholds"
 select_when: "Generic SSD2 percentage ranges, fat/dry-weight conditions, evaluation-limit comparisons, positive LOD/LOQ/recovery/uncertainty, CCalpha/CCbeta and the V999A exception. Includes Warning rules GBR22 and GBR42; core BIN/unit rules are on business-rules-gbr."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "pp. 101-106 (Table 9)"
+  - "ChemMon 2026 pp. 101-106 (Table 9)"
+  - "ChemMon 2026 p. 97 (GBR scope)"
+  - "No-presence 2026 p. 13 (DCF upload), pp. 19-21 (Table 3)"
+  - "Use-levels 2026 p. 17 (DCF upload), pp. 24-28 (Table 3)"
 related:
   - "[[business-rules-gbr]]"
   - "[[business-rules-cross-cutting]]"
@@ -29,10 +34,13 @@ presence requirements and domain-specific conditions. A numeric constraint
 alone is not a complete specification of when a field must be supplied.
 
 Core result shape, units, LOD/LOQ presence and result uniqueness are in
-[[business-rules-gbr]]. Table 9 is written against SSD2 elements. The
-No-presence and Use-levels guides list only PRE/USE rules, and the guidance does
-not say whether GBRs are run on those submissions; see the scope notes in
-[[business-rules-gbr]].
+[[business-rules-gbr]]. Table 9 is written against SSD2 elements. Source
+discrepancy: ChemMon says GBRs "apply to all data submitted to EFSA through the
+DCF" (ChemMon 2026 p97), and the No-presence and Use-levels files are uploaded
+in the DCF (No-presence 2026 p13; Use-levels 2026 p17), yet those guides'
+Table 3 lists only PRE/USE rules and no GBR (No-presence 2026 pp. 19-21;
+Use-levels 2026 pp. 24-28). No source says which holds for those submissions;
+see the scope notes in [[business-rules-gbr]].
 
 ## Percentages and expression basis
 

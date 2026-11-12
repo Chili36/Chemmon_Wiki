@@ -2,11 +2,11 @@
 title: "SSD2 Elements: Matrix"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "pp. 32-36 (Section 2, E.02 sampMatCode and related matrix guidance)"
+  - "pp. 31-36 (Section 2, Table 3 unspecific country codes, E.02 sampMatCode and related matrix guidance)"
   - "p. 56 (Section 2, E.03-E.04, F.01, G.01-G.02)"
 related:
   - "[[ssd2-data-model]]"
@@ -40,11 +40,11 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 
 ## Rule Summary (Rule-First)
 
-- `sampMatCode` must use the most detailed suitable FoodEx2 term from the MTX reporting hierarchy; if the item is not yet intended as food or feed, report it as food.
+- `sampMatCode` normally uses the most detailed suitable FoodEx2 term from the MTX reporting hierarchy; if the item is not yet declared or intended as food or feed, it must be reported as food. (ChemMon 2026 p32)
 - A base term is always required. Add explicit facets only when they contribute information not already implicit in the selected FoodEx2 term.
 - VMPR has additional matrix rules beyond ordinary FoodEx2 use: `F01` / `F02` expectations, wild-game `F21`, feed/water `F23`, non-food matrices, and special product categories.
 - `sampMatText` supplements `sampMatCode`; it is not where brand names belong.
-- `origCountry` is mandatory. Unspecific country codes are sometimes allowed, but not for non-compliant pesticide results, and import-control samples cannot have `origCountry = sampCountry`.
+- `origCountry` is mandatory. Unspecific country codes (Table 3) are sometimes allowed, but cannot be used for non-compliant results (ChemMon 2026 p31; validation checks this only for pesticides, `CHEMON95`, Warning, p137), and import-control samples cannot have `origCountry = sampCountry`.
 - `sampAnId`, `anMatCode`, and `anMatText` inherit from the sampled-matrix elements unless the analysed material is genuinely different from the sampled material.
 
 ## Relevant Business Rules

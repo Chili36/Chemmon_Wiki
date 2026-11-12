@@ -2,7 +2,7 @@
 title: "Reading Pesticide Residue Definition Wording"
 type: "domain-guide"
 domain: "pesticide"
-last_updated: "2026-10-24"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "datasets/rd-bridge/interpretation_guidance.json"
@@ -41,7 +41,7 @@ These are readings of the legal wording, not extra rules. Where a reading and th
 |---|---|---|
 | "sum of A, B and C", "including", "mixture of" | Each named constituent is a part of the residue. A group counts as one part only when the text names a class without listing its members. | The heading counted again as an extra part when it only labels the sum. |
 | "determined as", "hydrolysable to", "common moiety", "calculated in total as" | One measurement converts several forms to a common product. Keep apart the substance finally determined, the precursor forms it covers and the substance used to express the result. | The conversion product or expression basis treated as a separately required parent analyte. |
-| "its salts", "its esters", "its conjugates", "free and conjugated" | Usually widens what counts as the named residue, for example by requiring hydrolysis. | A separate analyte for every unnamed salt, ester or conjugate. Named, analytically distinct forms still count separately. |
+| "its salts", "its esters", "its conjugates", "free and conjugated" | Usually widens what counts as the named residue. | A separate analyte for every unnamed salt, ester or conjugate. Named, analytically distinct forms still count separately. |
 | "sum of isomers" (unnamed) | The total for the named compound. | Specific stereoisomers invented. When E/Z, cis/trans or R/S forms are named and have their own terms, keep them distinct. |
 | A commodity-specific (R) definition, e.g. for animal products | Read it independently of the default. Plant and animal definitions can use different marker substances. | Components copied from the default definition into the exception. The product scope is not an analyte. |
 | "Where only Y is detected …, the residue definition of Y applies" | An alternative rule that depends on which substances are found. | Both branches treated as one sum that must be measured together. |
@@ -55,14 +55,14 @@ Examples from the EU wording: 2,4-D is the "sum of 2,4-D, its salts, its esters 
 
 <!-- Source: datasets/rd-bridge/residue_param_map.json @ ad3e16f, residue_id 253 -->
 
-Commission Regulation (EU) 2023/710 gives chloridazon two definitions. In rd-bridge this is the one case so far where the reading has been checked against the legal act.
+Commission Regulation (EU) 2023/710 gives chloridazon two definitions. In rd-bridge the animal-product exception is the one case so far where the reading has been checked against the legal act (`parts_from: legal_guidance`).
 
 | Scope (Annex I) | Residue definition | Whole-residue `paramCode` |
 |---|---|---|
 | Default | Chloridazon (sum of chloridazon and chloridazon-desphenyl, expressed as chloridazon) | `RF-00005729-PAR` |
 | `1000000` products of animal origin; except `1040000` honey | Chloridazon (chloridazon-desphenyl, expressed as chloridazon) | `RF-00005712-PAR` |
 
-- **Default:** two parts, chloridazon `RF-0080-001-PPP` and chloridazon-desphenyl `RF-00006186-PAR`. Analysing only one of them is a subset.
+- **Default:** the wording "sum of chloridazon and chloridazon-desphenyl" names two parts, chloridazon `RF-0080-001-PPP` and chloridazon-desphenyl `RF-00006186-PAR`. rd-bridge marks this default split `parts_from: guided_model`, so it has not been checked against the legal act. Analysing only one of them is a subset.
 - **Animal products:** one part, chloridazon-desphenyl `RF-00006186-PAR`. Chloridazon is only the expression basis. Analysing chloridazon-desphenyl covers the definition, but analysing the parent chloridazon alone does not.
 
 ## From the reading to paramType
@@ -86,7 +86,7 @@ ChemMon's own example: "aldicarb (sum of aldicarb, its sulfoxide and its sulfone
 - **Order of authority:** the residue definition in Regulation (EC) No 396/2005 and its amendments decides; EFSA validates against its Legal Limits database ([[legal-limits-database]]); the readings above help interpret the wording.
 - **Where the readings come from:** the wording rules paraphrase the OECD *Guidance Document on the Definition of Residue* (revised 2009, ENV/JM/MONO(2009)30). It explains how enforcement residues are chosen and expressed, but it is **not EU law**. The rules about EU wording (conditional clauses, alternative names) are rd-bridge's readings of the legal text. They are taken from rd-bridge's curated guidance index, which records a source and locator for each rule. They are not verbatim quotes and the wiki has not checked them against the OECD text.
 - **One definition at a time:** a reading that fits one definition does not settle another with similar wording. Check the legal text for each case.
-- **Model output is not evidence:** rd-bridge uses these rules to prompt a model when it splits definitions into parts. Those model readings are not authoritative, and the wiki does not cite them.
+- **Model output is not evidence:** rd-bridge uses these rules to prompt a model when it splits definitions into parts. Those model readings are not authoritative. The wiki cites one only where it says so and flags it as not checked against the legal act (the `guided_model` split above).
 
 ## Relevant Business Rules
 
@@ -94,7 +94,7 @@ ChemMon's own example: "aldicarb (sum of aldicarb, its sulfoxide and its sulfone
 |---|---|
 | `LL_03` (Error) | `paramType` must be reported for multicomponent/sum parameters. |
 | `LL_03_b` (Warning) | `paramType` should equal EFSA's pre-assigned value. |
-| `LL_04` / `LL_04_b` (Error) | The whole-residue `paramCode` must be a plausible legal combination with the sampled matrix; results for a part of a sum are exempt. See [[pesticide-residue-definition-by-matrix]]. |
+| `LL_04` / `LL_04_b` (Error) | For pesticide results (`is_pest=1`) whose `paramCode` is part of the legal limits database, the sampled matrix and `paramCode.base` should match a plausible legal combination (`PlausibleCombinationPPP=1`); results for a part of a sum are exempt. (ChemMon 2026 p143) See [[pesticide-residue-definition-by-matrix]]. |
 
 ## Relevant Policy
 

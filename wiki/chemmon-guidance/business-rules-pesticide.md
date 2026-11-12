@@ -3,11 +3,11 @@ title: "Pesticide-Specific Business Rules"
 select_when: "Named pesticide CHEMON rules and their field conditions, including copper facets and uncertainty and N027A programme types. Use only when the question concerns pesticide reporting."
 type: "rule-reference"
 domain: "pesticide"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "Table 10, pp. 126-137 (CHEMON52-CHEMON95); Table 8, p. 86 (copper)"
+  - "Table 10, pp. 126-137 (CHEMON52-CHEMON95); Table 8, p. 86 (copper); p. 69 (M.14, pesticides in eggs and milk)"
 related:
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
@@ -36,7 +36,7 @@ Rules that apply to PPP *and* other domains (e.g. CHEMON27, CHEMON43, CHEMON44, 
 | CHEMON59 | Error | For pesticides, `evalLimitType` can only be W002A (MRL), W990A (National or local limit), or missing. | PPP | 128 |
 | CHEMON60 | Error | For pesticides, `evalCode` can only be J002A (below/equal to maximum permissible quantities), J003A (above), J029A (Result not evaluated) or J031A (Compliant due to measurement uncertainty). | PPP | 128 |
 | CHEMON61 | Error | For pesticides, `resType` can only be LOD, LOQ, BIN, or VAL. No other result types are accepted. | PPP | 128 |
-| CHEMON70 | Error | For pesticides in egg/milk matrices, `exprResType` must be B001A (whole weight). Fat-weight or dry-weight expression is not accepted for these matrices. | PPP | 131 |
+| CHEMON70 | Error | For pesticides in egg/milk matrices, `exprResType` must be B001A (whole weight). Source discrepancy: the M.14 prose says to report whether the result is expressed as whole weight (B001A) or fat weight (B003A) for eggs or milk (ChemMon 2026 p69), while the rule names only B001A (p131). The guidance does not say whether B003A passes this rule. | PPP | 131 |
 | CHEMON72 | Warning | For pesticides, `resValUncert` (measurement uncertainty) should be reported when `resType` = VAL. | PPP | 131 |
 | CHEMON90_a | Warning | For copper (`paramCode` RF-0102-001-PPP), the use of facet F20 (part-consumed-analysed) and/or facet F28 (process) is needed to describe sample preparation. | `paramCode` RF-0102-001-PPP trigger; no domain condition | 135 |
 | CHEMON90_b | Error | For copper (`paramCode` RF-0102-001-PPP), `resValUncert` is mandatory when `resType` = VAL. | `paramCode` RF-0102-001-PPP trigger; no domain condition | 135 |

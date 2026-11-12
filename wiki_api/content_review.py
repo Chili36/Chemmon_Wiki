@@ -678,6 +678,9 @@ def main(argv: list[str] | None = None) -> int:
             "lines_reviewed": result.lines_reviewed, "full": result.full, "findings": result.findings,
             "not_checked": result.not_checked, "context_pages": result.context_pages,
             "context_omitted": result.context_omitted}
+        if result.full and not args.head and change.name in record["pages"]:
+            # Every line has now been read, whatever the outcome; later entries keep this date.
+            record["pages"][change.name]["full_review"] = {"date": date.today().isoformat(), "reviewer": args.model}
         code = 0
         if result.blocking:
             print(f"  {len(result.blocking)} blocking finding(s): fix the page and review again, or "

@@ -2,13 +2,14 @@
 title: "SSD2 Matrix: Sampled Matrix Code and Text"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 32-33 (Section 2, E.02)"
   - "p. 42 (drinking water note)"
   - "p. 56 (Section 2, E.03)"
+  - "p. 101 (Table 9: GBR15)"
 related:
   - "[[ssd2-elements-matrix]]"
   - "[[foodex2-in-chemmon]]"
@@ -22,10 +23,10 @@ related:
 
 ## Rule Summary (Rule-First)
 
-- `sampMatCode` is mandatory and must use the highest-detail suitable FoodEx2 term from the MTX reporting hierarchy.
+- `sampMatCode` is mandatory; the highest-detail suitable FoodEx2 term from the MTX reporting hierarchy is normally used. (ChemMon 2026 p32)
 - If implicit facets already characterise the matrix sufficiently, do not restate them explicitly.
 - If a suitable FoodEx2 term is missing, ask EFSA for support or code addition rather than forcing a broad or incorrect term.
-- `sampMatText` is optional and is only for descriptive supplementation or cross-checking; it should not contain brand names.
+- `sampMatText` is optional (ChemMon 2026 p56), but must be reported if `sampMatCode.gen` is 'Other' (`A07XE`) (`GBR15`, Error; ChemMon 2026 p101). It supplements the code for description and cross-checking; it should not contain brand names. (ChemMon 2026 p56)
 
 ## sampMatCode — Coded description of the matrix of the sample taken
 
@@ -39,7 +40,7 @@ related:
 
 ### Reporting hierarchy and downstream classification
 
-FoodEx2 codes are selected from the MTX catalogue reporting hierarchy, which includes food, feed, and non-food animal matrices. If the sample is not yet declared or intended as food or feed, it should still be reported as food. EFSA then applies legislative/reporting hierarchies and algorithms to `sampMatCode` for annual-report grouping and legal-limit classification. (ChemMon 2026 p32)
+FoodEx2 codes are selected from the MTX catalogue reporting hierarchy, which includes food, feed, and non-food animal matrices. If the sample is not yet declared or intended as food or feed, it must be reported as food. EFSA then applies legislative/reporting hierarchies and algorithms to `sampMatCode` for annual-report grouping and legal-limit classification. (ChemMon 2026 p32)
 
 ### Base terms and facets
 
@@ -67,4 +68,4 @@ If a suitable FoodEx2 term cannot be found, the guidance recommends contacting E
 
 ### What not to include
 
-Brand names do not belong in `sampMatText`; they should be reported in the dedicated matrix-info fields instead. (ChemMon 2026 p56)
+Brand names do not belong in `sampMatText`; they can be reported in element E.10 (`sampMatInfo`). (ChemMon 2026 p56)

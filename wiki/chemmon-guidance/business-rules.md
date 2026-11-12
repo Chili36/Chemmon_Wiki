@@ -2,7 +2,7 @@
 title: "ChemMon Business Rules"
 type: "hub"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
@@ -88,9 +88,10 @@ the two inactive and seven biological-only GBR IDs remain in the source inventor
 All **100 active CHEMON rules**, the four inactive CHEMON rows, **17 PRE rules**,
 **29 USE/USE_LLDB rules** and **49 PRE/USE fields** have now been compared with
 the complete source rows and field sections. Canonical tables show source pages
-and severity. A further contextual reading resolved the three content findings:
-CHEMON grouping is explicit, USE19 requires at least one positive level under
-the documented interpretation, and CONCLUS has a naming discrepancy for the
+and severity. A further contextual reading settled or documented the three content findings:
+CHEMON grouping is explicit, the USE19 description and error message differ on
+whether one or both levels must be greater than 0 (Use-levels 2026 p27; see
+[[fa-ff-use-levels-data-model]]), and CONCLUS has a naming discrepancy for the
 same concept family. Source notes and the supporting rationale remain visible.
 This assistant source comparison does not certify an executable validator or
 prove valid submissions.

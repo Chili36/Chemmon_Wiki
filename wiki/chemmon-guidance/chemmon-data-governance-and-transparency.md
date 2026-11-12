@@ -2,7 +2,7 @@
 title: "ChemMon Data Governance and Transparency"
 type: "overview"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -25,7 +25,7 @@ related:
 - SSD2 now allows either separate reporting of listed data elements or historical compound-element strings.
 - Mapping national values to EFSA catalogues is a central data-quality risk.
 - EFSA reduces free text because ChemMon data is increasingly published under Open by Default and transparency rules.
-- Source resources such as structural metadata, catalogues, business rules, and schema definitions are expected to be published in machine-readable and human-readable formats.
+- Source resources such as structural metadata, catalogues, business rules, and schema definitions are expected to be published in a machine-readable format, and in human-readable format where appropriate.
 - In this guidance, "residue" is a broad reporting concept covering both added substances and unintentionally present substances.
 
 ## Compound Element Flexibility
@@ -35,7 +35,7 @@ Some data providers reported that creating strings for compound elements introdu
 - reporting each data element listed in the SSD2 specification separately
 - reporting as compound elements, which is the historical format
 
-Data providers can choose the approach that fits their systems without loss of information. (ChemMon 2026 p9)
+Data providers can use either approach. (ChemMon 2026 p9)
 
 For the logical SSD2 concept of compound elements, see [[ssd2-data-model]]. For the main FoodEx2 compound elements in ChemMon, see [[foodex2-in-chemmon]].
 
@@ -53,7 +53,7 @@ For that reason, the use of free-text fields in ChemMon submissions has been red
 
 The Transparency Regulation (EU) 2019/1381, which became applicable on 27/03/2021, introduced provisions on publication of data and information supporting requests from the Commission for a scientific output. The guidance says these "may also apply" to data collected under the ChemMon data collections. (ChemMon 2026 p10)
 
-Under Article 38(1)(c) of Regulation (EC) No 178/2002, proactive transparency applies to documents, studies, and data submitted to EFSA to support application dossiers or mandates for scientific output received on or after 27/03/2021. Under Article 38(1)(d), information on which EFSA's outputs are based is made proactively available at the time the output is published. Member States who submit data on behalf of natural or legal persons (such as industry) in relation to a post-Transparency-Regulation mandate have the right to submit confidentiality requests for certain data under Articles 39-39e of Regulation (EC) No 178/2002. (ChemMon 2026 p10)
+Under Article 38(1)(c) of Regulation (EC) No 178/2002, proactive transparency applies to documents, studies, and data submitted to EFSA to support application dossiers or mandates for scientific output received on or after 27/03/2021. Under Article 38(1)(d), information on which EFSA's outputs are based is made proactively available at the time the output is published. Member States who submit data on behalf of natural or legal persons (such as industry) in relation to a post-Transparency-Regulation mandate have the right to submit confidentiality requests for certain data in accordance with Articles 39-39e of Regulation (EC) No 178/2002, applicable sectoral legal acts and EFSA's Practical Arrangements on transparency and confidentiality. (ChemMon 2026 p10)
 
 ## Machine-Readable Resources
 

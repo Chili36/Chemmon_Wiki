@@ -2,11 +2,12 @@
 title: "FoodEx2 Facets: Source, Part, Ingredient, and Origin"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 43-44, 49 (Table 4: F01, F02, F04, F27)"
+  - "p. 140 (Table 10: CHEMON108)"
 related:
   - "[[foodex2-facets]]"
   - "[[foodex2-in-chemmon]]"
@@ -81,7 +82,7 @@ related:
 
 - `CHEMON76`: for VMPR with the same `sampEventId`, the `F01` species/breed facet must be identical. See [[business-rules-vmpr]].
 - `CHEMON12`: for acrylamide, `F33` legislative class is mandatory. See [[business-rules-contaminant]] and [[contaminant-reporting]].
-- `CHEMON108`: additives/flavourings require matrix specificity for food colour/additive classification. See [[business-rules-additives]].
+- `CHEMON108` (Warning, new in 2026; might become an Error in 2027): for FA/FF results, the codes `A047N` (Food colours), `A047Q` (Artificial food colour), `A047R` (Food additives other than flavours, colours and artificial sweeteners), `A047A` (Food flavourings), `A047P` (Natural food colour) and `A0F3T` (Preparations for food flavouring) cannot be reported as `sampMatCode`. See [[business-rules-additives]]. (ChemMon 2026 p140)
 
 ## Related Guidance
 

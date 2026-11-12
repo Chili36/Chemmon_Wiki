@@ -2,7 +2,7 @@
 title: "Ingest Workflow"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 ---
 
 # Ingest Workflow
@@ -123,13 +123,18 @@ Fix everything catchable before committing.
 
 The writer cannot check their own text: the agents that fixed the #68 audit
 findings introduced 27 new errors, which only fresh readers found. So every
-changed page is read against the PDFs by a reviewer that sees only the page
-and the PDFs.
+changed page is read against the PDFs by a reviewer that sees the page, the
+PDFs and dataset files it cites, and the wiki pages linked to or from it.
 
 ```bash
 python -m wiki_api.content_review            # which pages need a review (no model call)
 python -m wiki_api.content_review --review   # review them; needs ANTHROPIC_API_KEY
+python -m wiki_api.content_review --review --full [PAGE ...]   # every line, not only changes
 ```
+
+Use `--full` for a new page family, after a new guidance edition, and once
+a year for the whole wiki (about USD 40 and 40 minutes for 75 pages in
+November 2026). The record keeps the date of each page's last full review.
 
 For each changed line the reviewer must quote the source passage and give a
 verdict. It reports findings with the wiki line, the source page and both
@@ -139,9 +144,13 @@ quotes, and records each clean page in `docs/content-review.json`.
   check it yourself. If the reviewer is right, fix the page and run
   `--review` again. If it is wrong, record why:
   `--waive PAGE --reason "..."`. The waived finding stays in the record.
+- **`cross_page` finding**: the changed line disagrees with another wiki
+  page. The finding names that page and says which one the source supports;
+  the fix may belong on the other page. Review that page too.
 - **Notes** (confidence LOW, or removed text that may have moved to another
   page): read each one. They do not block, but about one real error in ten
-  arrived as a note in testing.
+  arrived as a note in testing, and nearly all notes in the 2026-11-12 full
+  run were right.
 - **Front-matter-only changes** (`last_updated`, `related`, `select_when`)
   are recorded without a model call. A change to `sources` or
   `source_pages` is a claim and is reviewed.
@@ -158,9 +167,13 @@ way, and say how.
 **What this does not give you.** The reviewer is a second reader, not proof.
 Tested on the #68 fixes it caught about half of the errors that human-led
 reviewers had found on the same lines, and none of the errors on lines it
-was not asked to read. It cannot see other wiki pages, so it does not catch
-two pages that disagree. It checks against the PDFs, not against EFSA's
-live catalogues. For a new guidance edition or a rewrite of a whole page
+was not asked to read (use `--full` for those). It sees only linked pages,
+so it misses a disagreement between two pages that do not link to each
+other, and a hub page with many links is reviewed without some of them
+(the record names the ones left out). It checks against the PDFs, not
+against EFSA's live catalogues. In the 2026-11-12 full run 98 of its 102
+findings were confirmed against the source, so check a finding before
+waiving it. For a new guidance edition or a rewrite of a whole page
 family, add a manual review by fresh reviewers as in #69.
 
 ### Reporting what was done
