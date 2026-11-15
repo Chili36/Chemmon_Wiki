@@ -2,7 +2,7 @@
 title: "Legal Limits Database (MRLs and Other Limits)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
@@ -35,7 +35,7 @@ The guidance describes it as a resource intended to help data providers check ex
 - Contains maximum residue limits (MRLs) from:
   - Regulation (EC) No 396/2005 (pesticides),
   - Regulation (EC) No 37/2010 (veterinary residues),
-  - Directive (EC) No 141/2006 (veterinary residues). (ChemMon 2026 p148)
+  - Directive (EC) No 141/2006 (the guidance lists it with the other two and does not say which residues it covers). (ChemMon 2026 p148)
 - If an MRL changes during the data-collection reference period, the database contains both limits with dates of applicability; EFSA determines which applies based on the **sampling date**. (ChemMon 2026 p148)
 - There is a small number of substances for which legal limits are not harmonised across the legislation that applies to chemical monitoring. (ChemMon 2026 p148)
 - In the **ChemMon 2026 SSD2 analytical path**, the applied legal limit note is scoped to **raw, unprocessed** samples. The FA/FF use-levels path documented below is a separate LLDB use case with marketing-date applicability. (ChemMon 2026 p148; Use-levels 2026 p18)
@@ -50,7 +50,7 @@ The guidance describes it as a resource intended to help data providers check ex
 
 ## Relationship to legal-limit business rules
 
-For pesticides, LL_04 uses the database's plausible matrix/`paramCode` combinations to check that the reported code matches the residue definition for the sampled matrix; see [[pesticide-residue-definition-by-matrix]]. (ChemMon 2026 p143)
+For pesticide results (`is_pest=1`) whose `paramCode` is part of the legal limits database, LL_04/LL_04_b (Error) uses the database's plausible matrix/`paramCode` combinations to check that the reported code matches the residue definition for the sampled matrix, "unless the result is reported for a part of sum"; see [[pesticide-residue-definition-by-matrix]]. (ChemMon 2026 p143)
 
 See [[business-rules-legal-limits]] for the validation rules that compare reported results against legal limits as part of the ChemMon validation layer. For the SSD2 fields that explicitly carry a declared limit and limit type, see [[ssd2-evaluation-limits]].
 

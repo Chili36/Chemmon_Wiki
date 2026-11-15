@@ -2,11 +2,12 @@
 title: "SSD2 Elements: Evaluation, Action, Conclusion"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 73-79 (Section 2, elements N.01-N.06.4)"
+  - "pp. 121, 133 (Table 10, CHEMON37, CHEMON85)"
 related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-result]]"
@@ -44,7 +45,7 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 
 - `CHEMON35`, `CHEMON46`, `CHEMON48`, `CHEMON59` — limit-type / limit-value logic. See [[business-rules-cross-cutting]] and [[business-rules-pesticide]].
 - `CHEMON30`, `CHEMON36`, `CHEMON60`, `CHEMON100` — allowed evaluation-code logic and interactions with result/method fields. See [[business-rules-cross-cutting]], [[business-rules-pesticide]], and [[business-rules-vmpr]].
-- `CHEMON37`, `CHEMON85` — action-taken requirements. See [[business-rules-cross-cutting]].
+- `CHEMON37` (Warning, `actTakenCode` "should be reported") and `CHEMON85` (Error, `actTakenCode` "must be reported") — action-taken rules. See [[business-rules-cross-cutting]]. (ChemMon 2026 Table 10, pp. 121, 133)
 - `CHEMON26`, `CHEMON66_a`, `CHEMON66_b`, `CHEMON87`, `CHEMON88` — conclusion/comment recommendations and exception handling. See [[business-rules-cross-cutting]] and [[business-rules-additives]].
 
 ## Relevant Policy

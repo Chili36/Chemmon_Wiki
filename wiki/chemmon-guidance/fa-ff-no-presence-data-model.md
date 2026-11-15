@@ -3,7 +3,7 @@ title: "FA/FF No-presence Data Model"
 select_when: "No-presence FA/FF records: sampId/sampMatCode, presenceAdded, sampling date, PRE rules and PRE15 warning. Use for this collection, not SSD2 results or use levels."
 type: "reference"
 domain: "additives"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
 source_pages:
@@ -42,7 +42,7 @@ The **no-presence DM** is a sample-level data model for reporting that a specifi
 <!-- Source: No-presence 2026 pp. 4-5 -->
 
 - SSD2 is structured around measured analytical values. A record that says "this FA/FF is not used here" without an accompanying analytical measurement cannot be represented.
-- The no-presence DM fills that gap. Element naming (`progLegalRef`, `sampMatCode`, `paramCode`, `resId`, …) and controlled-terminology catalogues match SSD2 so downstream joins and dietary-exposure calculations remain coherent across both models.
+- The no-presence DM fills that gap. The DM "is in accordance with the harmonised terminology of EFSA and, where applicable, with the terminology used in the EFSA Standard Sample Description (SSD2)" (No-presence 2026 p5). Wiki note (not in the guidance): element names such as `progLegalRef`, `sampMatCode`, `paramCode` and `resId` are shared with SSD2; others, such as `functionOf`, are not.
 - The DM "has been already piloted in 2025, and it will be piloted in 2026". The element set in this page reflects the **2026** version, which was adjusted and improved after the result of the 2025 pilot was assessed. (No-presence 2026 pp. 4-5)
 
 ## Fast constraints
@@ -114,7 +114,7 @@ All 17 rules in this DM are prefixed `PRE`. All are currently **Active**. Sixtee
 | Rule | Severity | What it enforces | Source page |
 |---|---|---|---|
 | PRE01 | Error | `sampY` = data collection year − 1 | 19 |
-| PRE02 | Error | F23 (target consumer) mandatory if F33 is category 13 (foods for specific groups) | 19 |
+| PRE02 | Error | F23 (target consumer) mandatory if F33 is category 13 (foods intended for particular nutritional uses as defined by Directive 2009/39/EC) | 19 |
 | PRE03 | Error | If `progLegalRef=N112A`, `restrictionException` ∈ `FARestExc` (or use `ADD00881A`) | 19 |
 | PRE04 | Error | If `progLegalRef=N113A`, `restrictionException` ∈ `FFRestExc` (or use `ADD00881A`) | 19 |
 | PRE05 | Error | `paramCode` ∈ `addAnalysis` ∪ `flavAnalysis` (PARAM) | 19 |
@@ -134,7 +134,7 @@ All 17 rules in this DM are prefixed `PRE`. All are currently **Active**. Sixtee
 ## Source wording and field details
 
 The complete field sections (§§2.1–2.16), Table 1 and all 17 PRE rows were
-compared on 5 October 2026; the whole document (pp. 1–24) was audited again
+compared on 5 October 2026; the whole document (pp. 1–23) was audited again
 on 11 November 2026. Catalogue restrictions and mandatory fields still
 apply even when they have no separate PRE rule ID.
 
@@ -154,8 +154,9 @@ apply even when they have no separate PRE rule ID.
 
 ## Version-sensitive cheese example
 
-The source's p. 9 example uses `A02RH` (Soft-ripened cheese), with F33.A0C5F
-implicit. The checked local MTX 17.2 snapshot agrees. ChemMon's analytical
+The source's p. 9 example uses `A02RH` (Soft-ripened cheese), with F33
+'FA-01.7.2 Ripened cheese' implicit (No-presence 2026 p9). The checked local
+MTX 17.2 snapshot agrees and gives the facet code F33.A0C5F. ChemMon's analytical
 example p. 39 instead prints an explicit F33: do not copy that duplicate into
 this path. PRE15 assigns Warning severity. See [[foodex2-in-chemmon]] for the
 version-specific reconciliation and evidence; this does not establish the

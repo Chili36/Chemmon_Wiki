@@ -3,7 +3,7 @@ title: "FA/FF Use-levels Data Model"
 select_when: "FA/FF use levels and aggregated product data: prodId/matCode, marketing date, min/typical/max levels, dilution, USE rules and USE23 error. Use for this collection, not SSD2 results."
 type: "reference"
 domain: "additives"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
@@ -42,8 +42,8 @@ The **use-levels DM** collects FA/FF use levels (minimum / typical / maximum con
 
 - The use-levels DM is **not implemented in SSD2.** It collects data of food categories and the FA/FF use level in those categories, while SSD2 was devised to host sample-based data collections. (Use-levels 2026 p5) The DM is nonetheless **SSD2-derived**: the earlier SSD1-based use-levels model was translated to SSD2. (Use-levels 2026 p6)
 - Wiki note (not in the guidance): `weight`, `fatPerc`, `moistPerc` and `unit` parallel the SSD2 elements `exprResType`, `exprResPerc.fatPerc`, `exprResPerc.moistPerc` and `resUnit`. (ChemMon 2026 pp. 69-70, 83)
-- Terminology and controlled vocabularies are aligned with SSD2 where applicable (`LEGREF`, `PARAM`, `MTX`, `CONCLUS`, `ADDFOOD`, `EXPRRES`, `FUNC`, `UNIT`), so downstream joins with analytical data remain coherent.
-- The DM is piloted annually and the 2026 version reflects changes incorporated from 2025 pilot feedback.
+- The DM "is in accordance with the harmonised terminology of EFSA and, where applicable, with the terminology used in the EFSA Standard Sample Description (SSD2)" (Use-levels 2026 p5). Wiki note (not in the guidance): the catalogues `LEGREF`, `PARAM`, `MTX`, `CONCLUS`, `ADDFOOD`, `EXPRRES` and `UNIT` are also used in the ChemMon SSD2 guidance; `FUNC` (`functionOf`) exists only in the two parallel FA/FF data models.
+- The DM "has been already piloted in 2025, and it will be piloted in 2026"; the result of the 2025 pilot was assessed and considered to further adjust and improve the DM described in the 2026 guidance. (Use-levels 2026 p5)
 
 ## Fast constraints
 
@@ -79,8 +79,9 @@ category × substance. The combination `(paramCode, prodId)` must be unique
 
 ### Matrix description
 
-The source's p. 9 cheese example uses `A02RH`, with F33.A0C5F implicit, which
-matches the checked local MTX 17.2 snapshot. Do not copy the explicit F33 from
+The source's p. 9 cheese example uses `A02RH`, with F33 'FA-01.7.2 Ripened
+cheese' implicit (Use-levels 2026 p9), which matches the checked local MTX 17.2
+snapshot (facet code F33.A0C5F). Do not copy the explicit F33 from
 the conflicting ChemMon p. 39 example: **USE23 makes that duplication an Error**.
 See [[foodex2-in-chemmon]] for catalogue provenance and the unresolved historical
 edition of the ChemMon example.
@@ -145,9 +146,9 @@ edition of the ChemMon example.
 
 - `additionalInfo` (optional, ≤250 chars) — free-text notes on the reported product. (Use-levels 2026 p15)
 - `minLevel` (optional, `xs:double`) — minimum use level. Must be `0` when `presenceAdded=C20A` (USE09). (Use-levels 2026 p15)
-- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09). The contextual reading of USE19 requires at least one of typicalLevel/maxLevel to be positive for added substances; see the rationale below. If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
+- `typicalLevel` (mandatory, `xs:double`) — typical use level. Must be `0` when `presenceAdded=C20A` (USE09). USE19 applies for C19A; see the source-wording note below. If an exact level is known, `minLevel = typicalLevel = maxLevel`. (Use-levels 2026 p15)
 - `maxLevel` (mandatory, `xs:double`) — maximum use level. Must be `0` when `presenceAdded=C20A` (USE09). USE19 applies for C19A; see the source-wording note below. Enforced ordering: `maxLevel ≥ typicalLevel ≥ minLevel` (USE25). USE27 compares it with the MPL reported by the DP, separately from the LLDB comparison. (Use-levels 2026 pp. 15-16, 28)
-- `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — factor applied to minimum/typical/maximum levels to yield the product as consumed. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)
+- `conversionOrDilutionFactor` (dependent mandatory, `xs:double`) — the recommended conversion or dilution factor to prepare the product category/food as it is consumed; it must be indicated with the value that needs to be applied to the minimum, typical and maximum values. The element description requires it for **food supplements** and for products that must be prepared before consumption (example: infant formula diluted 1:4 → factor 0.25). The published rule table explicitly enforces at least the food-supplement case via `USE13` (`matCode.F33 = 17`). In practice, use the field whenever the reported levels need a preparation/dilution step to express the product as consumed. (Use-levels 2026 p16; Table 3 p25)
 
 ### Maximum Permitted Level check
 
@@ -182,7 +183,7 @@ Source discrepancy: p. 17 says a dataset is "Valid with warnings" when it "trigg
 | USE16 | Error | F33 mandatory on `matCode` if not implicitly assigned | 26 |
 | USE17 | Error | F03 mandatory for the specific legislative categories (same list as PRE09) | 26 |
 | USE18 | Error | `C19A` and `C20A` cannot coexist on one record | 27 |
-| USE19 | Error | If `presenceAdded` includes C19A, at least one of `typicalLevel` or `maxLevel` must be >0. This is the contextual reading of the description and error message together; see the source note below | 27 |
+| USE19 | Error | If `presenceAdded` includes C19A, the description says `typicalLevel` or `maxLevel` "cannot be 0"; the error message fires when neither is greater than 0. The two wordings differ on whether one or both must be >0; see the source note below, which also gives the wiki's reading with USE25 | 27 |
 | USE20 | Error | `(paramCode, prodId)` must be unique | 27 |
 | USE21 | Error | If `progLegalRef=N112A`, `paramCode` ∈ `addAnalysis` | 27 |
 | USE22 | Error | If `progLegalRef=N113A`, `paramCode` ∈ `flavAnalysis` | 27 |
@@ -199,20 +200,20 @@ Source discrepancy: p. 17 says a dataset is "Valid with warnings" when it "trigg
 The complete field sections (§§2.1–2.29), Table 1 and all 29 USE/USE_LLDB rows
 were compared on 5 October 2026. The following distinctions matter:
 
-- **USE19 (p. 27), contextual reading:** when `presenceAdded` includes C19A
-  (also in a combination such as `C19A$C05A`), require
-  `typicalLevel > 0 OR maxLevel > 0`. The error message describes the failure
-  where **neither** level is greater than zero. That is the clearest reading of
-  “typical or maximum” in the description; it does not say to reject every
-  zero typical value. The message's C10A is a typo: the description and §2.17
-  pp. 12–14 consistently use C19A. Under this interpretation, `typicalLevel=0,
-  maxLevel>0` satisfies USE19. USE25 separately requires
-  `maxLevel >= typicalLevel >= minLevel` when a minimum is supplied; its order
-  means a positive typical level cannot compensate for a zero maximum.
-  The model reports product/category ranges (§§2.24–2.26), while the positive
-  exact-level examples do not add a requirement that both fields be positive.
-  This source interpretation resolves the wiki guidance; it is not a recorded
-  test of EFSA's live validator or a guarantee that a record meets every rule.
+- **USE19 (p. 27), source wording:** Source discrepancy: the rule description
+  says that if FA/FF are added (`presenceAdded` = C19A) "the typical or the
+  maximum level (typicalLevel or maxLevel) cannot be 0", which can be read as
+  neither level may be 0; the error message describes the failure as "nor the
+  typical nor the maximum level (typicalLevel and maxLevel) is greater than
+  0", i.e. only when both are 0 (Use-levels 2026 p27). The guidance does not
+  say which reading validation applies. The message's C10A is a typo: the
+  description and §2.17 pp. 12–14 consistently use C19A. USE25 separately
+  requires `maxLevel >= typicalLevel >= minLevel` (Use-levels 2026 p27); its
+  order means a positive typical level cannot compensate for a zero maximum.
+  Wiki note (not in the guidance): a C19A record with `typicalLevel > 0`, and
+  therefore `maxLevel > 0` under USE25, passes USE19 under either reading.
+  This is not a recorded test of EFSA's live validator or a guarantee that a
+  record meets every rule.
 - **Optional minimum:** `minLevel` is optional in §2.24/Table 1; report zero
   in the USE09 no-addition case, and the exact value when the exact-level
   convention in §2.25 applies. Do not invent a zero for every omitted minimum.
@@ -222,9 +223,10 @@ were compared on 5 October 2026. The following distinctions matter:
   diluted 1:4: `minLevel` 100, `typicalLevel` 100, `maxLevel` 100,
   `conversionOrDilutionFactor` 0.25; the factor "must be indicated with the
   value that needs to be applied to the minimum, typical and maximum values"
-  (Use-levels 2026 p16). Wiki note (not in the guidance): the guidance prints
-  no converted value and does not say whether the reported levels are before
-  or after the factor is applied.
+  (Use-levels 2026 p16). Wiki note (not in the guidance): that wording implies
+  the reported levels are those before the factor is applied, while
+  §§2.24–2.26 highly recommend reporting levels as consumed; the guidance does
+  not reconcile the two and prints no converted value.
 - **F23:** Source discrepancy: §2.7 (p. 8) says F23 "should be added" when
   the product is formulated for infants (<12 months) in category 13; USE03
   (p. 24) and Table 1 (p. 19) say F23 must be reported for legislative
@@ -270,6 +272,6 @@ Verify the current year's pilot scope against the latest EFSA reporting guidance
 
 ## Relationship to other FA/FF reporting paths
 
-- **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — sample-level measured concentrations. Analytical data and use levels answer different exposure-assessment questions; both may be collected for the same substance.
+- **SSD2 ChemMon analytical** ([[food-additives-reporting]]) — sample-level measured concentrations. MS should collect at least one type of occurrence data (analytical data or use levels). (Use-levels 2026 p4)
 - **[[fa-ff-no-presence-data-model]]** — sample-level negative reports. Uses `sampId`/`sampY`/`sampCountry` rather than `prodId`/`marketYear`/`marketCountry`.
 - Rule IDs in this DM (`USE…`, `USE_LLDB…`) are a separate namespace from SSD2 CHEMON rules catalogued under [[business-rules]]; they do not overlap.

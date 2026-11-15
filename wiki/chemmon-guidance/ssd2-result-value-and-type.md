@@ -3,7 +3,7 @@ title: "SSD2 Result: Reported Value and Result Type (resVal, resQualValue, resTy
 select_when: "SSD2 resVal, resQualValue and resType (VAL, BIN, LOD, LOQ, AWR), uniqueness and processed-sample reporting. Use alongside units/limits when those fields are asked about."
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -114,7 +114,7 @@ The `resType` indicates the type of analytical result obtained for a substance i
 | `CCB` | The residue cannot be detected and CCbeta is reported | Below detection capability |
 | `AWR` | **Above the working range** — exceptional; only for VMPR in rare cases | Environmental sample above calibrated range |
 
-(ChemMon 2026 p71)
+(ChemMon 2026 pp. 71-72; the p. 71 table lists the first six codes, `AWR` is introduced on p. 72)
 
 ### Important rules
 

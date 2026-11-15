@@ -2,11 +2,12 @@
 title: "SSD2 Analysis: Analytical Method Identification and Type"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 63-64 (Section 2, elements L.01, L.03, L.04)"
+  - "pp. 83, 92, 144 (Tables 7, 8 and 11, catalogue name ANLYMD)"
   - "pp. 100-101 (Table 9, GBR11, GBR18)"
   - "pp. 118-120, 132 (Table 10, CHEMON23, CHEMON30, CHEMON33, CHEMON34, CHEMON79)"
 related:
@@ -68,13 +69,13 @@ Screening should be used only when a qualitative method returns a negative resul
 
 <!-- Source: ChemMon 2026 p64 -->
 
-**Element code:** L.04 · **Name:** `anMethCode` · **Catalogue:** `ANYLMD` · **Status:** mandatory
+**Element code:** L.04 · **Name:** `anMethCode` · **Catalogue:** `ANLYMD` · **Status:** mandatory
 
 ### Purpose
 
 `anMethCode` describes the type of analysis performed by the laboratory. It is strongly advised to report the specific analytical method instead of `F001A` ("Classification not possible"). If the generic code `F001A` is reported, enter also `anMethText`. (ChemMon 2026 p64)
 
-Codes for `anMethType` and `anMethCode` can be selected from the ANLYTYP catalogue and the ANYLMD catalogue. (ChemMon 2026 p64)
+Codes for `anMethType` and `anMethCode` can be selected from the ANLYTYP catalogue and the ANYLMD catalogue (spelling as printed). (ChemMon 2026 p64) **Source discrepancy:** p. 64 prints "ANYLMD", while Table 7 (p. 83), Table 8 (p. 92) and Table 11 (p. 144) print `ANLYMD`. The guidance does not explain the difference.
 
 | Example | `anMethType` | `anMethCode` |
 | --- | --- | --- |
@@ -97,5 +98,5 @@ For chemical contaminants, food additives and food flavourings, the system retur
 - `CHEMON23` — `anMethType` must be `AT06A` or `AT08A`. See [[business-rules-cross-cutting]].
 - `CHEMON30` — if `evalCode = J003A`, `anMethType` must be `AT08A`. See [[business-rules-cross-cutting]].
 - `CHEMON33` — if `resType=BIN`, `anMethType` must be AT06A; published severity is **Error**, despite “should” in the description (Table 10, p. 120). See [[business-rules-cross-cutting]].
-- `CHEMON34` — if `anMethType = AT08A`, `resType` should not be `BIN`. See [[business-rules-cross-cutting]].
-- `CHEMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes such as `F001A`, `F500A`, or `F598A`. See [[business-rules-cross-cutting]].
+- `CHEMON34` (Warning) — if `anMethType = AT08A`, `resType` should not be `BIN` and `resQualValue` should not be reported (Table 10, p120). See [[business-rules-cross-cutting]].
+- `CHEMON79` (Error) — for contaminants, food additives and food flavourings, `anMethCode` must be different from `F001A` (Classification not possible), `F500A` (Unknown) and `F598A` (Unspecified); the description says "should be different", the error message "must be different" (Table 10, p132). See [[business-rules-cross-cutting]].

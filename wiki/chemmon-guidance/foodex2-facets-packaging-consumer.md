@@ -2,7 +2,7 @@
 title: "FoodEx2 Facets: Packaging, Part Consumed, and Target Consumer"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -81,7 +81,7 @@ related:
 - `CHEMON15`: for PAHs, `F19` packaging material should be reported. See [[business-rules-contaminant]].
 - `CHEMON73`: for VMPR feed/water matrices, `F23` should be reported. See [[business-rules-vmpr]].
 - `CHEMON83`: if `sampMatCode` **contains facet** F10.A18PX, do not report F19 (packaging material) or F18 (packaging format); Warning. See [[business-rules-cross-cutting]].
-- `CHEMON89`: for FA/FF category 13, `F23` target consumer is recommended. See [[business-rules-additives]].
+- `CHEMON89` (Warning): for FA/FF results, `F23` target consumer is highly recommended to be reported when the sample refers to food category 13. See [[business-rules-additives]]. (ChemMon 2026 p135)
 - `CHEMON90_a`: when copper (`paramCode` RF-0102-001-PPP) is reported, the use of `F20` and/or `F28` is needed (Warning); the rule has no domain condition. See [[business-rules-pesticide]]. (ChemMon 2026 p135)
 
 ## Navigation

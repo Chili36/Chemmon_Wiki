@@ -2,7 +2,7 @@
 title: "ChemMon Change Management"
 type: "overview"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -25,7 +25,7 @@ related:
 - Ordinary annual changes proposed in October-November of year X usually apply to results reported in year X+2.
 - The X+2 delay exists because sampling officers need requirements before samples are collected.
 - The X+2 timing does not apply to changes implementing new or amended legal requirements that EFSA cannot anticipate.
-- The 2026 change table classifies changes by legal requirement, quality requirement, or sampling requirement.
+- Most rows of the 2026 change table give the reason for change as legal requirement, quality requirement, or sampling requirement; the two merge rows (CHEMON39 and CHEMON79) give the merge itself as the reason.
 
 ## Revision Cadence
 
@@ -39,7 +39,7 @@ Network members must contribute to and participate in the revision process on an
 
 ## Main Change Categories for 2026
 
-The 2026 guidance lists major changes in Table 1. They fall into three broad categories:
+The 2026 guidance lists major changes in Table 1. Most rows give one of three reasons for change; the two merge rows give the merge itself as the reason: "CHEMON39_a and CHEMON39_b are merged" (ChemMon 2026 p11) and "CHEMON79_a, CHEMON79_b, and CHEMON79_c are merged" (ChemMon 2026 p12). The three reasons are:
 
 - **Legal requirement**: new or amended regulations, such as new `progLegalRef` N422A for Commission Implementing Regulation (EU) 2019/1873 on intensified official controls at border control posts on products of animal origin, germinal products, animal by-products and composite products, added to Table 2. (ChemMon 2026 p11)
 - **Quality requirement**: tightened or clarified business rules to improve data quality.

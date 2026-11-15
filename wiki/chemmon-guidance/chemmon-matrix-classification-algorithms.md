@@ -2,12 +2,13 @@
 title: "ChemMon Matrix Classification Algorithms (VMPR, Pesticides)"
 type: "reference"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "p. 97 (Section 5)"
-  - "pp. 40-42 (FoodEx2 mapping and general considerations)"
+  - "pp. 41-42 (FoodEx2 mapping and general considerations)"
+  - "p. 153 (correction of accepted data)"
 related:
   - "[[ssd2-elements-matrix]]"
   - "[[ssd2-matrix-sampled-matrix]]"
@@ -47,6 +48,6 @@ The guidance notes these algorithms are published on EFSA Knowledge Junction alo
 
 ## Practical advice: validate before acceptance
 
-<!-- Source: ChemMon 2026 p41 -->
+<!-- Source: ChemMon 2026 p41, p153 -->
 
-EFSA recommends that data providers check, in the validation dashboards, that samples are being flagged/classified as expected (e.g. EU coordinated programme flagging for pesticides) **before accepting** datasets. This avoids discovering systematic classification issues only after data have been accepted. (ChemMon 2026 p41)
+For pesticides, the FoodEx2-to-MATRIX mapping "can be checked" in the validation dashboards, and EFSA highly recommends checking that samples have been flagged as EUCP in accordance with expectations **before accepting** the dataset(s) in the confirmation dashboards. (ChemMon 2026 p41) Once data are 'Accepted' in the sDWH, the only way to correct them is through the record 'Update procedure' described in the GDE2 guidance. (ChemMon 2026 p153)

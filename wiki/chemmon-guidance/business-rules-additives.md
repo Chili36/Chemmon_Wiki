@@ -3,11 +3,15 @@ title: "Food Additives & Flavourings Business Rules"
 select_when: "SSD2 FA/FF CHEMON rule severity, implicit F33, F03/F23 recommendations and 2026 changes. PRE and USE belong to separate data-model pages."
 type: "rule-reference"
 domain: "additives"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "Table 10, pp. 113-143"
+  - "ChemMon 2026 pp. 113-143 (Table 10)"
+  - "No-presence 2026 pp. 19-21 (Table 3, PRE rules)"
+  - "Use-levels 2026 pp. 24-28 (Table 3, USE and USE_LLDB rules)"
 related:
   - "[[business-rules]]"
   - "[[business-rules-cross-cutting]]"
@@ -23,11 +27,11 @@ related:
 
 ## Overview
 
-CHEMON rules that apply exclusively to the food additives and flavourings (FA/FF) reporting domain. These rules cover mandatory F33 legislative class facets, sampling year validation, expression-of-result type requirements, physical state reporting, target consumer facets, substance-specific `paramText` recommendations, and matrix code restrictions. Several rules are new or amended for 2026.
+CHEMON rules specific to the food additives and flavourings (FA/FF) reporting domain. CHEMON106 and CHEMON107 are triggered by the named `paramCode` values; their descriptions name no domain flag (ChemMon 2026 p140). These rules cover mandatory F33 legislative class facets, sampling year validation, expression-of-result type requirements, physical state reporting, target consumer facets, substance-specific `paramText` recommendations, and matrix code restrictions. Several rules are new or amended for 2026.
 
 Rules that span additives *and* other domains (e.g. CHEMON37, CHEMON44, CHEMON79, CHEMON97) are in [[business-rules-cross-cutting]]. Legal limit rules for food additives/flavourings (LL_01/02/03 FA_FF) are in [[business-rules-legal-limits]]. For food additives reporting guidance including F33 coding, expression types, restrictions/exceptions, and worked examples, see [[food-additives-reporting]].
 
-FA/FF reporting also has **two parallel data models** outside SSD2, each with its own rule namespace: `PRE…` rules on [[fa-ff-no-presence-data-model]] and `USE…` / `USE_LLDB…` rules on [[fa-ff-use-levels-data-model]]. Those rule IDs are not listed in this file because they validate different DCF submission paths; they do not overlap with the CHEMON IDs below.
+FA/FF reporting also has **two parallel data models** outside SSD2, each with its own rule namespace: `PRE…` rules on [[fa-ff-no-presence-data-model]] and `USE…` / `USE_LLDB…` rules on [[fa-ff-use-levels-data-model]]. Those rule IDs are not listed in this file because they validate different DCF submission paths; they do not overlap with the CHEMON IDs below. (No-presence 2026 pp. 19-21, Table 3; Use-levels 2026 pp. 24-28, Table 3)
 
 ## Food Additives & Flavourings CHEMON Rules
 
@@ -36,7 +40,7 @@ FA/FF reporting also has **two parallel data models** outside SSD2, each with it
 | CHEMON39 | Error | For FA/FF (`is_add=1` or `is_flav=1`), `sampMatCode.legis` (F33) must provide the applicable food category under Regulations 1333/2008 and 1334/2008. An implicit F33 satisfies this; add it explicitly only if missing. | FA/FF | 121-122 |
 | CHEMON43_b | Warning | For FA/FF, `sampY` should be less than or equal to submission year minus 1. The source announces Error severity and merging with CHEMON43 in 2027; the 2026 severity is Warning. | FA/FF | 123 |
 | CHEMON84_a | Error | `exprResType` (expression of result type) must be reported for food additives and flavourings. Table 1 records the 2026 amendment as "From warning to error message in 2026" (p12); the Table 10 comment says it becomes an Error for food flavourings in 2026. | FA/FF | 133 |
-| CHEMON86 | Warning | For FA/FF, if F03 is not implicit, report it for legislative categories 1, 6.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5 and 17. These are the SSD2 categories; do not substitute the narrower PRE/USE dairy list. Introduced in 2025 and modified in 2026; the source announces Error severity in 2027 for categories 12.5, 13, 14.1.4, 14.1.5 and 17. | FA/FF | 133-134 |
+| CHEMON86 | Warning | For FA/FF, if F03 is not implicitly present in `sampMatCode`, it is highly recommended to report it for legislative categories 1, 6.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5 and 17. These are the SSD2 categories; do not substitute the narrower PRE/USE dairy list. Introduced in 2025 and modified in 2026; the source announces Error severity in 2027 for categories 12.5, 13, 14.1.4, 14.1.5 and 17. | FA/FF | 133-134 |
 | CHEMON87 | Warning | `evalInfo.conclusion` is highly recommended for food additives and flavourings. Evaluation conclusions aid data interpretation. | FA/FF | 134 |
 | CHEMON88 | Warning | For FA/FF, `evalInfo.restrictionException` is highly recommended. The source says it **might** become an Error in 2027 depending on the pilot; that is not the 2026 severity. | FA/FF | 134-135 |
 | CHEMON89 | Warning | For FA/FF, the target consumer facet (F23) is highly recommended to be reported when the sample refers to food category 13 (printed in this rule as "Foods intended for particular nutritional uses as defined by Directive 2009/39/EC"). Introduced in 2025. | FA/FF | 135 |

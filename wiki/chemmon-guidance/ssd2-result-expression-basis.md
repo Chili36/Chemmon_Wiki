@@ -2,7 +2,7 @@
 title: "SSD2 Result: Expression Basis (exprResType, exprResPerc)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -30,7 +30,7 @@ related:
 
 - **CHEMON56/70** — Pesticide constraints for `exprResType`. See [[business-rules-pesticide]].
 - **CHEMON71** — Contaminants in feed: `exprResType` is mandatory. See [[business-rules-contaminant]].
-- **CHEMON84_a / CHEMON84_b** — Additives/flavourings mandatory; contaminants in food recommended. Contaminants in feed have mandatory CHEMON71. See [[business-rules-additives]] and [[business-rules-contaminant]].
+- **CHEMON84_a / CHEMON84_b** — Additives/flavourings mandatory (Error); contaminants in food highly recommended (Warning) (Table 10, p133). Contaminants in feed have mandatory CHEMON71. See [[business-rules-additives]] and [[business-rules-contaminant]].
 
 ## exprResPerc / exprResType — Expression of result
 

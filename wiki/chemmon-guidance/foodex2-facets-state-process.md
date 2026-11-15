@@ -2,12 +2,13 @@
 title: "FoodEx2 Facets: State, Cooking, Production Method, and Process"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 44-45, 47-50 (Table 4: F03, F17, F21, F28)"
   - "pp. 86, 135 (copper: Table 8 and CHEMON90_a)"
+  - "pp. 116, 133-134, 139 (Table 10: CHEMON18, CHEMON86, CHEMON103)"
 related:
   - "[[foodex2-facets]]"
   - "[[foodex2-in-chemmon]]"
@@ -79,11 +80,11 @@ related:
 ## Related Business Rules
 
 - `CHEMON17`: for mycotoxins, `F21` production method should be reported. See [[business-rules-contaminant]].
-- `CHEMON18`: for arsenic in rice, `F28` should specify processed or unprocessed state. See [[business-rules-contaminant]].
+- `CHEMON18` (Warning): for arsenic and derivatives in rice (as grains for human consumption), `F28` (`sampMatCode.process`) should be reported; it is recommended to specify at least the codes for processed or unprocessed. See [[business-rules-contaminant]]. (ChemMon 2026 p116)
 - `CHEMON19`: for chlorates/perchlorates/QACs, `F28` should be reported. See [[business-rules-contaminant]].
-- `CHEMON86`: `F03` is recommended for specified FA/FF categories where physical state affects legal limits. See [[business-rules-additives]].
+- `CHEMON86` (Warning): for FA/FF results, `F03`, if not implicitly present in `sampMatCode`, is highly recommended to be reported when the sample refers to food categories 1, 6.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5 or 17. See [[business-rules-additives]]. (ChemMon 2026 pp. 133-134)
 - `CHEMON90_a`: when copper (`paramCode` RF-0102-001-PPP) is reported, the use of `F20` and/or `F28` is needed (Warning). The rule is triggered by the parameter code, with no domain condition; Table 8 gives the copper `F20` and/or `F28` requirement the status "Highly Recommended". See [[business-rules-pesticide]]. (ChemMon 2026 p86, p135)
-- `CHEMON103`: organic and conventional production facets must not be reported together. See [[business-rules-cross-cutting]].
+- `CHEMON103` (Warning, new in 2026; becomes an Error in 2027): `A07SE` (Organic production) and `A0C6Y` (Conventional (non-organic) production) should not be reported together in `sampMatCode.prod`; in that case the sample will be considered as organic. See [[business-rules-cross-cutting]]. (ChemMon 2026 p139)
 
 ## Navigation
 

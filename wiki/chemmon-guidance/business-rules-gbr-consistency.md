@@ -3,11 +3,16 @@ title: "GBR: Identifier Consistency, Matrix Text and Size Units"
 select_when: "Generic SSD2 rules for shared sample portions, organisation/laboratory/method identifiers, processing country, Other matrix text, unclassifiable method text, sample-size units and analysed-sample ID. GBR5/7/10/11/14/15/16/18/24/25/26/103."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for  No‐presence  data on food additives and food flavourings.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Reporting guidance for use levels on food additives and food flavourings ‐ 2026.pdf"
 source_pages:
-  - "pp. 99-102, 112 (Table 9)"
+  - "ChemMon 2026 pp. 99-102, 112 (Table 9)"
+  - "ChemMon 2026 p. 97 (GBR scope)"
+  - "No-presence 2026 p. 13 (DCF upload), pp. 19-21 (Table 3)"
+  - "Use-levels 2026 p. 17 (DCF upload), pp. 24-28 (Table 3)"
 related:
   - "[[business-rules-gbr]]"
   - "[[ssd2-analysis-context]]"
@@ -23,9 +28,12 @@ related:
 <!-- Source: ChemMon 2026 Table 9, pp. 99-102, 112 -->
 
 These 12 rules are **Active, Error** in the 2026 source table. Table 9 is
-written against SSD2 elements. The No-presence and Use-levels guides list only
-PRE/USE rules, and the guidance does not say whether GBRs are run on those
-submissions; see the scope notes in [[business-rules-gbr]].
+written against SSD2 elements. Source discrepancy: ChemMon says GBRs "apply to
+all data submitted to EFSA through the DCF" (ChemMon 2026 p97), and the
+No-presence and Use-levels files are uploaded in the DCF (No-presence 2026 p13;
+Use-levels 2026 p17), yet those guides' Table 3 lists only PRE/USE rules and no
+GBR (No-presence 2026 pp. 19-21; Use-levels 2026 pp. 24-28). No source says
+which holds for those submissions; see the scope notes in [[business-rules-gbr]].
 The broader GBR index, sample/event consistency rules and result uniqueness
 rule are in [[business-rules-gbr]].
 

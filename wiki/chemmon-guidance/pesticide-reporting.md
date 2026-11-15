@@ -16,6 +16,7 @@ related:
   - "[[baby-food-reporting]]"
   - "[[pesticide-residue-definition-by-matrix]]"
 source_pages:
+  - "p. 5 (pesticide residues in food and feed)"
   - "pp. 11-15 (main changes introduced for the 2026 collection)"
   - "pp. 19-21 (progLegalRef examples, B.03 sampStrategy, B.04 progType)"
   - "pp. 23-27 (Table 2, pesticide flags, examples)"
@@ -23,18 +24,18 @@ source_pages:
   - "p. 86 (Table 8, copper)"
   - "pp. 135-139, 143 (Table 10: CHEMON90_a/b, CHEMON94, CHEMON95, CHEMON101, CHEMON104, CHEMON105, LL_04)"
   - "p. 146 (Table 12)"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 ---
 
 # Pesticide Residues Reporting
 
-<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 19-21, 25-26, 148 -->
+<!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 5, 19-21, 25-26, 148 -->
 ## Scope
 
-- Pesticide residues is one of five [[chemmon-overview|ChemMon]] reporting domains, covering samples of food products defined in Annex I of Regulation (EC) No 396/2005 (processed and unprocessed). (ChemMon 2026 pp. 19, 148)
+- Pesticide residues is one of five [[chemmon-overview|ChemMon]] reporting domains (ChemMon 2026 p148), covering the monitoring of pesticide residues in food and feed under Regulation (EC) No 396/2005 on maximum residue levels of pesticides in or on food and feed of plant and animal origin (ChemMon 2026 p5). `progLegalRef` `N027A` is the code for samples of food products defined in Annex I of that Regulation (processed and unprocessed products) taken as part of the EU MACP defined in Article 29 and in Regulation (EU) 2021/1355; "Both pieces of legislation are covered by the existing progLegalRef code=N027A". (ChemMon 2026 p19)
 - Covers the EU-coordinated programme (EU MACP), national programmes under Regulation (EU) 2021/1355 (MANCP), and increased controls on imported food. EFSA flags a sample as EU MACP when `progType` is `K009A` or `K018A`, `sampStrategy` is `ST10A` or `ST20A`, and the sample is one of the 12 commodities in Annex I Part A, or baby food in Annex II, of Regulation (EU) 2024/989; the MANCP and import-control flag conditions are on [[ssd2-programme-valid-combinations]]. (ChemMon 2026 pp. 25-26)
 - Matrix coding follows [[foodex2-in-chemmon]] rules. Copper reporting overlaps with [[contaminant-reporting]]; different `F20` and `F28` codes apply depending on domain, so use [[foodex2-facets-packaging-consumer]] and [[foodex2-facets-state-process]] for the facet definitions.
-- Some pesticides have different residue definitions for different commodities, so the `paramCode` depends on the sampled matrix; LL_04 rejects mismatches (Error; ChemMon 2026 Table 10 p. 143). See [[pesticide-residue-definition-by-matrix]].
+- Some pesticides have different residue definitions for different commodities, so the `paramCode` depends on the sampled matrix; for pesticide results whose `paramCode` is part of the legal limits database, LL_04/LL_04_b (Error) rejects matrix/`paramCode` combinations that do not match the plausible legal combinations in that database, unless the result is reported for a part of a sum (ChemMon 2026 Table 10 p. 143). See [[pesticide-residue-definition-by-matrix]].
 
 ## Mandatory Legal References
 
@@ -65,6 +66,7 @@ The full list of 31 codes is on [[ssd2-programme-legal-reference]]. (ChemMon 202
 
 - Samples falling under the EU MACP should be reported with `ST10A` or `ST20A`. (ChemMon 2026 p20)
 - `progType`: EU MACP samples should use `K009A`; MANCP samples taken in the EU market `K005A`; `K018A` is for samples that are part of both an EU MACP and a national programme, should also be used when the analytical scope is wider than the EU MACP pesticide/crop combinations, and can be used if the same sample serves other domain programmes "as long as the sample strategy is used in accordance with Table 2"; at the border use `K019A` for the EU increased control programme under Regulation (EU) 2019/1793, otherwise `K038A`. (ChemMon 2026 p21) See [[ssd2-programme-strategy-and-type]].
+- Source discrepancy: B.04 says `K038A` "for all other import controls" (ChemMon 2026 p21), but for `progLegalRef` `N422A` (Regulation (EU) 2019/1873) Table 2 lists only `K019A` with `ST30A` (ChemMon 2026 p24) and CHEMON101 (Error, ChemMon 2026 pp. 138-139) requires `progType` `K019A` with `sampStrategy` `ST30A`; validation enforces `K019A` for `N422A`.
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 13, 41, 86, 135 -->
 ## Copper-Specific Requirements

@@ -2,11 +2,11 @@
 title: "ChemMon Scope and Legal Basis"
 type: "overview"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
-  - "pp. 5-8 (Section 1.1 Background: purpose, audience, legal framework, border control posts); p. 11 (Table 1, N422A); p. 146 (Table 12, N422A)"
+  - "pp. 5-8 (Section 1.1 Background: purpose, audience, legal framework, border control posts); p. 11 (Table 1, N422A); p. 146 (Table 12, N422A); p. 32 (transmission of samples from any year); p. 123 (Table 10, CHEMON43)"
 related:
   - "[[chemmon-background]]"
   - "[[chemmon-overview]]"
@@ -42,7 +42,7 @@ This guidance is intended for data providers reporting datasets to EFSA in SSD2 
 
 (ChemMon 2026 p5)
 
-Except for the statutory EU Annual Report domains (pesticide residues and VMPR), samples taken in any year can be transmitted to the EFSA Scientific Data Warehouse when the data provider has the data ready. Only samples taken in the specific calendar year are included in each year's national and Annual Report. (ChemMon 2026 p5)
+Except for the statutory EU Annual Report domains (pesticide residues and VMPR), samples taken in any year can be transmitted to the EFSA Scientific Data Warehouse when the data provider has the data ready. Only samples taken in the specific calendar year are included in each year's national and Annual Report. (ChemMon 2026 p5) Source discrepancy: p. 32 says "Samples taken in any year can be transmitted to the EFSA sDWH when the data provider has the data ready" without that exception; it restricts report inclusion instead: EU VMPR and pesticides reports "should only include samples taken in the specific calendar year ... and submitted within agreed deadlines", and for food additives and flavourings "only samples in the specific calendar year (equal to the submission year minus 1) will be considered" on their report (ChemMon 2026 p32). Validation: for pesticides and VMPR, `CHEMON43` (Error) requires `sampY` to be lower than or equal to the submission year minus 1 (ChemMon 2026 p123).
 
 ## Main Legal Framework
 

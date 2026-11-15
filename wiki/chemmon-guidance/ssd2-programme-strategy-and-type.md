@@ -2,7 +2,7 @@
 title: "SSD2 Programme: Sampling Strategy and Programme Type"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -27,7 +27,7 @@ related:
 - `sampStrategy` and `progType` are both mandatory.
 - Their meaning depends on domain context; the same code does not automatically imply the same reporting role across pesticides, VMPR, and contaminants.
 - `ST30A` is the suspect-sampling route and is mandatory for some border-control regimes.
-- `K019A` is reserved for the EU increased control programme on imported food; `K038A` is the national import-control path used in VMPR, pesticides, and contaminants where applicable.
+- `K019A` is reserved for the EU increased control programme on imported food; `K038A` is the national import-control path (Official (National) programme for Third Country Import): the B.04 example names VMPR Plan 3, pesticides if different from `K019A`, and contaminants (ChemMon 2026 p21), and Table 2 also lists it for VMPR other control activities, pesticide residues in baby food, food additives and food flavourings (ChemMon 2026 p24).
 - The final validity check is not done on either field in isolation. Use them together with `progLegalRef` and, when needed, `sampPoint`.
 
 ## sampStrategy — Sampling strategy
@@ -53,7 +53,7 @@ related:
 
 ### Domain-specific highlights
 
-- VMPR annual reporting uses `Objective`, `Target sampling`, and `Suspect sampling` for the formal plans; `Other` is for VMPR records outside those plans. (ChemMon 2026 p20)
+- For VMPR National and Annual Reports, all results should be reported with sampling strategies `Objective`, `Target sampling` or `Suspect sampling`; `Other` should be used to transmit results that are not considered in the VMPR National Control Plans as set up by Regulation (EU) 2022/1646. (ChemMon 2026 p20) Table 2 lists `ST30A` for `N371A` only under "VMPR - Other Control activities", not under Plans 1-3. (ChemMon 2026 pp. 23-24)
 - In pesticides, EU MACP samples use `ST10A` or `ST20A`. (ChemMon 2026 p20)
 - `ST10A` covers surveillance samples for the VMPR national randomised surveillance plan for production in the Member States (Plan 2). (ChemMon 2026 p20)
 - `ST20A` "is the code to be used" for samples taken under national programmes under Regulation (EU) 2021/1355 for pesticide residues; it is "typically used" for the VMPR national risk-based control plans for production in the Member States and for third-country imports (Plan 1 and Plan 3); and it "shall be used also for the official controls as regards contaminants in foods". (ChemMon 2026 p20)

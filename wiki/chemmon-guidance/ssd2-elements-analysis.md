@@ -2,11 +2,12 @@
 title: "SSD2 Elements: Analysis, Laboratory, Parameter, Method"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 57-64 (Section 2, elements E.06-L.04)"
+  - "p. 117 (Table 10, CHEMON20)"
 related:
   - "[[ssd2-data-model]]"
   - "[[ssd2-elements-programme]]"
@@ -41,7 +42,7 @@ This page is intentionally short and acts as a hub plus a fast-path summary. Det
 
 ## Relevant Business Rules
 
-- `CHEMON20` — fish matrices with BFRs/dioxins/mercury should report `origFishAreaCode`. See [[business-rules-contaminant]].
+- `CHEMON20` (Warning) — if `sampMatCode.base` has ancestor `A0BZ4` (Processed or preserved seafood) or `A0BNJ` (Fish, other aquatic animals and products derived thereof (feed)) and `paramCode.base` has ancestor Brominated flame retardants (`RF-00000074-ORG`), Dioxins and PCBs (`RF-00000114-ORG`) or Mercury and derivatives (`RF-00000169-CHE`), `origFishAreaCode` should be reported (ChemMon 2026 Table 10, p117). See [[business-rules-contaminant]].
 - `CHEMON68` — `progLegalRef` domain must match `paramCode` domain. See [[business-rules-cross-cutting]].
 - `CHEMON23`, `CHEMON30`, `CHEMON33`, `CHEMON34` — analytical-method type rules. See [[business-rules-cross-cutting]].
 - `CHEMON79` — contaminants/additives/flavourings cannot use generic fallback analytical-method codes. See [[business-rules-cross-cutting]].

@@ -3,12 +3,13 @@ title: "2026 Business Rule Changes"
 select_when: "Changes effective for the 2026 collection, merged or deactivated IDs and future transition notes. Use canonical rule pages for the operative conditions."
 type: "rule-reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 11-16 (Table 1: main changes introduced with the 2026 data collection)"
   - "pp. 113-143 (Table 10 comment column for introduction years and announced changes)"
+  - "p. 70 (M.13/M.14: years exprResType became mandatory for food additives and food flavourings)"
 related:
   - "[[chemmon-change-management]]"
   - "[[business-rules]]"
@@ -34,7 +35,7 @@ Each entry below states what Table 1 says changed (ChemMon 2026 pp. 11-16). "Typ
 - **CHEMON08** (Error) -- If `resVal` equals `resLOQ`, `resType` must be VAL. (p11) Defined in [[business-rules-cross-cutting]].
 - **CHEMON40** (Error) -- If `resType` is BIN, LOQ or LOD, `resVal` must be empty. CHEMON47 is inactivated because CHEMON40 "is more complete". (p11-12) Defined in [[business-rules-cross-cutting]].
 - **CHEMON50** (Error) -- If `progType` is K018A or K009A and `progLegalRef` contains N027A, `sampStrategy` can only be ST10A or ST20A. Its updated description includes CHEMON49. (p12) Defined in [[business-rules-cross-cutting]].
-- **CHEMON84_a** (Error) -- For food additives or food flavourings, `exprResType` must be reported. "From warning to error message in 2026." (p12) Defined in [[business-rules-additives]].
+- **CHEMON84_a** (Error) -- For food additives or food flavourings, `exprResType` must be reported. "From warning to error message in 2026." (p12) The Table 10 comment says "It becomes an Error for food flavourings in 2026" (p133); M.13/M.14 says `exprResType` "became mandatory in 2025 and 2026 respectively" for food additives and food flavourings (p70). Defined in [[business-rules-additives]].
 - **CHEMON84_b** (Warning) -- For contaminants in food, `exprResType` is highly recommended. "Business rule remains a warning message for contaminants." (p12) Defined in [[business-rules-contaminant]].
 - **CHEMON86** (Warning) -- For food additives or food flavourings, F03 is highly recommended, if not implicit, for categories 1, 6.3, 12.5, 12.6, 13, 14.1.2, 14.1.3, 14.1.4, 14.1.5 and 17. "From warning to error message in 2027" for categories 12.5, 13, 14.1.4, 14.1.5 and 17. (p12-13) Defined in [[business-rules-additives]].
 - **CHEMON88** (Warning) -- For food additives or food flavourings, `evalInfo.restrictionException` is highly recommended. "This business rule might become an error in 2027." (p13) Defined in [[business-rules-additives]].

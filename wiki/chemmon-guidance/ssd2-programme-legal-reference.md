@@ -2,7 +2,7 @@
 title: "SSD2 Programme: Legal Reference (progLegalRef)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -127,4 +127,4 @@ Notes:
 - `CHEMON101` — for `N422A`, `progType` must be `K019A` and `sampStrategy` must be `ST30A`. See [[business-rules-cross-cutting]]. (ChemMon 2026 pp. 138-139)
 - `CHEMON104` — `N422A` is exclusive. See [[business-rules-cross-cutting]]. (ChemMon 2026 p139)
 - `CHEMON54` — for `N317A`, `progType` must be `K019A` and `sampStrategy` must be `ST30A` (Error). See [[business-rules-cross-cutting]]. (ChemMon 2026 p126)
-- `CHEMON105` — N317A is exclusive across applicable domains. See [[business-rules-cross-cutting]].
+- `CHEMON105` (Error) — if `progLegalRef` is `N317A`, no other `progLegalRef` can be used. See [[business-rules-cross-cutting]]. (ChemMon 2026 p139)

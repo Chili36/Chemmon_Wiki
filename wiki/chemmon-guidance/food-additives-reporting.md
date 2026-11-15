@@ -35,7 +35,7 @@ source_pages:
   - "ChemMon 2026 p. 144 (Table 11, CONCLUS)"
   - "No-presence 2026 pp. 4-5, 8-9, 11, 16 (Table 1), 19-21 (Table 3)"
   - "Use-levels 2026 pp. 4-5, 7, 9-10, 13, 18, 20 (Table 1), 24-28 (Table 3)"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 ---
 
 # Food Additives and Flavourings Reporting
@@ -135,7 +135,7 @@ If the sample is formulated for **infants (<12 months)**, the target-consumer fa
 - For food additives, `paramText` must be filled in as “Expressed as free acid” or “Expressed as salt” when the food additives are regulated as groups (e.g. sorbic acid and sorbates). If the information is not provided, the analytical value will be considered expressed as free acid. (ChemMon 2026 p63)
 - CHEMON106 (Warning, Table 10 p. 140) checks this only for potassium sorbate (`RF-00000248-ADD`): `paramText` should specify “Expressed as free acid” or “Expressed as salt”. No rule checks the other grouped additives; see [[ssd2-analysis-parameter-coding]].
 - The field prose p. 66 recommends LOD for FA/FF binary negative results generally. CHEMON107 (Table 10 p. 140) specifically warns for six named parameters, including potassium sorbate, when `resType=BIN` and `resQualValue=NEG`; see [[business-rules-additives]] for the complete list.
-- Sum should be reported if it complements individual substance results and MPLs are regulated at the sum level for the reported legislative category. (ChemMon 2026 p61)
+- Additionally, the sum should be reported if it complements the individual substance, as the maximum permitted levels (MPLs) are regulated at the sum level for the reported legislative category. (ChemMon 2026 p61)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf pp. 11-16, 121, 133, 140-141 -->
 ## Key Business Rules
@@ -166,7 +166,7 @@ All three are Warnings. (ChemMon 2026 Table 10 pp. 142-143)
 
 | Product | FoodEx2 Code | Notes |
 | --- | --- | --- |
-| Soft-ripened cheese, sliced | `A02RH#F03.A06JA` | Local MTX 17.2: F33.A0C5F (FA-01.7.2 Ripened cheese) is implicit; add F03 only for the known sliced state. See version note below. (ChemMon 2026 p39 prints `A02RH#F03.A06JA$F33.A0C5F`) |
+| Soft-ripened cheese, sliced | `A02RH#F03.A06JA` | ChemMon 2026 p39 prints `A02RH#F03.A06JA$F33.A0C5F` as the correct code. Wiki note (not in the guidance): the code shown here drops the explicit F33 because F33.A0C5F (FA-01.7.2 Ripened cheese) is implicit in the locally checked MTX 17.2 snapshot, as the parallel guides also list it (No-presence 2026 p9; Use-levels 2026 p9); check your catalogue release before dropping the explicit F33. Add F03 only for the known sliced state. See version note below. |
 | Wine, red | `A03MX` | Implicit F33=FA-14.2.2 Wine and products (ChemMon 2026 p39; also No-presence p8, Use-levels p9) |
 | Omelette, plain | `A03YN#F33.A0C33` | Explicit F33=FA-10.2 Processed eggs and egg products (ChemMon 2026 p40, printed there as `A03YN# F33.A0C33`; also No-presence p9, Use-levels p9) |
 | Infant formula milk/soya-based liquid | `A03QH` | Implicit F33=FA-13.1.1 Infant formulae (ChemMon 2026 p40; also No-presence p8, Use-levels p9) |

@@ -2,7 +2,7 @@
 title: "SSD2 Analysis: Laboratory Identification and Accreditation"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -21,7 +21,7 @@ related:
 ## Rule Summary (Rule-First)
 
 - `labId`, `labAccred`, and `labCountry` are all mandatory.
-- `labId` is the national identifier for the laboratory and must stay stable enough to support validation and reporting.
+- `labId` is a unique code identifying each laboratory providing laboratory results (e.g. the national laboratory code). (ChemMon 2026 p58)
 - `labCountry` is the ISO country code for the laboratory and must be unique per `labId`.
 - `labAccred` expresses the accreditation status of the laboratory; for pesticides the allowed value set is especially narrow.
 

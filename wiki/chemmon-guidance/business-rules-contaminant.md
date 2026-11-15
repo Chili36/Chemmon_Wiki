@@ -3,7 +3,7 @@ title: "Contaminant-Specific Business Rules"
 select_when: "Named contaminant CHEMON rules: substance-specific matrix facets and result reporting, including acrylamide, dioxins, arsenic and mineral oils."
 type: "rule-reference"
 domain: "contaminant"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -20,7 +20,7 @@ related:
 
 ## Overview
 
-CHEMON rules for chemical contaminants, including rules triggered by named substances or matrices. Use each row’s scope rather than inferring a CONT flag requirement from this page title. These rules cover dioxin/PCB congener reporting, matrix-specific facet requirements (acrylamide, bisphenols, PAHs, mycotoxins, arsenic, chlorates, BFRs, fish origin, 3-MCPDs), expression-of-result defaults for feed, recovery correction reporting, and the N375A programme type restriction (CHEMON98, an Error from 2026).
+CHEMON rules for chemical contaminants, including rules triggered by named substances or matrices. Use each row’s scope rather than inferring a CONT flag requirement from this page title. These rules cover dioxin/PCB congener reporting, matrix-specific facet requirements (acrylamide, bisphenols, PAHs, mycotoxins, arsenic, chlorates; ChemMon 2026 pp. 115-116), the fish origin area `origFishAreaCode` (CHEMON20) and the fat percentage `exprResPerc.fatPerc` for BFRs, dioxins and PCBs, and 3-MCPDs (CHEMON21), which are SSD2 elements, not facets (ChemMon 2026 p117), expression-of-result defaults for feed, recovery correction reporting, and the N375A programme type restriction (CHEMON98, an Error from 2026).
 
 Rules that span contaminants *and* other domains (e.g. CHEMON37, CHEMON44, CHEMON79, CHEMON97) are in [[business-rules-cross-cutting]]. For contaminant reporting guidance covering acrylamide, dioxins/PCBs, BFRs, arsenic, chlorates, bisphenol, PAHs, 3-MCPDs, mineral oils, mycotoxins, and nitrates, see [[contaminant-reporting]].
 

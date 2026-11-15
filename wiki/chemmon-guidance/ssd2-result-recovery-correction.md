@@ -2,11 +2,13 @@
 title: "SSD2 Result: Recovery and Recovery Correction (resValRec, resValRecCorr)"
 type: "reference"
 domain: "all"
-last_updated: "2026-10-05"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 68-69 (Section 2, elements M.11-M.12)"
+  - "pp. 92-95 (Table 8, M.11 rows)"
+  - "pp. 122, 132 (Table 10, CHEMON42, CHEMON80)"
 related:
   - "[[ssd2-elements-result]]"
   - "[[ssd2-result-value-and-type]]"
@@ -21,14 +23,14 @@ related:
 
 - Unless explicitly flagged, EFSA treats reported results as **not corrected for recovery**.
 - If the result is corrected for recovery, set `resValRecCorr = Y` and report `resValRec` as a percentage.
-- Recovery correction is generally not applied to adjust numerical pesticide results, but is mandatory for specific contaminant frameworks (see list below).
+- Recovery correction is generally not applied to adjust numerical pesticide results, but the M.11 prose says results for specific contaminants must be adjusted for recovery and the recovery rate reported, while Table 8 lists `resValRec` as "Recommended" for PAHs, mycotoxins, cadmium, lead and nitrates (see the list and the source discrepancy below). (ChemMon 2026 pp. 69, 92-95)
 
 ## Relevant Business Rules
 
 - **CHEMON04/05/42** — Recovery ranges and dependency rules for `resValRec`/`resValRecCorr`.
 - **CHEMON80** — For contaminants, `resValRecCorr` should be reported.
 
-See [[business-rules-contaminant]].
+See [[business-rules-cross-cutting]] for CHEMON04/05/42 and [[business-rules-contaminant]] for CHEMON80.
 
 ## resValRec / resValRecCorr — Recovery and recovery correction
 
@@ -52,6 +54,8 @@ However, for the following the results must be **adjusted for recovery and the r
 - lead, cadmium, mercury, inorganic tin, 3-MCPD and benzo(a)pyrene per Commission Regulation 333/2007
 
 (ChemMon 2026 p69)
+
+**Source discrepancy:** the M.11 prose (p. 69) says results for these substances "must be adjusted for recovery and the recovery rate reported", but Table 8 gives `resValRec` (M.11) the status "Recommended" for PAHs, mycotoxins, cadmium, lead and nitrates (ChemMon 2026 pp. 92-95). No business rule makes `resValRec` mandatory: `CHEMON80` (Warning, p. 132) asks only that `resValRecCorr` be reported for contaminants, and `CHEMON42` (Warning, p. 122) asks for `resValRec` when `resValRecCorr` = Y.
 
 ### Expression format
 

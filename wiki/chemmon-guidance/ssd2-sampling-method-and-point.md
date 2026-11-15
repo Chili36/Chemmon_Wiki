@@ -2,7 +2,7 @@
 title: "SSD2 Sampling: Method, Sampler, and Point"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -23,7 +23,7 @@ related:
 ## Rule Summary (Rule-First)
 
 - `sampMethod` is optional, but some codes carry downstream meaning. In particular, pooled-sample methods (`N002A`, `N031A`) trigger mandatory unit-size reporting on the sampling-unit fields. See [[ssd2-sampling-event-and-unit]]. (`CHEMON77`)
-- `sampler` is mandatory and identifies whether the sample was taken under official control or by a food business operator.
+- `sampler` is mandatory and identifies the person or persons responsible for taking the sample (`SAMPLR` catalogue); the guidance examples are `CX02A` (samples taken in the context of an official control) and `CX01A` (samples taken by food business operators). (ChemMon 2026 p28)
 - `sampPoint` is mandatory and locates the sample in the food chain; VMPR reporting also remaps `sampPoint` through a dedicated `vmprClasses` hierarchy.
 - For furan and alkylfurans, the guidance points to `sampMethod=N011A` where the dedicated sampling procedure applies. See [[contaminant-reporting]].
 

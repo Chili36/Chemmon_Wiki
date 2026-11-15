@@ -2,7 +2,7 @@
 title: "ChemMon Background and Rationale"
 type: "overview"
 domain: "all"
-last_updated: "2026-04-24"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
@@ -33,7 +33,7 @@ Use [[chemmon-overview]] for the operational overview of ChemMon. Use the narrow
 - Scope, audience, legal framework, or annual-report inclusion: use [[chemmon-scope-and-legal-basis]].
 - Why one SSD2 collection exists, overlapping domains, `progLegalRef`, and FCM exclusion: use [[chemmon-single-ssd2-collection]].
 - Compound-element flexibility, catalogue mapping, Open Data, free-text reduction, Knowledge Junction, or the meaning of residue: use [[chemmon-data-governance-and-transparency]].
-- Revision cadence, the X+2 implementation delay, urgent legal exceptions, or 2026 change categories: use [[chemmon-change-management]].
+- Revision cadence, the X+2 implementation delay, the exception for new or amended legal requirements EFSA cannot anticipate, or 2026 change categories: use [[chemmon-change-management]].
 
 ## Background Pages
 
@@ -42,7 +42,7 @@ Use [[chemmon-overview]] for the operational overview of ChemMon. Use the narrow
 | [[chemmon-scope-and-legal-basis]] | intended users, reporting domains, main EU legal acts, annual-report inclusion window |
 | [[chemmon-single-ssd2-collection]] | consolidation into one SSD2 mechanism, duplicate-reporting problem, domain overlap handling, FCM exclusion |
 | [[chemmon-data-governance-and-transparency]] | compound elements, national-code conversion, EFSA catalogues, Open Data, free-text limits, machine-readable resources, residue concept |
-| [[chemmon-change-management]] | annual revision cadence, X+2 rule, urgent legal exceptions, 2026 change categories |
+| [[chemmon-change-management]] | annual revision cadence, X+2 rule, exception for new or amended legal requirements EFSA cannot anticipate, 2026 change categories |
 
 ## Relevant Business Rules
 

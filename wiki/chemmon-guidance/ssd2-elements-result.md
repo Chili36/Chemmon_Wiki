@@ -2,11 +2,12 @@
 title: "SSD2 Elements: Result Values (resId through resInfo)"
 type: "reference"
 domain: "all"
-last_updated: "2026-11-11"
+last_updated: "2026-11-12"
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 source_pages:
   - "pp. 64-73 (Section 2, elements M.01-M.20)"
+  - "pp. 113, 122, 132 (Table 10, CHEMON04, CHEMON05, CHEMON42, CHEMON80)"
 related:
   - "[[ssd2-elements-evaluation]]"
   - "[[ssd2-evaluation-code]]"
@@ -39,7 +40,7 @@ Use these as the "fast path" when coding/debugging result records:
 - `resLOQ` is expected for most chemical-monitoring results; the guidance lists narrow exceptions (unvalidated methods, some VMPR cases, `resType=BIN`, and sum/not-summed scenarios).
 - VMPR: at least one of `resLOD`, `resLOQ`, `CCalpha`, or `CCbeta` must be reported per result (and CCalpha/CCbeta become mandatory in specific accreditation/method cases).
 - Expression basis matters: when expressing results on fat or dry-matter basis, the corresponding percentage (fat/moisture) must be available where required.
-- Processed products: report the result for the sample analysed (the processed product) without "back-calculating" to the unprocessed commodity (with specific pesticide-domain compliance caveats handled via facets, not by altering the numeric result).
+- Processed products: report the result for the sample analysed (the processed product) without "back-calculating" to the unprocessed commodity. For pesticide results on fruits with stones (e.g. peaches, mangoes, avocados), the analytical result should be recalculated back to the whole fruit when checking for MRL compliance; when reporting either option, facet F20 is recommended to indicate whether the result is expressed with stone (`A07QJ`) or without stone (`A07QK`). (ChemMon 2026 p68)
 
 ## Relevant Business Rules
 
@@ -48,13 +49,12 @@ This page is constrained by business rules; the most load-bearing ones:
 - GBR result-shape rules (units/required fields): GBR27/28/29, GBR36/39/46/47/48, GBR37, GBR102. See [[business-rules-gbr]].
 - `resLOQ`/limits rules: CHEMON44/45, CHEMON78, CHEMON82. See [[business-rules-cross-cutting]].
 - VMPR CCalpha/CCbeta requirements: CHEMON31/32. See [[business-rules-vmpr]].
-- Recovery metadata: CHEMON04/05/42, CHEMON80. See [[business-rules-contaminant]].
+- Recovery metadata: CHEMON04/05/42 (see [[business-rules-cross-cutting]]) and CHEMON80 (contaminants; see [[business-rules-contaminant]]). (ChemMon 2026 Table 10, pp. 113, 122, 132)
 - Uncertainty: CHEMON72 (recommended for pesticides), CHEMON90_b (mandatory for copper). See [[business-rules-pesticide]].
 
 ## Relevant Policy
 
 - Wiki note (not in the guidance): where a rule and the prose disagree, the rule shows what DCF validation enforces. This is the wiki's reading; the guidance does not state a precedence order.
-- Prefer encoding context via the appropriate elements/facets (e.g. expression basis, sample-preparation facets) rather than altering numeric results to "fit" a downstream interpretation.
 
 ## Subpages
 

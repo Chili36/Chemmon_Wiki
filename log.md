@@ -5,6 +5,14 @@ last_updated: "2026-11-11"
 
 # Log
 
+## [2026-11-12] correction | Every page reviewed in full by the content reviewer; cross-page check added (#74)
+
+- **Tool**: the content reviewer now receives the wiki pages linked to or from the page under review and reports `cross_page` findings, naming the other page and the side the source supports. `--review --full` reviews every line; `--jobs` runs pages in parallel; dataset files a page cites are sent too. The record keeps each page's last full-review date.
+- **Full run**: all 75 hand-written pages, 2,954 claim-bearing lines. 101 findings on 48 pages (66 blocking, 35 notes), none rated as causing wrong data, 23 as misleading. Five agents re-read the source for each finding: 98 confirmed and fixed, 2 partly accepted, 2 rejected. The changed lines were reviewed again until clean (3 follow-on findings and 5 notes fixed).
+- **What was wrong**: requirement strength (`recommended` for `highly recommended` on CHEMON86/89, `must` for `should` on LL_04, `generally` for `always` on VMPR F01/F02); rules described wider or narrower than Table 10 (CHEMON20, 34, 70, 79, 90_b, 103, 105, 108); unsourced rationale sentences removed or labelled as wiki notes; four source discrepancies that the wiki had stated as settled (any-year transmission p. 5 vs p. 32; recovery correction p. 69 vs Table 8; USE19 description vs error message; whether GBRs run on FA/FF submissions); wrong page citations; eight disagreements between two wiki pages.
+- **Rejected findings**: [[ssd2-matrix-origin]] on the Table 3 ban (the page was right, p. 31) and [[business-rules-additives]] on CHEMON89 (right, p. 135).
+- **Not checked**: [[business-rules]] and [[business-rules-cross-cutting]] were reviewed without some of their linked pages (size limit; named in `docs/content-review.json`). The verifying agents worked from the PDF text and rendered pages only for Table 2. Pages that do not link to each other are not compared. Codes are not checked against the live EFSA catalogues.
+
 ## [2026-11-11] tooling | Independent content review automated (#72)
 
 - **New tool**: `python -m wiki_api.content_review --review` sends each changed page and its source PDFs to a fresh model call (`claude-opus-5-5`, effort `xhigh`; set `CONTENT_REVIEW_MODEL` / `CONTENT_REVIEW_EFFORT` to change). For every changed line the reviewer must quote the source passage and give a verdict; a review that skips a line, stops early or is refused records nothing.
