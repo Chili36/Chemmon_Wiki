@@ -18,6 +18,14 @@ Of course it's readable by humans, but it's really targeted towards agents, both
 ingestion and using. I would recommend hooking up the [MCP](#mcp-server-for-agents) to
 your harness of choice and seeing if it's usable for you.
 
+A lot of thought has gone into mainly two items over the last month: how to teach an
+agent to think horses, not zebras, and how knowledge is best stored and accessed. I
+still firmly believe that software is solved in principle, but knowledge is not. How
+can we make sure that our agents, tools and processes are grounded in truth and not in
+general assumptions? But this creates a paradox. How can we think horses before
+zebras when we actually don't know? If we continue to make an ass of u and me by
+assuming, when do we know? How true does truth have to be?
+
 ## Directory Layout
 
 ```text
